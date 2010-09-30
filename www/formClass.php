@@ -6,6 +6,7 @@ require_once('checkboxClass.php');
 
 class formClass {
     private $name;
+    private $valid;
     // private $method; @todo implement|
     // private $successAddress; @todo implement|
     private $submitLabel;
@@ -20,6 +21,7 @@ class formClass {
     public function __construct($name, $parameters = array()) {
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
+        $this->valid = false;
     }
 
     public function __call($functionName, $functionArguments) {
@@ -47,6 +49,15 @@ class formClass {
         $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>';
         $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '">' . $renderedForm . $renderedSubmit . '</form>';
         return $renderedForm;
+    }
+
+    public function validate() {
+        // @todo ...validate
+        $this->valid = true;
+    }
+
+    public function isValid() {
+        return $this->valid;
     }
 
     private function _checkFormName($name) {
