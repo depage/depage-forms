@@ -5,19 +5,21 @@ require_once('textClass.php');
 require_once('checkboxClass.php');
 
 class formClass {
-    private $method;
-    private $successAddress;
-    private $submitButtonLabel = 'go';
+    private $name;
+    // private $method; @todo implement|
+    // private $successAddress; @todo implement|
+    private $submitLabel;
     private $inputTypes = array(
         'hidden' => 'text', 
         'text' => 'text',
         'email' => 'text',
-        'option' => 'checkbox'
+        'select' => 'checkbox'
     );
     public $inputs = array();
 
-    public function __construct($submitButtonLabel) {
-        $this->submitButtonLabel = $submitButtonLabel;
+    public function __construct($name, $parameters = array()) {
+        $this->name = $name;
+        $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
     }
 
     public function __call($functionName, $functionArguments) {
@@ -29,16 +31,34 @@ class formClass {
         }
     }
 
-    public function addInput($type, $name, $parameters) {
-        $this->checkType($type);
-        $this->checkName($name);
-        $this->checkParameters($parameters);
+    public function addInput($type, $name, $parameters = array()) {
+        $this->_checkInputType($type);
+        $this->_checkInputName($name);
+        $this->_checkInputParameters($parameters);
 
         $class = $this->inputTypes[$type] . "Class";
-        $this->inputs[] = new $class($type, $name, $parameters);
+        $this->inputs[] = new $class($type, $name, $parameters, $this->name);
     }
 
-    private function checkName($name) {
+    public function __toString() {
+        foreach($this->inputs as $input) {
+            $renderedForm .= $input;
+        }
+        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>';
+        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '">' . $renderedForm . $renderedSubmit . '</form>';
+        return $renderedForm;
+    }
+
+    private function _checkFormName($name) {
+        if (!is_string($name)) {
+            throw new Exception('Form name needs to be a string: ' . $name);
+        }
+        if (trim($name) === '') {
+            throw new Exception('Invalid form name');
+        }
+    }
+
+    private function _checkInputName($name) {
         if (!is_string($name)) {
             throw new Exception('Input name needs to be a string: ' . $name);
         }
@@ -52,16 +72,13 @@ class formClass {
         }
     }
 
-    private function checkType($type) {
-        if (!is_string($type)) {
-            throw new Exception('Input type needs to be a string: ' . $type);
-        }
+    private function _checkInputType($type) {
         if (!$this->inputTypes[$type]) {
             throw new Exception('Unknown input type: ' . $type);
         }
     }
 
-    private function checkParameters($parameters) {
+    private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
             throw new Exception('Input parameters need to be in an array');
         }
