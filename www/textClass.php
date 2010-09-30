@@ -8,17 +8,19 @@ class textClass extends inputClass {
     }
 
     public function render() {
+        $renderedName = ' name="' . $this->name . '"';
+        $renderedType = ' type="' . $this->type . '"';
+        $renderedValue = (isset($this->value)) ? ' value="' . $this->value . '" ' : '';
+        $renderedLabelOpen = ($this->label !== '') ? '<label>' . $this->label : '';
+        $renderedLabelClose = ($this->label !== '') ?'</label>' : '';
 
         switch ($this->type) {
             case 'text':
             case 'email':
-                $renderedInput = '<input name="' . $this->name . '" type="' . $this->type . '">';
-                if ($this->label !== '') {
-                    $renderedInput = '<label>' . $this->label . $renderedInput . '</label>';
-                }
+                $renderedInput = $renderedLabelOpen . '<input' . $renderedName . $renderedType . $renderedValue . '>' . $renderedLabelClose;
                 break;
             case 'hidden':
-                $renderedInput = '<input name="' . $this->name . '" type="' . $this->type . '">';
+                $renderedInput = '<input' . $renderedName . $renderedType . $renderedValue . '>';
                 break;
         }
         return $renderedInput;
