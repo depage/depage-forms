@@ -11,21 +11,25 @@ class checkboxClass extends inputClass {
     }
 
     public function render() {
+        $renderedName = ' name="' . $this->name . '"';
+        $renderedType = ' type="' . $this->type . '"';
+
+        $renderedLabelOpen = ($this->label !== '') ? '<label>' . $this->label : '';
+        $renderedLabelClose = ($this->label !== '') ?'</label>' : '';
+
         switch ($this->type) {
             case 'checkbox':
-                $renderedInput = '<input name="' . $this->name . '" type="' . $this->type . '">';
+                $renderedInput = '<input' . $renderedName . $renderedType . '">';
                 break;
             case 'select':
                 foreach($this->optionList as $option) {
                     $renderedInput .= '<option>' . $option . '</option>';
                 }
-                $renderedInput = '<select name="' . $this->name . '">' . $renderedInput . '</select>';
+                $renderedInput = '<select' . $renderedName . '>' . $renderedInput . '</select>';
                 break;
         }
 
-        if ($this->label !== '') {
-            $renderedInput = '<label>' . $this->label . $renderedInput . '</label>';
-        }
+        $renderedInput = $renderedLabelOpen . $renderedInput . $renderedLabelClose;
 
         return $renderedInput;
     }

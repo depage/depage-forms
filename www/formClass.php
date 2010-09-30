@@ -7,8 +7,9 @@ require_once('checkboxClass.php');
 class formClass {
     private $name;
     private $valid;
-    // private $method; @todo implement|
-    // private $successAddress; @todo implement|
+    private $method;
+    private $action;
+    // private $successAddress; @todo implement!
     private $submitLabel;
     private $inputTypes = array(
         'hidden' => 'text', 
@@ -21,7 +22,15 @@ class formClass {
     public function __construct($name, $parameters = array()) {
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
+        $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
+        $this->method = (strToLower($parameters['method']) == 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->valid = false;
+        
+        session_start();
+
+	if ($_SESSION[$this->name . '-valid'] == true) {
+            $this->valid = true;
+	}
     }
 
     public function __call($functionName, $functionArguments) {
@@ -43,17 +52,29 @@ class formClass {
     }
 
     public function __toString() {
+        $this->addHidden('PHPSESSID', array('value' => session_id()));
         foreach($this->inputs as $input) {
             $renderedForm .= $input;
         }
-        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>';
-        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '">' . $renderedForm . $renderedSubmit . '</form>';
+        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="' . $this->name . '-submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
+        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '" method="' . $this->method . '" action="' . $this->action . '">' . $renderedForm . $renderedSubmit . '</form>';
         return $renderedForm;
     }
 
     public function validate() {
+        if (isset($_POST['' . $this->name . '-submit'])) {
+	    $_SESSION[$this->name . '-data'] = $_POST;
+            if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
+                $_SESSION[$this->name . '-valid'] = true;
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                die( "Tried to redіrect you to " . $_SERVER['REQUEST_URI']);
+            } else {
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                die( "Tried to redіrect you to " . $_SERVER['REQUEST_URI']);
+            }
+        }
+
         // @todo ...validate
-        $this->valid = true;
     }
 
     public function isValid() {

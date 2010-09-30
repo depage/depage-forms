@@ -6,6 +6,7 @@ abstract class inputClass {
     protected $label;
     protected $required;
     protected $formName;
+    protected $value;
 
     public function __construct($type, $name, $parameters, $formName) {
         $this->type = $type;
@@ -13,6 +14,7 @@ abstract class inputClass {
         $this->formName = $formName;
         $this->label = $parameters['label'];
         $this->required = $parameters['required'];
+        $this->value = $parameters['value'];
     }
 
     public function getName() {
@@ -20,7 +22,7 @@ abstract class inputClass {
     }
 
     public function __toString() {
-        $uniqueID = $this->formName . '-' . $this->name;
-        return '<p id="' . $uniqueID . '">' . $this->render() . '</p>';
+        $renderedUniqueId = ' id="' . $this->formName . '-' . $this->name . '"';
+        return '<p' . $renderedUniqueId . '>' . $this->render() . '</p>';
     }
 }
