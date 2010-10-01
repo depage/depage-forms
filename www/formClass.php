@@ -9,7 +9,7 @@ class formClass {
     private $valid;
     private $method;
     private $action;
-    // private $successAddress; @todo implement!
+    private $successAddress;
     private $submitLabel;
     private $inputTypes = array(
         'hidden' => 'text', 
@@ -24,6 +24,7 @@ class formClass {
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
         $this->method = (strToLower($parameters['method']) == 'get') ? 'get' : 'post'; // @todo make this more verbose 
+        $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
         $this->valid = false;
         
         session_start();
@@ -31,6 +32,7 @@ class formClass {
 	if ($_SESSION[$this->name . '-valid'] == true) {
             $this->valid = true;
 	}
+        $this->addHidden('PHPSESSID', array('value' => session_id()));
     }
 
     public function __call($functionName, $functionArguments) {
@@ -52,7 +54,6 @@ class formClass {
     }
 
     public function __toString() {
-        $this->addHidden('PHPSESSID', array('value' => session_id()));
         foreach($this->inputs as $input) {
             $renderedForm .= $input;
         }
@@ -62,18 +63,17 @@ class formClass {
     }
 
     public function validate() {
-        if (isset($_POST['' . $this->name . '-submit'])) {
+        if (isset($_POST['' . $this->name . '-submit'])) { // @todo use hidden field instead
 	    $_SESSION[$this->name . '-data'] = $_POST;
             if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
                 $_SESSION[$this->name . '-valid'] = true;
-                header('Location: ' . $_SERVER['REQUEST_URI']);
-                die( "Tried to redіrect you to " . $_SERVER['REQUEST_URI']);
+                header('Location: ' . $this->successAddress);
+                die( "Tried to redіrect you to " . $this->successAddress);
             } else {
                 header('Location: ' . $_SERVER['REQUEST_URI']);
                 die( "Tried to redіrect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-
         // @todo ...validate
     }
 
