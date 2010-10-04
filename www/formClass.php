@@ -54,6 +54,7 @@ class formClass {
     }
 
     public function __toString() {
+        $this->addHidden('PHPSESSID', array('value' => session_id()));
         foreach($this->inputs as $input) {
             $renderedForm .= $input;
         }
