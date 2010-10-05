@@ -17,6 +17,7 @@ class checkboxClass extends inputClass {
         $renderedLabelOpen = ($this->label !== '') ? '<label>' . $this->label : '';
         $renderedLabelClose = ($this->label !== '') ?'</label>' : '';
 
+        $renderedInput = '';
         switch ($this->type) {
             case 'checkbox':
                 $renderedInput = '<input' . $renderedName . $renderedType . '">';
