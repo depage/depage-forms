@@ -20,19 +20,18 @@ class formClass {
     public $inputs = array();
 
     public function __construct($name, $parameters = array()) {
+        $this->_checkFormName($name);
+        session_start();
+
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
-        $this->method = (strToLower($parameters['method']) == 'get') ? 'get' : 'post'; // @todo make this more verbose 
+        $this->method = (strToLower($parameters['method']) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
-        $this->valid = false;
+        $this->valid = ($_SESSION[$this->name . '-valid'] === true) ? true : false;
         
-        session_start();
-
-	if ($_SESSION[$this->name . '-valid'] == true) {
-            $this->valid = true;
-	}
-        $this->addHidden('PHPSESSID', array('value' => session_id()));
+        //$this->addHidden('PHPSESSID', array('value' => session_id())); @todo required?
+        $this->addHidden('form-name', array('value' => $name));
     }
 
     public function __call($functionName, $functionArguments) {
@@ -47,7 +46,6 @@ class formClass {
     public function addInput($type, $name, $parameters = array()) {
         $this->_checkInputType($type);
         $this->_checkInputName($name);
-        $this->_checkInputParameters($parameters);
 
         $class = $this->inputTypes[$type] . "Class";
         $this->inputs[] = new $class($type, $name, $parameters, $this->name);
@@ -64,15 +62,16 @@ class formClass {
     }
 
     public function validate() {
-        if (isset($_POST['' . $this->name . '-submit'])) { // @todo use hidden field instead
-	    $_SESSION[$this->name . '-data'] = $_POST;
+
+        if (($_POST['form-name']) === $this->name) {
+            $_SESSION[$this->name . '-data'] = $_POST;
             if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
                 $_SESSION[$this->name . '-valid'] = true;
                 header('Location: ' . $this->successAddress);
-                die( "Tried to redіrect you to " . $this->successAddress);
+                die( "Tried to redirect you to " . $this->successAddress);
             } else {
                 header('Location: ' . $_SERVER['REQUEST_URI']);
-                die( "Tried to redіrect you to " . $_SERVER['REQUEST_URI']);
+                die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
         // @todo ...validate
@@ -80,6 +79,10 @@ class formClass {
 
     public function isValid() {
         return $this->valid;
+    }
+
+    public function populate() {
+        
     }
 
     private function _checkFormName($name) {
@@ -92,12 +95,6 @@ class formClass {
     }
 
     private function _checkInputName($name) {
-        if (!is_string($name)) {
-            throw new Exception('Input name needs to be a string: ' . $name);
-        }
-        if (trim($name) === '') {
-            throw new Exception('Invalid input name');
-        }
         foreach($this->inputs as $input) {  
             if ($input->getName() === $name) {
                 throw new Exception('Input name already in use: ' . $name);
@@ -108,12 +105,6 @@ class formClass {
     private function _checkInputType($type) {
         if (!$this->inputTypes[$type]) {
             throw new Exception('Unknown input type: ' . $type);
-        }
-    }
-
-    private function _checkInputParameters($parameters) {
-        if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new Exception('Input parameters need to be in an array');
         }
     }
 }
