@@ -7,7 +7,7 @@ class checkboxClass extends inputClass {
     
     public function __construct($type, $name, $parameters, $formName) {
         parent::__construct($type, $name, $parameters, $formName);
-        $this->optionList = $parameters['optionList'];
+        $this->optionList = (isset($parameters['optionList'])) ? $parameters['optionList'] : '';
     }
 
     public function render() {
@@ -17,6 +17,7 @@ class checkboxClass extends inputClass {
         $renderedLabelOpen = ($this->label !== '') ? '<label>' . $this->label : '';
         $renderedLabelClose = ($this->label !== '') ?'</label>' : '';
 
+        $renderedInput = '';
         switch ($this->type) {
             case 'checkbox':
                 $renderedInput = '<input' . $renderedName . $renderedType . '">';

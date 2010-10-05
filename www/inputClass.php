@@ -16,9 +16,9 @@ abstract class inputClass {
         $this->type = $type;
         $this->name = $name;
         $this->formName = $formName; // @todo check?
-        $this->label = $parameters['label'];
-        $this->required = $parameters['required'];
-        $this->value = $parameters['value'];
+        $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
+        $this->required = (isset($parameters['required'])) ? $parameters['required'] : '';
+        $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
     }
 
     public function getName() {
@@ -30,18 +30,16 @@ abstract class inputClass {
         return '<p' . $renderedUniqueId . '>' . $this->render() . '</p>';
     }
 
-    private function _checkInputName($name) {
-        if (!is_string($name)) {
-            throw new Exception('Input name needs to be a string: ' . $name);
-        }
-        if (trim($name) === '') {
-            throw new Exception('Invalid input name');
-        }
-    }
-
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new Exception('Input parameters need to be in an array');
+            throw new inputParametersNoArrayException();
+    
+    private function _checkInputName($name) {
+        if (!is_string($name)) {
+            throw new inputNameNoStringException();
+        }
+        if (trim($name) === '') {
+            throw new invalidInputNameException();
         }
     }
 }
