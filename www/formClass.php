@@ -3,6 +3,7 @@
 require_once('inputClass.php');
 require_once('textClass.php');
 require_once('checkboxClass.php');
+require_once('fileClass.php');
 require_once('exceptions.php');
 
 class formClass {
@@ -26,9 +27,9 @@ class formClass {
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
-	if (isset($parameters['method'])) {
+        if (isset($parameters['method'])) {
             $this->method = (strToLower($parameters['method']) == 'get') ? 'get' : 'post'; // @todo make this more verbose 
-	}
+        }
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
         $this->valid = false;
         
@@ -36,9 +37,9 @@ class formClass {
             session_start();
         }
 
-	if ((isset($_SESSION[$this->name . '-valid'])) &&  ($_SESSION[$this->name . '-valid'] == true)) {
+        if ((isset($_SESSION[$this->name . '-valid'])) &&  ($_SESSION[$this->name . '-valid'] == true)) {
             $this->valid = true;
-	}
+        }
         $this->addHidden('PHPSESSID', array('value' => session_id()));
     }
 
@@ -72,7 +73,7 @@ class formClass {
 
     public function validate() {
         if (isset($_POST['' . $this->name . '-submit'])) { // @todo use hidden field instead
-	    $_SESSION[$this->name . '-data'] = $_POST;
+            $_SESSION[$this->name . '-data'] = $_POST;
             if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
                 $_SESSION[$this->name . '-valid'] = true;
                 header('Location: ' . $this->successAddress);
@@ -107,7 +108,7 @@ class formClass {
     }
 
     private function _checkInputType($type) {
-        if (!$this->inputTypes[$type]) {
+        if (!isset($this->inputTypes[$type])) {
             throw new unknownInputTypeException();
         }
     }
