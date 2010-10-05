@@ -33,6 +33,8 @@ abstract class inputClass {
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
             throw new inputParametersNoArrayException();
+        }
+    }
     
     private function _checkInputName($name) {
         if (!is_string($name)) {

@@ -19,7 +19,7 @@ class formClass {
         'email' => 'text',
         'select' => 'checkbox'
     );
-    public $inputs = array();
+    private $inputs = array();
 
     public function __construct($name, $parameters = array()) {
         $this->_checkFormName($name);
@@ -29,7 +29,7 @@ class formClass {
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
         $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
-        $this->valid = ($_SESSION[$this->name . '-valid'] === true) ? true : false;
+        $this->valid = ((isset($_SESSION[$this->name . '-valid'])) && ($_SESSION[$this->name . '-valid'] === true)) ? true : false;
         
         if (!session_id()) {
             session_start();
@@ -38,6 +38,7 @@ class formClass {
         if ((isset($_SESSION[$this->name . '-valid'])) &&  ($_SESSION[$this->name . '-valid'] == true)) {
             $this->valid = true;
         }
+        $this->addHidden('form-name', array('value' => $this->name));
     }
 
     public function __call($functionName, $functionArguments) {
@@ -65,12 +66,13 @@ class formClass {
         $renderedMethod = ' method="' . $this->method . '"';
         $renderedAction = (empty($this->action)) ? '' : ' action="' . $this->action . '"';
         $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
+
         $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedForm . $renderedSubmit . '</form>';
         return $renderedForm;
     }
 
     public function validate() {
-        if (($_POST['form-name']) === $this->name) {
+        if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
             $_SESSION[$this->name . '-data'] = $_POST;
             if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
                 $_SESSION[$this->name . '-valid'] = true;
@@ -90,6 +92,10 @@ class formClass {
 
     public function populate() {
         
+    }
+
+    public function getInputs() { // @todo get single input instead?
+        return $this->inputs;
     }
 
     private function _checkFormName($name) {
