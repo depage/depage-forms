@@ -7,7 +7,7 @@ class checkboxClass extends inputClass {
     
     public function __construct($type, $name, $parameters, $formName) {
         parent::__construct($type, $name, $parameters, $formName);
-        $this->optionList = $parameters['optionList'];
+        $this->optionList = (isset($parameters['optionList'])) ? $parameters['optionList'] : '';
     }
 
     public function render() {

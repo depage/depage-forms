@@ -27,9 +27,7 @@ class formClass {
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
-        if (isset($parameters['method'])) {
-            $this->method = (strToLower($parameters['method']) == 'get') ? 'get' : 'post'; // @todo make this more verbose 
-        }
+        $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
         $this->valid = false;
         
@@ -40,7 +38,6 @@ class formClass {
         if ((isset($_SESSION[$this->name . '-valid'])) &&  ($_SESSION[$this->name . '-valid'] == true)) {
             $this->valid = true;
         }
-        $this->addHidden('PHPSESSID', array('value' => session_id()));
     }
 
     public function __call($functionName, $functionArguments) {
@@ -66,15 +63,17 @@ class formClass {
         foreach($this->inputs as $input) {
             $renderedForm .= $input;
         }
-        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="' . $this->name . '-submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
-        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '" method="' . $this->method . '" action="' . $this->action . '">' . $renderedForm . $renderedSubmit . '</form>';
+        $renderedMethod = ' method="' . $this->method . '"';
+        $renderedAction = (empty($this->action)) ? '' : ' action="' . $this->action . '"';
+        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
+        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedForm . $renderedSubmit . '</form>';
         return $renderedForm;
     }
 
     public function validate() {
         if (isset($_POST['' . $this->name . '-submit'])) { // @todo use hidden field instead
             $_SESSION[$this->name . '-data'] = $_POST;
-            if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
+            if ($_SESSION[$this->name . '-data']['firstname'] === 'valid') {
                 $_SESSION[$this->name . '-valid'] = true;
                 header('Location: ' . $this->successAddress);
                 die( "Tried to redіrect you to " . $this->successAddress);
