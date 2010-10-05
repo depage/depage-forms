@@ -5,6 +5,7 @@ require_once ('inputClass.php');
 class textClass extends inputClass {
     public function __construct($type, $name, $parameters, $formName) {
         parent::__construct($type, $name, $parameters, $formName);
+
     }
 
     public function render() {
@@ -24,5 +25,9 @@ class textClass extends inputClass {
                 break;
         }
         return $renderedInput;
+    }
+
+    public function validate() {
+        $this->valid = true; // @todo actually validate;
     }
 }

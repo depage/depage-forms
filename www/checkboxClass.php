@@ -33,4 +33,8 @@ class checkboxClass extends inputClass {
 
         return $renderedInput;
     }
+
+    public function validate() {
+        $this->valid = true; // @todo actually validate;
+    }
 }
