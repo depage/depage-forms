@@ -78,7 +78,6 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-
         $this->pupulate();
         $this->validate();
     }
@@ -87,9 +86,7 @@ class formClass {
         $this->valid = true;
         foreach($this->inputs as $input) {
             $input->validate();
-            if ($input->isValid() === false) {
-                $this->valid = false;
-            };
+            $this->valid = ($this->valid && $input->isValid());
         }
     }
 
@@ -99,7 +96,9 @@ class formClass {
 
     public function pupulate() {
         foreach($this->inputs as $input) {
-            $input->populate();
+            if (isset($_SESSION[$this->name . '-data'][$input->getName()]['value'])) {
+                $input->setValue($_SESSION[$this->name . '-data'][$input->getName()]['value']);
+            }
         }
     }
 
@@ -109,7 +108,8 @@ class formClass {
 
     private function saveToSession() {
         foreach($this->inputs as $input) {
-            $_SESSION[$this->name . '-data'][$input->getName()]['value'] = (isset($_POST[$input->getName()])) ? $_POST[$input->getName()] : ''; // @todo put into input classes?
+            $input->getName();
+            $_SESSION[$this->name . '-data'][$input->getName()]['value'] = (isset($_POST[$input->getName()])) ? $_POST[$input->getName()] : '';
         }
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once('validator.php');
+
 abstract class inputClass {
     protected $type;
     protected $name;
@@ -8,6 +10,7 @@ abstract class inputClass {
     protected $formName;
     protected $value;
     protected $valid;
+    protected $validator;
 
     public function __construct($type, $name, $parameters, $formName) {
         $this->_checkInputName($name);
@@ -19,6 +22,8 @@ abstract class inputClass {
         $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
         $this->required = (isset($parameters['required'])) ? $parameters['required'] : '';
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
+        
+        $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
     }
 
     public function getName() {
@@ -34,8 +39,12 @@ abstract class inputClass {
         return $this->valid;
     }
 
-    public function populate() {
-        $this->value = (isset($_SESSION[$this->formName . '-data'][$this->name]['value'])) ? $_SESSION[$this->formName . '-data'][$this->name]['value'] : '';
+    public function setValue($newValue) {
+        $this->value = $newValue;
+    }
+
+    public function validate() {
+        $this->valid = $this->validator->match($this->value);
     }
 
     private function _checkInputParameters($parameters) {

@@ -21,8 +21,4 @@ class textClass extends inputClass {
         }
         return $renderedInput;
     }
-
-    public function validate() {
-        $this->valid = (($this->value === 'valid') || ($this->type === 'hidden')) ? true : false; // @todo actually validate;
-    }
 }
