@@ -3,11 +3,6 @@
 require_once ('inputClass.php');
 
 class textClass extends inputClass {
-    public function __construct($type, $name, $parameters, $formName) {
-        parent::__construct($type, $name, $parameters, $formName);
-
-    }
-
     public function render() {
         $renderedName = ' name="' . $this->name . '"';
         $renderedType = ' type="' . $this->type . '"';
@@ -28,6 +23,6 @@ class textClass extends inputClass {
     }
 
     public function validate() {
-        $this->valid = true; // @todo actually validate;
+        $this->valid = (($this->value === 'valid') || ($this->type === 'hidden')) ? true : false; // @todo actually validate;
     }
 }

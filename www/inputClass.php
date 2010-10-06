@@ -30,6 +30,14 @@ abstract class inputClass {
         return '<p' . $renderedUniqueId . '>' . $this->render() . '</p>';
     }
 
+    public function isValid() {
+        return $this->valid;
+    }
+
+    public function populate() {
+        $this->value = (isset($_SESSION[$this->formName . '-data'][$this->name]['value'])) ? $_SESSION[$this->formName . '-data'][$this->name]['value'] : '';
+    }
+
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
             throw new inputParametersNoArrayException();

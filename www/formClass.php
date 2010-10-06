@@ -29,15 +29,11 @@ class formClass {
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
         $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
-        $this->valid = ((isset($_SESSION[$this->name . '-valid'])) && ($_SESSION[$this->name . '-valid'] === true)) ? true : false;
         
         if (!session_id()) {
             session_start();
         }
 
-        if ((isset($_SESSION[$this->name . '-valid'])) &&  ($_SESSION[$this->name . '-valid'] == true)) {
-            $this->valid = true;
-        }
         $this->addHidden('form-name', array('value' => $this->name));
     }
 
@@ -71,11 +67,10 @@ class formClass {
         return $renderedForm;
     }
 
-    public function validate() {
+    public function process() {
         if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
-            $_SESSION[$this->name . '-data'] = $_POST;
-            if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
-                $_SESSION[$this->name . '-valid'] = true;
+            $this->saveToSession();
+            if ($this->valid) {
                 header('Location: ' . $this->successAddress);
                 die( "Tried to redirect you to " . $this->successAddress);
             } else {
@@ -83,19 +78,39 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        // @todo ...validate
+
+        $this->pupulate();
+        $this->validate();
+    }
+
+    public function validate() {
+        $this->valid = true;
+        foreach($this->inputs as $input) {
+            $input->validate();
+            if ($input->isValid() === false) {
+                $this->valid = false;
+            };
+        }
     }
 
     public function isValid() {
         return $this->valid;
     }
 
-    public function populate() {
-        
+    public function pupulate() {
+        foreach($this->inputs as $input) {
+            $input->populate();
+        }
     }
 
     public function getInputs() { // @todo get single input instead?
         return $this->inputs;
+    }
+
+    private function saveToSession() {
+        foreach($this->inputs as $input) {
+            $_SESSION[$this->name . '-data'][$input->getName()]['value'] = (isset($_POST[$input->getName()])) ? $_POST[$input->getName()] : ''; // @todo put into input classes?
+        }
     }
 
     private function _checkFormName($name) {
