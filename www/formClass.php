@@ -3,6 +3,7 @@
 require_once('inputClass.php');
 require_once('textClass.php');
 require_once('checkboxClass.php');
+require_once('fileClass.php');
 require_once('exceptions.php');
 
 class formClass {
@@ -18,7 +19,7 @@ class formClass {
         'email' => 'text',
         'select' => 'checkbox'
     );
-    public $inputs = array();
+    private $inputs = array();
 
     public function __construct($name, $parameters = array()) {
         $this->_checkFormName($name);
@@ -26,20 +27,14 @@ class formClass {
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
-        if (isset($parameters['method'])) {
-            $this->method = (strToLower($parameters['method']) == 'get') ? 'get' : 'post'; // @todo make this more verbose 
-        }
+        $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI']; // @todo url check?
-        $this->valid = false;
         
         if (!session_id()) {
             session_start();
         }
 
-        if ((isset($_SESSION[$this->name . '-valid'])) &&  ($_SESSION[$this->name . '-valid'] == true)) {
-            $this->valid = true;
-        }
-        $this->addHidden('PHPSESSID', array('value' => session_id()));
+        $this->addHidden('form-name', array('value' => $this->name));
     }
 
     public function __call($functionName, $functionArguments) {
@@ -54,7 +49,6 @@ class formClass {
     public function addInput($type, $name, $parameters = array()) {
         $this->_checkInputType($type);
         $this->_checkInputName($name);
-        $this->_checkInputParameters($parameters);
 
         $class = $this->inputTypes[$type] . "Class";
         $this->inputs[] = new $class($type, $name, $parameters, $this->name);
@@ -65,28 +59,58 @@ class formClass {
         foreach($this->inputs as $input) {
             $renderedForm .= $input;
         }
-        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="' . $this->name . '-submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
-        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '" method="' . $this->method . '" action="' . $this->action . '">' . $renderedForm . $renderedSubmit . '</form>';
+        $renderedMethod = ' method="' . $this->method . '"';
+        $renderedAction = (empty($this->action)) ? '' : ' action="' . $this->action . '"';
+        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
+
+        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedForm . $renderedSubmit . '</form>';
         return $renderedForm;
     }
 
-    public function validate() {
-        if (isset($_POST['' . $this->name . '-submit'])) { // @todo use hidden field instead
-            $_SESSION[$this->name . '-data'] = $_POST;
-            if ($_SESSION[$this->name . '-data']['firstname'] == 'valid') {
-                $_SESSION[$this->name . '-valid'] = true;
+    public function process() {
+        if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
+            $this->saveToSession();
+            if ($this->valid) {
                 header('Location: ' . $this->successAddress);
-                die( "Tried to redіrect you to " . $this->successAddress);
+                die( "Tried to redirect you to " . $this->successAddress);
             } else {
                 header('Location: ' . $_SERVER['REQUEST_URI']);
-                die( "Tried to redіrect you to " . $_SERVER['REQUEST_URI']);
+                die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        // @todo ...validate
+
+        $this->pupulate();
+        $this->validate();
+    }
+
+    public function validate() {
+        $this->valid = true;
+        foreach($this->inputs as $input) {
+            $input->validate();
+            if ($input->isValid() === false) {
+                $this->valid = false;
+            };
+        }
     }
 
     public function isValid() {
         return $this->valid;
+    }
+
+    public function pupulate() {
+        foreach($this->inputs as $input) {
+            $input->populate();
+        }
+    }
+
+    public function getInputs() { // @todo get single input instead?
+        return $this->inputs;
+    }
+
+    private function saveToSession() {
+        foreach($this->inputs as $input) {
+            $_SESSION[$this->name . '-data'][$input->getName()]['value'] = (isset($_POST[$input->getName()])) ? $_POST[$input->getName()] : ''; // @todo put into input classes?
+        }
     }
 
     private function _checkFormName($name) {
@@ -107,14 +131,8 @@ class formClass {
     }
 
     private function _checkInputType($type) {
-        if (!$this->inputTypes[$type]) {
+        if (!isset($this->inputTypes[$type])) {
             throw new unknownInputTypeException();
-        }
-    }
-
-    private function _checkInputParameters($parameters) {
-        if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new inputParametersNoArrayException();
         }
     }
 }
