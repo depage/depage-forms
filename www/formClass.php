@@ -55,15 +55,15 @@ class formClass {
     }
 
     public function __toString() {
-        $renderedForm = '';
+        $renderedInputs = '';
         foreach($this->inputs as $input) {
-            $renderedForm .= $input;
+            $renderedInputs .= $input;
         }
         $renderedMethod = ' method="' . $this->method . '"';
         $renderedAction = (empty($this->action)) ? '' : ' action="' . $this->action . '"';
         $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
 
-        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedForm . $renderedSubmit . '</form>';
+        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedInputs . $renderedSubmit . '</form>';
         return $renderedForm;
     }
 
@@ -95,7 +95,7 @@ class formClass {
         return $this->valid;
     }
 
-    public function getInputs() { // @todo get single input instead?
+    public function getInputs() {
         return $this->inputs;
     }
 
