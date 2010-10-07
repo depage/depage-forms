@@ -55,15 +55,15 @@ class formClass {
     }
 
     public function __toString() {
-        $renderedForm = '';
+        $renderedInputs = '';
         foreach($this->inputs as $input) {
-            $renderedForm .= $input;
+            $renderedInputs .= $input;
         }
         $renderedMethod = ' method="' . $this->method . '"';
         $renderedAction = (empty($this->action)) ? '' : ' action="' . $this->action . '"';
         $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
 
-        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedForm . $renderedSubmit . '</form>';
+        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedInputs . $renderedSubmit . '</form>';
         return $renderedForm;
     }
 
@@ -78,18 +78,16 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-
-        $this->pupulate();
+        $this->loadFromSession();
         $this->validate();
     }
 
     public function validate() {
-        $this->valid = true;
-        foreach($this->inputs as $input) {
-            $input->validate();
-            if ($input->isValid() === false) {
-                $this->valid = false;
-            };
+        if (isset($_SESSION[$this->name . '-data'])) {
+            $this->valid = true;
+            foreach($this->inputs as $input) {
+                $this->valid = (($this->valid) && ($input->isValid()) && ($input->isSatisfied()));
+            }
         }
     }
 
@@ -97,19 +95,38 @@ class formClass {
         return $this->valid;
     }
 
-    public function pupulate() {
-        foreach($this->inputs as $input) {
-            $input->populate();
+    public function getInputs() {
+        return $this->inputs;
+    }
+
+    public function getInputIndex($name) {
+        foreach($this->inputs as $index => $input) {
+            if ($name === $input->getName()) {
+                return $index;
+            }
+        }
+        return false;
+    }
+
+    public function populate($data = array()) {
+        foreach($data as $name => $value) {
+            $this->inputs[$this->getInputIndex($name)]->setValue($value);
         }
     }
 
-    public function getInputs() { // @todo get single input instead?
-        return $this->inputs;
+    private function loadFromSession() {
+        foreach($this->inputs as $input) {
+            if (isset($_SESSION[$this->name . '-data'][$input->getName()]['value'])) {
+                $input->setValue($_SESSION[$this->name . '-data'][$input->getName()]['value']);
+            }
+        }
     }
 
     private function saveToSession() {
         foreach($this->inputs as $input) {
-            $_SESSION[$this->name . '-data'][$input->getName()]['value'] = (isset($_POST[$input->getName()])) ? $_POST[$input->getName()] : ''; // @todo put into input classes?
+            if (isset($_POST[$input->getName()])) {
+                $_SESSION[$this->name . '-data'][$input->getName()]['value'] = $_POST[$input->getName()];
+            }
         }
     }
 

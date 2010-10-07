@@ -1,5 +1,7 @@
 <?php
 
+require_once('validator.php');
+
 abstract class inputClass {
     protected $type;
     protected $name;
@@ -7,7 +9,7 @@ abstract class inputClass {
     protected $required;
     protected $formName;
     protected $value;
-    protected $valid;
+    protected $validator;
 
     public function __construct($type, $name, $parameters, $formName) {
         $this->_checkInputName($name);
@@ -17,8 +19,10 @@ abstract class inputClass {
         $this->name = $name;
         $this->formName = $formName; // @todo check?
         $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
-        $this->required = (isset($parameters['required'])) ? $parameters['required'] : '';
+        $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
+        
+        $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
     }
 
     public function getName() {
@@ -31,11 +35,27 @@ abstract class inputClass {
     }
 
     public function isValid() {
-        return $this->valid;
+        return $this->validator->match($this->value); 
     }
 
-    public function populate() {
-        $this->value = (isset($_SESSION[$this->formName . '-data'][$this->name]['value'])) ? $_SESSION[$this->formName . '-data'][$this->name]['value'] : '';
+    public function setValue($newValue) {
+        $this->value = $newValue;
+    }
+
+    public function isSatisfied() {
+        return ((!empty($this->value)) || (!$this->required)); 
+    }
+
+    public function getClasses() {
+        $classes = array();
+        if ($this->required === true) {
+            $classes[] = 'required';
+        }
+        if ($this->isSatisfied()) {
+            $classes[] = 'satisfied';
+        }
+        $classes[] = ($this->isValid()) ? 'valid' : 'invalid';
+        return $classes;
     }
 
     private function _checkInputParameters($parameters) {
