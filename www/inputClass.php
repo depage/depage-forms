@@ -1,6 +1,7 @@
 <?php
 
 require_once('validator.php');
+require_once('textClass.php');
 
 abstract class inputClass {
     protected $type;
@@ -10,18 +11,21 @@ abstract class inputClass {
     protected $formName;
     protected $value;
     protected $validator;
+    protected $valid;
+    protected $classes;
 
-    public function __construct($type, $name, $parameters, $formName) {
+    public function __construct($name, $parameters, $formName) {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
-        $this->type = $type;
+        $this->type = get_class($this);
         $this->name = $name;
+        $this->valid = true;
         $this->formName = $formName; // @todo check?
         $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
         $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
-        
+        $this->classes = array('input-' . $this->type);
         $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
     }
 
@@ -30,32 +34,36 @@ abstract class inputClass {
     }
 
     public function __toString() {
+        $renderedClass = ' class="';
+        foreach($this->getClasses() as $class) {
+            $renderedClass .= $class . ' ';
+        }
+        $renderedClass[strlen($renderedClass)-1] = '"';
+
         $renderedUniqueId = ' id="' . $this->formName . '-' . $this->name . '"';
-        return '<p' . $renderedUniqueId . '>' . $this->render() . '</p>';
+        return '<p' . $renderedUniqueId . $renderedClass . '>' . $this->render() . '</p>';
+    }
+
+    public function validate() {
+        $this->valid = (($this->validator->match($this->value)) && ((!empty($this->value)) || (!$this->required)));
     }
 
     public function isValid() {
-        return $this->validator->match($this->value); 
+        return $this->valid;
     }
 
     public function setValue($newValue) {
         $this->value = $newValue;
     }
 
-    public function isSatisfied() {
-        return ((!empty($this->value)) || (!$this->required)); 
-    }
-
-    public function getClasses() {
-        $classes = array();
-        if ($this->required === true) {
-            $classes[] = 'required';
+    private function getClasses() {
+        if ($this->required) {
+            $this->classes[] = 'required';
         }
-        if ($this->isSatisfied()) {
-            $classes[] = 'satisfied';
+        if (!$this->isValid()) {
+            $this->classes[] = 'error';
         }
-        $classes[] = ($this->isValid()) ? 'valid' : 'invalid';
-        return $classes;
+        return $this->classes;
     }
 
     private function _checkInputParameters($parameters) {

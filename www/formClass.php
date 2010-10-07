@@ -1,9 +1,6 @@
 <?php 
 
 require_once('inputClass.php');
-require_once('textClass.php');
-require_once('checkboxClass.php');
-require_once('fileClass.php');
 require_once('exceptions.php');
 
 class formClass {
@@ -13,12 +10,6 @@ class formClass {
     private $action;
     private $successAddress;
     private $submitLabel;
-    private $inputTypes = array(
-        'hidden' => 'text', 
-        'text' => 'text',
-        'email' => 'text',
-        'select' => 'checkbox'
-    );
     private $inputs = array();
 
     public function __construct($name, $parameters = array()) {
@@ -47,11 +38,10 @@ class formClass {
     }
 
     public function addInput($type, $name, $parameters = array()) {
-        $this->_checkInputType($type);
         $this->_checkInputName($name);
+        $this->_checkInputType($type);
 
-        $class = $this->inputTypes[$type] . "Class";
-        $this->inputs[] = new $class($type, $name, $parameters, $this->name);
+        $this->inputs[] = new $type($name, $parameters, $this->name);
     }
 
     public function __toString() {
@@ -78,16 +68,17 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        $this->loadFromSession();
-        $this->validate();
+        if (isset($_SESSION[$this->name . '-data'])) {
+            $this->loadFromSession();
+            $this->validate();
+        }
     }
 
     public function validate() {
-        if (isset($_SESSION[$this->name . '-data'])) {
-            $this->valid = true;
-            foreach($this->inputs as $input) {
-                $this->valid = (($this->valid) && ($input->isValid()) && ($input->isSatisfied()));
-            }
+        $this->valid = true;
+        foreach($this->inputs as $input) {
+            $input->validate();
+            $this->valid = (($this->valid) && ($input->isValid()));
         }
     }
 
@@ -148,7 +139,7 @@ class formClass {
     }
 
     private function _checkInputType($type) {
-        if (!isset($this->inputTypes[$type])) {
+        if (!class_exists($type)) {
             throw new unknownInputTypeException();
         }
     }
