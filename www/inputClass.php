@@ -34,8 +34,14 @@ abstract class inputClass {
     }
 
     public function __toString() {
+        $renderedClass = ' class="';
+        foreach($this->getClasses() as $class) {
+            $renderedClass .= $class . ' ';
+        }
+        $renderedClass[strlen($renderedClass)-1] = '"';
+
         $renderedUniqueId = ' id="' . $this->formName . '-' . $this->name . '"';
-        return '<p' . $renderedUniqueId . '>' . $this->render() . '</p>';
+        return '<p' . $renderedUniqueId . $renderedClass . '>' . $this->render() . '</p>';
     }
 
     public function validate() {
@@ -50,7 +56,7 @@ abstract class inputClass {
         $this->value = $newValue;
     }
 
-    protected function getClasses() {
+    private function getClasses() {
         if ($this->required) {
             $this->classes[] = 'required';
         }
