@@ -19,7 +19,7 @@ abstract class inputClass {
         $this->name = $name;
         $this->formName = $formName; // @todo check?
         $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
-        $this->required = (isset($parameters['required'])) ? $parameters['required'] : '';
+        $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
         
         $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
@@ -44,6 +44,18 @@ abstract class inputClass {
 
     public function isSatisfied() {
         return ((!empty($this->value)) || (!$this->required)); 
+    }
+
+    public function getClasses() {
+        $classes = array();
+        if ($this->required === true) {
+            $classes[] = 'required';
+        }
+        if ($this->isSatisfied()) {
+            $classes[] = 'satisfied';
+        }
+        $classes[] = ($this->isValid()) ? 'valid' : 'invalid';
+        return $classes;
     }
 
     private function _checkInputParameters($parameters) {
