@@ -83,10 +83,12 @@ class formClass {
     }
 
     public function validate() {
-        $this->valid = true;
-        foreach($this->inputs as $input) {
-            $input->validate();
-            $this->valid = ($this->valid && $input->isValid());
+        if (isset($_SESSION[$this->name . '-data'])) {
+            $this->valid = true;
+            foreach($this->inputs as $input) {
+                $input->validate();
+                $this->valid = ($this->valid && $input->isValid());
+            }
         }
     }
 
@@ -108,8 +110,9 @@ class formClass {
 
     private function saveToSession() {
         foreach($this->inputs as $input) {
-            $input->getName();
-            $_SESSION[$this->name . '-data'][$input->getName()]['value'] = (isset($_POST[$input->getName()])) ? $_POST[$input->getName()] : '';
+            if (isset($_POST[$input->getName()])) {
+                $_SESSION[$this->name . '-data'][$input->getName()]['value'] = $_POST[$input->getName()];
+            }
         }
     }
 
