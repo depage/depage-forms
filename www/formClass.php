@@ -86,7 +86,6 @@ class formClass {
         if (isset($_SESSION[$this->name . '-data'])) {
             $this->valid = true;
             foreach($this->inputs as $input) {
-                $input->validate();
                 $this->valid = (($this->valid) && ($input->isValid()) && ($input->isSatisfied()));
             }
         }

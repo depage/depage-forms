@@ -9,7 +9,6 @@ abstract class inputClass {
     protected $required;
     protected $formName;
     protected $value;
-    protected $valid;
     protected $validator;
 
     public function __construct($type, $name, $parameters, $formName) {
@@ -36,15 +35,11 @@ abstract class inputClass {
     }
 
     public function isValid() {
-        return $this->valid;
+        return $this->validator->match($this->value); 
     }
 
     public function setValue($newValue) {
         $this->value = $newValue;
-    }
-
-    public function validate() {
-        $this->valid = $this->validator->match($this->value);
     }
 
     public function isSatisfied() {
