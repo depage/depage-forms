@@ -47,6 +47,10 @@ abstract class inputClass {
         $this->valid = $this->validator->match($this->value);
     }
 
+    public function isSatisfied() {
+        return ((!empty($this->value)) || (!$this->required)); 
+    }
+
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
             throw new inputParametersNoArrayException();

@@ -87,7 +87,7 @@ class formClass {
             $this->valid = true;
             foreach($this->inputs as $input) {
                 $input->validate();
-                $this->valid = ($this->valid && $input->isValid());
+                $this->valid = (($this->valid) && ($input->isValid()) && ($input->isSatisfied()));
             }
         }
     }
