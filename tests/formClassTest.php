@@ -16,18 +16,6 @@ class formClassTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected duplicateInputNameException.');
     }
 
-    public function testInputParametersNoArrayException() {
-        $this->form = new formClass('nameString');
-
-        try {
-            $this->form->addHidden('nameString' , 'noArray');
-        }
-        catch (inputParametersNoArrayException $expected) {
-            return;
-        }
-        $this->fail('Expected inputParametersNoArrayException.');
-    }
-
     public function testFormNameNoStringException() {
         try {
             $form = new formClass(true, array());
@@ -49,7 +37,7 @@ class formClassTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToStringSimple() {
-        $rendered = '<form id="nameString" name="nameString" method="post"><p id="nameString-form-name"><input name="form-name" type="hidden" value="nameString" ></p><p id="nameString-submit"><input type="submit" name="submit" value="submit"></p></form>';
+        $rendered = '<form id="nameString" name="nameString" method="post"><p id="nameString-form-name"><input name="form-name" type="hidden" class="input-hidden" value="nameString" ></p><p id="nameString-submit"><input type="submit" name="submit" value="submit"></p></form>';
         $this->form = new formClass('nameString');
 
         $this->assertEquals($rendered, $this->form->__toString());
