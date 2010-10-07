@@ -78,7 +78,7 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        $this->pupulate();
+        $this->loadFromSession();
         $this->validate();
     }
 
@@ -96,16 +96,31 @@ class formClass {
         return $this->valid;
     }
 
-    public function pupulate() {
+    public function getInputs() { // @todo get single input instead?
+        return $this->inputs;
+    }
+
+    public function getInputIndex($name) {
+        foreach($this->inputs as $index => $input) {
+            if ($name === $input->getName()) {
+                return $index;
+            }
+        }
+        return false;
+    }
+
+    public function populate($data = array()) {
+        foreach($data as $name => $value) {
+            $this->inputs[$this->getInputIndex($name)]->setValue($value);
+        }
+    }
+
+    private function loadFromSession() {
         foreach($this->inputs as $input) {
             if (isset($_SESSION[$this->name . '-data'][$input->getName()]['value'])) {
                 $input->setValue($_SESSION[$this->name . '-data'][$input->getName()]['value']);
             }
         }
-    }
-
-    public function getInputs() { // @todo get single input instead?
-        return $this->inputs;
     }
 
     private function saveToSession() {
