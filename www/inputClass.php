@@ -21,11 +21,10 @@ abstract class inputClass {
         $this->type = get_class($this);
         $this->name = $name;
         $this->valid = true;
-        $this->formName = $formName; // @todo check?
-        $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
+        $this->formName = $formName;
+        $this->label = (isset($parameters['label'])) ? $parameters['label'] : $name;
         $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
-        $this->classes = array();
         $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
     }
 
