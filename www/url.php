@@ -1,4 +1,4 @@
 <?php
 
-class url extends textClass {
+class url extends text {
 }

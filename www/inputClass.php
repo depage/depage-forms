@@ -25,23 +25,12 @@ abstract class inputClass {
         $this->label = (isset($parameters['label'])) ? $parameters['label'] : '';
         $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
-        $this->classes = array('input-' . $this->type);
+        $this->classes = array();
         $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
     }
 
     public function getName() {
         return $this->name;
-    }
-
-    public function __toString() {
-        $renderedClass = ' class="';
-        foreach($this->getClasses() as $class) {
-            $renderedClass .= $class . ' ';
-        }
-        $renderedClass[strlen($renderedClass)-1] = '"';
-
-        $renderedUniqueId = ' id="' . $this->formName . '-' . $this->name . '"';
-        return '<p' . $renderedUniqueId . $renderedClass . '>' . $this->render() . '</p>';
     }
 
     public function validate() {
@@ -56,14 +45,16 @@ abstract class inputClass {
         $this->value = $newValue;
     }
 
-    private function getClasses() {
+    protected function getClasses() {
+        $classes = 'input-' . $this->type;
+        
         if ($this->required) {
-            $this->classes[] = 'required';
+            $classes .= ' required';
         }
         if (!$this->isValid()) {
-            $this->classes[] = 'error';
+            $classes .= ' error';
         }
-        return $this->classes;
+        return $classes;
     }
 
     private function _checkInputParameters($parameters) {

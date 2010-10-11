@@ -1,4 +1,4 @@
 <?php
 
-class email extends textClass {
+class email extends text {
 }
