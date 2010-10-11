@@ -11,6 +11,7 @@ class formClass {
     private $successAddress;
     private $submitLabel;
     private $inputs = array();
+    private $sessionSlot;
 
     public function __construct($name, $parameters = array()) {
         $this->_checkFormName($name);
@@ -20,6 +21,7 @@ class formClass {
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
         $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
+        $this->sessionSlot = $this->name . '-data';
         
         if (!session_id()) {
             session_start();
@@ -60,6 +62,8 @@ class formClass {
     public function process() {
         if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
             $this->saveToSession();
+            $this->loadFromSession();
+            $this->validate();
             if ($this->valid) {
                 header('Location: ' . $this->successAddress);
                 die( "Tried to redirect you to " . $this->successAddress);
@@ -68,7 +72,7 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        if (isset($_SESSION[$this->name . '-data'])) {
+        if (isset($_SESSION[$this->sessionSlot])) {
             $this->loadFromSession();
             $this->validate();
         }
@@ -107,8 +111,8 @@ class formClass {
 
     private function loadFromSession() {
         foreach($this->inputs as $input) {
-            if (isset($_SESSION[$this->name . '-data'][$input->getName()]['value'])) {
-                $input->setValue($_SESSION[$this->name . '-data'][$input->getName()]['value']);
+            if (isset($_SESSION[$this->sessionSlot][$input->getName()]['value'])) {
+                $input->setValue($_SESSION[$this->sessionSlot][$input->getName()]['value']);
             }
         }
     }
@@ -116,7 +120,7 @@ class formClass {
     private function saveToSession() {
         foreach($this->inputs as $input) {
             if (isset($_POST[$input->getName()])) {
-                $_SESSION[$this->name . '-data'][$input->getName()]['value'] = $_POST[$input->getName()];
+                $_SESSION[$this->sessionSlot][$input->getName()]['value'] = $_POST[$input->getName()];
             }
         }
     }
