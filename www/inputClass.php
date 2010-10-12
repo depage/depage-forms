@@ -2,6 +2,7 @@
 
 require_once('validator.php');
 require_once('textClass.php');
+require_once('checkboxClass.php');
 
 abstract class inputClass {
     protected $type;
