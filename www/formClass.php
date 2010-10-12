@@ -109,17 +109,21 @@ class formClass {
         }
     }
 
+    public function getValues() {
+        return $this->sessionSlot;
+    }
+
     private function loadFromSession() {
         foreach($this->inputs as $input) {
-            if (isset($this->sessionSlot[$input->getName()]['value'])) {
-                $input->setValue($this->sessionSlot[$input->getName()]['value']);
+            if (isset($this->sessionSlot[$input->getName()])) {
+                $input->setValue($this->sessionSlot[$input->getName()]);
             }
         }
     }
 
     private function saveToSession() {
         foreach($this->inputs as $input) {
-            $this->sessionSlot[$input->getName()]['value'] = $_POST[$input->getName()];
+            $this->sessionSlot[$input->getName()] = $_POST[$input->getName()];
         }
     }
 
