@@ -25,7 +25,6 @@ abstract class inputClass {
         $this->formName = $formName;
         $this->label = (isset($parameters['label'])) ? $parameters['label'] : $name;
         $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
-        $this->value = (isset($parameters['value'])) ? $parameters['value'] : '';
         $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
     }
 

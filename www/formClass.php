@@ -119,9 +119,7 @@ class formClass {
 
     private function saveToSession() {
         foreach($this->inputs as $input) {
-            if (isset($_POST[$input->getName()])) {
-                $this->sessionSlot[$input->getName()]['value'] = $_POST[$input->getName()];
-            }
+            $this->sessionSlot[$input->getName()]['value'] = $_POST[$input->getName()];
         }
     }
 
