@@ -13,4 +13,15 @@ abstract class checkboxClass extends inputClass {
         $this->value = (isset($parameters['value'])) ? $parameters['value'] : array();
         $this->optionList = (isset($parameters['optionList'])) ? $parameters['optionList'] : array();
     }
+    
+    public function __toString() {
+        $options = '';
+        foreach($this->optionList as $index => $option) {
+            $selected = (in_array($index, $this->value)) ? ' checked=\"yes\"' : '';
+            $options .= "<span><label><input type=\"$this->type\" name=\"$this->name[]\" value=\"$index\"$selected><span>$option</span></label></span>";
+        }
+
+        $classes = $this->getClasses();
+        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><span class=\"label\">$this->label</span><span>$options</span></p>";
+    }
 }

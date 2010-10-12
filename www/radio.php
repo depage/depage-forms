@@ -2,5 +2,5 @@
 
 require_once ('inputClass.php');
 
-class radio extends checkbox {
+class radio extends checkboxClass {
 }
