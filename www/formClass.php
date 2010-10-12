@@ -21,12 +21,12 @@ class formClass {
         $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
         $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
-        $this->sessionSlot = $this->name . '-data';
         
         if (!session_id()) {
             session_start();
         }
 
+        $this->sessionSlot =& $_SESSION[$this->name . '-data'];
         $this->addHidden('form-name', array('value' => $this->name));
     }
 
@@ -72,7 +72,7 @@ class formClass {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        if (isset($_SESSION[$this->sessionSlot])) {
+        if (isset($this->sessionSlot)) {
             $this->loadFromSession();
             $this->validate();
         }
@@ -111,8 +111,8 @@ class formClass {
 
     private function loadFromSession() {
         foreach($this->inputs as $input) {
-            if (isset($_SESSION[$this->sessionSlot][$input->getName()]['value'])) {
-                $input->setValue($_SESSION[$this->sessionSlot][$input->getName()]['value']);
+            if (isset($this->sessionSlot[$input->getName()]['value'])) {
+                $input->setValue($this->sessionSlot[$input->getName()]['value']);
             }
         }
     }
@@ -120,7 +120,7 @@ class formClass {
     private function saveToSession() {
         foreach($this->inputs as $input) {
             if (isset($_POST[$input->getName()])) {
-                $_SESSION[$this->sessionSlot][$input->getName()]['value'] = $_POST[$input->getName()];
+                $this->sessionSlot[$input->getName()]['value'] = $_POST[$input->getName()];
             }
         }
     }
