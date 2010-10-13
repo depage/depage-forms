@@ -18,7 +18,7 @@ class formClass {
 
         $this->name = $name;
         $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
-        $this->action = (isset($parameters['action'])) ? $parameters['action'] : '';
+        $this->action = (isset($parameters['action'])) ? $parameters['action'] : $_SERVER['REQUEST_URI'];
         $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
         $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
         
@@ -36,6 +36,7 @@ class formClass {
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
             $parameters = (isset($functionArguments[1])) ? $functionArguments[1] : array();
             $this->addInput($type, $name, $parameters);
+            return $this;
         }
     }
 
@@ -43,7 +44,13 @@ class formClass {
         $this->_checkInputName($name);
         $this->_checkInputType($type);
 
-        $this->inputs[] = new $type($name, $parameters, $this->name);
+        $newInput = new $type($name, $parameters, $this->name);
+        if (isset($this->sessionSlot[$name])) {
+            $newInput->setValue($this->sessionSlot[$name]);
+        }
+        $this->inputs[] = $newInput; 
+
+        return $this;
     }
 
     public function __toString() {
@@ -51,18 +58,17 @@ class formClass {
         foreach($this->inputs as $input) {
             $renderedInputs .= $input;
         }
-        $renderedMethod = ' method="' . $this->method . '"';
-        $renderedAction = (empty($this->action)) ? '' : ' action="' . $this->action . '"';
-        $renderedSubmit = '<p id="' . $this->name . '-submit"><input type="submit" name="submit" value="' . $this->submitLabel . '"></p>'; // @todo clean up
+        $renderedMethod = "method=\"$this->method\"";
+        $renderedAction = "action=\"$this->action\"";
+        $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
-        $renderedForm = '<form id="' . $this->name . '" name="' . $this->name . '"' . $renderedMethod . $renderedAction . '>' . $renderedInputs . $renderedSubmit . '</form>';
+        $renderedForm = "<form id=\"$this->name\" name=\"$this->name\" $renderedMethod $renderedAction>$renderedInputs$renderedSubmit</form>";
         return $renderedForm;
     }
 
     public function process() {
         if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
             $this->saveToSession();
-            $this->loadFromSession();
             $this->validate();
             if ($this->valid) {
                 header('Location: ' . $this->successAddress);
@@ -73,7 +79,6 @@ class formClass {
             }
         }
         if (isset($this->sessionSlot)) {
-            $this->loadFromSession();
             $this->validate();
         }
     }
@@ -94,10 +99,10 @@ class formClass {
         return $this->inputs;
     }
 
-    public function getInputIndex($name) {
+    public function getInput($name) {
         foreach($this->inputs as $index => $input) {
             if ($name === $input->getName()) {
-                return $index;
+                return $input;
             }
         }
         return false;
@@ -105,7 +110,7 @@ class formClass {
 
     public function populate($data = array()) {
         foreach($data as $name => $value) {
-            $this->inputs[$this->getInputIndex($name)]->setValue($value);
+            $this->getInput($name)->setValue($value);
         }
     }
 
@@ -113,17 +118,10 @@ class formClass {
         return $this->sessionSlot;
     }
 
-    private function loadFromSession() {
-        foreach($this->inputs as $input) {
-            if (isset($this->sessionSlot[$input->getName()])) {
-                $input->setValue($this->sessionSlot[$input->getName()]);
-            }
-        }
-    }
-
     private function saveToSession() {
         foreach($this->inputs as $input) {
             $this->sessionSlot[$input->getName()] = $_POST[$input->getName()];
+            $input->setValue($_POST[$input->getName()]);
         }
     }
 

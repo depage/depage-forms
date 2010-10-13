@@ -33,7 +33,7 @@ abstract class inputClass {
     }
 
     public function validate() {
-        $this->valid = (($this->validator->match($this->value)) && ((!empty($this->value)) || (!$this->required)));
+        $this->valid = (($this->validator->match($this->value) || (empty($this->value))) && ((!empty($this->value)) || (!$this->required)));
     }
 
     public function isValid() {

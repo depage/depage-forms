@@ -15,6 +15,9 @@ class validator {
                 case 'url':
                     $this->RegEx = '/(((ht|f)tp(s?):\/\/)|(www\.[^ \[\]\(\)\n\r\t]+)|(([012]?[0-9]{1,2}\.){3}[012]?[0-9]{1,2})\/)([^ \[\]\(\),;&quot;\'&lt;&gt;\n\r\t]+)([^\. \[\]\(\),;&quot;\'&lt;&gt;\n\r\t])|(([012]?[0-9]{1,2}\.){3}[012]?[0-9]{1,2})/';
                     break;
+                case 'tel':
+                    $this->RegEx = '/^[0-9,+,(), ,]{1,}(,[0-9]+){0,}$/';
+                    break;
                 default: 
                     $this->wildcard = true;
             }

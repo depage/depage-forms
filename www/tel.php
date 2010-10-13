@@ -2,5 +2,5 @@
 
 require_once('textClass.php');
 
-class url extends textClass {
+class tel extends textClass {
 }

@@ -39,8 +39,8 @@ class formClassInputTypesTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('textClass', $inputs[1]);
     }
 
-    public function testAddTelephone() {
-        $this->form->addTelephone('nameString');
+    public function testAddTel() {
+        $this->form->addTel('nameString');
         $inputs = $this->form->getInputs();
         $this->assertInstanceOf('textClass', $inputs[1]);
     }

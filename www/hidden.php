@@ -1,5 +1,7 @@
 <?php
 
+require_once('textClass.php');
+
 class hidden extends textClass {
     public function __toString() {
         $classes = $this->getClasses();

@@ -1,5 +1,6 @@
 <?php
 require_once('../www/inputClass.php');
+
 class inputClassTestClass extends inputClass {
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
