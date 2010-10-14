@@ -16,7 +16,8 @@ abstract class checkboxClass extends inputClass {
         }
 
         $classes = $this->getClasses();
-        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><span class=\"label\">$this->label</span><span>$options</span></p>";
+        $requiredChar = $this->getRequiredChar();
+        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><span class=\"label\">$this->label$requiredChar</span><span>$options</span></p>";
     }
 
     protected function setDefaults() {

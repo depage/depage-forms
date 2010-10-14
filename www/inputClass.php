@@ -37,7 +37,8 @@ abstract class inputClass {
     protected function setDefaults() {
         $this->defaults = array(
             'label' => $this->name,
-            'required' => false
+            'required' => false,
+            'requiredChar' => ' *'
         );
     }
 
@@ -67,6 +68,10 @@ abstract class inputClass {
             $classes .= ' error';
         }
         return $classes;
+    }
+
+    protected function getRequiredChar() {
+        return ($this->required) ? $this->requiredChar : '';
     }
 
     private function _checkInputParameters($parameters) {

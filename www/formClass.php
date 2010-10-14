@@ -22,7 +22,7 @@ class formClass {
             'submitLabel' => 'submit',
             'action' => $_SERVER['REQUEST_URI'],
             'method' => 'post',
-            'successAddress' => $_SERVER['REQUEST_URI']
+            'successAddress' => $_SERVER['REQUEST_URI'],
         );
 
         foreach ($this->defaults as $parameter => $default) {
@@ -32,8 +32,8 @@ class formClass {
         if (!session_id()) {
             session_start();
         }
-
         $this->sessionSlot =& $_SESSION[$this->name . '-data'];
+
         $this->addHidden('form-name', array('value' => $this->name));
     }
 
