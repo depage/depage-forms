@@ -4,14 +4,14 @@ require_once('inputClass.php');
 require_once('exceptions.php');
 
 class formClass {
-    private $name;
-    private $valid;
-    private $method;
-    private $action;
-    private $successAddress;
-    private $submitLabel;
-    private $inputs = array();
-    private $sessionSlot;
+    protected $name;
+    protected $valid;
+    protected $method;
+    protected $action;
+    protected $successAddress;
+    protected $submitLabel;
+    protected $inputs = array();
+    protected $sessionSlot;
     protected $defaults;
 
     public function __construct($name, $parameters = array()) {
@@ -91,6 +91,8 @@ class formClass {
     }
 
     public function validate() {
+        $this->onValidate();
+
         $this->valid = true;
         foreach($this->inputs as $input) {
             $input->validate();
@@ -115,6 +117,14 @@ class formClass {
         return false;
     }
 
+    public function getValue($name) {
+        return $this->getInput($name)->getValue();
+    }
+
+    public function setRequired($name) {
+        $this->getInput($name)->setRequired();
+    }
+
     public function populate($data = array()) {
         foreach($data as $name => $value) {
             $this->getInput($name)->setValue($value);
@@ -125,10 +135,14 @@ class formClass {
         return $this->sessionSlot;
     }
 
+    protected function onValidate() {
+    }
+
     private function saveToSession() {
         foreach($this->inputs as $input) {
-            $this->sessionSlot[$input->getName()] = $_POST[$input->getName()];
-            $input->setValue($_POST[$input->getName()]);
+            $value = isset($_POST[$input->getName()]) ? $_POST[$input->getName()] : null;
+            $this->sessionSlot[$input->getName()] = $value;
+            $input->setValue($value);
         }
     }
 

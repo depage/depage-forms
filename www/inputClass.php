@@ -14,7 +14,7 @@ abstract class inputClass {
     protected $validator;
     protected $valid;
     protected $classes;
-    protected $defaults;
+    protected $defaults = array();
 
     public function __construct($name, $parameters, $formName) {
         $this->_checkInputName($name);
@@ -56,6 +56,18 @@ abstract class inputClass {
 
     public function setValue($newValue) {
         $this->value = $newValue;
+    }
+
+    public function getValue() {
+        return $this->value;
+    }
+
+    public function setRequired() {
+        $this->required = true;
+    }
+
+    public function setNotRequired() {
+        $this->required = false;
     }
 
     protected function getClasses() {
