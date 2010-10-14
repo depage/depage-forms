@@ -12,16 +12,23 @@ class formClass {
     private $submitLabel;
     private $inputs = array();
     private $sessionSlot;
+    protected $defaults;
 
     public function __construct($name, $parameters = array()) {
         $this->_checkFormName($name);
-
         $this->name = $name;
-        $this->submitLabel = (isset($parameters['submitLabel'])) ? $parameters['submitLabel'] : 'submit';
-        $this->action = (isset($parameters['action'])) ? $parameters['action'] : $_SERVER['REQUEST_URI'];
-        $this->method = ((isset($parameters['method'])) && (strToLower($parameters['method'])) === 'get') ? 'get' : 'post'; // @todo make this more verbose 
-        $this->successAddress = (isset($parameters['successAddress'])) ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
-        
+
+        $this->defaults = array(
+            'submitLabel' => 'submit',
+            'action' => $_SERVER['REQUEST_URI'],
+            'method' => 'post',
+            'successAddress' => $_SERVER['REQUEST_URI']
+        );
+
+        foreach ($this->defaults as $parameter => $default) {
+            $this->$parameter = isset($parameters[$parameter]) ? $parameters[$parameter] : $default;
+        }
+
         if (!session_id()) {
             session_start();
         }
@@ -34,7 +41,7 @@ class formClass {
         if (substr($functionName, 0, 3) === 'add') {
             $type = strtolower(str_replace('add', '', $functionName)); // @todo case insensitive
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
-            $parameters = (isset($functionArguments[1])) ? $functionArguments[1] : array();
+            $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
             $this->addInput($type, $name, $parameters);
             return $this;
         }

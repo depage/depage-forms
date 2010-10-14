@@ -14,6 +14,7 @@ abstract class inputClass {
     protected $validator;
     protected $valid;
     protected $classes;
+    protected $defaults;
 
     public function __construct($name, $parameters, $formName) {
         $this->_checkInputName($name);
@@ -23,9 +24,21 @@ abstract class inputClass {
         $this->name = $name;
         $this->valid = true;
         $this->formName = $formName;
-        $this->label = (isset($parameters['label'])) ? $parameters['label'] : $name;
-        $this->required = (isset($parameters['required'])) ? $parameters['required'] : false;
+
+        $this->setDefaults();
+
+        foreach ($this->defaults as $parameter => $default) {
+            $this->$parameter = isset($parameters[$parameter]) ? $parameters[$parameter] : $default;
+        }
+
         $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
+    }
+
+    protected function setDefaults() {
+        $this->defaults = array(
+            'label' => $this->name,
+            'required' => false
+        );
     }
 
     public function getName() {
@@ -33,7 +46,7 @@ abstract class inputClass {
     }
 
     public function validate() {
-        $this->valid = (($this->validator->match($this->value) || (empty($this->value))) && ((!empty($this->value)) || (!$this->required)));
+        $this->valid = (($this->validator->match($this->value) || empty($this->value)) && (!empty($this->value) || !$this->required));
     }
 
     public function isValid() {

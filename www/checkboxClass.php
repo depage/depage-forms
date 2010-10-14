@@ -8,12 +8,6 @@ require_once ('radio.php');
 abstract class checkboxClass extends inputClass {
     protected $optionList = array();
 
-    public function __construct($name, $parameters, $formName) {
-        parent::__construct($name, $parameters, $formName);
-        $this->value = (isset($parameters['value'])) ? $parameters['value'] : array();
-        $this->optionList = (isset($parameters['optionList'])) ? $parameters['optionList'] : array();
-    }
-    
     public function __toString() {
         $options = '';
         foreach($this->optionList as $index => $option) {
@@ -23,5 +17,11 @@ abstract class checkboxClass extends inputClass {
 
         $classes = $this->getClasses();
         return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><span class=\"label\">$this->label</span><span>$options</span></p>";
+    }
+
+    protected function setDefaults() {
+        parent::setDefaults();
+        $this->defaults['value'] = array();
+        $this->defaults['optionList'] = array();
     }
 }
