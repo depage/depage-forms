@@ -6,6 +6,10 @@ require_once('hidden.php');
 require_once('url.php');
 require_once('tel.php');
 require_once('inputClass.php');
+require_once('textarea.php');
+require_once('password.php');
+require_once('range.php');
+require_once('number.php');
 
 abstract class textClass extends inputClass {
     public function __toString() {
