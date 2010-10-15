@@ -2,32 +2,19 @@
 
 require_once('inputClass.php');
 require_once('exceptions.php');
+require_once('fieldset.php');
+require_once('container.php');
 
-class formClass {
-    protected $name;
-    protected $valid;
+class formClass extends container {
     protected $method;
     protected $action;
     protected $successAddress;
     protected $submitLabel;
-    protected $inputs = array();
     protected $sessionSlot;
-    protected $defaults;
 
     public function __construct($name, $parameters = array()) {
+        parent::__construct($name, $parameters);
         $this->_checkFormName($name);
-        $this->name = $name;
-
-        $this->defaults = array(
-            'submitLabel' => 'submit',
-            'action' => $_SERVER['REQUEST_URI'],
-            'method' => 'post',
-            'successAddress' => $_SERVER['REQUEST_URI'],
-        );
-
-        foreach ($this->defaults as $parameter => $default) {
-            $this->$parameter = isset($parameters[$parameter]) ? $parameters[$parameter] : $default;
-        }
 
         if (!session_id()) {
             session_start();
@@ -36,28 +23,33 @@ class formClass {
 
         $this->addHidden('form-name', array('value' => $this->name));
     }
-
-    public function __call($functionName, $functionArguments) {
-        if (substr($functionName, 0, 3) === 'add') {
-            $type = strtolower(str_replace('add', '', $functionName)); // @todo case insensitive
-            $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
-            $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
-            $this->addInput($type, $name, $parameters);
-            return $this;
-        }
+    
+    protected function setDefaults() {
+        parent::setDefaults();
+        $this->defaults['submitLabel'] = 'submit';
+        $this->defaults['action'] = $_SERVER['REQUEST_URI'];
+        $this->defaults['method'] = 'post';
+        $this->defaults['successAddress'] = $_SERVER['REQUEST_URI'];
     }
 
     public function addInput($type, $name, $parameters = array()) {
         $this->_checkInputName($name);
-        $this->_checkInputType($type);
 
-        $newInput = new $type($name, $parameters, $this->name);
-        if (isset($this->sessionSlot[$name])) {
-            $newInput->setValue($this->sessionSlot[$name]);
+        if ($type == 'fieldset') {
+            $parameters['form'] = $this;
         }
-        $this->inputs[] = $newInput; 
 
-        return $this;
+        $newInput = parent::addInput($type, $name, $parameters);
+
+        $this->loadValueFromSession($name);
+
+        return $newInput;
+    }
+
+    public function loadValueFromSession($name) {
+        if (isset($this->sessionSlot[$name])) {
+            $this->getInput($name)->setValue($this->sessionSlot[$name]);
+        }
     }
 
     public function __toString() {
@@ -69,8 +61,7 @@ class formClass {
         $renderedAction = "action=\"$this->action\"";
         $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
-        $renderedForm = "<form id=\"$this->name\" name=\"$this->name\" $renderedMethod $renderedAction>$renderedInputs$renderedSubmit</form>";
-        return $renderedForm;
+        return "<form id=\"$this->name\" name=\"$this->name\" $renderedMethod $renderedAction>$renderedInputs$renderedSubmit</form>";
     }
 
     public function process() {
@@ -93,23 +84,23 @@ class formClass {
     public function validate() {
         $this->onValidate();
 
-        $this->valid = true;
-        foreach($this->inputs as $input) {
-            $input->validate();
-            $this->valid = (($this->valid) && ($input->isValid()));
-        }
-    }
-
-    public function isValid() {
-        return $this->valid;
+        parent::validate();
     }
 
     public function getInputs() {
-        return $this->inputs;
+        $allInputs = array();
+        foreach($this->inputs as $input) {
+            if (get_class($input) == 'fieldset') {
+                $allInputs = array_merge($allInputs, $input->getInputs());
+            } else {
+                $allInputs[] = $input;
+            }
+        }
+        return $allInputs;
     }
 
     public function getInput($name) {
-        foreach($this->inputs as $index => $input) {
+        foreach($this->getInputs() as $input) {
             if ($name === $input->getName()) {
                 return $input;
             }
@@ -139,7 +130,7 @@ class formClass {
     }
 
     private function saveToSession() {
-        foreach($this->inputs as $input) {
+        foreach($this->getInputs() as $input) {
             $value = isset($_POST[$input->getName()]) ? $_POST[$input->getName()] : null;
             $this->sessionSlot[$input->getName()] = $value;
             $input->setValue($value);
@@ -147,25 +138,14 @@ class formClass {
     }
 
     private function _checkFormName($name) {
-        if (!is_string($name)) {
-            throw new formNameNoStringException();
-        }
-        if (trim($name) === '') {
-            throw new invalidFormNameException();
-        }
+        parent::_checkContainerName($name);
     }
 
     private function _checkInputName($name) {
-        foreach($this->inputs as $input) {  
+        foreach($this->getInputs() as $input) {  
             if ($input->getName() === $name) {
                 throw new duplicateInputNameException();
             }
-        }
-    }
-
-    private function _checkInputType($type) {
-        if (!class_exists($type)) {
-            throw new unknownInputTypeException();
         }
     }
 }
