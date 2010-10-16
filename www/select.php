@@ -18,6 +18,6 @@ class select extends checkboxClass {
         $multiple = ($this->multiple) ? ' multiple' : '';
         $classes = $this->getClasses();
         $requiredChar = $this->getRequiredChar();
-        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><label><span class=\"label\">$this->label$requiredChar</span><select$multiple name=\"$this->name[]\">$options</select></label></p>";
+        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><label><span class=\"label\">$this->label</span><em>$requiredChar</em><select$multiple name=\"$this->name[]\">$options</select></label></p>";
     }
 }
