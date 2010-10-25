@@ -14,7 +14,6 @@ class formClass extends container {
 
     public function __construct($name, $parameters = array()) {
         parent::__construct($name, $parameters);
-        $this->_checkFormName($name);
 
         if (!session_id()) {
             session_start();
@@ -33,9 +32,9 @@ class formClass extends container {
     }
 
     public function addInput($type, $name, $parameters = array()) {
-        $this->_checkInputName($name);
+        $this->checkInputName($name);
 
-        if ($type == 'fieldset') {
+        if ($type === 'fieldset') {
             $parameters['form'] = $this;
         }
 
@@ -66,7 +65,7 @@ class formClass extends container {
 
     public function process() {
         if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
-            $this->saveToSession();
+            $this->_saveToSession();
             $this->validate();
             if ($this->valid) {
                 header('Location: ' . $this->successAddress);
@@ -76,8 +75,7 @@ class formClass extends container {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        if (isset($this->sessionSlot)) {
-            $this->validate();
+        if (isset($this->sessionSlot)) { $this->validate();
         }
     }
 
@@ -112,10 +110,6 @@ class formClass extends container {
         return $this->getInput($name)->getValue();
     }
 
-    public function setRequired($name) {
-        $this->getInput($name)->setRequired();
-    }
-
     public function populate($data = array()) {
         foreach($data as $name => $value) {
             $this->getInput($name)->setValue($value);
@@ -126,26 +120,22 @@ class formClass extends container {
         return $this->sessionSlot;
     }
 
-    protected function onValidate() {
-    }
-
-    private function saveToSession() {
-        foreach($this->getInputs() as $input) {
-            $value = isset($_POST[$input->getName()]) ? $_POST[$input->getName()] : null;
-            $this->sessionSlot[$input->getName()] = $value;
-            $input->setValue($value);
-        }
-    }
-
-    private function _checkFormName($name) {
-        parent::_checkContainerName($name);
-    }
-
-    private function _checkInputName($name) {
+    public function checkInputName($name) {
         foreach($this->getInputs() as $input) {  
             if ($input->getName() === $name) {
                 throw new duplicateInputNameException();
             }
+        }
+    }
+
+    protected function onValidate() {
+    }
+
+    private function _saveToSession() {
+        foreach($this->getInputs() as $input) {
+            $value = isset($_POST[$input->getName()]) ? $_POST[$input->getName()] : null;
+            $this->sessionSlot[$input->getName()] = $value;
+            $input->setValue($value);
         }
     }
 }

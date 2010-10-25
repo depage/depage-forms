@@ -4,14 +4,14 @@ require_once('exceptions.php');
 require_once('fieldset.php');
 require_once('formClass.php');
 
-class container {
+abstract class container {
     protected $name;
     protected $valid;
     protected $inputs = array();
     protected $defaults = array();
 
     public function __construct($name, $parameters = array()) {
-        $this->_checkFormName($name);
+        $this->checkContainerName($name);
         $this->name = $name;
 
         $this->setDefaults();
@@ -37,7 +37,7 @@ class container {
         $this->_checkInputType($type);
 
         $newInput = new $type($name, $parameters, $this->name);
-        
+
         $this->inputs[] = $newInput; 
 
         return $newInput;
@@ -55,7 +55,13 @@ class container {
         return $this->valid;
     }
 
-    protected function _checkContainerName($name) {
+    public function setRequired() {
+        foreach ($this->inputs as $input) {
+            $input->setRequired();
+        }
+    }
+
+    protected function checkContainerName($name) {
         if (!is_string($name)) {
             throw new formNameNoStringException();
         }

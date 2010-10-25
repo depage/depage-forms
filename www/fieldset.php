@@ -3,6 +3,8 @@
 require_once('container.php');
 
 class fieldset extends container {
+    private $form;
+
     public function __construct($name, $parameters = array()) {
         parent::__construct($name, $parameters);
 
@@ -15,6 +17,8 @@ class fieldset extends container {
     }
 
     public function addInput($type, $name, $parameters = array()) {
+        $this->form->checkInputName($name);
+
         $newInput = parent::addInput($type, $name, $parameters);
         
         $this->form->loadValueFromSession($name);
@@ -34,20 +38,12 @@ class fieldset extends container {
         return $this->inputs;
     }
 
-    public function getInput($name) {
+    public function getInput($name) { // @todo useless?
         foreach($this->inputs as $index => $input) {
             if ($name === $input->getName()) {
                 return $input;
             }
         }
-    }
-
-    public function getValue($name) {
-        return $this->getInput($name)->getValue();
-    }
-
-    public function setRequired($name) {
-        $this->getInput($name)->setRequired();
     }
 
     public function populate($data = array()) {
