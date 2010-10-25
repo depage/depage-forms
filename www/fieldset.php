@@ -19,6 +19,10 @@ class fieldset extends container {
     public function addInput($type, $name, $parameters = array()) {
         $this->form->checkInputName($name);
 
+        if ($type === 'fieldset') {
+            $parameters['form'] = $this->form;
+        }
+
         $newInput = parent::addInput($type, $name, $parameters);
         
         $this->form->loadValueFromSession($name);
