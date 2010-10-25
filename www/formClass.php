@@ -10,6 +10,7 @@ class formClass extends container {
     protected $action;
     protected $successAddress;
     protected $submitLabel;
+    protected $sessionSlotName;
     protected $sessionSlot;
 
     public function __construct($name, $parameters = array()) {
@@ -18,7 +19,8 @@ class formClass extends container {
         if (!session_id()) {
             session_start();
         }
-        $this->sessionSlot =& $_SESSION[$this->name . '-data'];
+        $this->sessionSlotName = $this->name . '-data';
+        $this->sessionSlot =& $_SESSION[$this->sessionSlotName];
 
         $this->addHidden('form-name', array('value' => $this->name));
     }
@@ -75,7 +77,8 @@ class formClass extends container {
                 die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
             }
         }
-        if (isset($this->sessionSlot)) { $this->validate();
+        if (isset($this->sessionSlot)) { 
+            $this->validate();
         }
     }
 
@@ -128,10 +131,14 @@ class formClass extends container {
         }
     }
 
+    public function clearSession() {
+        unset($_SESSION[$this->sessionSlotName]);
+    }
+
     protected function onValidate() {
     }
 
-    private function _saveToSession() {
+    private function _saveToSession() { // @todo rename (saves to session and input)
         foreach($this->getInputs() as $input) {
             $value = isset($_POST[$input->getName()]) ? $_POST[$input->getName()] : null;
             $this->sessionSlot[$input->getName()] = $value;

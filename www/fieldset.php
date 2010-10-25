@@ -35,19 +35,11 @@ class fieldset extends container {
         foreach($this->inputs as $input) {
             $renderedInputs .= $input;
         }
-        return "<fieldset id=\"$this->name\" name=\"$this->name\"><legend>$this->label</legend>$renderedInputs</fieldset>";
+        return "<fieldset id=\"$this->name\" name=\"$this->name\"><legend>$this->label</legend>$renderedInputs</fieldset>\n";
     }
 
     public function getInputs() {
         return $this->inputs;
-    }
-
-    public function getInput($name) { // @todo useless?
-        foreach($this->inputs as $index => $input) {
-            if ($name === $input->getName()) {
-                return $input;
-            }
-        }
     }
 
     public function populate($data = array()) {
