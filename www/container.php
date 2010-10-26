@@ -38,7 +38,7 @@ abstract class container {
 
         $newInput = new $type($name, $parameters, $this->name);
 
-        $this->inputs[] = $newInput; 
+        $this->inputs[] = $newInput;
 
         return $newInput;
     }
@@ -74,5 +74,21 @@ abstract class container {
         if (!class_exists($type)) {
             throw new unknownInputTypeException();
         }
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getInputs() {
+        $allInputs = array();
+        foreach($this->inputs as $input) {  
+            if (get_class($input) == 'fieldset') {
+                $allInputs = array_merge($allInputs, $input->getInputs());
+            } else {
+                $allInputs[] = $input;
+            }
+        }
+        return $allInputs;
     }
 }
