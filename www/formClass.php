@@ -88,18 +88,6 @@ class formClass extends container {
         parent::validate();
     }
 
-    public function getInputs() {
-        $allInputs = array();
-        foreach($this->inputs as $input) {
-            if (get_class($input) == 'fieldset') {
-                $allInputs = array_merge($allInputs, $input->getInputs());
-            } else {
-                $allInputs[] = $input;
-            }
-        }
-        return $allInputs;
-    }
-
     public function getInput($name) {
         foreach($this->getInputs() as $input) {
             if ($name === $input->getName()) {
@@ -115,7 +103,10 @@ class formClass extends container {
 
     public function populate($data = array()) {
         foreach($data as $name => $value) {
-            $this->getInput($name)->setValue($value);
+            $input = $this->getInput($name);
+            if ($input) {
+               $input->setValue($value);
+            }
         }
     }
 

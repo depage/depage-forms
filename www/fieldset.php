@@ -38,10 +38,6 @@ class fieldset extends container {
         return "<fieldset id=\"$this->name\" name=\"$this->name\"><legend>$this->label</legend>$renderedInputs</fieldset>\n";
     }
 
-    public function getInputs() {
-        return $this->inputs;
-    }
-
     public function populate($data = array()) {
         foreach($data as $name => $value) {
             $this->getInput($name)->setValue($value);
