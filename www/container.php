@@ -4,6 +4,13 @@ require_once('exceptions.php');
 require_once('fieldset.php');
 require_once('formClass.php');
 
+/**
+ * container
+ *
+ * The abstract container class contains the similatrities of the child classes
+ * formClass and fieldset.
+ * 
+ **/
 abstract class container {
     protected $name;
     protected $valid;
@@ -83,7 +90,7 @@ abstract class container {
     public function getInputs() {
         $allInputs = array();
         foreach($this->inputs as $input) {  
-            if (get_class($input) == 'fieldset') {
+            if (is_a($input, 'fieldset')) {
                 $allInputs = array_merge($allInputs, $input->getInputs());
             } else {
                 $allInputs[] = $input;
