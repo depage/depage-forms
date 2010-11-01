@@ -1,8 +1,8 @@
 <?php 
 
 /**
- * forms is a PHP library that assists in creating HTML forms. It features
- * validation and takes care of duplicate form submissions.
+ * forms is a PHP library that assists programmers in creating HTML forms.
+ * It features validation and takes care of duplicate form submissions.
  *
  **/
 
@@ -75,7 +75,7 @@ class formClass extends container {
     }
 
     /** 
-     * Calls parent class to generate an input element or a fielset and add
+     * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements
      * 
      * @param $type input type or fieldset
