@@ -140,17 +140,26 @@ class formClass extends container {
             $this->_saveToSession();
             $this->validate();
             if ($this->valid) {
-                header('Location: ' . $this->successAddress);
-                die( "Tried to redirect you to " . $this->successAddress);
+                $this->redirect($this->successAddress);
             } else {
-                header('Location: ' . $_SERVER['REQUEST_URI']);
-                die( "Tried to redirect you to " . $_SERVER['REQUEST_URI']);
+                $this->redirect($_SERVER['REQUEST_URI']);
             }
         }
         // don't validate on initial processing
         if (isset($this->sessionSlot)) { 
             $this->validate();
         }
+    }
+
+    /**
+     * Redirects Browser to a different URL
+     *
+     * @param   string $URL     url to redirect to
+     * @return  void
+     */
+    public function redirect($url) {
+        header('Location: ' . $url);
+        die( "Tried to redirect you to " . $url);
     }
 
     /**
@@ -163,6 +172,9 @@ class formClass extends container {
         $this->onValidate();
 
         parent::validate();
+
+        // save validation-state in session
+        $this->sessionSlot['form-isvalid'] = $this->valid;
     }
 
     /**
