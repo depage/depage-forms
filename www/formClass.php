@@ -3,7 +3,6 @@
 /**
  * forms is a PHP library that assists programmers in creating HTML forms.
  * It features validation and takes care of duplicate form submissions.
- *
  **/
 
 require_once('inputClass.php');
