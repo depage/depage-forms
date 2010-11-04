@@ -17,7 +17,7 @@ abstract class checkboxClass extends inputClass {
     public function __toString() {
         $options = '';
         foreach($this->optionList as $index => $option) {
-            $selected = (in_array($index, $this->value)) ? ' checked=\"yes\"' : '';
+            $selected = (is_array($this->value) && in_array($index, $this->value)) ? ' checked="yes"' : '';
             $options .= "<span><label><input type=\"$this->type\" name=\"$this->name[]\" value=\"$index\"$selected><span>$option</span></label></span>";
         }
 

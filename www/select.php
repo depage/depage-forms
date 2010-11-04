@@ -11,7 +11,7 @@ class select extends checkboxClass {
     public function __toString() {
         $options = '';
         foreach($this->optionList as $index => $option) {
-            $selected = (in_array($index, $this->value)) ? ' selected' : '';
+            $selected = (is_array($this->value) && in_array($index, $this->value)) ? ' selected' : '';
             $options .= "<option value=\"$index\"$selected>$option</option>";
         }
 
