@@ -58,7 +58,7 @@ abstract class checkboxClass extends inputClass {
      * @param $option option list key
      * @return boolean - true if selected - false if not
      **/
-    public function isChecked($option) {
-        return (in_array($option, $this->value));
+    public function isChecked($options) {
+        return (in_array($options, $this->value));
     }
 }
