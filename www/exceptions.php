@@ -1,19 +1,33 @@
 <?php
 
-class formException extends Exception {
+class containerException extends Exception {
 }
 
-class formNameNoStringException extends formException {
+class containerNameNoStringException extends containerException {
     public function __construct() {
-        parent::__construct("Form name needs to be a string.");
+        parent::__construct("Container name needs to be a string.");
     }
 }
 
-class invalidFormNameException extends formException {
+class invalidContainerNameException extends containerException {
     public function __construct() {
-        parent::__construct("Invalid form name.");
+        parent::__construct("Invalid container name.");
     }
 }
+
+class duplicateElementNameException extends containerException {
+    public function __construct() {
+        parent::__construct("Element name already in use.");
+    }
+}
+
+
+class htmlNoStringException extends Exception {
+    public function __construct() {
+        parent::__construct("HTML needs to be parsed as type string.");
+    }
+}
+
 
 class inputException extends Exception {
 }
@@ -27,12 +41,6 @@ class inputNameNoStringException extends inputException {
 class invalidInputNameException extends inputException {
     public function __construct() {
         parent::__construct("Invalid input name.");
-    }
-}
-
-class duplicateInputNameException extends inputException {
-    public function __construct() {
-        parent::__construct("Input name already in use.");
     }
 }
 

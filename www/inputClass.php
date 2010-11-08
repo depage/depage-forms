@@ -62,7 +62,7 @@ abstract class inputClass {
 
         $this->type = get_class($this);
         $this->name = $name;
-        // so it doesn't show errors on initial display (when its still empty)
+        // so it doesn't show errors on initial display (when it's still empty)
         $this->valid = true;
         $this->formName = $formName;
 
@@ -154,6 +154,11 @@ abstract class inputClass {
         $this->required = false;
     }
 
+    /**
+     * Returns a string of the HTML elements classes, separated by a space.
+     *
+     * @return $classes
+     **/
     protected function getClasses() {
         $classes = 'input-' . $this->type;
         
@@ -166,16 +171,44 @@ abstract class inputClass {
         return $classes;
     }
 
+    /**
+     * Returns current input elements required - indicator.
+     *
+     * @return $this->requiredChar or empty string
+     **/
     protected function getRequiredChar() {
-        return ($this->required) ? $this->requiredChar : '';
+        return ($this->required) ? "<em>$this->requiredChar</em>" : '';
     }
 
+    /**
+     * Returns required attribute if current input element is required. 
+     *
+     * @return string HTML required attribute
+     **/
+    protected function getRequiredAttribute() {
+        return ($this->required) ? ' required' : '';
+    }
+
+    
+    /**
+     * Throws an exception if $parameters isn't of type array.
+     *
+     * @param $parameters parameters for input element constructor
+     * @return void
+     **/
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
             throw new inputParametersNoArrayException();
         }
     }
     
+    /**
+     * Checks if name of input element is of type string and not empty.
+     * Otherwise throws an exception.
+     * 
+     * @params $name name of input element
+     * @return void
+     **/
     private function _checkInputName($name) {
         if (!is_string($name)) {
             throw new inputNameNoStringException();

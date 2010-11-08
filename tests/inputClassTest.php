@@ -12,7 +12,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
         try {
             $input = new inputClassTestClass(true, array(), 'formNameString');
         }
-        catch (inputNameNoStringException $expected) {
+        catch (InputNameNoStringException $expected) {
             return;
         }
         $this->fail('Expected inputNameNoStringException.');
@@ -20,7 +20,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
     
     public function testInvalidInputNameException() {
         try {
-            $form = new inputClassTestClass(' ', array(), 'formNameString');
+            $input = new inputClassTestClass(' ', array(), 'formNameString');
         }
         catch (invalidInputNameException $expected) {
             return;
@@ -30,7 +30,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
 
     public function testInputParametersNoArrayException() {
         try {
-            $form = new inputClassTestClass('inputNameString', 'string', 'formNameString');
+            $input = new inputClassTestClass('inputNameString', 'string', 'formNameString');
         }
         catch (inputParametersNoArrayException $expected) {
             return;

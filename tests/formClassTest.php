@@ -3,34 +3,34 @@
 require_once('../www/formClass.php');
 
 class formClassTest extends PHPUnit_Framework_TestCase {
-    public function testDuplicateInputNameException() {
+    public function testDuplicateElementNameException() {
         $this->form = new formClass('nameString');
 
         $this->form->addHidden('duplicate' , array());
         try {
             $this->form->addHidden('duplicate' , array());
         }
-        catch (duplicateInputNameException $expected) {
+        catch (duplicateElementNameException $expected) {
             return;
         }
-        $this->fail('Expected duplicateInputNameException.');
+        $this->fail('Expected duplicateElementNameException.');
     }
 
-    public function testFormNameNoStringException() {
+    public function testContainerNameNoStringException() {
         try {
             $form = new formClass(true, array());
         }
-        catch (formNameNoStringException $expected) {
+        catch (containerNameNoStringException $expected) {
             return;
         }
-        $this->fail('Expected formNameNoStringException.');
+        $this->fail('Expected containerNameNoStringException.');
     }
 
-    public function testInvalidFormNameException() {
+    public function testInvalidContainerNameException() {
         try {
             $form = new formClass(' ', array());
         }
-        catch (invalidFormNameException $expected) {
+        catch (invalidContainerNameException $expected) {
             return;
         }
         $this->fail('Expected invalidFormNameException.');
@@ -51,9 +51,9 @@ class formClassTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $this->form->isValid());
     }
 
-    public function testGetInput() {
+    public function testGetElement() {
         $this->form = new formClass('nameString');
-        $this->assertEquals('form-name', $this->form->getInput('form-name')->getName());
+        $this->assertEquals('form-name', $this->form->getElement('form-name')->getName());
         $this->assertEquals(false, $this->form->getInput('bogus-input-name'));
     }
 }

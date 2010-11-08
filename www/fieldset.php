@@ -42,7 +42,7 @@ class fieldset extends container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-     public function addInput($type, $name, $parameters = array()) {
+     public function addElement($type, $name, $parameters = array()) {
         $this->form->checkInputName($name);
 
         // if it's a fieldset it needs to know which form it belongs to
@@ -50,11 +50,13 @@ class fieldset extends container {
             $parameters['form'] = $this->form;
         }
 
-        $newInput = parent::addInput($type, $name, $parameters);
+        $newElement = parent::addElement($type, $name, $parameters);
         
-        $this->form->loadValueFromSession($name);
+        if ($type !== 'fieldset') {
+            $this->form->updateInputValue($name);
+        }
 
-        return $newInput;
+        return $newElement;
     }
 
     /**
@@ -64,10 +66,12 @@ class fieldset extends container {
      * @return string
      **/
      public function __toString() {
-        $renderedInputs = '';
-        foreach($this->inputs as $input) {
-            $renderedInputs .= $input;
+        $renderedElements = '';
+        foreach($this->elementsAndHtml as $element) {
+            $renderedElements .= $element;
         }
-        return "<fieldset id=\"$this->name\" name=\"$this->name\"><legend>$this->label</legend>$renderedInputs</fieldset>\n";
+        return "<fieldset id=\"$this->name\" name=\"$this->name\">" .
+            "<legend>$this->label</legend>$renderedElements" .
+        "</fieldset>\n";
     }
 }

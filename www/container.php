@@ -3,10 +3,9 @@
 require_once('exceptions.php');
 require_once('fieldset.php');
 require_once('formClass.php');
+require_once('html.php');
 
 /**
- * container
- *
  * The abstract container class contains the similatrities of the child classes
  * formClass and fieldset.
  * 
@@ -21,9 +20,13 @@ abstract class container {
      **/
     protected $valid;
     /**
-     * Holds input element references.
+     * Holds references to input elements and fieldsets.
      **/
-    protected $inputs = array();
+    protected $elements = array();
+    /**
+     * Holds input element, fieldset and custom HTML object references.
+     **/
+    protected $elementsAndHtml = array();
     /**
      * Contains default attribute values.
      **/
@@ -53,8 +56,8 @@ abstract class container {
     }
 
     /**
-     * Used to accommodate different input element types. Accepts methods that
-     * start with "add" and tries to call $this->addInput() to instantiate
+     * Allows for various input element types and fieldsets. Accepts methods
+     * that start with "add" and tries to call $this->addElement() to instantiate
      * the respective class.
      *
      * @param $name string - name of the element
@@ -65,26 +68,41 @@ abstract class container {
             $type = strtolower(str_replace('add', '', $functionName));
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
-            return $this->addInput($type, $name, $parameters);
+            return $this->addElement($type, $name, $parameters);
         }
     }
 
     /**
-     * Generates input elements and adds references to them to $this->$inputs.
+     * Generates elements and adds their references to $this->$elements.
      * 
      * @param $type input type or fieldset
      * @param $name string - name of the element
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
-     * @return object $newInput
+     * @return $newElement
      **/
-    public function addInput($type, $name, $parameters = array()) {
+    public function addElement($type, $name, $parameters = array()) {
         $this->_checkInputType($type);
 
-        $newInput = new $type($name, $parameters, $this->name);
+        $newElement = new $type($name, $parameters, $this->name);
 
-        $this->inputs[] = $newInput;
+        $this->elements[] = $newElement;
+        $this->elementsAndHtml[] = $newElement;
 
-        return $newInput;
+        return $newElement;
+    }
+
+    /**
+     * Adds a custom HTML element to the form.
+     *
+     * @param $htmlString
+     * return $newHtml custom HTML element reference
+     **/
+    public function addHtml($htmlString) {
+        $newHtml = new html($htmlString);
+
+        $this->elementsAndHtml[] = $newHtml;
+        
+        return $newHtml;
     }
 
     /**
@@ -95,9 +113,9 @@ abstract class container {
      **/
     public function validate() {
         $this->valid = true;
-        foreach($this->inputs as $input) {
-            $input->validate();
-            $this->valid = (($this->valid) && ($input->isValid()));
+        foreach($this->elements as $element) {
+            $element->validate();
+            $this->valid = (($this->valid) && ($element->isValid()));
         }
     }
 
@@ -117,8 +135,8 @@ abstract class container {
      * @return void
      **/
     public function setRequired() {
-        foreach ($this->inputs as $input) {
-            $input->setRequired();
+        foreach ($this->elements as $element) {
+            $element->setRequired();
         }
     }
 
@@ -130,10 +148,10 @@ abstract class container {
      **/
     protected function checkContainerName($name) {
         if (!is_string($name)) {
-            throw new formNameNoStringException();
+            throw new containerNameNoStringException();
         }
         if (trim($name) === '') {
-            throw new invalidFormNameException();
+            throw new invalidContainerNameException();
         }
     }
 
@@ -163,15 +181,15 @@ abstract class container {
      *
      * @return $allInputs array of input elements
      **/
-    public function getInputs() {
-        $allInputs = array();
-        foreach($this->inputs as $input) {  
-            if (is_a($input, 'fieldset')) {
-                $allInputs = array_merge($allInputs, $input->getInputs());
+    public function getElements() {
+        $allElements = array();
+        foreach($this->elements as $element) {  
+            if (is_a($element, 'fieldset')) {
+                $allElements = array_merge($allElements, $element->getElements());
             } else {
-                $allInputs[] = $input;
+                $allElements[] = $element;
             }
         }
-        return $allInputs;
+        return $allElements;
     }
 }
