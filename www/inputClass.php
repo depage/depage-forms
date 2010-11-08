@@ -177,9 +177,19 @@ abstract class inputClass {
      * @return $this->requiredChar or empty string
      **/
     protected function getRequiredChar() {
-        return ($this->required) ? $this->requiredChar : '';
+        return ($this->required) ? "<em>$this->requiredChar</em>" : '';
     }
 
+    /**
+     * Returns required attribute if current input element is required. 
+     *
+     * @return string HTML required attribute
+     **/
+    protected function getRequiredAttribute() {
+        return ($this->required) ? ' required' : '';
+    }
+
+    
     /**
      * Throws an exception if $parameters isn't of type array.
      *

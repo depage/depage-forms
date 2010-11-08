@@ -16,13 +16,16 @@ class number extends textClass {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $classes = $this->getClasses();
-        $requiredChar = $this->getRequiredChar();
         $min = ($this->min !== null) ? " min=\"$this->min\"" : "";
         $max = ($this->max !== null) ? " max=\"$this->max\"" : "";
         $step = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><label><span class=\"label\">$this->label$requiredChar</span><input name=\"$this->name\" type=\"$this->type\"$max$min$step value=\"$this->value\"></label></p>";
+        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
+            "<label>" . 
+                "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" . 
+                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step" . $this->getRequiredAttribute() . " value=\"$this->value\">" .
+            "</label>" .
+        "</p>";
     }
 
     /**

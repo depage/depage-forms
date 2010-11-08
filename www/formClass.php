@@ -132,11 +132,11 @@ class formClass extends container {
         foreach($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
-        $renderedMethod = "method=\"$this->method\"";
-        $renderedAction = "action=\"$this->action\"";
         $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
-        return "<form id=\"$this->name\" name=\"$this->name\" $renderedMethod $renderedAction>$renderedElements$renderedSubmit</form>";
+        return "<form id=\"$this->name\" name=\"$this->name\" method=\"$this->method\" action=\"$this->action\">" .
+                $renderedElements . $renderedSubmit .
+            "</form>";
     }
 
     /**

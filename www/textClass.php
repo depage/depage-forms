@@ -22,9 +22,12 @@ abstract class textClass extends inputClass {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $classes = $this->getClasses();
-        $requiredChar = $this->getRequiredChar();
-        return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><label><span class=\"label\">$this->label<em>$requiredChar</em></span><input name=\"$this->name\" type=\"$this->type\" value=\"$this->value\"></label></p>\n";
+        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
+            "<label>" .
+                "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" .
+                "<input name=\"$this->name\" type=\"$this->type\"" . $this->getRequiredAttribute() . " value=\"$this->value\">" .
+            "</label>" .
+        "</p>\n";
     }
 
     /**

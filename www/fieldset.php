@@ -70,6 +70,8 @@ class fieldset extends container {
         foreach($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
-        return "<fieldset id=\"$this->name\" name=\"$this->name\"><legend>$this->label</legend>$renderedElements</fieldset>\n";
+        return "<fieldset id=\"$this->name\" name=\"$this->name\">" .
+            "<legend>$this->label</legend>$renderedElements" .
+        "</fieldset>\n";
     }
 }
