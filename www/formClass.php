@@ -92,20 +92,31 @@ class formClass extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        $this->loadValueFromSession($name);
-
+        if ($type !== 'fieldset') {
+            $this->updateInputValue($name);
+        }
+        
         return $newElement;
     }
 
     /**
-     * Sets the input elements' value. Gets the value by name from the PHP
-     * session array.
-     * 
+     * Sets the input elements' value. If there is post-data - we'll use that
+     * to update the value of the input element and the session. If not - we 
+     * take the value that's already in the session. If the value is neither in
+     * the session nor in the post-data - nothing happens.
+     *
      * @param $name the name of the input element we're looking for
      * @return void
      **/
-    public function loadValueFromSession($name) {
-        if (isset($this->sessionSlot[$name])) {
+    public function updateInputValue($name) {
+        // if it's a post get the value from there and save them to the session
+        if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
+            $value = $_POST[$name];
+            $this->sessionSlot[$name] = $value;
+            $this->getElement($name)->setValue($value);
+        }
+        // if it's not a post try to get the value from the session
+        else if (isset($this->sessionSlot[$name])) {
             $this->getElement($name)->setValue($this->sessionSlot[$name]);
         }
     }
@@ -137,7 +148,6 @@ class formClass extends container {
     public function process() {
         // if there's post-data from this form
         if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
-            $this->_saveToSession();
             $this->validate();
             if ($this->valid) {
                 $this->redirect($this->successAddress);
@@ -257,19 +267,5 @@ class formClass extends container {
      * @return void
      **/
     protected function onValidate() {
-    }
-
-    /**
-     * Gets input element value from post-data and saves it to PHP session and
-     * $value attribute of input element.
-     *
-     * @return void
-     **/
-    private function _saveToSession() { // @todo rename (saves to session and input)
-        foreach($this->getElements() as $element) {
-            $value = isset($_POST[$element->getName()]) ? $_POST[$element->getName()] : null;
-            $this->sessionSlot[$element->getName()] = $value;
-            $element->setValue($value);
-        }
     }
 }

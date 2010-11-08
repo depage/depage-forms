@@ -52,7 +52,9 @@ class fieldset extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
         
-        $this->form->loadValueFromSession($name);
+        if ($type !== 'fieldset') {
+            $this->form->updateInputValue($name);
+        }
 
         return $newElement;
     }
