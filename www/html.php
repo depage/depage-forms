@@ -16,6 +16,12 @@ class html {
      * @param $htmlString string of HTML to be printed
      **/
     public function __construct($htmlString) {
+        $htmlString = (string) $htmlString;
+        
+        if (!is_string($htmlString)) {
+            throw new htmlNoStringException();
+        }
+
         $this->htmlString = $htmlString;
     }
 

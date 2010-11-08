@@ -62,7 +62,7 @@ abstract class inputClass {
 
         $this->type = get_class($this);
         $this->name = $name;
-        // so it doesn't show errors on initial display (when its still empty)
+        // so it doesn't show errors on initial display (when it's still empty)
         $this->valid = true;
         $this->formName = $formName;
 
