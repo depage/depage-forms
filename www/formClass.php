@@ -75,7 +75,7 @@ class formClass extends container {
 
     /** 
      * Calls parent class to generate an input element or a fieldset and add
-     * it to its list of elements
+     * it to its list of elements.
      * 
      * @param $type input type or fieldset
      * @param $name string - name of the element
