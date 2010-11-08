@@ -6,8 +6,17 @@ require_once('textClass.php');
  * HTML number input type.
  **/
 class number extends textClass {
+    /**
+     * Minimum range HTML attribute.
+     **/
     protected $min;
+    /**
+     * Maximum range HTML attribute.
+     **/
     protected $max;
+    /**
+     * Step HTML attribute.
+     **/
     protected $step;
 
     /**

@@ -2,8 +2,16 @@
 
 require_once('textClass.php');
 
+/**
+ * HTML textarea element.
+ **/
 class textarea extends textClass {
-   public function __toString() {
+    /**
+     * Renders element to HTML.
+     *
+     * @return string of HTML rendered element
+     **/
+    public function __toString() {
         $rows = ($this->rows !== null) ? " rows=\"$this->rows\"" : "";
         $cols = ($this->cols !== null) ? " cols=\"$this->cols\"" : "";
 
@@ -15,6 +23,11 @@ class textarea extends textClass {
         "</p>\n";
     }
 
+    /**
+     * Overrides parent::setDefaults()
+     *
+     * return void
+     **/
     public function setDefaults() {
         parent::setDefaults();
         $this->defaults['rows'] = null;

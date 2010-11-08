@@ -164,7 +164,7 @@ class formClass extends container {
     /**
      * Redirects Browser to a different URL
      *
-     * @param   string $URL     url to redirect to
+     * @param   $url    string - url to redirect to
      * @return  void
      */
     public function redirect($url) {
