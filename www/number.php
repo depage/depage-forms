@@ -5,7 +5,11 @@ require_once('textClass.php');
 /**
  * HTML number input type.
  **/
-class number extends range {
+class number extends textClass {
+    protected $min;
+    protected $max;
+    protected $step;
+
     /**
      * Renders element to HTML.
      *
