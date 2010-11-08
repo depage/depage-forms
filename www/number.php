@@ -2,7 +2,15 @@
 
 require_once('textClass.php');
 
+/**
+ * HTML number input type.
+ **/
 class number extends range {
+    /**
+     * Renders element to HTML.
+     *
+     * @return string of HTML rendered element
+     **/
     public function __toString() {
         $classes = $this->getClasses();
         $requiredChar = $this->getRequiredChar();
@@ -13,6 +21,11 @@ class number extends range {
         return "<p id=\"$this->formName-$this->name\" class=\"$classes\"><label><span class=\"label\">$this->label$requiredChar</span><input name=\"$this->name\" type=\"$this->type\"$max$min$step value=\"$this->value\"></label></p>";
     }
 
+    /**
+     * Overrides parent::setDefaults()
+     *
+     * return void
+     **/
     protected function setDefaults() {
         parent::setDefaults();
         $this->defaults['min'] = null;

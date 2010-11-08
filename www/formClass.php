@@ -82,19 +82,19 @@ class formClass extends container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-    public function addInput($type, $name, $parameters = array()) {
-        $this->checkInputName($name);
+    public function addElement($type, $name, $parameters = array()) {
+        $this->checkElementName($name);
 
         // if it's a fieldset it needs to know which form it belongs to
         if ($type === 'fieldset') {
             $parameters['form'] = $this;
         }
 
-        $newInput = parent::addInput($type, $name, $parameters);
+        $newElement = parent::addElement($type, $name, $parameters);
 
         $this->loadValueFromSession($name);
 
-        return $newInput;
+        return $newElement;
     }
 
     /**
@@ -106,26 +106,26 @@ class formClass extends container {
      **/
     public function loadValueFromSession($name) {
         if (isset($this->sessionSlot[$name])) {
-            $this->getInput($name)->setValue($this->sessionSlot[$name]);
+            $this->getElement($name)->setValue($this->sessionSlot[$name]);
         }
     }
 
     /**
-     * Renders the form as HTML code. If the form contains input elements it
+     * Renders the form as HTML code. If the form contains elements it
      * calls their rendering methods.
      *
      * @return string
      **/
     public function __toString() {
-        $renderedInputs = '';
-        foreach($this->inputs as $input) {
-            $renderedInputs .= $input;
+        $renderedElements = '';
+        foreach($this->elementsAndHtml as $element) {
+            $renderedElements .= $element;
         }
         $renderedMethod = "method=\"$this->method\"";
         $renderedAction = "action=\"$this->action\"";
         $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
-        return "<form id=\"$this->name\" name=\"$this->name\" $renderedMethod $renderedAction>$renderedInputs$renderedSubmit</form>";
+        return "<form id=\"$this->name\" name=\"$this->name\" $renderedMethod $renderedAction>$renderedElements$renderedSubmit</form>";
     }
 
     /**
@@ -183,10 +183,10 @@ class formClass extends container {
      * @param $name string - name of the input element we're looking for
      * @return $input object - input element or fieldset
      **/
-    public function getInput($name) {
-        foreach($this->getInputs() as $input) {
-            if ($name === $input->getName()) {
-                return $input;
+    public function getElement($name) {
+        foreach($this->getElements() as $element) {
+            if ($name === $element->getName()) {
+                return $element;
             }
         }
         return false;
@@ -199,7 +199,7 @@ class formClass extends container {
     * @return string or array - value of an input element
     **/
     public function getValue($name) {
-        return $this->getInput($name)->getValue(); // @todo check if input exists
+        return $this->getElement($name)->getValue(); // @todo check if input exists
     }
 
     /**
@@ -211,9 +211,9 @@ class formClass extends container {
      **/
     public function populate($data = array()) {
         foreach($data as $name => $value) {
-            $input = $this->getInput($name);
-            if ($input) {
-               $input->setValue($value);
+            $element = $this->getElement($name);
+            if ($element) {
+               $element->setValue($value);
             }
         }
     }
@@ -234,10 +234,10 @@ class formClass extends container {
      * @param $name name to check
      * @return void
      **/
-    public function checkInputName($name) {
-        foreach($this->getInputs() as $input) {  
-            if ($input->getName() === $name) {
-                throw new duplicateInputNameException();
+    public function checkElementName($name) {
+        foreach($this->getElements() as $element) {  
+            if ($element->getName() === $name) {
+                throw new duplicateElementNameException();
             }
         }
     }
@@ -266,10 +266,10 @@ class formClass extends container {
      * @return void
      **/
     private function _saveToSession() { // @todo rename (saves to session and input)
-        foreach($this->getInputs() as $input) {
-            $value = isset($_POST[$input->getName()]) ? $_POST[$input->getName()] : null;
-            $this->sessionSlot[$input->getName()] = $value;
-            $input->setValue($value);
+        foreach($this->getElements() as $element) {
+            $value = isset($_POST[$element->getName()]) ? $_POST[$element->getName()] : null;
+            $this->sessionSlot[$element->getName()] = $value;
+            $element->setValue($value);
         }
     }
 }
