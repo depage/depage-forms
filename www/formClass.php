@@ -188,6 +188,21 @@ class formClass extends container {
     }
 
     /**
+     * Returns current containers' validation status.
+     *
+     * @return $this->valid
+     **/
+    public function isValid() {
+        $this->valid = parent::isValid();
+
+        if ($this->valid === null) {
+            return (bool) $this->sessionSlot['form-isvalid'];
+        } else {
+            return $this->valid;
+        }
+    }
+
+    /**
      * Gets input element/fieldset by name.
      *
      * @param $name string - name of the input element we're looking for
