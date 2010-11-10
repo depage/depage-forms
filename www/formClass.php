@@ -9,6 +9,7 @@ require_once('inputClass.php');
 require_once('exceptions.php');
 require_once('fieldset.php');
 require_once('container.php');
+require_once('creditcard.php');
 
 /**
  * The class formClass is the main tool of the forms library. It generates HTML
@@ -85,17 +86,15 @@ class formClass extends container {
     public function addElement($type, $name, $parameters = array()) {
         $this->checkElementName($name);
 
-        // if it's a fieldset it needs to know which form it belongs to
-        if ($type === 'fieldset') {
-            $parameters['form'] = $this;
-        }
-
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if ($type !== 'fieldset') {
+        if (is_a($newElement, 'fieldset')) {
+            // if it's a fieldset it needs to know which form it belongs to
+            $newElement->setParentForm($this);
+        } else {
             $this->updateInputValue($name);
         }
-        
+
         return $newElement;
     }
 
