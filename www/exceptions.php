@@ -55,3 +55,9 @@ class inputParametersNoArrayException extends inputException {
         parent::__construct("Input parameters need to be in an array.");
     }
 }
+
+class wrongCheckedParameterCombination extends inputException {
+    public function __construct() {
+        parent::__construct("Wrong parameter - option list combination.");
+    }
+}
