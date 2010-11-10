@@ -9,17 +9,26 @@ class fieldset extends container {
     /**
      * Contains reference to current fieldsets' parent HTML form.
      **/
-    private $form;
+    protected $form;
 
-     /**
-     *  @param $name string - fieldset name
-     *  @param $parameters array of fieldset parameters, HTML attributes
+    /**
+     * sets parent form of fieldset
+     *
+     *  @param $form object - parent form object
      *  @return void
      **/
-    public function __construct($name, $parameters = array()) {
-        parent::__construct($name, $parameters);
+    public function setParentForm($form) {
+        $this->form = $form;
 
-        $this->form = $parameters['form'];
+        $this->addChildElements();
+    }
+
+    /**
+     * overwritable method to add child elements
+     *
+     *  @return void
+     **/
+    protected function addChildElements() {
     }
 
     /**
@@ -45,14 +54,12 @@ class fieldset extends container {
      public function addElement($type, $name, $parameters = array()) {
         $this->form->checkInputName($name);
 
-        // if it's a fieldset it needs to know which form it belongs to
-        if ($type === 'fieldset') {
-            $parameters['form'] = $this->form;
-        }
-
         $newElement = parent::addElement($type, $name, $parameters);
         
-        if ($type !== 'fieldset') {
+        if (is_a($newElement, 'fieldset')) {
+            // if it's a fieldset it needs to know which form it belongs to
+            $newElement->setParentForm($this->form);
+        } else {
             $this->form->updateInputValue($name);
         }
 

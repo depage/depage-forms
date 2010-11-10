@@ -2,7 +2,6 @@
 
 require_once('exceptions.php');
 require_once('fieldset.php');
-require_once('formClass.php');
 require_once('html.php');
 
 /**
