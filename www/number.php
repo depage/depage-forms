@@ -25,8 +25,22 @@ class number extends textClass {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $min = ($this->min !== null) ? " min=\"$this->min\"" : "";
-        $max = ($this->max !== null) ? " max=\"$this->max\"" : "";
+        if ($this->min !== null) {
+            $min = " min=\"$this->min\"";
+            if ($this->value < $this->min) {
+                $this->value = $this->min;
+            }
+        } else {
+            $min = "";
+        }
+        if ($this->max !== null) {
+            $max = " max=\"$this->max\"";
+            if ($this->value > $this->max) {
+                $this->value = $this->max;
+            }
+        } else {
+            $max = "";
+        }
         $step = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
         return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
@@ -44,6 +58,7 @@ class number extends textClass {
      **/
     protected function setDefaults() {
         parent::setDefaults();
+        $this->defaults['value'] = 0;
         $this->defaults['min'] = null;
         $this->defaults['max'] = null;
         $this->defaults['step'] = null;
