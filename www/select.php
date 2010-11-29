@@ -21,18 +21,18 @@ class select extends checkboxClass {
      *
      * @return string of HTML rendered element
      **/
-    public function __toString() {
+    public function render($value, $requiredAttribute, $requiredChar, $class) {
         $options = '';
         foreach($this->optionList as $index => $option) {
-            $selected = (in_array($index, $this->value)) ? ' selected' : '';
+            $selected = (in_array($index, $value)) ? ' selected' : '';
             $options .= "<option value=\"$index\"$selected>$option</option>";
         }
 
         $multiple = ($this->multiple) ? ' multiple' : '';
-        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" .
-                "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" .
-                "<select$multiple name=\"$this->name[]\"" . $this->getRequiredAttribute() . ">$options</select>" .
+                "<span class=\"label\">$this->label$requiredChar</span>" .
+                "<select$multiple name=\"$this->name[]\"$requiredAttribute>$options</select>" .
             "</label>" .
         "</p>\n";
     }

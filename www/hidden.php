@@ -6,7 +6,7 @@ require_once('textClass.php');
  * HTML hidden input type.
  **/
 class hidden extends textClass {
-    public function __toString() {
-        return "<input name=\"$this->name\" id=\"$this->formName-$this->name\" type=\"$this->type\" class=\"" . $this->getClasses() . "\" value=\"$this->value\">\n";
+    public function render($value, $requiredAttribute, $requiredChar, $class) {
+        return "<input name=\"$this->name\" id=\"$this->formName-$this->name\" type=\"$this->type\" class=\"$class\" value=\"$value\">\n";
     }
 }

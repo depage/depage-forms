@@ -62,8 +62,7 @@ abstract class inputClass {
 
         $this->type = get_class($this);
         $this->name = $name;
-        // so it doesn't show errors on initial display (when it's still empty)
-        $this->valid = true;
+        $this->valid = false;
         $this->formName = $formName;
 
         // loads default attributes from $this->defaults array
@@ -85,7 +84,8 @@ abstract class inputClass {
         $this->defaults = array(
             'label' => $this->name,
             'required' => false,
-            'requiredChar' => ' *'
+            'requiredChar' => ' *',
+            'value' => null
         );
     }
 
@@ -105,7 +105,7 @@ abstract class inputClass {
      * @return void
      **/
     public function validate() {
-        $this->valid = (($this->validator->match($this->value) || empty($this->value)) && (!empty($this->value) || !$this->required));
+        $this->valid = (($this->value !== null) && ($this->validator->match($this->value) || empty($this->value)) && (!empty($this->value) || !$this->required));
     }
 
     /**
@@ -144,6 +144,20 @@ abstract class inputClass {
     public function setRequired() {
         $this->required = true;
     }
+    
+    /**
+     * Prepares element for HTML rendering and calls render() method.
+     *
+     * @return string of HTML rendered element
+     **/
+    public function __toString() {
+        $value = ($this->value == null) ? $this->defaultValue : $this->value;
+        $requiredAttribute = $this->getRequiredAttribute();
+        $requiredChar = $this->getRequiredChar();
+        $class = $this->getClasses();
+
+        return $this->render($value, $requiredAttribute, $requiredChar, $class);
+    }
 
     /**
      * Unsets the the HTML required attribute of the current input element.
@@ -165,8 +179,10 @@ abstract class inputClass {
         if ($this->required) {
             $classes .= ' required';
         }
-        if (!$this->isValid()) {
-            $classes .= ' error';
+        if ($this->value !== null) {
+            if (!$this->isValid()) {
+                $classes .= ' error';
+            }
         }
         return $classes;
     }

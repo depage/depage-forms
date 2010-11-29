@@ -24,7 +24,7 @@ abstract class checkboxClass extends inputClass {
         parent::setDefaults();
 
         // checkboxClass elements have values of type array
-        $this->defaults['value'] = array();
+        $this->defaults['defaultValue'] = array();
         $this->defaults['optionList'] = array();
     }
 
@@ -33,21 +33,21 @@ abstract class checkboxClass extends inputClass {
      *
      * @return string of HTML rendered element
      **/
-    public function __toString() {
+    public function render($value, $requiredAttribute, $requiredChar, $class) {
         $options = '';
 
         foreach($this->optionList as $index => $option) {
-            $selected = (in_array($index, $this->value)) ? " checked=\"yes\"" : '';
+            $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
             $options .= "<span>" .
                 "<label>" .
-                    "<input type=\"$this->type\" name=\"$this->name[]\"" . $this->getRequiredAttribute() . " value=\"$index\"$selected>" .
+                    "<input type=\"$this->type\" name=\"$this->name[]\"$requiredAttribute value=\"$index\"$selected>" .
                     "<span>$option</span>" .
                 "</label>" .
             "</span>";
         }
 
-        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
-            "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" .
+        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+            "<span class=\"label\">$this->label$requiredChar</span>" .
             "<span>$options</span>" .
         "</p>\n";
     }

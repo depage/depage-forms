@@ -14,8 +14,8 @@ class fieldset extends container {
     /**
      * sets parent form of fieldset
      *
-     *  @param $form object - parent form object
-     *  @return void
+     * @param $form object - parent form object
+     * @return void
      **/
     public function setParentForm($form) {
         $this->form = $form;
@@ -26,7 +26,7 @@ class fieldset extends container {
     /**
      * overwritable method to add child elements
      *
-     *  @return void
+     * @return void
      **/
     protected function addChildElements() {
     }

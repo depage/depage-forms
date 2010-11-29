@@ -21,11 +21,11 @@ abstract class textClass extends inputClass {
      *
      * @return string of HTML rendered element
      **/
-    public function __toString() {
-        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
+    public function render($value, $requiredAttribute, $requiredChar, $class) {
+        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" .
-                "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"" . $this->getRequiredAttribute() . " value=\"$this->value\">" .
+                "<span class=\"label\">$this->label$requiredChar</span>" .
+                "<input name=\"$this->name\" type=\"$this->type\"$requiredAttribute value=\"$value\">" .
             "</label>" .
         "</p>\n";
     }
@@ -39,6 +39,6 @@ abstract class textClass extends inputClass {
         parent::setDefaults();
         
         // textClass elements have values of type string
-        $this->defaults['value'] = '';
+        $this->defaults['defaultValue'] = '';
     }
 }

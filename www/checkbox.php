@@ -16,7 +16,7 @@ class checkbox extends checkboxClass {
         if ((func_num_args() === 0) && (count($this->optionList) === 1)) {
             return (!empty($this->value[0]));
         } else if ((func_num_args() === 1) && (count($this->optionList) >= 0)) {
-            return (in_array(func_get_arg(0), $this->value));
+            return (is_array($this->value) && (in_array(func_get_arg(0), $this->value)));
         } else {
             throw new wrongCheckedParameterCombination();
         }

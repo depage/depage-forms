@@ -37,11 +37,11 @@ class formClassTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToStringSimple() {
-    $rendered = '<form id="nameString" name="nameString" method="post" action="'.$_SERVER['REQUEST_URI'].'"><input name="form-name" id="nameString-form-name" type="hidden" class="input-hidden" value="nameString">
+    $rendered = '<form id="nameString" name="nameString" method="post" action="'.$_SERVER['REQUEST_URI'].'"><input name="form-name" id="nameString-form-name" type="hidden" class="input-hidden error" value="nameString">
 <p id="nameString-submit"><input type="submit" name="submit" value="submit"></p></form>';
-        $this->form = new formClass('nameString');
+        $form = new formClass('nameString');
 
-        $this->assertEquals($rendered, $this->form->__toString());
+        $this->assertEquals($rendered, $form->__toString());
     }
 
     public function testEmptyFormValidation() {

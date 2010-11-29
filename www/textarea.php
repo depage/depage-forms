@@ -11,14 +11,14 @@ class textarea extends textClass {
      *
      * @return string of HTML rendered element
      **/
-    public function __toString() {
+    public function render($value, $requiredAttribute, $requiredChar, $class) {
         $rows = ($this->rows !== null) ? " rows=\"$this->rows\"" : "";
         $cols = ($this->cols !== null) ? " cols=\"$this->cols\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" .
-                "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" .
-                "<textarea name=\"$this->name\"" . $this->getRequiredAttribute() . " $rows$cols>$this->value</textarea>" .
+                "<span class=\"label\">$this->label$requiredChar</span>" .
+                "<textarea name=\"$this->name\"$requiredAttribute $rows$cols>$this->value</textarea>" .
             "</label>" .
         "</p>\n";
     }

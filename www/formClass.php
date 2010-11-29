@@ -10,6 +10,7 @@ require_once('exceptions.php');
 require_once('fieldset.php');
 require_once('container.php');
 require_once('creditcard.php');
+require_once('step.php');
 
 /**
  * The class formClass is the main tool of the forms library. It generates HTML
@@ -41,12 +42,18 @@ class formClass extends container {
      **/
     protected $sessionSlot;
 
+    protected $currentStep;
+
+    protected $steps;
+
     /**
-     *  @param $name string - form name
-     *  @param $parameters array of form parameters, HTML attributes
-     *  @return void
+     * @param $name string - form name
+     * @param $parameters array of form parameters, HTML attributes
+     * @return void
      **/
     public function __construct($name, $parameters = array()) {
+        $this->url = parse_url($_SERVER['REQUEST_URI']);
+
         parent::__construct($name, $parameters);
 
         // check if there's an open session
@@ -58,6 +65,12 @@ class formClass extends container {
         
         // create a hidden input element to tell forms apart
         $this->addHidden('form-name', array('value' => $this->name));
+
+        if (isset($_GET['step'])) {
+            $this->currentStep = $_GET['step'];
+        } else {
+            $this->currentStep = 0;
+        }
     }
     
     /**
@@ -91,6 +104,10 @@ class formClass extends container {
         if (is_a($newElement, 'fieldset')) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this);
+
+            if (is_a($newElement, 'step')) {
+                $this->steps[] = $newElement;
+            }
         } else {
             $this->updateInputValue($name);
         }
@@ -108,8 +125,8 @@ class formClass extends container {
      * @return void
      **/
     public function updateInputValue($name) {
-        // if it's a post get the value from there and save them to the session
-        if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
+        // if it's a post take the value from there and save it to the session
+        if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name) && isset($_POST[$name]) ) {
             $value = $_POST[$name];
             $this->sessionSlot[$name] = $value;
             $this->getElement($name)->setValue($value);
@@ -129,7 +146,12 @@ class formClass extends container {
     public function __toString() {
         $renderedElements = '';
         foreach($this->elementsAndHtml as $element) {
-            $renderedElements .= $element;
+            if ( !is_a($element, 'step') 
+                || (is_a($element, 'step') 
+                    && (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) ) {
+                
+                $renderedElements .= $element;
+            }
         }
         $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
@@ -146,18 +168,29 @@ class formClass extends container {
      **/
     public function process() {
         // if there's post-data from this form
-        if ((isset($_POST['form-name'])) && (($_POST['form-name']) === $this->name)) {
-            $this->validate();
-            if ($this->valid) {
-                $this->redirect($this->successAddress);
+        if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)) {
+            if (count($this->steps) === 0) {
+                $this->validate();
+                if ($this->valid) {
+                    $this->redirect($this->successAddress);
+                } else {
+                    $this->redirect($this->url['path']);
+                }
             } else {
-                $this->redirect($_SERVER['REQUEST_URI']);
+                $this->steps[$this->currentStep]->validate();
+                if ($this->steps[$this->currentStep]->valid) {
+                    if ($this->currentStep < count($this->steps)) {
+                        $this->redirect($this->url['path'] . '?step=' . ($this->currentStep + 1));
+                    } else {
+                        $this->redirect($this->successAddress);
+                    }
+                } else {
+                    $this->redirect($this->url['path'] . '?step=' . $this->currentStep);
+                }
             }
         }
-        // don't validate on initial processing
-        if (isset($this->sessionSlot)) { 
-            $this->validate();
-        }
+
+        $this->validate();
     }
 
     /**
@@ -183,7 +216,7 @@ class formClass extends container {
         parent::validate();
 
         // save validation-state in session
-        $this->sessionSlot['form-isvalid'] = $this->valid;
+        $this->sessionSlot['form-isValid'] = $this->valid;
     }
 
     /**
@@ -195,7 +228,7 @@ class formClass extends container {
         $this->valid = parent::isValid();
 
         if ($this->valid === null) {
-            return (bool) $this->sessionSlot['form-isvalid'];
+            return (bool) $this->sessionSlot['form-isValid'];
         } else {
             return $this->valid;
         }

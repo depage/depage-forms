@@ -24,29 +24,29 @@ class number extends textClass {
      *
      * @return string of HTML rendered element
      **/
-    public function __toString() {
+    public function render($value, $requiredAttribute, $requiredChar, $class) {
         if ($this->min !== null) {
             $min = " min=\"$this->min\"";
-            if ($this->value < $this->min) {
-                $this->value = $this->min;
+            if ($value < $this->min) {
+                $value = $this->min;
             }
         } else {
             $min = "";
         }
         if ($this->max !== null) {
             $max = " max=\"$this->max\"";
-            if ($this->value > $this->max) {
-                $this->value = $this->max;
+            if ($value > $this->max) {
+                $value = $this->max;
             }
         } else {
             $max = "";
         }
         $step = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getClasses() . "\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" . 
-                "<span class=\"label\">$this->label" . $this->getRequiredChar() . "</span>" . 
-                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step" . $this->getRequiredAttribute() . " value=\"$this->value\">" .
+                "<span class=\"label\">$this->label$requiredChar</span>" . 
+                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$requiredAttribute value=\"$value\">" .
             "</label>" .
         "</p>";
     }
@@ -58,7 +58,7 @@ class number extends textClass {
      **/
     protected function setDefaults() {
         parent::setDefaults();
-        $this->defaults['value'] = 0;
+        $this->defaults['defaultValue'] = 0;
         $this->defaults['min'] = null;
         $this->defaults['max'] = null;
         $this->defaults['step'] = null;
