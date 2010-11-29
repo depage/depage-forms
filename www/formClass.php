@@ -195,7 +195,7 @@ class formClass extends container {
             } else {
                 $this->steps[$this->currentStep]->validate();
                 if ($this->steps[$this->currentStep]->valid) {
-                    if ($this->currentStep < count($this->steps)) {
+                    if ($this->currentStep < (count($this->steps)-1)) {
                         $this->redirect($this->url['path'] . '?step=' . ($this->currentStep + 1));
                     } else {
                         $this->redirect($this->successAddress);
