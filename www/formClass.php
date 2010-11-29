@@ -64,7 +64,7 @@ class formClass extends container {
         $this->sessionSlot =& $_SESSION[$this->sessionSlotName];
         
         // create a hidden input element to tell forms apart
-        $this->addHidden('form-name', array('value' => $this->name));
+        $this->addHidden('form-name', array('defaultValue' => $this->name));
 
         if (isset($_GET['step'])) {
             $this->currentStep = $_GET['step'];
@@ -126,14 +126,30 @@ class formClass extends container {
      **/
     public function updateInputValue($name) {
         // if it's a post take the value from there and save it to the session
-        if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name) && isset($_POST[$name]) ) {
-            $value = $_POST[$name];
+        if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name) && $this->inCurrentStep($name)) {
+            // checkbox like elements produce "null" in post-data if nothing has been selected - change that to empty string for validation
+            $value = ($_POST[$name] !== null) ? $_POST[$name] : "";
             $this->sessionSlot[$name] = $value;
             $this->getElement($name)->setValue($value);
         }
         // if it's not a post try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
             $this->getElement($name)->setValue($this->sessionSlot[$name]);
+        }
+    }
+    
+    /**
+     * Checks if the element named $name is in the current step fieldset.
+     *
+     * @param $name name of element
+     * @return bool - says wether it's in the current step
+     **/
+    private function inCurrentStep($name) {
+        if (count($this->steps) === 0) {
+            return true;
+        } else {
+            $currentElements = $this->steps[$this->currentStep]->getElements();
+            return (in_array($this->getElement($name), $currentElements));
         }
     }
 

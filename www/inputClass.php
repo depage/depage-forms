@@ -33,7 +33,7 @@ abstract class inputClass {
     /**
      * Input elements's value.
      **/
-    protected $value;
+    public $value = null;
     /**
      * Holds validator object reference.
      **/
@@ -41,52 +41,29 @@ abstract class inputClass {
     /**
      * Contains current input elements' validation status.
      **/
-    protected $valid;
+    protected $valid = false;
     /**
      * HTML classes attribute for rendering the input element.
      **/
     protected $classes;
-    /**
-     * Input elements default parameter values.
-     **/
-    protected $defaults = array();
 
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-     public function __construct($name, $parameters, $formName) {
+    public function __construct($name, $parameters, $formName) {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
-        $this->type = get_class($this);
-        $this->name = $name;
-        $this->valid = false;
-        $this->formName = $formName;
+        $this->type         = get_class($this);
+        $this->name         = $name;
+        $this->formName     = $formName;
 
-        // loads default attributes from $this->defaults array
-        $this->setDefaults();
-        foreach ($this->defaults as $parameter => $default) {
-            $this->$parameter = isset($parameters[$parameter]) ? $parameters[$parameter] : $default;
-        }
-
-        $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
-    }
-
-    /**
-     * Hook method to be overridden by children in order to specify default
-     * values.
-     *
-     * @return void
-     **/
-    protected function setDefaults() {
-        $this->defaults = array(
-            'label' => $this->name,
-            'required' => false,
-            'requiredChar' => ' *',
-            'value' => null
-        );
+        $this->validator    = (isset($parameters['validator']))     ? new validator($parameters['validator'])   : new validator($this->type);
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                      : $name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                   : false;
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']               : ' *';
     }
 
     /**

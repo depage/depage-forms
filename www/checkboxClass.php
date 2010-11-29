@@ -16,16 +16,16 @@ abstract class checkboxClass extends inputClass {
     protected $optionList = array();
 
     /**
-     * Overrides parent::setDefaults()
-     *
-     * return void
+     * @param $name input elements' name
+     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
+     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    protected function setDefaults() {
-        parent::setDefaults();
-
+    public function __construct($name, $parameters, $formName) {
+        parent::__construct($name, $parameters, $formName);
+        
         // checkboxClass elements have values of type array
-        $this->defaults['defaultValue'] = array();
-        $this->defaults['optionList'] = array();
+        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : array();
+        $this->optionList   = (isset($parameters['optionList']))    ? $parameters['optionList']     : array();
     }
 
     /**

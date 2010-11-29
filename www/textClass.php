@@ -17,6 +17,18 @@ require_once('number.php');
  **/
 abstract class textClass extends inputClass {
     /**
+     * @param $name input elements' name
+     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
+     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+     **/
+    public function __construct($name, $parameters, $formName) {
+        parent::__construct($name, $parameters, $formName);
+        
+        // textClass elements have values of type string
+        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : '';
+    }
+
+    /**
      * Renders element to HTML.
      *
      * @return string of HTML rendered element
@@ -28,17 +40,5 @@ abstract class textClass extends inputClass {
                 "<input name=\"$this->name\" type=\"$this->type\"$requiredAttribute value=\"$value\">" .
             "</label>" .
         "</p>\n";
-    }
-
-    /**
-     * Overrides parent::setDefaults()
-     *
-     * return void
-     **/
-    protected function setDefaults() {
-        parent::setDefaults();
-        
-        // textClass elements have values of type string
-        $this->defaults['defaultValue'] = '';
     }
 }
