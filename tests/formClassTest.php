@@ -44,11 +44,11 @@ class formClassTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($rendered, $form->__toString());
     }
 
-    public function testEmptyFormValidation() {
+    public function testEmptyFormBeforePostValidation() {
         $_SESSION = array('nameString-data' => array());
         $this->form = new formClass('nameString');
         $this->form->process();
-        $this->assertEquals(true, $this->form->isValid());
+        $this->assertEquals(false, $this->form->isValid());
     }
 
     public function testGetElement() {

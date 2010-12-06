@@ -82,7 +82,10 @@ abstract class inputClass {
      * @return void
      **/
     public function validate() {
-        $this->valid = (($this->value !== null) && ($this->validator->match($this->value) || empty($this->value)) && (!empty($this->value) || !$this->required));
+        $this->valid = (($this->value !== null) 
+            && ($this->validator->match($this->value) || empty($this->value)) 
+            && (!empty($this->value) || !$this->required)
+        );
     }
 
     /**

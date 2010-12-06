@@ -41,9 +41,13 @@ class formClass extends container {
      * PHP session handle.
      **/
     protected $sessionSlot;
-
+    /**
+     * Contains current step number.
+     **/
     protected $currentStep;
-
+    /**
+     * Contains array of step object references.
+     **/
     protected $steps;
 
     /**
@@ -139,7 +143,7 @@ class formClass extends container {
      *
      * @return array of input elements
      **/
-    public function getCurrentElements() {
+    private function getCurrentElements() {
         $currentElements = array();
         foreach($this->elements as $element) {
             if (is_a($element, 'fieldset')) {
@@ -162,10 +166,8 @@ class formClass extends container {
     public function __toString() {
         $renderedElements = '';
         foreach($this->elementsAndHtml as $element) {
-            if ( !is_a($element, 'step') 
-                || (is_a($element, 'step') 
-                    && (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) ) {
-                
+            // leave out inactive step elements
+            if (!is_a($element, 'step') || (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) {
                 $renderedElements .= $element;
             }
         }
