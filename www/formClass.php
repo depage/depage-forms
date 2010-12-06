@@ -128,7 +128,7 @@ class formClass extends container {
         // if it's a post take the value from there and save it to the session
         if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name) && $this->inCurrentStep($name)) {
             // checkbox like elements produce "null" in post-data if nothing has been selected - change that to empty string for validation
-            $value = ($_POST[$name] !== null) ? $_POST[$name] : "";
+            $value = ($_POST[$name] !== null) ? $_POST[$name] : '';
             $this->sessionSlot[$name] = $value;
             $this->getElement($name)->setValue($value);
         }
@@ -146,8 +146,13 @@ class formClass extends container {
      **/
     private function inCurrentStep($name) {
         if (count($this->steps) === 0) {
+            // if there aren't any steps it's definitely true
+            return true;
+        } else if (in_array($this->getElement($name), $this->elements)) {
+            // if it's in the form object outside any step objects
             return true;
         } else {
+            // if it's in the current step object
             $currentElements = $this->steps[$this->currentStep]->getElements();
             return (in_array($this->getElement($name), $currentElements));
         }
