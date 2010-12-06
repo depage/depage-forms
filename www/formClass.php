@@ -139,23 +139,32 @@ class formClass extends container {
     }
     
     /**
-     * Checks if the element named $name is in the current step fieldset.
+     * Checks if the element named $name is in the current step.
      *
      * @param $name name of element
      * @return bool - says wether it's in the current step
      **/
     private function inCurrentStep($name) {
-        if (count($this->steps) === 0) {
-            // if there aren't any steps it's definitely true
-            return true;
-        } else if (in_array($this->getElement($name), $this->elements)) {
-            // if it's in the form object outside any step objects
-            return true;
-        } else {
-            // if it's in the current step object
-            $currentElements = $this->steps[$this->currentStep]->getElements();
-            return (in_array($this->getElement($name), $currentElements));
+        return in_array($this->getElement($name), $this->getCurrentElements());
+    }
+
+    /**
+     * returns an array of input elements contained in the current step.
+     *
+     * @return array of input elements
+     **/
+    public function getCurrentElements() {
+        $currentElements = array();
+        foreach($this->elements as $element) {
+            if (is_a($element, 'fieldset')) {
+                if (!is_a($element, 'step') || ($element == $this->steps[$this->currentStep])) {
+                    $currentElements = array_merge($currentElements, $element->getElements());
+                }
+            } else {
+                $currentElements[] = $element;
+            }
         }
+        return $currentElements;
     }
 
     /**

@@ -24,7 +24,7 @@ class fieldset extends container {
     }
 
     /**
-     * overwritable method to add child elements
+     * overridable method to add child elements
      *
      * @return void
      **/
