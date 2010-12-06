@@ -26,10 +26,6 @@ abstract class container {
      * Holds input element, fieldset and custom HTML object references.
      **/
     protected $elementsAndHtml = array();
-    /**
-     * Contains default attribute values.
-     **/
-    protected $defaults = array();
 
     /**
      *  @param $name string - container name
@@ -39,19 +35,6 @@ abstract class container {
     public function __construct($name, $parameters = array()) {
         $this->checkContainerName($name);
         $this->name = $name;
-
-        // loads default attributes from $this->defaults array
-        $this->setDefaults();
-        foreach ($this->defaults as $parameter => $default) {
-            $this->$parameter = isset($parameters[$parameter]) ? $parameters[$parameter] : $default;
-        }
-    }
-
-    /**
-     * Hook method to be overridden by children in order to specify default
-     * values.
-     **/
-    protected function setDefaults() {
     }
 
     /**

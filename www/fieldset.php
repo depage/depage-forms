@@ -12,6 +12,17 @@ class fieldset extends container {
     protected $form;
 
     /**
+     * @param $name string - fieldset name
+     * @param $parameters array of fieldset parameters, HTML attributes
+     * @return void
+     **/
+    public function __construct($name, $parameters = array()) {
+        parent::__construct($name, $parameters);
+
+        $this->label = (isset($parameters['label'])) ? $parameters['label'] : $this->name; 
+    }
+
+    /**
      * sets parent form of fieldset
      *
      * @param $form object - parent form object
@@ -29,17 +40,6 @@ class fieldset extends container {
      * @return void
      **/
     protected function addChildElements() {
-    }
-
-    /**
-     * Specifies default values of fieldset attributes for the parent class
-     * constructor.
-     *
-     * @return void
-     **/
-    protected function setDefaults() {
-        parent::setDefauls();
-        $this->defaults['label'] = $this->name;
     }
 
     /** 

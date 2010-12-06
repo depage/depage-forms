@@ -56,37 +56,23 @@ class formClass extends container {
 
         parent::__construct($name, $parameters);
 
+        $this->submitLabel      = (isset($parameters['submitLabel']))       ? $parameters['submitLabel']      : 'submit';
+        $this->action           = (isset($parameters['action']))            ? $parameters['action']         : $_SERVER['REQUEST_URI'];
+        $this->method           = (isset($parameters['method']))            ? $parameters['method']         : 'post';
+        $this->successAddress   = (isset($parameters['successAddress']))    ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
+        $this->currentStep      = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
+
         // check if there's an open session
         if (!session_id()) {
             session_start();
         }
-        $this->sessionSlotName = $this->name . '-data';
-        $this->sessionSlot =& $_SESSION[$this->sessionSlotName];
+        $this->sessionSlotName  = $this->name . '-data';
+        $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
         
         // create a hidden input element to tell forms apart
         $this->addHidden('form-name', array('defaultValue' => $this->name));
-
-        if (isset($_GET['step'])) {
-            $this->currentStep = $_GET['step'];
-        } else {
-            $this->currentStep = 0;
-        }
     }
     
-    /**
-     * Specifies default values of form attributes for the parent class
-     * constructor.
-     *
-     * @return void
-     **/
-    protected function setDefaults() {
-        parent::setDefaults();
-        $this->defaults['submitLabel'] = 'submit';
-        $this->defaults['action'] = $_SERVER['REQUEST_URI'];
-        $this->defaults['method'] = 'post';
-        $this->defaults['successAddress'] = $_SERVER['REQUEST_URI'];
-    }
-
     /** 
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements.
