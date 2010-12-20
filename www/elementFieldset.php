@@ -5,7 +5,7 @@ require_once('container.php');
 /**
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
-class fieldset extends container {
+class elementFieldset extends container {
     /**
      * Contains reference to current fieldsets' parent HTML form.
      **/
@@ -56,7 +56,7 @@ class fieldset extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
         
-        if (is_a($newElement, 'fieldset')) {
+        if (is_a($newElement, 'elementFieldset')) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this->form);
         } else {

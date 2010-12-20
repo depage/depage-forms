@@ -2,8 +2,9 @@
 
 require_once('validator.php');
 require_once('textClass.php');
-require_once('checkboxClass.php');
-require_once('inputBoolean.php');
+require_once('elementBoolean.php');
+require_once('elementSingle.php');
+require_once('elementMultiple.php');
 
 /**
  * The abstract class inputClass holds the intersections of all implemented
@@ -57,7 +58,7 @@ abstract class inputClass {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
-        $this->type         = str_replace("input", "", get_class($this));
+        $this->type         = strtolower(str_replace("element", "", get_class($this)));
         $this->name         = $name;
         $this->formName     = $formName;
 
@@ -102,7 +103,7 @@ abstract class inputClass {
      * Allows to manually set the current input elements value.
      *
      * @param $newValue contains the new value
-     * @return void
+     * @return $newValue
      **/
     public function setValue($newValue) {
         $this->value = $newValue;

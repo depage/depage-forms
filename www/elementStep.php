@@ -1,8 +1,8 @@
 <?php
 
-require_once('fieldset.php');
+require_once('elementFieldset.php');
 
-class step extends fieldset {
+class elementStep extends elementFieldset {
     /**
      * If the step contains elements it calls their rendering methods.
      * (unlike fieldsets, steps themselves aren't rendered)

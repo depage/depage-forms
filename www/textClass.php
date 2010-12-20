@@ -1,15 +1,15 @@
 <?php 
 
-require_once('inputText.php');
-require_once('inputEmail.php');
-require_once('inputHidden.php');
-require_once('inputUrl.php');
-require_once('inputTel.php');
+require_once('elementText.php');
+require_once('elementEmail.php');
+require_once('elementHidden.php');
+require_once('elementUrl.php');
+require_once('elementTel.php');
 require_once('inputClass.php');
-require_once('inputTextarea.php');
-require_once('inputPassword.php');
-require_once('inputRange.php');
-require_once('inputNumber.php');
+require_once('elementTextarea.php');
+require_once('elementPassword.php');
+require_once('elementRange.php');
+require_once('elementNumber.php');
 
 /**
  * The abstract class textClass is parent to text based input element classes.

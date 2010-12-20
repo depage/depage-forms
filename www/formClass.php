@@ -7,10 +7,10 @@
 
 require_once('inputClass.php');
 require_once('exceptions.php');
-require_once('fieldset.php');
 require_once('container.php');
-require_once('creditcard.php');
-require_once('step.php');
+require_once('elementFieldset.php');
+require_once('elementStep.php');
+require_once('elementCreditcard.php');
 
 /**
  * The class formClass is the main tool of the forms library. It generates HTML
@@ -91,11 +91,11 @@ class formClass extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if (is_a($newElement, 'fieldset')) {
+        if (is_a($newElement, 'elementFieldset')) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this);
 
-            if (is_a($newElement, 'step')) {
+            if (is_a($newElement, 'elementStep')) {
                 $this->steps[] = $newElement;
             }
         } else {
@@ -145,8 +145,8 @@ class formClass extends container {
     private function getCurrentElements() {
         $currentElements = array();
         foreach($this->elements as $element) {
-            if (is_a($element, 'fieldset')) {
-                if (!is_a($element, 'step') || ($element == $this->steps[$this->currentStep])) {
+            if (is_a($element, 'elementFieldset')) {
+                if (!is_a($element, 'elementStep') || ($element == $this->steps[$this->currentStep])) {
                     $currentElements = array_merge($currentElements, $element->getElements());
                 }
             } else {
@@ -166,7 +166,7 @@ class formClass extends container {
         $renderedElements = '';
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
-            if (!is_a($element, 'step') || (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) {
+            if (!is_a($element, 'elementStep') || (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) {
                 $renderedElements .= $element;
             }
         }
