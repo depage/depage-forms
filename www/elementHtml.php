@@ -6,7 +6,7 @@ require_once('container.php');
  * The html class can be used to add custom HTML between rendered HTML 
  * elements.
  **/
-class html {
+class elementHtml {
     /**
      * string of HTML to be printed
      **/

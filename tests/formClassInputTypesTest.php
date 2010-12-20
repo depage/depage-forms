@@ -105,28 +105,28 @@ class formClassInputTypesTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('textClass', $inputs[1]);
     }
 
-    public function testAddCheckbox() {
-        $this->form->addCheckbox('nameString');
+    public function testAddBoolean() {
+        $this->form->addBoolean('nameString');
         $inputs = $this->form->getElements();
-        $this->assertInstanceOf('checkboxClass', $inputs[1]);
+        $this->assertInstanceOf('elementBoolean', $inputs[1]);
     }
 
-    public function testAddRadio() {
-        $this->form->addRadio('nameString');
+    public function testAddSingle() {
+        $this->form->addSingle('nameString');
         $inputs = $this->form->getElements();
-        $this->assertInstanceOf('checkboxClass', $inputs[1]);
+        $this->assertInstanceOf('elementSingle', $inputs[1]);
     }
 
-    public function testAddSelect() {
-        $this->form->addSelect('nameString');
+    public function testAddMultiple() {
+        $this->form->addMultiple('nameString');
         $inputs = $this->form->getElements();
-        $this->assertInstanceOf('checkboxClass', $inputs[1]);
+        $this->assertInstanceOf('elementMultiple', $inputs[1]);
     }
 
     public function testAddFile() {
         $this->form->addFile('nameString');
         $inputs = $this->form->getElements();
-        $this->assertInstanceOf('fileClass', $inputs[1]);
+        $this->assertInstanceOf('elementFile', $inputs[1]);
     }
 }
 ?>

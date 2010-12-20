@@ -5,7 +5,7 @@ require_once('textClass.php');
 /**
  * HTML number input type.
  **/
-class inputNumber extends textClass {
+class elementNumber extends textClass {
     /**
      * Minimum range HTML attribute.
      **/

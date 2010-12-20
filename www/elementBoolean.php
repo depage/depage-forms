@@ -5,7 +5,7 @@ require_once ('inputClass.php');
 /**
  * HTML single checkbox input type.
  **/
-class inputBoolean extends inputClass {
+class elementBoolean extends inputClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
@@ -14,7 +14,8 @@ class inputBoolean extends inputClass {
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
         
-        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : false;
+        // boolean-elements have values of type boolean
+        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : (boolean) false;
     }
 
     /**

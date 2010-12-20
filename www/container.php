@@ -1,8 +1,8 @@
 <?php 
 
 require_once('exceptions.php');
-require_once('fieldset.php');
-require_once('html.php');
+require_once('elementFieldset.php');
+require_once('elementHtml.php');
 
 /**
  * The abstract container class contains the similatrities of the child classes
@@ -47,17 +47,11 @@ abstract class container {
      **/
     public function __call($functionName, $functionArguments) {
         if (substr($functionName, 0, 3) === 'add') {
-            $type = $this->getElementType($functionName);
+            $type = strtolower(str_replace('add', 'element', $functionName));
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
             return $this->addElement($type, $name, $parameters);
         }
-    }
-
-    protected function getElementType($type) {
-        $type = strtolower(str_replace('add', '', $type));
-
-        return ((class_exists("input".$type))) ? "input".$type : $type;
     }
 
     /**
@@ -172,7 +166,7 @@ abstract class container {
     public function getElements() {
         $allElements = array();
         foreach($this->elements as $element) {  
-            if (is_a($element, 'fieldset')) {
+            if (is_a($element, 'elementFieldset')) {
                 $allElements = array_merge($allElements, $element->getElements());
             } else {
                 $allElements[] = $element;

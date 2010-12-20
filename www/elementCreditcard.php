@@ -1,11 +1,11 @@
 <?php 
 
-require_once('fieldset.php');
+require_once('elementFieldset.php');
 
 /**
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
-class creditcard extends fieldset {
+class creditcard extends elementFieldset {
     /**
      * adds creditcard-inputs to fieldset
      *
