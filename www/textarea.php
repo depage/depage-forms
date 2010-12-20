@@ -5,7 +5,7 @@ require_once('textClass.php');
 /**
  * HTML textarea element.
  **/
-class textarea extends textClass {
+class inputTextarea extends textClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

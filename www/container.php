@@ -47,11 +47,17 @@ abstract class container {
      **/
     public function __call($functionName, $functionArguments) {
         if (substr($functionName, 0, 3) === 'add') {
-            $type = strtolower(str_replace('add', '', $functionName));
+            $type = $this->getElementType($functionName);
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
             return $this->addElement($type, $name, $parameters);
         }
+    }
+
+    protected function getElementType($type) {
+        $type = strtolower(str_replace('add', '', $type));
+
+        return ((class_exists("input".$type))) ? "input".$type : $type;
     }
 
     /**

@@ -5,7 +5,7 @@ require_once ('inputClass.php');
 /** 
  * HTML select element.
  **/
-class select extends checkboxClass {
+class inputSelect extends checkboxClass {
     /**
      * @param $name select - elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

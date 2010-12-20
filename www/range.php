@@ -5,5 +5,5 @@ require_once('number.php');
 /**
  * HTML range input type.
  **/
-class range extends number {
+class inputRange extends inputNumber {
 }

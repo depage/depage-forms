@@ -3,6 +3,7 @@
 require_once('validator.php');
 require_once('textClass.php');
 require_once('checkboxClass.php');
+require_once('inputBoolean.php');
 
 /**
  * The abstract class inputClass holds the intersections of all implemented
@@ -56,7 +57,7 @@ abstract class inputClass {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
-        $this->type         = get_class($this);
+        $this->type         = str_replace("input", "", get_class($this));
         $this->name         = $name;
         $this->formName     = $formName;
 
@@ -105,6 +106,7 @@ abstract class inputClass {
      **/
     public function setValue($newValue) {
         $this->value = $newValue;
+        return $newValue;
     }
 
     /**

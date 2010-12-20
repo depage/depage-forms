@@ -119,8 +119,7 @@ class formClass extends container {
         if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name) && $this->inCurrentStep($name)) {
             // checkbox like elements produce "null" in post-data if nothing has been selected - change that to empty string for validation
             $value = ($_POST[$name] !== null) ? $_POST[$name] : '';
-            $this->sessionSlot[$name] = $value;
-            $this->getElement($name)->setValue($value);
+            $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
         }
         // if it's not a post try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
