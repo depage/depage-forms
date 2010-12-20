@@ -1,6 +1,6 @@
 <?php
 
-require_once('number.php');
+require_once('inputNumber.php');
 
 /**
  * HTML range input type.

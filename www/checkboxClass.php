@@ -1,9 +1,9 @@
 <?php 
 
 require_once ('inputClass.php');
-require_once ('select.php');
-require_once ('checkbox.php');
-require_once ('radio.php');
+require_once ('inputSelect.php');
+require_once ('inputCheckbox.php');
+require_once ('inputRadio.php');
 
 /**
  * The abstract class checkboxClass is parent to choice based input element
