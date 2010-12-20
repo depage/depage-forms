@@ -60,7 +60,7 @@ class formClass extends container {
 
         parent::__construct($name, $parameters);
 
-        $this->submitLabel      = (isset($parameters['submitLabel']))       ? $parameters['submitLabel']      : 'submit';
+        $this->submitLabel      = (isset($parameters['submitLabel']))       ? $parameters['submitLabel']    : 'submit';
         $this->action           = (isset($parameters['action']))            ? $parameters['action']         : $_SERVER['REQUEST_URI'];
         $this->method           = (isset($parameters['method']))            ? $parameters['method']         : 'post';
         $this->successAddress   = (isset($parameters['successAddress']))    ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
