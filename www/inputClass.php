@@ -2,7 +2,9 @@
 
 require_once('validator.php');
 require_once('textClass.php');
-require_once('checkboxClass.php');
+require_once('elementBoolean.php');
+require_once('elementSingle.php');
+require_once('elementMultiple.php');
 
 /**
  * The abstract class inputClass holds the intersections of all implemented
@@ -33,7 +35,7 @@ abstract class inputClass {
     /**
      * Input elements's value.
      **/
-    protected $value;
+    public $value = null;
     /**
      * Holds validator object reference.
      **/
@@ -41,52 +43,29 @@ abstract class inputClass {
     /**
      * Contains current input elements' validation status.
      **/
-    protected $valid;
+    protected $valid = false;
     /**
      * HTML classes attribute for rendering the input element.
      **/
     protected $classes;
-    /**
-     * Input elements default parameter values.
-     **/
-    protected $defaults = array();
 
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-     public function __construct($name, $parameters, $formName) {
+    public function __construct($name, $parameters, $formName) {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
-        $this->type = get_class($this);
-        $this->name = $name;
-        // so it doesn't show errors on initial display (when it's still empty)
-        $this->valid = true;
-        $this->formName = $formName;
+        $this->type         = strtolower(str_replace("element", "", get_class($this)));
+        $this->name         = $name;
+        $this->formName     = $formName;
 
-        // loads default attributes from $this->defaults array
-        $this->setDefaults();
-        foreach ($this->defaults as $parameter => $default) {
-            $this->$parameter = isset($parameters[$parameter]) ? $parameters[$parameter] : $default;
-        }
-
-        $this->validator = (isset($parameters['validator'])) ? new validator($parameters['validator']) : new validator($this->type);
-    }
-
-    /**
-     * Hook method to be overridden by children in order to specify default
-     * values.
-     *
-     * @return void
-     **/
-    protected function setDefaults() {
-        $this->defaults = array(
-            'label' => $this->name,
-            'required' => false,
-            'requiredChar' => ' *'
-        );
+        $this->validator    = (isset($parameters['validator']))     ? new validator($parameters['validator'])   : new validator($this->type);
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                      : $name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                   : false;
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']               : ' *';
     }
 
     /**
@@ -105,7 +84,10 @@ abstract class inputClass {
      * @return void
      **/
     public function validate() {
-        $this->valid = (($this->validator->match($this->value) || empty($this->value)) && (!empty($this->value) || !$this->required));
+        $this->valid = (($this->value !== null) 
+            && ($this->validator->match($this->value) || empty($this->value)) 
+            && (!empty($this->value) || !$this->required)
+        );
     }
 
     /**
@@ -121,10 +103,11 @@ abstract class inputClass {
      * Allows to manually set the current input elements value.
      *
      * @param $newValue contains the new value
-     * @return void
+     * @return $newValue
      **/
     public function setValue($newValue) {
         $this->value = $newValue;
+        return $newValue;
     }
 
     /**
@@ -143,6 +126,20 @@ abstract class inputClass {
      **/
     public function setRequired() {
         $this->required = true;
+    }
+    
+    /**
+     * Prepares element for HTML rendering and calls render() method.
+     *
+     * @return string of HTML rendered element
+     **/
+    public function __toString() {
+        $value = ($this->value == null) ? $this->defaultValue : $this->value;
+        $requiredAttribute = $this->getRequiredAttribute();
+        $requiredChar = $this->getRequiredChar();
+        $class = $this->getClasses();
+
+        return $this->render($value, $requiredAttribute, $requiredChar, $class);
     }
 
     /**
@@ -165,8 +162,10 @@ abstract class inputClass {
         if ($this->required) {
             $classes .= ' required';
         }
-        if (!$this->isValid()) {
-            $classes .= ' error';
+        if ($this->value !== null) {
+            if (!$this->isValid()) {
+                $classes .= ' error';
+            }
         }
         return $classes;
     }

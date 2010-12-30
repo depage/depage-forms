@@ -5,17 +5,28 @@ require_once('container.php');
 /**
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
-class fieldset extends container {
+class elementFieldset extends container {
     /**
      * Contains reference to current fieldsets' parent HTML form.
      **/
     protected $form;
 
     /**
+     * @param $name string - fieldset name
+     * @param $parameters array of fieldset parameters, HTML attributes
+     * @return void
+     **/
+    public function __construct($name, $parameters = array()) {
+        parent::__construct($name, $parameters);
+
+        $this->label = (isset($parameters['label'])) ? $parameters['label'] : $this->name; 
+    }
+
+    /**
      * sets parent form of fieldset
      *
-     *  @param $form object - parent form object
-     *  @return void
+     * @param $form object - parent form object
+     * @return void
      **/
     public function setParentForm($form) {
         $this->form = $form;
@@ -24,22 +35,11 @@ class fieldset extends container {
     }
 
     /**
-     * overwritable method to add child elements
-     *
-     *  @return void
-     **/
-    protected function addChildElements() {
-    }
-
-    /**
-     * Specifies default values of fieldset attributes for the parent class
-     * constructor.
+     * overridable method to add child elements
      *
      * @return void
      **/
-    protected function setDefaults() {
-        parent::setDefauls();
-        $this->defaults['label'] = $this->name;
+    protected function addChildElements() {
     }
 
     /** 
@@ -56,7 +56,7 @@ class fieldset extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
         
-        if (is_a($newElement, 'fieldset')) {
+        if (is_a($newElement, 'elementFieldset')) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this->form);
         } else {

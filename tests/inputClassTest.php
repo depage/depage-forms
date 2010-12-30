@@ -40,9 +40,9 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
 
     public function testInputClassValid() {
         $input = new inputClassTestClass('inputNameString', array(), 'formNameString');
-        $this->assertEquals(true, $input->isValid());
+        $this->assertEquals(false, $input->isValid());
         $input->validate();
-        $this->assertEquals(true, $input->isValid());
+        $this->assertEquals(false, $input->isValid());
         $input->setValue('testValue');
         $input->validate();
         $this->assertEquals(true, $input->isValid());

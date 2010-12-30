@@ -1,21 +1,11 @@
-<?php 
+<?php
 
-require_once('elementText.php');
-require_once('elementEmail.php');
-require_once('elementHidden.php');
-require_once('elementUrl.php');
-require_once('elementTel.php');
-require_once('inputClass.php');
-require_once('elementTextarea.php');
-require_once('elementPassword.php');
-require_once('elementRange.php');
-require_once('elementNumber.php');
+require_once('textClass.php');
 
 /**
- * The abstract class textClass is parent to text based input element classes.
- * It contains basic HTML rendering functionality.
+ * HTML textarea element.
  **/
-abstract class textClass extends inputClass {
+class elementTextarea extends textClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
@@ -24,8 +14,8 @@ abstract class textClass extends inputClass {
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
         
-        // textClass elements have values of type string
-        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : '';
+        $this->rows = (isset($parameters['rows'])) ? $parameters['rows'] : null;
+        $this->cols = (isset($parameters['cols'])) ? $parameters['cols'] : null;
     }
 
     /**
@@ -34,10 +24,13 @@ abstract class textClass extends inputClass {
      * @return string of HTML rendered element
      **/
     public function render($value, $requiredAttribute, $requiredChar, $class) {
+        $rows = ($this->rows !== null) ? " rows=\"$this->rows\"" : "";
+        $cols = ($this->cols !== null) ? " cols=\"$this->cols\"" : "";
+
         return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"$requiredAttribute value=\"$value\">" .
+                "<textarea name=\"$this->name\"$requiredAttribute $rows$cols>$value</textarea>" .
             "</label>" .
         "</p>\n";
     }

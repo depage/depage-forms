@@ -28,7 +28,6 @@ class htmlNoStringException extends Exception {
     }
 }
 
-
 class inputException extends Exception {
 }
 
@@ -56,7 +55,7 @@ class inputParametersNoArrayException extends inputException {
     }
 }
 
-class wrongCheckedParameterCombination extends inputException {
+class wrongCheckedParameterCombinationException extends inputException {
     public function __construct() {
         parent::__construct("Wrong parameter - option list combination.");
     }

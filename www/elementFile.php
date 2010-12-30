@@ -2,5 +2,5 @@
 
 require_once ('inputClass.php');
 
-class fileClass extends inputClass {
+class elementFile extends inputClass {
 }
