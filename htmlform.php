@@ -16,7 +16,7 @@ require_once('elementCreditcard.php');
  * The class formClass is the main tool of the forms library. It generates HTML
  * fieldsets and input elements. It also contains the PHP session handlers.
  **/
-class formClass extends container {
+class htmlform extends container {
     /**
      * HTML form method attribute.
      * */

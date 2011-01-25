@@ -80,7 +80,7 @@ abstract class container {
      * return $newHtml custom HTML element reference
      **/
     public function addHtml($htmlString) {
-        $newHtml = new html($htmlString);
+        $newHtml = new elementHtml($htmlString);
 
         $this->elementsAndHtml[] = $newHtml;
         
