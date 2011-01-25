@@ -5,6 +5,7 @@ class validator {
     private $wildcard = false;
 
     public function __construct($argument = '') {
+        // if argument string starts with a '/' it's used as a regular expression
         if ((isset($argument[0])) && ($argument[0] === '/')) {
             $this->RegEx = $argument;
         } else {
