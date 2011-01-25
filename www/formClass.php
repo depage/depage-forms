@@ -187,19 +187,14 @@ class formClass extends container {
         // if there's post-data from this form
         if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)) {
             if (count($this->steps) === 0) {
-                $this->validate();
-                if ($this->valid) {
-                    $this->redirect($this->successAddress);
-                } else {
-                    $this->redirect($this->url['path']);
-                }
+                $this->finalValidation();
             } else {
                 $this->steps[$this->currentStep]->validate();
                 if ($this->steps[$this->currentStep]->valid) {
                     if ($this->currentStep < (count($this->steps)-1)) {
                         $this->redirect($this->url['path'] . '?step=' . ($this->currentStep + 1));
                     } else {
-                        $this->redirect($this->successAddress);
+                        $this->finalValidation();
                     }
                 } else {
                     $this->redirect($this->url['path'] . '?step=' . $this->currentStep);
@@ -208,6 +203,41 @@ class formClass extends container {
         }
 
         $this->validate();
+    }
+
+    /**
+     * Checks the entire form. If it's valid, it redirects to the successPage. 
+     * Otherwise redirects to first step with an error.
+     **/
+    private function finalValidation() {
+        $this->validate();
+        if ($this->valid) {
+            $this->redirect($this->successAddress);
+        } else {
+            $firstInvalidStep = $this->getFirstInvalidStep();
+            $urlStepParameter = ($firsInvalidStep > 0) ? '' : '?step=' . $firstInvalidStep;
+            $this->redirect($this->url['path'] . $urlStepParameter);
+        }
+    }
+
+    /**
+     * Validates steps consecutively and returns the number of the first one
+     * that isn't valid (steps need to be submitted at least once to count as
+     * valid).
+     *
+     * @return int $stepNumber
+     **/
+    private function getFirstInvalidStep() {
+        if ( count($this->steps ) > 0) {
+            foreach ( $this->steps as $stepNumber=>$step ) {
+                $step->validate();
+                if ( !$step->valid ) {
+                    return $stepNumber;
+                }
+            }
+        } else {
+            return 0;
+        }
     }
 
     /**
