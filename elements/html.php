@@ -1,12 +1,12 @@
 <?php 
 
-require_once('container.php');
+namespace depage\htmlform\elements;
 
 /**
  * The html class can be used to add custom HTML between rendered HTML 
  * elements.
  **/
-class elementHtml {
+class html {
     /**
      * string of HTML to be printed
      **/
