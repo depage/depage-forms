@@ -1,11 +1,11 @@
 <?php
 
-require_once('textClass.php');
+namespace depage\htmlform\elements;
 
 /**
  * HTML number input type.
  **/
-class elementNumber extends textClass {
+class number extends \depage\htmlform\abstracts\textClass {
     /**
      * Minimum range HTML attribute.
      **/

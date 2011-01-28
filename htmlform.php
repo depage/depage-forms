@@ -1,22 +1,27 @@
 <?php 
 
 /**
- * forms is a PHP library that assists programmers in creating HTML forms.
+ * htmlform is a PHP library that assists programmers in creating HTML forms.
  * It features validation and takes care of duplicate form submissions.
  **/
+namespace depage\htmlform; 
 
-require_once('inputClass.php');
-require_once('exceptions.php');
-require_once('container.php');
-require_once('elementFieldset.php');
-require_once('elementStep.php');
-require_once('elementCreditcard.php');
+function autoload($class) {
+        $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
+        $file = __DIR__ . '/' .  $class . '.php';
+
+        if (file_exists($file)) {
+            require_once($file);
+        }
+    }
+
+spl_autoload_register(__NAMESPACE__ . '\autoload');
 
 /**
- * The class formClass is the main tool of the forms library. It generates HTML
+ * The class htmlform is the main tool of the htmlform library. It generates HTML
  * fieldsets and input elements. It also contains the PHP session handlers.
  **/
-class htmlform extends container {
+class htmlform extends abstracts\container {
     /**
      * HTML form method attribute.
      * */
@@ -91,11 +96,11 @@ class htmlform extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if (is_a($newElement, 'elementFieldset')) {
+        if (is_a($newElement, '\\depage\\htmlform\\elements\\fieldset')) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this);
 
-            if (is_a($newElement, 'elementStep')) {
+            if (is_a($newElement, '\\depage\\htmlform\\elements\\step')) {
                 $this->steps[] = $newElement;
             }
         } else {
@@ -145,8 +150,8 @@ class htmlform extends container {
     private function getCurrentElements() {
         $currentElements = array();
         foreach($this->elements as $element) {
-            if (is_a($element, 'elementFieldset')) {
-                if (!is_a($element, 'elementStep') || ($element == $this->steps[$this->currentStep])) {
+            if (is_a($element, '\\depage\\htmlform\\elements\\fieldset')) {
+                if (!is_a($element, '\\depage\\htmlform\\elements\\step') || ($element == $this->steps[$this->currentStep])) {
                     $currentElements = array_merge($currentElements, $element->getElements());
                 }
             } else {
@@ -166,7 +171,7 @@ class htmlform extends container {
         $renderedElements = '';
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
-            if (!is_a($element, 'elementStep') || (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) {
+            if (!is_a($element, '\\depage\\htmlform\\elements\\step') || (isset($this->steps[$this->currentStep]) && $this->steps[$this->currentStep] == $element)) {
                 $renderedElements .= $element;
             }
         }
@@ -341,7 +346,7 @@ class htmlform extends container {
     public function checkElementName($name) {
         foreach($this->getElements() as $element) {  
             if ($element->getName() === $name) {
-                throw new duplicateElementNameException();
+                throw new \depage\htmlform\exceptions\duplicateElementNameException();
             }
         }
     }
@@ -363,3 +368,4 @@ class htmlform extends container {
     protected function onValidate() {
     }
 }
+

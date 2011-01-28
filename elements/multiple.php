@@ -1,11 +1,11 @@
 <?php 
 
-require_once ('inputClass.php');
+namespace depage\htmlform\elements;
 
 /**
  * HTML-multiple-choice input type i.e. checkbox and select.
  **/
-class elementMultiple extends inputClass {
+class multiple extends \depage\htmlform\abstracts\inputClass {
     /** 
      * Contains list of selectable options.
      **/

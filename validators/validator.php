@@ -1,4 +1,5 @@
 <?php
+namespace depage\htmlform\validators;
 
 class validator {
     private $RegEx;

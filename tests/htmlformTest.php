@@ -1,16 +1,16 @@
 <?php
 
-require_once('../www/formClass.php');
+require_once('../htmlform.php');
 
-class formClassTest extends PHPUnit_Framework_TestCase {
+class htmlformTest extends PHPUnit_Framework_TestCase {
     public function testDuplicateElementNameException() {
-        $this->form = new formClass('nameString');
+        $this->form = new depage\htmlform\htmlform('nameString');
 
         $this->form->addHidden('duplicate', array());
         try {
             $this->form->addHidden('duplicate', array());
         }
-        catch (duplicateElementNameException $expected) {
+        catch (\depage\htmlform\exceptions\duplicateElementNameException $expected) {
             return;
         }
         $this->fail('Expected duplicateElementNameException.');
@@ -18,9 +18,9 @@ class formClassTest extends PHPUnit_Framework_TestCase {
 
     public function testContainerNameNoStringException() {
         try {
-            $form = new formClass(true, array());
+            $form = new depage\htmlform\htmlform(true, array());
         }
-        catch (containerNameNoStringException $expected) {
+        catch (\depage\htmlform\exceptions\containerNameNoStringException $expected) {
             return;
         }
         $this->fail('Expected containerNameNoStringException.');
@@ -28,9 +28,9 @@ class formClassTest extends PHPUnit_Framework_TestCase {
 
     public function testInvalidContainerNameException() {
         try {
-            $form = new formClass(' ', array());
+            $form = new depage\htmlform\htmlform(' ', array());
         }
-        catch (invalidContainerNameException $expected) {
+        catch (\depage\htmlform\exceptions\invalidContainerNameException $expected) {
             return;
         }
         $this->fail('Expected invalidFormNameException.');
@@ -39,20 +39,20 @@ class formClassTest extends PHPUnit_Framework_TestCase {
     public function testToStringSimple() {
     $rendered = '<form id="nameString" name="nameString" method="post" action="' . $_SERVER['REQUEST_URI'] . '"><input name="form-name" id="nameString-form-name" type="hidden" class="input-hidden" value="nameString">
 <p id="nameString-submit"><input type="submit" name="submit" value="submit"></p></form>';
-        $form = new formClass('nameString');
+        $form = new depage\htmlform\htmlform('nameString');
 
         $this->assertEquals($rendered, $form->__toString());
     }
 
     public function testEmptyFormBeforePostValidation() {
         $_SESSION = array('nameString-data' => array());
-        $this->form = new formClass('nameString');
+        $this->form = new depage\htmlform\htmlform('nameString');
         $this->form->process();
         $this->assertEquals(false, $this->form->isValid());
     }
 
     public function testGetElement() {
-        $this->form = new formClass('nameString');
+        $this->form = new depage\htmlform\htmlform('nameString');
         $this->assertEquals('form-name', $this->form->getElement('form-name')->getName());
         $this->assertEquals(false, $this->form->getInput('bogus-input-name'));
     }

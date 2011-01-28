@@ -1,11 +1,11 @@
 <?php 
 
-require_once ('inputClass.php');
+namespace depage\htmlform\elements;
 
 /** 
  * HTML-single-choice input type i.e. radio and select.
  **/
-class elementSingle extends inputClass {
+class single extends \depage\htmlform\abstracts\inputClass {
     /** 
      * Contains list of selectable options.
      **/

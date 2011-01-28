@@ -1,11 +1,11 @@
 <?php 
 
-require_once('container.php');
+namespace depage\htmlform\elements;
 
 /**
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
-class elementFieldset extends container {
+class fieldset extends \depage\htmlform\abstracts\container {
     /**
      * Contains reference to current fieldsets' parent HTML form.
      **/
@@ -56,7 +56,7 @@ class elementFieldset extends container {
 
         $newElement = parent::addElement($type, $name, $parameters);
         
-        if (is_a($newElement, 'elementFieldset')) {
+        if (is_a($newElement, '\\depage\\htmlform\\elements\\fieldset')) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this->form);
         } else {

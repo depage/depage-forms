@@ -1,8 +1,8 @@
 <?php
 
-require_once('elementFieldset.php');
+namespace depage\htmlform\elements;
 
-class elementStep extends elementFieldset {
+class step extends fieldset {
     /**
      * If the step contains elements it calls their rendering methods.
      * (unlike fieldsets, steps themselves aren't rendered)

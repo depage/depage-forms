@@ -1,16 +1,12 @@
 <?php
-
-require_once('validator.php');
-require_once('textClass.php');
-require_once('elementBoolean.php');
-require_once('elementSingle.php');
-require_once('elementMultiple.php');
-
 /**
  * The abstract class inputClass holds the intersections of all implemented
  * HTML input element types. It handles validation, manual value manipulation
  * and constructor parameter checks.
  **/
+
+namespace depage\htmlform\abstracts;
+
 abstract class inputClass {
     /** 
      * Input element type - HTML input type attribute.
@@ -58,11 +54,11 @@ abstract class inputClass {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
-        $this->type         = strtolower(str_replace("element", "", get_class($this)));
+        $this->type         = strtolower(str_replace('depage\\htmlform\\elements\\', '', get_class($this)));
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? new validator($parameters['validator'])   : new validator($this->type);
+        $this->validator    = (isset($parameters['validator']))     ? new \depage\htmlform\validators\validator($parameters['validator'])   : new \depage\htmlform\validators\validator($this->type);
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                      : $name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                   : false;
         $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']               : ' *';
@@ -207,7 +203,7 @@ abstract class inputClass {
      **/
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new inputParametersNoArrayException();
+            throw new \depage\htmlform\exceptions\inputParametersNoArrayException();
         }
     }
     
@@ -220,10 +216,10 @@ abstract class inputClass {
      **/
     private function _checkInputName($name) {
         if (!is_string($name)) {
-            throw new inputNameNoStringException();
+            throw new \depage\htmlform\exceptions\inputNameNoStringException();
         }
         if (trim($name) === '') {
-            throw new invalidInputNameException();
+            throw new \depage\htmlform\exceptions\invalidInputNameException();
         }
     }
 }

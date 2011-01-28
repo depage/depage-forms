@@ -1,11 +1,11 @@
 <?php 
 
-require_once ('inputClass.php');
+namespace depage\htmlform\elements;
 
 /**
  * HTML single checkbox input type.
  **/
-class elementBoolean extends inputClass {
+class boolean extends \depage\htmlform\abstracts\inputClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

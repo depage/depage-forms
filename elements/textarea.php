@@ -1,11 +1,11 @@
 <?php
 
-require_once('textClass.php');
+namespace depage\htmlform\elements;
 
 /**
  * HTML textarea element.
  **/
-class elementTextarea extends textClass {
+class textarea extends \depage\htmlform\abstracts\textClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

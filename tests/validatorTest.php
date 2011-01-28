@@ -1,6 +1,10 @@
 <?php
 
-class validatorTest extends PHPUnit_Framework_TestCase {
+namespace depage\htmlform\validators;
+
+require_once('../validators/validator.php');
+
+class validatorTest extends \PHPUnit_Framework_TestCase {
     public function testWildcard() {
         $wildcardValidator = new validator();
         $this->assertEquals(true, $wildcardValidator->match('anyString'));

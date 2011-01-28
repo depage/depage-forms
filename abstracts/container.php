@@ -1,14 +1,13 @@
 <?php 
 
-require_once('exceptions.php');
-require_once('elementFieldset.php');
-require_once('elementHtml.php');
-
 /**
  * The abstract container class contains the similatrities of the child classes
  * formClass and fieldset.
  * 
  **/
+
+namespace depage\htmlform\abstracts;
+
 abstract class container {
     /**
      * Name of the container.
@@ -47,7 +46,7 @@ abstract class container {
      **/
     public function __call($functionName, $functionArguments) {
         if (substr($functionName, 0, 3) === 'add') {
-            $type = strtolower(str_replace('add', 'element', $functionName));
+            $type = strtolower(str_replace('add', '\\depage\\htmlform\\elements\\', $functionName));
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
             return $this->addElement($type, $name, $parameters);
@@ -80,7 +79,7 @@ abstract class container {
      * return $newHtml custom HTML element reference
      **/
     public function addHtml($htmlString) {
-        $newHtml = new elementHtml($htmlString);
+        $newHtml = new \depage\htmlform\elements\html($htmlString);
 
         $this->elementsAndHtml[] = $newHtml;
         
@@ -130,10 +129,10 @@ abstract class container {
      **/
     protected function checkContainerName($name) {
         if (!is_string($name)) {
-            throw new containerNameNoStringException();
+            throw new \depage\htmlform\exceptions\containerNameNoStringException();
         }
         if (trim($name) === '') {
-            throw new invalidContainerNameException();
+            throw new \depage\htmlform\exceptions\invalidContainerNameException();
         }
     }
 
@@ -144,7 +143,7 @@ abstract class container {
      **/
     private function _checkInputType($type) {
         if (!class_exists($type)) {
-            throw new unknownInputTypeException();
+            throw new \depage\htmlform\exceptions\unknownInputTypeException();
         }
     }
 
@@ -166,7 +165,7 @@ abstract class container {
     public function getElements() {
         $allElements = array();
         foreach($this->elements as $element) {  
-            if (is_a($element, 'elementFieldset')) {
+            if (is_a($element, '\\depage\\htmlform\\elements\\fieldset')) {
                 $allElements = array_merge($allElements, $element->getElements());
             } else {
                 $allElements[] = $element;
