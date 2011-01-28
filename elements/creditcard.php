@@ -1,11 +1,26 @@
 <?php 
 
-require_once('elementFieldset.php');
+namespace depage\htmlform\elements;
 
 /**
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
-class creditcard extends elementFieldset {
+class creditcard extends fieldset {
+    public function __construct($name, $parameters = array()) {
+        parent::__construct($name, $parameters);
+
+        $this->labelNumber          = (isset($parameters['labelNumber']))           ? $parameters['labelNumber']            : "Creditcard Number";
+        $this->labelCheck           = (isset($parameters['labelCheck']))            ? $parameters['labelCheck']             : "CVV/CVC";
+        $this->labelExpirationDate  = (isset($parameters['labelExpirationDate']))   ? $parameters['labelExpirationDate']    : "Expiration Date MM/YY";
+        $this->labelOwner           = (isset($parameters['labelOwner']))            ? $parameters['labelOwner']             : "Card Owner";
+        $this->cardtypes            = (isset($parameters['cardtypes']))             ? $parameters['cardtypes']              : array(
+            "visa",
+            "americanexpress",
+            "mastercard",
+        );
+
+    }
+    
     /**
      * adds creditcard-inputs to fieldset
      *
@@ -28,9 +43,10 @@ class creditcard extends elementFieldset {
             }
         }
 
-        $this->addSelect($this->name . "_card_type", array(
+        $this->addSingle($this->name . "_card_type", array(
             'label' => "",
             'optionList' => $options,
+            'skin' => 'select',
         ));
         $this->addText($this->name . "_card_number", array(
             'label' => $this->labelNumber,
@@ -63,26 +79,5 @@ class creditcard extends elementFieldset {
      **/
     public function validate() {
         parent::validate();
-    }
-
-    /**
-     * Specifies default values of fieldset attributes for the parent class
-     * constructor.
-     *
-     * @return void
-     **/
-    protected function setDefaults() {
-        parent::setDefauls();
-
-        $this->defaults['label'] = $this->name;
-        $this->defaults['labelNumber'] = "Creditcard Number";
-        $this->defaults['labelCheck'] = "CVV/CVC";
-        $this->defaults['labelExpirationDate'] = "Expiration Date MM/YY";
-        $this->defaults['labelOwner'] = "Card Owner";
-        $this->defaults['cardtypes'] = array(
-            "visa",
-            "americanexpress",
-            "mastercard",
-        );
     }
 }
