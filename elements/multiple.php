@@ -32,7 +32,7 @@ class multiple extends abstracts\inputClass {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $requiredAttribute, $requiredChar, $class) {
+    public function render($value, $attributes, $requiredChar, $class) {
         $options = '';
 
         if ($this->skin === 'select') {
@@ -44,7 +44,7 @@ class multiple extends abstracts\inputClass {
             return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
                 "<label>" .
                     "<span class=\"label\">$this->label$requiredChar</span>" .
-                    "<select multiple name=\"$this->name[]\"$requiredAttribute>$options</select>" .
+                    "<select multiple name=\"$this->name[]\"$attributes>$options</select>" .
                 "</label>" .
             "</p>\n";
         } else {
@@ -52,7 +52,7 @@ class multiple extends abstracts\inputClass {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
                     "<label>" .
-                        "<input type=\"checkbox\" name=\"$this->name[]\"$requiredAttribute value=\"$index\"$selected>" .
+                        "<input type=\"checkbox\" name=\"$this->name[]\"$attributes value=\"$index\"$selected>" .
                         "<span>$option</span>" .
                     "</label>" .
                 "</span>";

@@ -47,6 +47,10 @@ abstract class inputClass {
      * HTML classes attribute for rendering the input element.
      **/
     protected $classes;
+    /**
+     * HTML autofocus attribute
+     **/
+    private $autofocus = false;
 
     /**
      * @param $name input elements' name
@@ -129,26 +133,35 @@ abstract class inputClass {
     }
 
     /**
-     * Sets the HTML required attribute of the current input element.
-     *
-     * @return void
-     **/
-    public function setRequired() {
-        $this->required = true;
-    }
-    
-    /**
      * Prepares element for HTML rendering and calls render() method.
      *
      * @return string of HTML rendered element
      **/
     public function __toString() {
         $value = ($this->value == null) ? $this->defaultValue : $this->value;
-        $requiredAttribute = $this->getRequiredAttribute();
+        $attributes = $this->getAttributes();
         $requiredChar = $this->getRequiredChar();
         $class = $this->getClasses();
 
-        return $this->render($value, $requiredAttribute, $requiredChar, $class);
+        return $this->render($value, $attributes, $requiredChar, $class);
+    }
+
+    /**
+     * Sets the HTML autofocus attribute of the current input element.
+     *
+     * @return void
+     **/
+    public function setAutofocus() {
+        $this->autofocus = true;
+    }
+
+    /**
+     * Sets the HTML required attribute of the current input element.
+     *
+     * @return void
+     **/
+    public function setRequired() {
+        $this->required = true;
     }
 
     /**
@@ -189,12 +202,20 @@ abstract class inputClass {
     }
 
     /**
-     * Returns required attribute if current input element is required. 
+     * Returns string of HTML attributes. (required or autofocus)
      *
-     * @return string HTML required attribute
+     * @return string HTML attribute
      **/
-    protected function getRequiredAttribute() {
-        return ($this->required) ? ' required' : '';
+    protected function getAttributes() {
+        $attributes = '';
+
+        if ($this->required) {
+            $attributes .= ' required';
+        }
+        if ($this->autofocus) {
+            $attributes .= ' autofocus';
+        }
+        return $attributes;
     }
 
     

@@ -40,7 +40,7 @@ class number extends abstracts\textClass {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $requiredAttribute, $requiredChar, $class) {
+    public function render($value, $attributes, $requiredChar, $class) {
         if ($this->min !== null) {
             $min = " min=\"$this->min\"";
             if ($value < $this->min) {
@@ -62,7 +62,7 @@ class number extends abstracts\textClass {
         return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" . 
                 "<span class=\"label\">$this->label$requiredChar</span>" . 
-                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$requiredAttribute value=\"$value\">" .
+                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
         "</p>";
     }

@@ -25,14 +25,14 @@ class textarea extends abstracts\textClass {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $requiredAttribute, $requiredChar, $class) {
+    public function render($value, $attributes, $requiredChar, $class) {
         $rows = ($this->rows !== null) ? " rows=\"$this->rows\"" : "";
         $cols = ($this->cols !== null) ? " cols=\"$this->cols\"" : "";
 
         return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
             "<label>" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
-                "<textarea name=\"$this->name\"$requiredAttribute $rows$cols>$value</textarea>" .
+                "<textarea name=\"$this->name\"$attributes $rows$cols>$value</textarea>" .
             "</label>" .
         "</p>\n";
     }

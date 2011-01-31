@@ -24,11 +24,11 @@ abstract class textClass extends inputClass {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $requiredAttribute, $requiredChar, $class) {
-        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+    public function render($value, $attributes, $requiredChar, $class) {
+        return "<p id=\"{$this->formName}-{$this->name}\" class=\"$class\">" .
             "<label>" .
-                "<span class=\"label\">$this->label$requiredChar</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"$requiredAttribute value=\"$value\">" .
+                "<span class=\"label\">{$this->label}$requiredChar</span>" .
+                "<input name=\"$this->name\" type=\"$this->type\"$attributes value=\"$value\">" .
             "</label>" .
         "</p>\n";
     }
