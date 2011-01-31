@@ -2,8 +2,10 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML url input type.
  **/
-class url extends \depage\htmlform\abstracts\textClass {
+class url extends abstracts\textClass {
 }

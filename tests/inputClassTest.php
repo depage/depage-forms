@@ -1,7 +1,10 @@
 <?php
 require_once('../abstracts/inputClass.php');
 
-class inputClassTestClass extends \depage\htmlform\abstracts\inputClass {
+use depage\htmlform\abstracts\inputClass;
+use depage\htmlform\exceptions;
+
+class inputClassTestClass extends inputClass {
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
     }
@@ -12,7 +15,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
         try {
             $input = new inputClassTestClass(true, array(), 'formNameString');
         }
-        catch (\depage\htmlform\exceptions\inputNameNoStringException $expected) {
+        catch (exceptions\inputNameNoStringException $expected) {
             return;
         }
         $this->fail('Expected inputNameNoStringException.');
@@ -22,7 +25,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
         try {
             $input = new inputClassTestClass(' ', array(), 'formNameString');
         }
-        catch (\depage\htmlform\exceptions\invalidInputNameException $expected) {
+        catch (exceptions\invalidInputNameException $expected) {
             return;
         }
         $this->fail('Expected invalidInputNameException.');
@@ -32,7 +35,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
         try {
             $input = new inputClassTestClass('inputNameString', 'string', 'formNameString');
         }
-        catch (\depage\htmlform\exceptions\inputParametersNoArrayException $expected) {
+        catch (exceptions\inputParametersNoArrayException $expected) {
             return;
         }
         $this->fail('Expected inputParametersNoArrayException.');

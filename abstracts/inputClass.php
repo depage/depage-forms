@@ -7,6 +7,9 @@
 
 namespace depage\htmlform\abstracts;
 
+use depage\htmlform\validators;
+use depage\htmlform\exceptions;
+
 abstract class inputClass {
     /** 
      * Input element type - HTML input type attribute.
@@ -58,10 +61,10 @@ abstract class inputClass {
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? new \depage\htmlform\validators\validator($parameters['validator'])   : new \depage\htmlform\validators\validator($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                      : $name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']                   : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']               : ' *';
+        $this->validator    = (isset($parameters['validator']))     ? new validators\validator($parameters['validator'])    : new validators\validator($this->type);
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                  : $name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                               : false;
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                           : ' *';
     }
 
     /**
@@ -88,7 +91,7 @@ abstract class inputClass {
     
     /**
      * Extends empty() function. Accepts (string) '0' as not empty.
-     *
+     * 
      * @param $value mixed value
      * @return bool
      **/
@@ -203,7 +206,7 @@ abstract class inputClass {
      **/
     private function _checkInputParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new \depage\htmlform\exceptions\inputParametersNoArrayException();
+            throw new exceptions\inputParametersNoArrayException();
         }
     }
     
@@ -216,10 +219,10 @@ abstract class inputClass {
      **/
     private function _checkInputName($name) {
         if (!is_string($name)) {
-            throw new \depage\htmlform\exceptions\inputNameNoStringException();
+            throw new exceptions\inputNameNoStringException();
         }
         if (trim($name) === '') {
-            throw new \depage\htmlform\exceptions\invalidInputNameException();
+            throw new exceptions\invalidInputNameException();
         }
     }
 }

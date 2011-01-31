@@ -2,8 +2,10 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML tel input type.
  **/
-class tel extends \depage\htmlform\abstracts\textClass {
+class tel extends abstracts\textClass {
 }

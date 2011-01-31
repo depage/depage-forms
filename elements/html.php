@@ -2,6 +2,8 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\exceptions;
+
 /**
  * The html class can be used to add custom HTML between rendered HTML 
  * elements.
@@ -19,7 +21,7 @@ class html {
         $htmlString = (string) $htmlString;
         
         if (!is_string($htmlString)) {
-            throw new htmlNoStringException();
+            throw new exceptions\htmlNoStringException();
         }
 
         $this->htmlString = $htmlString;

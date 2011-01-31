@@ -2,10 +2,12 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML single checkbox input type.
  **/
-class boolean extends \depage\htmlform\abstracts\inputClass {
+class boolean extends abstracts\inputClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

@@ -2,10 +2,12 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML textarea element.
  **/
-class textarea extends \depage\htmlform\abstracts\textClass {
+class textarea extends abstracts\textClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

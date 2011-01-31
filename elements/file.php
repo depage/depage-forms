@@ -2,5 +2,7 @@
 
 namespace depage\htmlform\elements;
 
-class file extends \depage\htmlform\abstracts\textClass {
+use depage\htmlform\abstracts;
+
+class file extends abstracts\textClass {
 }

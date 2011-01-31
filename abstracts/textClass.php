@@ -6,7 +6,7 @@
 
 namespace depage\htmlform\abstracts;
 
-abstract class textClass extends \depage\htmlform\abstracts\inputClass {
+abstract class textClass extends inputClass {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

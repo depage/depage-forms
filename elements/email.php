@@ -2,8 +2,10 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML email input type.
  **/
-class email extends \depage\htmlform\abstracts\textClass {
+class email extends abstracts\textClass {
 }

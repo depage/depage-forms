@@ -2,10 +2,12 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /** 
  * HTML-single-choice input type i.e. radio and select.
  **/
-class single extends \depage\htmlform\abstracts\inputClass {
+class single extends abstracts\inputClass {
     /** 
      * Contains list of selectable options.
      **/

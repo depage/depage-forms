@@ -2,10 +2,12 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML number input type.
  **/
-class number extends \depage\htmlform\abstracts\textClass {
+class number extends abstracts\textClass {
     /**
      * Minimum range HTML attribute.
      **/

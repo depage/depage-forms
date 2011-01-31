@@ -8,6 +8,9 @@
 
 namespace depage\htmlform\abstracts;
 
+use depage\htmlform\elements;
+use depage\htmlform\exceptions;
+
 abstract class container {
     /**
      * Name of the container.
@@ -79,7 +82,7 @@ abstract class container {
      * return $newHtml custom HTML element reference
      **/
     public function addHtml($htmlString) {
-        $newHtml = new \depage\htmlform\elements\html($htmlString);
+        $newHtml = new elements\html($htmlString);
 
         $this->elementsAndHtml[] = $newHtml;
         
@@ -129,10 +132,10 @@ abstract class container {
      **/
     protected function checkContainerName($name) {
         if (!is_string($name)) {
-            throw new \depage\htmlform\exceptions\containerNameNoStringException();
+            throw new exceptions\containerNameNoStringException();
         }
         if (trim($name) === '') {
-            throw new \depage\htmlform\exceptions\invalidContainerNameException();
+            throw new exceptions\invalidContainerNameException();
         }
     }
 
@@ -143,7 +146,7 @@ abstract class container {
      **/
     private function _checkInputType($type) {
         if (!class_exists($type)) {
-            throw new \depage\htmlform\exceptions\unknownInputTypeException();
+            throw new exceptions\unknownInputTypeException();
         }
     }
 

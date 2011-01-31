@@ -346,7 +346,7 @@ class htmlform extends abstracts\container {
     public function checkElementName($name) {
         foreach($this->getElements() as $element) {  
             if ($element->getName() === $name) {
-                throw new \depage\htmlform\exceptions\duplicateElementNameException();
+                throw new exceptions\duplicateElementNameException();
             }
         }
     }

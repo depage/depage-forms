@@ -2,10 +2,12 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
-class fieldset extends \depage\htmlform\abstracts\container {
+class fieldset extends abstracts\container {
     /**
      * Contains reference to current fieldsets' parent HTML form.
      **/

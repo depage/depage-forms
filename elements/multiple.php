@@ -2,10 +2,12 @@
 
 namespace depage\htmlform\elements;
 
+use depage\htmlform\abstracts;
+
 /**
  * HTML-multiple-choice input type i.e. checkbox and select.
  **/
-class multiple extends \depage\htmlform\abstracts\inputClass {
+class multiple extends abstracts\inputClass {
     /** 
      * Contains list of selectable options.
      **/

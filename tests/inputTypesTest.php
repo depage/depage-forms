@@ -2,11 +2,13 @@
 
 require_once('../htmlform.php');
 
+use depage\htmlform\htmlform;
+
 class inputTypesTest extends PHPUnit_Framework_TestCase {
     protected $form;
 
     protected function setUp() {
-        $this->form = new \depage\htmlform\htmlform('nameString');
+        $this->form = new htmlform('nameString');
     }
 
     public function testAddHidden() {
