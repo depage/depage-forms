@@ -12,8 +12,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->form->addHidden('duplicate', array());
         try {
             $this->form->addHidden('duplicate', array());
-        }
-        catch (exceptions\duplicateElementNameException $expected) {
+        } catch (exceptions\duplicateElementNameException $expected) {
             return;
         }
         $this->fail('Expected duplicateElementNameException.');
@@ -22,8 +21,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     public function testContainerNameNoStringException() {
         try {
             $form = new htmlform(true, array());
-        }
-        catch (exceptions\containerNameNoStringException $expected) {
+        } catch (exceptions\containerNameNoStringException $expected) {
             return;
         }
         $this->fail('Expected containerNameNoStringException.');
@@ -32,8 +30,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     public function testInvalidContainerNameException() {
         try {
             $form = new htmlform(' ', array());
-        }
-        catch (exceptions\invalidContainerNameException $expected) {
+        } catch (exceptions\invalidContainerNameException $expected) {
             return;
         }
         $this->fail('Expected invalidFormNameException.');
