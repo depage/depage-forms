@@ -143,6 +143,23 @@ class htmlform extends abstracts\container {
     }
 
     /**
+     * Validates step number of the GET request. If it's out of range it's
+     * reset to the number of the first invalid step. (only to be used after
+     * the form is completely created because the step elements have to be
+     * counted)
+     *
+     * @return void
+     **/
+    private function setCurrentStep() {
+        if (!is_numeric($this->currentStep)
+            || ($this->currentStep > count($this->steps) - 1)
+            || ($this->currentStep < 0)
+        ) {
+            $this->currentStep = $this->getFirstInvalidStep();
+        }
+    }
+
+    /**
      * returns an array of input elements contained in the current step.
      *
      * @return array of input elements
@@ -189,6 +206,8 @@ class htmlform extends abstracts\container {
      * @return void
      **/
     public function process() {
+        $this->setCurrentStep();
+
         // if there's post-data from this form
         if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)) {
             if (count($this->steps) === 0) {
