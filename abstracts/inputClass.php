@@ -94,13 +94,13 @@ abstract class inputClass {
     }
     
     /**
-     * Extends empty() function. Accepts (string) '0' as not empty.
+     * Extends empty() function. Accepts '0' and false as not empty.
      * 
      * @param $value mixed value
      * @return bool
      **/
-    private function emptyNotZero($value) {
-        return ( empty($value) && ('0' != $value) );
+    protected function emptyNotZero($value) {
+        return (empty($value) && ((string) $value !== '0') && ($value !== false));
     }
 
     /**
