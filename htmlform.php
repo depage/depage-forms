@@ -120,13 +120,13 @@ class htmlform extends abstracts\container {
      * @return void
      **/
     public function updateInputValue($name) {
-        // if it's a post take the value from there and save it to the session
+        // if it's a post, take the value from there and save it to the session
         if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name) && $this->inCurrentStep($name)) {
             // checkbox like elements produce "null" in post-data if nothing has been selected - change that to empty string for validation
             $value = ($_POST[$name] !== null) ? $_POST[$name] : '';
             $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
         }
-        // if it's not a post try to get the value from the session
+        // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
             $this->getElement($name)->setValue($this->sessionSlot[$name]);
         }
@@ -145,7 +145,7 @@ class htmlform extends abstracts\container {
     /**
      * Validates step number of the GET request. If it's out of range it's
      * reset to the number of the first invalid step. (only to be used after
-     * the form is completely created because the step elements have to be
+     * the form is completely created, because the step elements have to be
      * counted)
      *
      * @return void

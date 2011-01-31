@@ -66,4 +66,14 @@ class number extends abstracts\textClass {
             "</label>" .
         "</p>";
     }
+
+    /**
+     * Converts value to element specific type.
+     *
+     * @param $value value to be converted
+     * @return float converted value
+     **/
+    protected function typeCastValue($value) {
+        return (float) $value;
+    }
 }

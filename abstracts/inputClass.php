@@ -119,6 +119,7 @@ abstract class inputClass {
      * @return $newValue
      **/
     public function setValue($newValue) {
+        $newValue = $this->typeCastValue($newValue);
         $this->value = $newValue;
         return $newValue;
     }
@@ -129,7 +130,19 @@ abstract class inputClass {
      * @return $this->value
      **/
     public function getValue() {
+        $this->value = $this->typeCastValue($this->value);
         return $this->value;
+    }
+
+    /**
+     * Converts value to element specific type. (to be overridden by element
+     * child classes)
+     *
+     * @param $value value to be converted
+     * @return mixed converted value
+     **/
+    protected function typeCastValue($value) {
+        return $value;
     }
 
     /**

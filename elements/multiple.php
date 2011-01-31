@@ -64,4 +64,15 @@ class multiple extends abstracts\inputClass {
             "</p>\n";
         }
     }
+
+    /**
+     * Converts value to element specific type.
+     *
+     * @param $value value to be converted
+     * @return array converted value
+     **/
+    protected function typeCastValue($value) {
+        return (array) $value;
+    }
 }
+
