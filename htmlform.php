@@ -69,6 +69,7 @@ class htmlform extends abstracts\container {
         $this->action           = (isset($parameters['action']))            ? $parameters['action']         : $_SERVER['REQUEST_URI'];
         $this->method           = (isset($parameters['method']))            ? $parameters['method']         : 'post';
         $this->successAddress   = (isset($parameters['successAddress']))    ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
+        $this->validator        = (isset($parameters['validator']))         ? $parameters['validator']      : null;
         $this->currentStep      = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
 
         // check if there's an open session
@@ -286,6 +287,10 @@ class htmlform extends abstracts\container {
         $this->onValidate();
 
         parent::validate();
+
+        if ($this->valid && is_callable($this->validator)) {
+            $this->valid = call_user_func($this->validator, $this->getValues());
+        }
 
         // save validation-state in session
         $this->sessionSlot['form-isValid'] = $this->valid;
