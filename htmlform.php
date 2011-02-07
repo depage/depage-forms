@@ -53,7 +53,7 @@ class htmlform extends abstracts\container {
     /**
      * Contains array of step object references.
      **/
-    protected $steps;
+    protected $steps = array();
 
     /**
      * @param $name string - form name
@@ -235,11 +235,12 @@ class htmlform extends abstracts\container {
      **/
     private function finalValidation() {
         $this->validate();
+
         if ($this->valid) {
             $this->redirect($this->successAddress);
         } else {
             $firstInvalidStep = $this->getFirstInvalidStep();
-            $urlStepParameter = ($firsInvalidStep > 0) ? '' : '?step=' . $firstInvalidStep;
+            $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
             $this->redirect($this->url['path'] . $urlStepParameter);
         }
     }
