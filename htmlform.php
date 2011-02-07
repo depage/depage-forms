@@ -307,6 +307,15 @@ class htmlform extends abstracts\container {
     }
 
     /**
+     * Retuns if form has been submitted before
+     *
+     * @return (bool) session status
+     **/
+    public function isEmpty() {
+        return $this->sessionSlot['form-name'] != $this->name;
+    }
+
+    /**
      * Gets input element/fieldset by name.
      *
      * @param $name string - name of the input element we're looking for
