@@ -317,7 +317,11 @@ class htmlform extends abstracts\container {
      * @return (bool) session status
      **/
     public function isEmpty() {
-        return $this->sessionSlot['form-name'] != $this->name;
+        if (isset($this->sessionSlot['form-name'])) {
+            return $this->sessionSlot['form-name'] != $this->name;
+        } else {
+            return true;
+        }
     }
 
     /**
