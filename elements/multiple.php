@@ -72,6 +72,10 @@ class multiple extends abstracts\inputClass {
      * @return array converted value
      **/
     protected function typeCastValue($value) {
-        return (array) $value;
+        if ($value == "") {
+            return array();
+        } else {
+            return (array) $value;
+        }
     }
 }
