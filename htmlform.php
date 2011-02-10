@@ -53,7 +53,7 @@ class htmlform extends abstracts\container {
     /**
      * Contains array of step object references.
      **/
-    protected $steps;
+    protected $steps = array();
 
     /**
      * @param $name string - form name
@@ -69,6 +69,7 @@ class htmlform extends abstracts\container {
         $this->action           = (isset($parameters['action']))            ? $parameters['action']         : $_SERVER['REQUEST_URI'];
         $this->method           = (isset($parameters['method']))            ? $parameters['method']         : 'post';
         $this->successAddress   = (isset($parameters['successAddress']))    ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
+        $this->validator        = (isset($parameters['validator']))         ? $parameters['validator']      : null;
         $this->currentStep      = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
 
         // check if there's an open session
@@ -235,11 +236,12 @@ class htmlform extends abstracts\container {
      **/
     private function finalValidation() {
         $this->validate();
+
         if ($this->valid) {
             $this->redirect($this->successAddress);
         } else {
             $firstInvalidStep = $this->getFirstInvalidStep();
-            $urlStepParameter = ($firsInvalidStep > 0) ? '' : '?step=' . $firstInvalidStep;
+            $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
             $this->redirect($this->url['path'] . $urlStepParameter);
         }
     }
@@ -286,6 +288,10 @@ class htmlform extends abstracts\container {
 
         parent::validate();
 
+        if ($this->valid && is_callable($this->validator)) {
+            $this->valid = call_user_func($this->validator, $this->getValues());
+        }
+
         // save validation-state in session
         $this->sessionSlot['form-isValid'] = $this->valid;
     }
@@ -302,6 +308,19 @@ class htmlform extends abstracts\container {
             return (bool) $this->sessionSlot['form-isValid'];
         } else {
             return $this->valid;
+        }
+    }
+
+    /**
+     * Retuns if form has been submitted before
+     *
+     * @return (bool) session status
+     **/
+    public function isEmpty() {
+        if (isset($this->sessionSlot['form-name'])) {
+            return $this->sessionSlot['form-name'] != $this->name;
+        } else {
+            return true;
         }
     }
 
