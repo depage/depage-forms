@@ -136,8 +136,6 @@ abstract class inputClass {
     /**
      * Converts value to element specific type. (to be overridden by element
      * child classes)
-     *
-     * @param $value value to be converted
      **/
     protected function typeCastValue() {
     }
@@ -145,7 +143,7 @@ abstract class inputClass {
     /**
      * Prepares element for HTML rendering and calls render() method.
      *
-     * @return string of HTML rendered element
+     * @return (string) HTML rendered element
      **/
     public function __toString() {
         $value = ($this->value == null) ? $this->defaultValue : $this->value;
