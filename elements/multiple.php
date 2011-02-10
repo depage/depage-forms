@@ -75,4 +75,3 @@ class multiple extends abstracts\inputClass {
         return (array) $value;
     }
 }
-

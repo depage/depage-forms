@@ -88,19 +88,19 @@ abstract class inputClass {
      **/
     public function validate() {
         $this->valid = (($this->value !== null)
-            && ($this->validator->match($this->value) || $this->emptyNotZero($this->value))
-            && (!$this->emptyNotZero($this->value) || !$this->required)
+            && ($this->validator->match($this->value) || $this->isEmpty())
+            && (!$this->isEmpty() || !$this->required)
         );
     }
     
     /**
-     * Extends empty() function. Accepts '0' and false as not empty.
+     * Checks wether the element-value is empty. Accepts '0' and false as not
+     * empty.
      * 
-     * @param $value mixed value
      * @return bool
      **/
-    protected function emptyNotZero($value) {
-        return (empty($value) && ((string) $value !== '0') && ($value !== false));
+    protected function isEmpty() {
+        return (empty($this->value) && ((string) $this->value !== '0') && ($this->value !== false));
     }
 
     /**
