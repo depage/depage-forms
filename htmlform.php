@@ -118,7 +118,6 @@ class htmlform extends abstracts\container {
      * the session nor in the post-data - nothing happens.
      *
      * @param $name the name of the input element we're looking for
-     * @return void
      **/
     public function updateInputValue($name) {
         // if it's a post, take the value from there and save it to the session
@@ -126,7 +125,8 @@ class htmlform extends abstracts\container {
             isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)
             && $this->inCurrentStep($name)
         ) {
-            $this->sessionSlot[$name] = $this->getElement($name)->setValue($_POST[$name]);
+            $value = (isset($_POST[$name])) ? $_POST[$name] : null;
+            $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
         }
         // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
@@ -138,7 +138,7 @@ class htmlform extends abstracts\container {
      * Checks if the element named $name is in the current step.
      *
      * @param $name name of element
-     * @return bool - says wether it's in the current step
+     * @return (bool) - says wether it's in the current step
      **/
     private function inCurrentStep($name) {
         return in_array($this->getElement($name), $this->getCurrentElements());
@@ -149,8 +149,6 @@ class htmlform extends abstracts\container {
      * reset to the number of the first invalid step. (only to be used after
      * the form is completely created, because the step elements have to be
      * counted)
-     *
-     * @return void
      **/
     private function setCurrentStep() {
         if (!is_numeric($this->currentStepId)
@@ -164,13 +162,17 @@ class htmlform extends abstracts\container {
     /**
      * returns an array of input elements contained in the current step.
      *
-     * @return array of input elements
+     * @return (array) input-elements
      **/
     private function getCurrentElements() {
         $currentElements = array();
+
         foreach($this->elements as $element) {
             if (is_a($element, '\\depage\\htmlform\\elements\\fieldset')) {
-                if (!is_a($element, '\\depage\\htmlform\\elements\\step') || ($element == $this->steps[$this->currentStepId])) {
+                if (
+                    !is_a($element, '\\depage\\htmlform\\elements\\step')
+                    || ($element == $this->steps[$this->currentStepId])
+                ) {
                     $currentElements = array_merge($currentElements, $element->getElements());
                 }
             } else {
@@ -202,46 +204,24 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * Implememts the Post/Redirect/Get strategy. Saves the form-data to PHP
-     * session and redirects to success Address on succesful validation.
+     * Implememts the Post/Redirect/Get strategy. Redirects to success Address
+     * on succesful validation otherwise redirects to first invalid step or
+     * back to form.
      **/
     public function process() {
+
         $this->setCurrentStep();
+        $this->validate();
 
         // if there's post-data from this form
         if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)) {
-            if (count($this->steps) === 0) {
-                $this->finalValidation();
+            if ($this->valid) {
+                $this->redirect($this->successAddress);
             } else {
-                $this->steps[$this->currentStepId]->validate();
-                if ($this->steps[$this->currentStepId]->valid) {
-                    if ($this->currentStepId < (count($this->steps)-1)) {
-                        $this->redirect($this->url['path'] . '?step=' . ($this->currentStepId + 1));
-                    } else {
-                        $this->finalValidation();
-                    }
-                } else {
-                    $this->redirect($this->url['path'] . '?step=' . $this->currentStepId);
-                }
+                $firstInvalidStep = $this->getFirstInvalidStep();
+                $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
+                $this->redirect($this->url['path'] . $urlStepParameter);
             }
-        }
-
-        $this->validate();
-    }
-
-    /**
-     * Checks the entire form. If it's valid, it redirects to the successPage. 
-     * Otherwise redirects to first step with an error.
-     **/
-    private function finalValidation() {
-        $this->validate();
-
-        if ($this->valid) {
-            $this->redirect($this->successAddress);
-        } else {
-            $firstInvalidStep = $this->getFirstInvalidStep();
-            $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
-            $this->redirect($this->url['path'] . $urlStepParameter);
         }
     }
 
@@ -254,8 +234,7 @@ class htmlform extends abstracts\container {
      **/
     private function getFirstInvalidStep() {
         if ( count($this->steps ) > 0) {
-            foreach ( $this->steps as $stepNumber=>$step ) {
-                $step->validate();
+            foreach ( $this->steps as $stepNumber => $step ) {
                 if ( !$step->valid ) {
                     return $stepNumber;
                 }
