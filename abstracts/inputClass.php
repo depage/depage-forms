@@ -116,12 +116,12 @@ abstract class inputClass {
      * Allows to manually set the current input elements value.
      *
      * @param $newValue contains the new value
-     * @return $newValue
+     * @return $this->value
      **/
     public function setValue($newValue) {
-        $newValue = $this->typeCastValue($newValue);
         $this->value = $newValue;
-        return $newValue;
+        $this->typeCastValue();
+        return $this->value;
     }
 
     /**
@@ -130,7 +130,6 @@ abstract class inputClass {
      * @return $this->value
      **/
     public function getValue() {
-        $this->value = $this->typeCastValue($this->value);
         return $this->value;
     }
 
@@ -139,10 +138,8 @@ abstract class inputClass {
      * child classes)
      *
      * @param $value value to be converted
-     * @return mixed converted value
      **/
-    protected function typeCastValue($value) {
-        return $value;
+    protected function typeCastValue() {
     }
 
     /**

@@ -69,11 +69,8 @@ class number extends abstracts\textClass {
 
     /**
      * Converts value to element specific type.
-     *
-     * @param $value value to be converted
-     * @return float converted value
      **/
-    protected function typeCastValue($value) {
-        return (float) $value;
+    protected function typeCastValue() {
+        $this->value = (float) $this->value;
     }
 }

@@ -35,11 +35,8 @@ abstract class textClass extends inputClass {
 
     /**
      * Converts value to element specific type.
-     *
-     * @param $value value to be converted
-     * @return string converted value
      **/
-    protected function typeCastValue($value) {
-        return (string) $value;
+    protected function typeCastValue() {
+        $this->value = (string) $this->value;
     }
 }

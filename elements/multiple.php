@@ -67,15 +67,12 @@ class multiple extends abstracts\inputClass {
 
     /**
      * Converts value to element specific type.
-     *
-     * @param $value value to be converted
-     * @return array converted value
      **/
-    protected function typeCastValue($value) {
-        if ($value == "") {
-            return array();
+    protected function typeCastValue() {
+        if ($this->value == "") {
+            $this->value = array();
         } else {
-            return (array) $value;
+            $this->value = (array) $this->value;
         }
     }
 }
