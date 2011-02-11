@@ -6,6 +6,8 @@
  **/
 namespace depage\htmlform; 
 
+use depage\htmlform\elements;
+
 function autoload($class) {
         $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
         $file = __DIR__ . '/' .  $class . '.php';
@@ -97,11 +99,11 @@ class htmlform extends abstracts\container {
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if (is_a($newElement, '\\depage\\htmlform\\elements\\fieldset')) {
+        if ($newElement instanceof elements\fieldset) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this);
 
-            if (is_a($newElement, '\\depage\\htmlform\\elements\\step')) {
+            if ($newElement instanceof elements\step) {
                 $this->steps[] = $newElement;
             }
         } else {

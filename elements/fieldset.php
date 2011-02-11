@@ -58,7 +58,7 @@ class fieldset extends abstracts\container {
 
         $newElement = parent::addElement($type, $name, $parameters);
         
-        if (is_a($newElement, '\\depage\\htmlform\\elements\\fieldset')) {
+        if ($newElement instanceof fieldset) {
             // if it's a fieldset it needs to know which form it belongs to
             $newElement->setParentForm($this->form);
         } else {

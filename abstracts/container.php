@@ -168,7 +168,7 @@ abstract class container {
     public function getElements() {
         $allElements = array();
         foreach($this->elements as $element) {  
-            if (is_a($element, '\\depage\\htmlform\\elements\\fieldset')) {
+            if ($element instanceof elements\fieldset) {
                 $allElements = array_merge($allElements, $element->getElements());
             } else {
                 $allElements[] = $element;
