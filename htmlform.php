@@ -228,9 +228,10 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * Validates steps consecutively and returns the number of the first one
-     * that isn't valid (steps need to be submitted at least once to count as
-     * valid).
+     * Checks steps consecutively and returns the number of the first one that
+     * isn't valid (steps need to be submitted at least once to count as valid).
+     *
+     * Beware! Be sure to validate the form before calling this method.
      *
      * @return (int) $stepNumber
      **/
@@ -241,6 +242,13 @@ class htmlform extends abstracts\container {
                     return $stepNumber;
                 }
             }
+            /**
+             * If there aren't any invalid steps there must be a fieldset
+             * directly attached to the form that's invalid. In this case we
+             * don't want to jump back to the first step. Hence, this little
+             * hack.
+             **/
+            return count($this->steps) - 1;
         } else {
             return 0;
         }
