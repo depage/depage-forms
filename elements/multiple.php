@@ -29,12 +29,16 @@ class multiple extends abstracts\inputClass {
 
     /**
      * Renders HTML - option list part of select element.
-     * Works recursively in case of optgroups
+     * Works recursively in case of optgroups.
+     *
+     * @param $optionsArray array of list elements and subgroups
+     * @param $value value that is to be marked as selecteѕ
+     * @return (string) options-part of the HTML-select-element
      **/
     private function renderOptions($optionsArray, $value) {
         $options = '';
         foreach($optionsArray as $index => $option) {
-            if (is_array($option)) { 
+            if (is_array($option)) {
                 $options .= "<optgroup label=\"$index\">" . $this->renderOptions($option, $value) . "</optgroup>";
             } else {
                 $selected = (in_array($index, $value)) ? ' selected' : '';
@@ -53,7 +57,7 @@ class multiple extends abstracts\inputClass {
         $options = '';
 
         if ($this->skin === 'select') {
-            
+
             // render HTML select
 
             $options = $this->renderOptions($this->optionList, $value);
@@ -66,7 +70,7 @@ class multiple extends abstracts\inputClass {
 
         } else {
 
-            // render HTML checkbox 
+            // render HTML checkbox
 
             foreach($this->optionList as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
