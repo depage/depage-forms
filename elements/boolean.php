@@ -39,6 +39,21 @@ class boolean extends abstracts\inputClass {
     }
 
     /**
+     * Overrides inputClass::validate(). Checks if the value the current input
+     * element holds is valid according to it's validator object. 
+     * 
+     * In case of boolean value has to be true if field is required.
+     * 
+     * @return void
+     **/
+    public function validate() {
+        $this->valid = (($this->value !== null)
+            && ($this->validator->match($this->value) || $this->isEmpty())
+            && ($this->value || !$this->required)
+        );
+    }
+
+    /**
      * Sets the current input elements value. Converts it to boolean if
      * necessary.
      *
