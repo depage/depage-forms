@@ -32,7 +32,7 @@ class prgTest extends PHPUnit_Framework_TestCase {
      **/
     public function testProcessOnPost() {
         // setting up the post-data (form-name and value for a text-element)
-        $_POST['form-name'] = 'htmlformNameString';
+        $_POST['formName'] = 'htmlformNameString';
         $_POST['postedText'] = 'submitted';
 
         $form = new testHtmlform('htmlformNameString');

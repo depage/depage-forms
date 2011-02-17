@@ -19,7 +19,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToStringSimple() {
-    $rendered = '<form id="nameString" name="nameString" method="post" action="' . $_SERVER['REQUEST_URI'] . '"><input name="form-name" id="nameString-form-name" type="hidden" class="input-hidden" value="nameString">
+    $rendered = '<form id="nameString" name="nameString" method="post" action="' . $_SERVER['REQUEST_URI'] . '"><input name="formName" id="nameString-formName" type="hidden" class="input-hidden" value="nameString">
 <p id="nameString-submit"><input type="submit" name="submit" value="submit"></p></form>';
         $form = new htmlform('nameString');
 
@@ -35,8 +35,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
     public function testGetElement() {
         $this->form = new htmlform('nameString');
-        $this->assertEquals('form-name', $this->form->getElement('form-name')->getName());
-        $this->assertEquals(false, $this->form->getInput('bogus-input-name'));
+        $this->assertEquals('formName', $this->form->getElement('formName')->getName());
+        $this->assertEquals(false, $this->form->getInput('bogusInputName'));
     }
 }
 ?>

@@ -82,7 +82,7 @@ class htmlform extends abstracts\container {
         $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
         
         // create a hidden input element to tell forms apart
-        $this->addHidden('form-name', array('defaultValue' => $this->name));
+        $this->addHidden('formName', array('defaultValue' => $this->name));
     }
     
     /** 
@@ -124,7 +124,7 @@ class htmlform extends abstracts\container {
     public function updateInputValue($name) {
         // if it's a post, take the value from there and save it to the session
         if (
-            isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)
+            isset($_POST['formName']) && ($_POST['formName'] === $this->name)
             && $this->inCurrentStep($name)
         ) {
             $value = (isset($_POST[$name])) ? $_POST[$name] : null;
@@ -216,7 +216,7 @@ class htmlform extends abstracts\container {
         $this->validate();
 
         // if there's post-data from this form
-        if (isset($_POST['form-name']) && ($_POST['form-name'] === $this->name)) {
+        if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if ($this->valid) {
                 $this->redirect($this->successAddress);
             } else {
@@ -302,8 +302,8 @@ class htmlform extends abstracts\container {
      * @return (bool) session status
      **/
     public function isEmpty() {
-        if (isset($this->sessionSlot['form-name'])) {
-            return $this->sessionSlot['form-name'] != $this->name;
+        if (isset($this->sessionSlot['formName'])) {
+            return $this->sessionSlot['formName'] != $this->name;
         } else {
             return true;
         }

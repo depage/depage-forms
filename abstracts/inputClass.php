@@ -34,7 +34,7 @@ abstract class inputClass {
     /**
      * Input elements's value.
      **/
-    public $value = null;
+    protected $value = null;
     /**
      * Holds validator object reference.
      **/
@@ -66,7 +66,7 @@ abstract class inputClass {
         $this->formName     = $formName;
 
         $this->validator    = (isset($parameters['validator']))     ? new validators\validator($parameters['validator'])    : new validators\validator($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                  : $name;
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                  : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                               : false;
         $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                           : ' *';
     }
@@ -255,7 +255,7 @@ abstract class inputClass {
         if (!is_string($name)) {
             throw new exceptions\inputNameNoStringException();
         }
-        if (trim($name) === '') {
+        if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name))  {
             throw new exceptions\invalidInputNameException();
         }
     }
