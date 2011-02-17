@@ -278,7 +278,7 @@ class htmlform extends abstracts\container {
         }
 
         // save validation-state in session
-        $this->sessionSlot['form-isValid'] = $this->valid;
+        $this->sessionSlot['formIsValid'] = $this->valid;
     }
 
     /**
@@ -290,7 +290,7 @@ class htmlform extends abstracts\container {
         $this->valid = parent::isValid();
 
         if ($this->valid === null) {
-            return (bool) $this->sessionSlot['form-isValid'];
+            return (bool) $this->sessionSlot['formIsValid'];
         } else {
             return $this->valid;
         }

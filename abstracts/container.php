@@ -134,7 +134,7 @@ abstract class container {
         if (!is_string($name)) {
             throw new exceptions\containerNameNoStringException();
         }
-        if (trim($name) === '') {
+        if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name)) {
             throw new exceptions\invalidContainerNameException();
         }
     }
