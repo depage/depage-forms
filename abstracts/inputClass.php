@@ -139,6 +139,16 @@ abstract class inputClass {
     }
 
     /**
+     * Allows to manually set the current input elements value.
+     *
+     * @param $newValue contains the new value
+     * @return $this->value
+     **/
+    public function setDefaultValue($newDefaultValue) {
+        $this->defaultValue = $newDefaultValue;
+    }
+
+    /**
      * Converts value to element specific type. (to be overridden by element
      * child classes)
      **/
@@ -151,7 +161,7 @@ abstract class inputClass {
      * @return (string) HTML rendered element
      **/
     public function __toString() {
-        $value = ($this->value == null) ? $this->defaultValue : $this->value;
+        $value = ($this->value === null) ? $this->defaultValue : $this->value;
         $attributes = $this->getAttributes();
         $requiredChar = $this->getRequiredChar();
         $class = $this->getClasses();

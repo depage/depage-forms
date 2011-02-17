@@ -17,7 +17,7 @@ class boolean extends abstracts\inputClass {
         parent::__construct($name, $parameters, $formName);
         
         // boolean-elements have values of type boolean
-        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : (boolean) false;
+        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : (bool) false;
     }
 
     /**

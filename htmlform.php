@@ -344,7 +344,7 @@ class htmlform extends abstracts\container {
         foreach($data as $name => $value) {
             $element = $this->getElement($name);
             if ($element) {
-               $element->setValue($value);
+               $element->setDefaultValue($value);
             }
         }
     }
