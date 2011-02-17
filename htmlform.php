@@ -170,9 +170,9 @@ class htmlform extends abstracts\container {
         $currentElements = array();
 
         foreach($this->elements as $element) {
-            if (is_a($element, '\\depage\\htmlform\\elements\\fieldset')) {
+            if ($element instanceof elements\fieldset) {
                 if (
-                    !is_a($element, '\\depage\\htmlform\\elements\\step')
+                    !($element instanceof elements\step)
                     || ($element == $this->steps[$this->currentStepId])
                 ) {
                     $currentElements = array_merge($currentElements, $element->getElements());
@@ -194,7 +194,7 @@ class htmlform extends abstracts\container {
         $renderedElements = '';
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
-            if (!is_a($element, '\\depage\\htmlform\\elements\\step') || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)) {
+            if (!($element instanceof elements\step) || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)) {
                 $renderedElements .= $element;
             }
         }
