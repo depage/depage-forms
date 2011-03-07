@@ -41,6 +41,9 @@ class number extends abstracts\textClass {
      * @return string of HTML rendered element
      **/
     public function render($value, $attributes, $requiredChar, $class) {
+        /**
+         * @todo temporary - remove once error reporting has been implemented
+         **/
         if ($this->min !== null) {
             $min = " min=\"$this->min\"";
             if ($value < $this->min) {
@@ -65,6 +68,13 @@ class number extends abstracts\textClass {
                 "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
         "</p>";
+    }
+
+    /**
+     * Overrides parent method to add min and max values
+     **/
+    protected function validatorCall() {
+        return $this->validator->validate($this->value, $this->min, $this->max);
     }
 
     /**

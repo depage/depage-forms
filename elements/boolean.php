@@ -48,7 +48,7 @@ class boolean extends abstracts\inputClass {
      **/
     public function validate() {
         $this->valid = (($this->value !== null)
-            && ($this->validator->match($this->value) || $this->isEmpty())
+            && ($this->validator->validate($this->value) || $this->isEmpty())
             && ($this->value || !$this->required)
         );
     }
