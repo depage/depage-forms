@@ -65,17 +65,10 @@ abstract class inputClass {
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? $this->addValidator($parameters['validator'])         : $this->addValidator($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                  : $this->name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']                               : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                           : ' *';
-    }
-
-    public function addValidator($argument) {
-        $type = '\\depage\\htmlform\\validators\\' . $argument . "Validator";
-        $newValidator = new $type();
-
-        return $newValidator;
+        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])   : validators\validator::factory($this->type);
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                      : $this->name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                   : false;
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                               : ' *';
     }
 
     /**

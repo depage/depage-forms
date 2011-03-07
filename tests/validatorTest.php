@@ -5,26 +5,26 @@ namespace depage\htmlform\validators;
 require_once('../validators/validator.php');
 
 class validatorTest extends \PHPUnit_Framework_TestCase {
-    public function testWildcard() {
-        $wildcardValidator = new validator();
-        $this->assertEquals(true, $wildcardValidator->match('anyString'));
+    public function testText() {
+        $textValidator = validator::factory('text');
+        $this->assertEquals(true, $textValidator->validate('anyString'));
     }
 
     public function testEmail() {
-        $emailValidator = new validator('email');
-        $this->assertEquals(false, $emailValidator->match('anyString'));
-        $this->assertEquals(true, $emailValidator->match('test@testmail.com'));
+        $emailValidator = validator::factory('email');
+        $this->assertEquals(false, $emailValidator->validate('anyString'));
+        $this->assertEquals(true, $emailValidator->validate('test@testmail.com'));
     }
 
    public function testUrl() {
-        $urlValidator = new validator('url');
-        $this->assertEquals(false, $urlValidator->match('anyString'));
-        $this->assertEquals(true, $urlValidator->match('http://www.testmail.com'));
+        $urlValidator = validator::factory('url');
+        $this->assertEquals(false, $urlValidator->validate('anyString'));
+        $this->assertEquals(true, $urlValidator->validate('http://www.testmail.com'));
     }
 
     public function testCustomRegEx() {
-        $customValidator = new validator('/[a-zA-Z]/');
-        $this->assertEquals(false, $customValidator->match('1234'));
-        $this->assertEquals(true, $customValidator->match('letters'));
+        $customValidator = validator::factory('/[a-zA-Z]/');
+        $this->assertEquals(false, $customValidator->validate('1234'));
+        $this->assertEquals(true, $customValidator->validate('letters'));
     }
 }
