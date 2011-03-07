@@ -94,6 +94,9 @@ abstract class inputClass {
         );
     }
     
+    /**
+     * Hook method for validator call. Arguments can be adjusted on override.
+     **/
     protected function validatorCall() {
         return $this->validator->validate($this->value);
     }
