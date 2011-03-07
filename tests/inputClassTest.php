@@ -6,6 +6,7 @@ use depage\htmlform\exceptions;
 
 class inputClassTestClass extends inputClass {
     public function __construct($name, $parameters, $formName) {
+        $parameters['validator'] = 'text';
         parent::__construct($name, $parameters, $formName);
     }
 }

@@ -72,9 +72,9 @@ abstract class inputClass {
     }
 
     public function addValidator($argument) {
-        //$newValidator = new $type . Validator();
+        $type = '\\depage\\htmlform\\validators\\' . $argument . "Validator";
+        $newValidator = new $type();
 
-        $newValidator = new validators\validator($argument);
         return $newValidator;
     }
 
@@ -102,7 +102,7 @@ abstract class inputClass {
     }
     
     protected function validatorCall() {
-        return $this->validator->match($this->value);
+        return $this->validator->validate($this->value);
     }
 
     /**
