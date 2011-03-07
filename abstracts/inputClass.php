@@ -65,10 +65,17 @@ abstract class inputClass {
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? new validators\validator($parameters['validator'])    : new validators\validator($this->type);
+        $this->validator    = (isset($parameters['validator']))     ? $this->addValidator($parameters['validator'])         : $this->addValidator($this->type);
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                                  : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                               : false;
         $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                           : ' *';
+    }
+
+    public function addValidator($argument) {
+        //$newValidator = new $type . Validator();
+
+        $newValidator = new validators\validator($argument);
+        return $newValidator;
     }
 
     /**
@@ -89,11 +96,15 @@ abstract class inputClass {
     public function validate() {
         $this->valid = (
             ($this->value !== null)
-            && ($this->validator->match($this->value) || $this->isEmpty())
+            && ($this->validatorCall() || $this->isEmpty())
             && (!$this->isEmpty() || !$this->required)
         );
     }
     
+    protected function validatorCall() {
+        return $this->validator->match($this->value);
+    }
+
     /**
      * Checks wether the element-value is empty. Accepts '0' and false as not
      * empty.
