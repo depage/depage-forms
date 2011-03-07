@@ -19,6 +19,16 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->container->getName(), 'containerNameString');
     }
 
+    public function testGetContainerElements() {
+        $this->container->addText('text1');
+        $this->container->addFieldset('fieldset1');
+        $this->container->addText('text2');
+
+        $elements = $this->container->getElements();
+        $this->assertEquals($elements[0]->getName(), 'text1');
+        $this->assertEquals($elements[1]->getName(), 'text2');
+    }
+
     public function testInvalidContainerNameException() {
         try {
             $input = new containerTestClass(' ', array());
