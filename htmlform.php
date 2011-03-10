@@ -279,15 +279,6 @@ class htmlform extends abstracts\container {
 
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
-    }
-
-    /**
-     * Returns current containers' validation status.
-     *
-     * @return $this->valid
-     **/
-    public function isValid() {
-        $this->valid = parent::isValid();
 
         if ($this->valid === null) {
             return (bool) $this->sessionSlot['formIsValid'];

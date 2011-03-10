@@ -99,17 +99,8 @@ abstract class container {
         $this->valid = true;
         foreach($this->elements as $element) {
             $element->validate();
-            $this->valid = (($this->valid) && ($element->isValid()));
+            $this->valid = (($this->valid) && ($element->validate()));
         }
-    }
-
-    /**
-     * Returns current containers' validation status.
-     *
-     * @return $this->valid
-     **/
-    public function isValid() {
-        return $this->valid;
     }
 
     /**

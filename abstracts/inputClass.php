@@ -92,6 +92,7 @@ abstract class inputClass {
             && ($this->validatorCall() || $this->isEmpty())
             && (!$this->isEmpty() || !$this->required)
         );
+        return $this->valid;
     }
     
     /**
@@ -113,15 +114,6 @@ abstract class inputClass {
             && ((string) $this->value !== '0') 
             && ($this->value !== false)
         );
-    }
-
-    /**
-     * Returns the value of the current input elements' valid variable.
-     *
-     * @return $this->valid
-     **/
-    public function isValid() {
-        return $this->valid;
     }
 
     /**
@@ -215,7 +207,7 @@ abstract class inputClass {
             $classes .= ' required';
         }
         if ($this->value !== null) {
-            if (!$this->isValid()) {
+            if (!$this->validate()) {
                 $classes .= ' error';
             }
         }
