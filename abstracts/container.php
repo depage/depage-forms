@@ -21,6 +21,10 @@ abstract class container {
      **/
     protected $valid;
     /**
+     * True if the containers elements have been validated before.
+     **/
+    protected $validated = false;
+    /**
      * Holds references to input elements and fieldsets.
      **/
     protected $elements = array();
@@ -96,11 +100,16 @@ abstract class container {
      * @return void
      **/
     public function validate() {
-        $this->valid = true;
-        foreach($this->elements as $element) {
-            $element->validate();
-            $this->valid = (($this->valid) && ($element->validate()));
+        if (!$this->validated) {
+            $this->validated = true;
+
+            $this->valid = true;
+            foreach($this->elements as $element) {
+                $element->validate();
+                $this->valid = (($this->valid) && ($element->validate()));
+            }
         }
+        return $this->valid;
     }
 
     /**

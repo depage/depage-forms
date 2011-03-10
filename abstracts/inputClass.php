@@ -44,6 +44,10 @@ abstract class inputClass {
      **/
     protected $valid = false;
     /**
+     * True if the element has been validated before.
+     **/
+    protected $validated = false;
+    /**
      * HTML classes attribute for rendering the input element.
      **/
     protected $classes;
@@ -87,14 +91,18 @@ abstract class inputClass {
      * @return void
      **/
     public function validate() {
-        $this->valid = (
-            ($this->value !== null)
-            && ($this->validatorCall() || $this->isEmpty())
-            && (!$this->isEmpty() || !$this->required)
-        );
+        if (!$this->validated) {
+            $this->validated = true;
+
+            $this->valid = (
+                ($this->value !== null)
+                && ($this->validatorCall() || $this->isEmpty())
+                && (!$this->isEmpty() || !$this->required)
+            );
+        }
         return $this->valid;
     }
-    
+
     /**
      * Hook method for validator call. Arguments can be adjusted on override.
      **/
