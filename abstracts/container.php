@@ -21,6 +21,10 @@ abstract class container {
      **/
     protected $valid;
     /**
+     * True if the containers elements have been validated before.
+     **/
+    protected $validated = false;
+    /**
      * Holds references to input elements and fieldsets.
      **/
     protected $elements = array();
@@ -53,6 +57,8 @@ abstract class container {
             $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
             return $this->addElement($type, $name, $parameters);
+        } else {
+            trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }
     }
 
@@ -65,7 +71,7 @@ abstract class container {
      * @return $newElement
      **/
     public function addElement($type, $name, $parameters = array()) {
-        $this->_checkInputType($type);
+        $this->_checkElementType($type);
 
         $newElement = new $type($name, $parameters, $this->name);
 
@@ -96,19 +102,15 @@ abstract class container {
      * @return void
      **/
     public function validate() {
-        $this->valid = true;
-        foreach($this->elements as $element) {
-            $element->validate();
-            $this->valid = (($this->valid) && ($element->isValid()));
-        }
-    }
+        if (!$this->validated) {
+            $this->validated = true;
 
-    /**
-     * Returns current containers' validation status.
-     *
-     * @return $this->valid
-     **/
-    public function isValid() {
+            $this->valid = true;
+            foreach($this->elements as $element) {
+                $element->validate();
+                $this->valid = (($this->valid) && ($element->validate()));
+            }
+        }
         return $this->valid;
     }
 
@@ -144,7 +146,7 @@ abstract class container {
      *
      * @param $type input type to be checked
      **/
-    private function _checkInputType($type) {
+    private function _checkElementType($type) {
         if (!class_exists($type)) {
             throw new exceptions\unknownInputTypeException();
         }

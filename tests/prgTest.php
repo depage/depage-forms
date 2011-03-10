@@ -47,7 +47,7 @@ class prgTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($unpostedTextElement->getValue(), '');
 
         $form->process();
-        $this->assertTrue($form->isValid());
+        $this->assertTrue($form->validate());
         // should redirect to success address
         $this->assertEquals($form->testRedirect, $_SERVER['REQUEST_URI']);
     }

@@ -44,12 +44,13 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
 
     public function testInputClassValid() {
         $input = new inputClassTestClass('inputNameString', array(), 'formNameString');
-        $this->assertEquals(false, $input->isValid());
-        $input->validate();
-        $this->assertEquals(false, $input->isValid());
+        $this->assertEquals(false, $input->validate());
+    }
+
+    public function testInputClassInvalid() {
+        $input = new inputClassTestClass('inputNameString', array(), 'formNameString');
         $input->setValue('testValue');
-        $input->validate();
-        $this->assertEquals(true, $input->isValid());
+        $this->assertEquals(true, $input->validate());
     }
 
     public function testGetName() {

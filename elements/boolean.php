@@ -44,13 +44,15 @@ class boolean extends abstracts\inputClass {
      * 
      * In case of boolean value has to be true if field is required.
      * 
-     * @return void
+     * @return $this->valid
      **/
     public function validate() {
         $this->valid = (($this->value !== null)
             && ($this->validator->validate($this->value) || $this->isEmpty())
             && ($this->value || !$this->required)
         );
+        
+        return $this->valid;
     }
 
     /**
