@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace depage\htmlform\elements;
 
 use depage\htmlform\abstracts;
 
 /**
- * HTML file input type.
+ * HTML datetime input type.
  **/
-class file extends abstracts\textClass {
+class datetime extends abstracts\textClass {
 }

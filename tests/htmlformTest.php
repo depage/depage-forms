@@ -30,13 +30,13 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $_SESSION = array('nameString-data' => array());
         $this->form = new htmlform('nameString');
         $this->form->process();
-        $this->assertEquals(false, $this->form->isValid());
+        $this->assertEquals(false, $this->form->validate());
     }
 
     public function testGetElement() {
         $this->form = new htmlform('nameString');
         $this->assertEquals('formName', $this->form->getElement('formName')->getName());
-        $this->assertEquals(false, $this->form->getInput('bogusInputName'));
+        $this->assertEquals(false, $this->form->getElement('bogusInputName'));
     }
 }
 ?>
