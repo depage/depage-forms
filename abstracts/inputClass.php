@@ -88,7 +88,7 @@ abstract class inputClass {
      * Checks if the value the current input element holds is valid according
      * to it's validator object.
      *
-     * @return void
+     * @return $this->valid
      **/
     public function validate() {
         if (!$this->validated) {
