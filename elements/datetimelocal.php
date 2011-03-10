@@ -10,7 +10,7 @@ use depage\htmlform\abstracts;
 class datetimelocal extends abstracts\textClass {
     /**
      * Renders element to HTML. datetime-local needs its own rendering method 
-     * because of the minus sіgn.
+     * because of the minus sign.
      *
      * @return string of HTML rendered element
      **/
