@@ -54,7 +54,7 @@ class fieldset extends abstracts\container {
      * @return object $newInput
      **/
      public function addElement($type, $name, $parameters = array()) {
-        $this->form->checkInputName($name);
+        $this->form->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters);
         
