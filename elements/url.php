@@ -2,12 +2,10 @@
 
 namespace depage\htmlform\elements;
 
-use depage\htmlform\abstracts;
-
 /**
  * HTML url input type.
  **/
-class url extends abstracts\textClass {
+class url extends text {
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
 

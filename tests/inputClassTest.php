@@ -1,20 +1,20 @@
 <?php
-require_once('../abstracts/inputClass.php');
+require_once('../abstracts/input.php');
 
-use depage\htmlform\abstracts\inputClass;
+use depage\htmlform\abstracts\input;
 use depage\htmlform\exceptions;
 
-class inputClassTestClass extends inputClass {
+class inputTestClass extends input {
     public function __construct($name, $parameters, $formName) {
         $parameters['validator'] = 'text';
         parent::__construct($name, $parameters, $formName);
     }
 }
 
-class inputClassTest extends PHPUnit_Framework_TestCase {
+class inputTest extends PHPUnit_Framework_TestCase {
     public function testInputNameNoStringException() {
         try {
-            $input = new inputClassTestClass(true, array(), 'formNameString');
+            $input = new inputTestClass(true, array(), 'formNameString');
         }
         catch (exceptions\inputNameNoStringException $expected) {
             return;
@@ -24,7 +24,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
     
     public function testInvalidInputNameException() {
         try {
-            $input = new inputClassTestClass(' ', array(), 'formNameString');
+            $input = new inputTestClass(' ', array(), 'formNameString');
         }
         catch (exceptions\invalidInputNameException $expected) {
             return;
@@ -34,7 +34,7 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
 
     public function testInputParametersNoArrayException() {
         try {
-            $input = new inputClassTestClass('inputNameString', 'string', 'formNameString');
+            $input = new inputTestClass('inputNameString', 'string', 'formNameString');
         }
         catch (exceptions\inputParametersNoArrayException $expected) {
             return;
@@ -42,19 +42,19 @@ class inputClassTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected inputParametersNoArrayException.');
     }
 
-    public function testInputClassValid() {
-        $input = new inputClassTestClass('inputNameString', array(), 'formNameString');
+    public function testInputValid() {
+        $input = new inputTestClass('inputNameString', array(), 'formNameString');
         $this->assertEquals(false, $input->validate());
     }
 
-    public function testInputClassInvalid() {
-        $input = new inputClassTestClass('inputNameString', array(), 'formNameString');
+    public function testInputInvalid() {
+        $input = new inputTestClass('inputNameString', array(), 'formNameString');
         $input->setValue('testValue');
         $this->assertEquals(true, $input->validate());
     }
 
     public function testGetName() {
-        $input = new inputClassTestClass('inputNameString', array(), 'formNameString');
+        $input = new inputTestClass('inputNameString', array(), 'formNameString');
         $this->assertEquals('inputNameString', $input->getName());
     }
 }

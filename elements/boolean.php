@@ -7,7 +7,7 @@ use depage\htmlform\abstracts;
 /**
  * HTML single checkbox input type.
  **/
-class boolean extends abstracts\inputClass {
+class boolean extends abstracts\input {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.

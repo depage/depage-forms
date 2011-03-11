@@ -2,12 +2,10 @@
 
 namespace depage\htmlform\elements;
 
-use depage\htmlform\abstracts;
-
 /**
  * HTML datetimelocal input type.
  **/
-class datetimelocal extends abstracts\textClass {
+class datetimelocal extends text {
     /**
      * Renders element to HTML. datetime-local needs its own rendering method 
      * because of the minus sign.
