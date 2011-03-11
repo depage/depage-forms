@@ -18,6 +18,7 @@ class boolean extends abstracts\input {
         
         // boolean-elements have values of type boolean
         $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : (bool) false;
+        $this->errorMessage = (isset($parameters['errorMessage'])) ? $parameters['errorMessage'] : 'Please check this box if you want to procede!';
     }
 
     /**
