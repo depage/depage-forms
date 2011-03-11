@@ -55,6 +55,10 @@ abstract class inputClass {
      * HTML autofocus attribute
      **/
     private $autofocus = false;
+    /**
+     * HTML pattern attribute
+     **/
+    protected $pattern = false;
 
     /**
      * @param $name input elements' name
@@ -69,10 +73,11 @@ abstract class inputClass {
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])   : validators\validator::factory($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                      : $this->name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                   : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                               : ' *';
+        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])       : validators\validator::factory($this->type);
+        $this->pattern      = (isset($parameters['validator']))     ? validators\validator::getPattern($parameters['validator'])    : false;
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : ' *';
     }
 
     /**
@@ -244,6 +249,9 @@ abstract class inputClass {
         }
         if ($this->autofocus) {
             $attributes .= ' autofocus';
+        }
+        if ($this->pattern) {
+            $attributes .= " pattern=\"$this->pattern\"";
         }
         return $attributes;
     }
