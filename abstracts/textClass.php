@@ -14,7 +14,7 @@ abstract class textClass extends inputClass {
      **/
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
-        
+
         // textClass elements have values of type string
         $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : '';
     }

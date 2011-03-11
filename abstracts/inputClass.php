@@ -78,6 +78,7 @@ abstract class inputClass {
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
         $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : ' *';
+        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                                   : 'Please enter valid data!';
     }
 
     /**
@@ -123,7 +124,7 @@ abstract class inputClass {
      **/
     protected function isEmpty() {
         return (
-            empty($this->value) 
+            empty($this->value)
             && ((string) $this->value !== '0') 
             && ($this->value !== false)
         );
@@ -244,19 +245,14 @@ abstract class inputClass {
     protected function getAttributes() {
         $attributes = '';
 
-        if ($this->required) {
-            $attributes .= ' required';
-        }
-        if ($this->autofocus) {
-            $attributes .= ' autofocus';
-        }
-        if ($this->pattern) {
-            $attributes .= " pattern=\"$this->pattern\"";
-        }
+        if ($this->required)    $attributes .= " required";
+        if ($this->autofocus)   $attributes .= " autofocus";
+        if ($this->pattern)     $attributes .= " pattern=\"$this->pattern\"";
+        if (!$this->valid)      $attributes .= " data-errorMessage=\"$this->errorMessage\"";
+
         return $attributes;
     }
 
-    
     /**
      * Throws an exception if $parameters isn't of type array.
      *

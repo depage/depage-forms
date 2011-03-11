@@ -33,6 +33,7 @@ class number extends abstracts\textClass {
         $this->min = (isset($parameters['min'])) ? $parameters['min'] : null;
         $this->max = (isset($parameters['max'])) ? $parameters['max'] : null;
         $this->step = (isset($parameters['step'])) ? $parameters['step'] : null;
+        $this->errorMessage = (isset($parameters['errorMessage'])) ? $parameters['errorMessage'] : 'Please enter a valid number!';
     }
 
     /**
