@@ -26,14 +26,14 @@ class boolean extends abstracts\input {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        $selected = ($value === true) ? " checked=\"yes\"" : '';
+    public function __toString() {
+        $selected = ($this->getRenderedValue() === true) ? " checked=\"yes\"" : '';
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getRenderedClasses() . "\">" .
             "<span>" .
                 "<label>" .
-                    "<input type=\"checkbox\" name=\"$this->name\"$attributes value=\"true\"$selected>" .
-                    "<span class=\"label\">$this->label$requiredChar</span>" .
+                    "<input type=\"checkbox\" name=\"$this->name\"" . $this->getRenderedAttributes() . " value=\"true\"$selected>" .
+                    "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" .
                 "</label>" .
             "</span>" .
         "</p>\n";

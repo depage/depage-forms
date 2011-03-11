@@ -53,15 +53,19 @@ class multiple extends abstracts\input {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        $options = '';
+    public function __toString() {
+        $options        = '';
+        $value          = $this->getRenderedValue();
+        $classes        = $this->getRenderedClasses();
+        $requiredChar   = $this->getRenderedRequiredChar();
+        $attributes     = $this->getRenderedAttributes();
 
         if ($this->skin === 'select') {
 
             // render HTML select
 
             $options = $this->renderOptions($this->optionList, $value);
-            return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+            return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<label>" .
                     "<span class=\"label\">$this->label$requiredChar</span>" .
                     "<select multiple name=\"$this->name[]\"$attributes>$options</select>" .
@@ -81,7 +85,7 @@ class multiple extends abstracts\input {
                     "</label>" .
                 "</span>";
             }
-            return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+            return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
                 "<span>$options</span>" .
             "</p>\n";

@@ -39,10 +39,13 @@ class number extends text {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
+    public function __toString() {
         /**
          * @todo temporary - remove once error reporting has been implemented
          **/
+
+        $value = $this->getRenderedValue();
+
         if ($this->min !== null) {
             $min = " min=\"$this->min\"";
             if ($value < $this->min) {
@@ -61,10 +64,10 @@ class number extends text {
         }
         $step = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getRenderedClasses() . "\">" .
             "<label>" . 
-                "<span class=\"label\">$this->label$requiredChar</span>" . 
-                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
+                "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" . 
+                "<input name=\"$this->name\" type=\"$this->type\"" . $max . $min . $step . $this->getRenderedAttributes() . " value=\"$value\">" .
             "</label>" .
         "</p>";
     }

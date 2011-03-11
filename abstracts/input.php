@@ -11,7 +11,7 @@ use depage\htmlform\validators;
 use depage\htmlform\exceptions;
 
 abstract class input {
-    /** 
+    /**
      * Input element type - HTML input type attribute.
      **/
     protected $type;
@@ -168,20 +168,6 @@ abstract class input {
     }
 
     /**
-     * Prepares element for HTML rendering and calls render() method.
-     *
-     * @return (string) HTML rendered element
-     **/
-    public function __toString() {
-        $value = ($this->value === null) ? $this->defaultValue : $this->value;
-        $attributes = $this->getAttributes();
-        $requiredChar = $this->getRequiredChar();
-        $class = $this->getClasses();
-
-        return $this->render($value, $attributes, $requiredChar, $class);
-    }
-
-    /**
      * Sets the HTML autofocus attribute of the current input element.
      *
      * @return void
@@ -213,7 +199,7 @@ abstract class input {
      *
      * @return $classes
      **/
-    protected function getClasses() {
+    protected function getRenderedClasses() {
         $classes = 'input-' . $this->type;
         
         if ($this->required) {
@@ -232,7 +218,7 @@ abstract class input {
      *
      * @return $this->requiredChar or empty string
      **/
-    protected function getRequiredChar() {
+    protected function getRenderedRequiredChar() {
         return ($this->required) ? "<em>$this->requiredChar</em>" : '';
     }
 
@@ -241,7 +227,7 @@ abstract class input {
      *
      * @return string HTML attribute
      **/
-    protected function getAttributes() {
+    protected function getRenderedAttributes() {
         $attributes = '';
 
         if ($this->required)    $attributes .= " required";
@@ -251,6 +237,15 @@ abstract class input {
         $attributes .= $this->validator->getPatternAttribute();
 
         return $attributes;
+    }
+
+    /**
+     * Returns value prepared for rendering the element to HTML
+     *
+     * @return mixed
+     **/
+    protected function getRenderedValue() {
+        return ($this->value === null) ? $this->defaultValue : $this->value;
     }
 
     /**

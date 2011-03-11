@@ -25,11 +25,11 @@ class text extends abstracts\input {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        return "<p id=\"{$this->formName}-{$this->name}\" class=\"$class\">" .
+    public function __toString() {
+        return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->getRenderedClasses() . "\">" .
             "<label>" .
-                "<span class=\"label\">{$this->label}$requiredChar</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"$attributes value=\"$value\">" .
+                "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" .
+                "<input name=\"$this->name\" type=\"$this->type\"" . $this->getRenderedAttributes() . " value=\"" . $this->getRenderedValue() . "\">" .
             "</label>" .
         "</p>\n";
     }
