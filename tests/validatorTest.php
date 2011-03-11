@@ -1,8 +1,8 @@
 <?php
 
-namespace depage\htmlform\validators;
-
 require_once('../validators/validator.php');
+
+use depage\htmlform\validators\validator;
 
 class validatorTest extends \PHPUnit_Framework_TestCase {
     public function testText() {

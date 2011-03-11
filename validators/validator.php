@@ -2,20 +2,30 @@
 namespace depage\htmlform\validators;
 
 class validator {
+    /**
+     * HTML pattern Attrbute.
+     **/
+    protected $patternAttribute = "";
+
     public static function factory($argument) {
-        if ($argument[0] === '/') {
+        if (($argument[0] === '/') && ($argument[strlen($argument)-1] ==='/')) {
             return new regExValidator($argument);
         } else {
             $type = 'depage\\htmlform\\validators\\' . $argument . 'Validator';
-            return new $type;
+
+            if (class_exists($type)) {
+                return new $type;
+            } else {
+                return new validator;
+            }
         }
     }
-    public static function getPattern($validator) {
-        if (($validator[0] === '/') && ($validator[strlen($validator)-1] ==='/')) {
-            $pattern = substr($validator, 1,-1);
-        } else {
-            $pattern = false;
-        }
-        return $pattern;
+
+    public function getPatternAttribute() {
+        return $this->patternAttribute;
+    }
+
+    public function validate($value) {
+        return true;
     }
 }

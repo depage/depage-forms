@@ -74,7 +74,6 @@ abstract class inputClass {
         $this->formName     = $formName;
 
         $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])       : validators\validator::factory($this->type);
-        $this->pattern      = (isset($parameters['validator']))     ? validators\validator::getPattern($parameters['validator'])    : false;
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
         $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : ' *';
@@ -247,8 +246,9 @@ abstract class inputClass {
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
-        if ($this->pattern)     $attributes .= " pattern=\"$this->pattern\"";
         if (!$this->valid)      $attributes .= " data-errorMessage=\"$this->errorMessage\"";
+
+        $attributes .= $this->validator->getPatternAttribute();
 
         return $attributes;
     }
