@@ -55,6 +55,10 @@ abstract class inputClass {
      * HTML autofocus attribute
      **/
     private $autofocus = false;
+    /**
+     * HTML pattern attribute
+     **/
+    protected $pattern = false;
 
     /**
      * @param $name input elements' name
@@ -69,10 +73,11 @@ abstract class inputClass {
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])   : validators\validator::factory($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                      : $this->name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                   : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                               : ' *';
+        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])       : validators\validator::factory($this->type);
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : ' *';
+        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                                   : 'Please enter valid data!';
     }
 
     /**
@@ -118,7 +123,7 @@ abstract class inputClass {
      **/
     protected function isEmpty() {
         return (
-            empty($this->value) 
+            empty($this->value)
             && ((string) $this->value !== '0') 
             && ($this->value !== false)
         );
@@ -239,16 +244,15 @@ abstract class inputClass {
     protected function getAttributes() {
         $attributes = '';
 
-        if ($this->required) {
-            $attributes .= ' required';
-        }
-        if ($this->autofocus) {
-            $attributes .= ' autofocus';
-        }
+        if ($this->required)    $attributes .= " required";
+        if ($this->autofocus)   $attributes .= " autofocus";
+        if (!$this->valid)      $attributes .= " data-errorMessage=\"$this->errorMessage\"";
+
+        $attributes .= $this->validator->getPatternAttribute();
+
         return $attributes;
     }
 
-    
     /**
      * Throws an exception if $parameters isn't of type array.
      *
