@@ -7,5 +7,37 @@ use depage\htmlform\abstracts;
 /**
  * HTML text input type.
  **/
-class text extends abstracts\textClass {
+class text extends abstracts\input {
+     /**
+     * @param $name input elements' name
+     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
+     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+     **/
+    public function __construct($name, $parameters, $formName) {
+        parent::__construct($name, $parameters, $formName);
+
+        // textClass elements have values of type string
+        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : '';
+    }
+
+    /**
+     * Renders element to HTML.
+     *
+     * @return string of HTML rendered element
+     **/
+    public function render($value, $attributes, $requiredChar, $class) {
+        return "<p id=\"{$this->formName}-{$this->name}\" class=\"$class\">" .
+            "<label>" .
+                "<span class=\"label\">{$this->label}$requiredChar</span>" .
+                "<input name=\"$this->name\" type=\"$this->type\"$attributes value=\"$value\">" .
+            "</label>" .
+        "</p>\n";
+    }
+
+    /**
+     * Converts value to element specific type.
+     **/
+    protected function typeCastValue() {
+        $this->value = (string) $this->value;
+    }
 }

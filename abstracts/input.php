@@ -10,7 +10,7 @@ namespace depage\htmlform\abstracts;
 use depage\htmlform\validators;
 use depage\htmlform\exceptions;
 
-abstract class inputClass {
+abstract class input {
     /** 
      * Input element type - HTML input type attribute.
      **/

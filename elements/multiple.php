@@ -7,7 +7,7 @@ use depage\htmlform\abstracts;
 /**
  * HTML-multiple-choice input type i.e. checkbox and select.
  **/
-class multiple extends abstracts\inputClass {
+class multiple extends abstracts\input {
     /** 
      * Contains list of selectable options.
      **/
