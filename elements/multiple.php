@@ -70,6 +70,7 @@ class multiple extends abstracts\input {
                     "<span class=\"label\">$this->label$requiredChar</span>" .
                     "<select multiple name=\"$this->name[]\"$attributes>$options</select>" .
                 "</label>" .
+                $this->getRenderedErrorMessage() .
             "</p>\n";
 
         } else {
@@ -88,6 +89,7 @@ class multiple extends abstracts\input {
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
                 "<span>$options</span>" .
+                $this->getRenderedErrorMessage() .
             "</p>\n";
         }
     }

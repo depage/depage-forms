@@ -248,6 +248,10 @@ abstract class input {
         return ($this->value === null) ? $this->defaultValue : $this->value;
     }
 
+    protected function getRenderedErrorMessage() {
+        return (!$this->valid && $this->value !== null) ? "<span class=\"errorMessage\">$this->errorMessage</span>" : "";
+    }
+
     /**
      * Throws an exception if $parameters isn't of type array.
      *

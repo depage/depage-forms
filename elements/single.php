@@ -20,7 +20,7 @@ class single extends abstracts\input {
      **/
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
-        
+
         // single-choice-elements have values of type string
         $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : "";
         $this->optionList   = (isset($parameters['optionList']))    ? $parameters['optionList']     : array();
@@ -71,6 +71,7 @@ class single extends abstracts\input {
                     "<span class=\"label\">$this->label$requiredChar</span>" .
                     "<select name=\"$this->name\"$attributes>$options</select>" .
                 "</label>" .
+            $this->getRenderedErrorMessage() .
             "</p>\n";
         } else {
 
@@ -88,6 +89,7 @@ class single extends abstracts\input {
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
                 "<span>$options</span>" .
+                $this->getRenderedErrorMessage() .
             "</p>\n";
         }
     }

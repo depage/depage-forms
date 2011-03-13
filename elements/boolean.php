@@ -30,12 +30,11 @@ class boolean extends abstracts\input {
         $selected = ($this->getRenderedValue() === true) ? " checked=\"yes\"" : '';
 
         return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getRenderedClasses() . "\">" .
-            "<span>" .
-                "<label>" .
-                    "<input type=\"checkbox\" name=\"$this->name\"" . $this->getRenderedAttributes() . " value=\"true\"$selected>" .
-                    "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" .
-                "</label>" .
-            "</span>" .
+            "<label>" .
+                "<input type=\"checkbox\" name=\"$this->name\"" . $this->getRenderedAttributes() . " value=\"true\"$selected>" .
+                "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" .
+            "</label>" .
+            $this->getRenderedErrorMessage() .
         "</p>\n";
     }
 

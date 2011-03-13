@@ -31,6 +31,7 @@ class text extends abstracts\input {
                 "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" .
                 "<input name=\"$this->name\" type=\"$this->type\"" . $this->getRenderedAttributes() . " value=\"" . $this->getRenderedValue() . "\">" .
             "</label>" .
+            $this->getRenderedErrorMessage() .
         "</p>\n";
     }
 

@@ -32,6 +32,7 @@ class textarea extends text {
                 "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" .
                 "<textarea name=\"$this->name\"" . $this->getRenderedAttributes() . $rows . $cols . ">" . $this->getRenderedValue() . "</textarea>" .
             "</label>" .
+            $this->getRenderedErrorMessage() .
         "</p>\n";
     }
 }

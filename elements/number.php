@@ -40,35 +40,20 @@ class number extends text {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        /**
-         * @todo temporary - remove once error reporting has been implemented
-         **/
+        $value          = $this->getRenderedValue();
+        $classes        = $this->getRenderedClasses();
+        $attributes     = $this->getRenderedAttributes();
+        $requiredChar   = $this->getRenderedrequiredChar();
+        $min            = " min=\"$this->min\"";
+        $max            = " max=\"$this->max\"";
+        $step           = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
-        $value = $this->getRenderedValue();
-
-        if ($this->min !== null) {
-            $min = " min=\"$this->min\"";
-            if ($value < $this->min) {
-                $value = $this->min;
-            }
-        } else {
-            $min = "";
-        }
-        if ($this->max !== null) {
-            $max = " max=\"$this->max\"";
-            if ($value > $this->max) {
-                $value = $this->max;
-            }
-        } else {
-            $max = "";
-        }
-        $step = ($this->step !== null) ? " step=\"$this->step\"" : "";
-
-        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->getRenderedClasses() . "\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
             "<label>" . 
-                "<span class=\"label\">" . $this->label . $this->getRenderedRequiredChar() . "</span>" . 
-                "<input name=\"$this->name\" type=\"$this->type\"" . $max . $min . $step . $this->getRenderedAttributes() . " value=\"$value\">" .
+                "<span class=\"label\">$this->label$requiredChar</span>" . 
+                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
+            $this->getRenderedErrorMessage() .
         "</p>";
     }
 
