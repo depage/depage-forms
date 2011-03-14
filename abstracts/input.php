@@ -232,7 +232,6 @@ abstract class input {
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
-        if (!$this->valid)      $attributes .= " data-errorMessage=\"$this->errorMessage\"";
 
         $attributes .= $this->validator->getPatternAttribute();
 
@@ -249,7 +248,16 @@ abstract class input {
     }
 
     protected function htmlErrorMessage() {
-        return (!$this->valid && $this->value !== null) ? " <span class=\"errorMessage\">$this->errorMessage</span>" : "";
+        if (!$this->valid
+            && $this->value !== null
+            && $this->errorMessage !== ""
+        ) {
+            $htmlErrorMessage = " <span class=\"errorMessage\">$this->errorMessage</span>";
+        } else {
+            $htmlErrorMessage = "";
+        }
+
+        return $htmlErrorMessage;
     }
 
     /**
