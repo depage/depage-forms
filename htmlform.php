@@ -233,13 +233,11 @@ class htmlform extends abstracts\container {
      * back to form.
      **/
     public function process() {
-
         $this->setCurrentStep();
-        $this->validate();
 
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
-            if ($this->valid) {
+            if ($this->validate()) {
                 $this->redirect($this->successAddress);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
