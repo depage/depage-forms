@@ -37,7 +37,7 @@ class text extends abstracts\input {
             "<label>" .
                 "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
                 "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlAttributes() . " value=\"" . $this->htmlValue() . "\">" .
-                $this->htmlList();
+                $this->htmlList() .
             "</label>" .
             $this->htmlErrorMessage() .
         "</p>\n";
@@ -63,7 +63,6 @@ class text extends abstracts\input {
         } else {
             $htmlList = "";
         }
-
         return $htmlList;
     }
 

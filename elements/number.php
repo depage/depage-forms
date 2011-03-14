@@ -54,7 +54,7 @@ class number extends text {
                 "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
             $this->htmlErrorMessage() .
-        "</p>";
+        "</p>\n";
     }
 
     /**
