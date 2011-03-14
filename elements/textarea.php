@@ -28,9 +28,9 @@ class textarea extends text {
         $cols = ($this->cols !== null) ? " cols=\"$this->cols\"" : "";
 
         return "<p id=\"$this->formName-$this->name\" class=\"" . $this->htmlClasses() . "\">" .
-            "<label>" .
+            "<label" . $this->htmlLabelAttributes() . ">" .
                 "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
-                "<textarea name=\"$this->name\"" . $this->htmlAttributes() . $rows . $cols . ">" . $this->htmlValue() . "</textarea>" .
+                "<textarea name=\"$this->name\"" . $this->htmlInputAttributes() . $rows . $cols . ">" . $this->htmlValue() . "</textarea>" .
             "</label>" .
             $this->htmlErrorMessage() .
         "</p>\n";

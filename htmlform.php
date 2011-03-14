@@ -56,6 +56,10 @@ class htmlform extends abstracts\container {
      * Contains array of step object references.
      **/
     protected $steps = array();
+    /**
+     * Time for session expiry
+     **/
+    protected $ttl;
 
     /**
      * @param $name string - form name
@@ -73,6 +77,7 @@ class htmlform extends abstracts\container {
         $this->successAddress   = (isset($parameters['successAddress']))    ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
         $this->validator        = (isset($parameters['validator']))         ? $parameters['validator']      : null;
         $this->currentStepId    = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
+        $this->ttl              = (isset($parameters['ttl']))               ? $parameters['ttl']            : null;
 
         // check if there's an open session
         if (!session_id()) {
@@ -80,9 +85,26 @@ class htmlform extends abstracts\container {
         }
         $this->sessionSlotName  = $this->name . '-data';
         $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
+
+        $this->sessionExpiry();
         
         // create a hidden input element to tell forms apart
         $this->addHidden('formName', array('defaultValue' => $this->name));
+    }
+
+    private function sessionExpiry() {
+        if (isset($this->ttl) && is_numeric($this->ttl)) {
+            $timestamp = time();
+
+            if (
+                isset($this->sessionSlot['timestamp'])
+                && ($timestamp - $this->sessionSlot['timestamp'] > $this->ttl)
+            ) {
+                $this->clearSession();
+            }
+
+            $this->sessionSlot['timestamp'] = $timestamp;
+        }
     }
     
     /** 

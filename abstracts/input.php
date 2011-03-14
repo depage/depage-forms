@@ -220,20 +220,32 @@ abstract class input {
      * @return $this->requiredChar or empty string
      **/
     protected function htmlRequiredChar() {
-        return ($this->required) ? " <em>$this->requiredChar</em>" : '';
+        return ($this->required) ? " <em>$this->requiredChar</em>" : "";
     }
 
     /**
-     * Returns string of HTML attributes. (required or autofocus)
+     * Returns string of HTML attributes for input element.
      *
      * @return string HTML attribute
      **/
-    protected function htmlAttributes() {
-        $attributes = '';
+    protected function htmlInputAttributes() {
+        $attributes = "data-errorMessage=\"$this->errorMessage\"";
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
-        if ($this->title)       $attributes .= " title=\"$this->title\"";
+
+        return $attributes;
+    }
+
+   /**
+     * Returns string of HTML attributes for label element.
+     *
+     * @return string HTML attribute
+     **/
+    protected function htmlLabelAttributes() {
+        $attributes = '';
+
+        if ($this->title) $attributes .= " title=\"$this->title\"";
 
         return $attributes;
     }

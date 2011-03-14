@@ -34,9 +34,9 @@ class text extends abstracts\input {
      **/
     public function __toString() {
         return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
-            "<label>" .
+            "<label" . $this->htmlLabelAttributes() . ">" .
                 "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlAttributes() . " value=\"" . $this->htmlValue() . "\">" .
+                "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
                 $this->htmlList() .
             "</label>" .
             $this->htmlErrorMessage() .
@@ -48,14 +48,14 @@ class text extends abstracts\input {
      **/
     protected function htmlList() {
         if ($this->list && is_array($this->list)) {
-            $htmlList = "<datalist id=\"{$this->name}-list\">";
+            $htmlList = "<datalist id=\"{$this->formName}-{$this->name}-list\">";
 
             foreach ($this->list as $index => $option) {
-                // if the array is associative
-                if (0 !== count(array_diff_key($this->list, array_keys(array_keys($this->list))))) {
-                    $htmlList .= "<option value=\"$index\" label=\"$option\">";
-                } else {
+                // associative arrays have index as value
+                if (is_int($index)) {
                     $htmlList .= "<option value=\"$option\">";
+                } else {
+                    $htmlList .= "<option value=\"$index\" label=\"$option\">";
                 }
             }
 
@@ -67,13 +67,13 @@ class text extends abstracts\input {
     }
 
     /**
-     * Adds placeholder to the attribute list if it's set.
+     * Renders text element specific attributes.
      **/
-    protected function htmlAttributes() {
-        $attributes = parent::htmlAttributes();
+    protected function htmlInputAttributes() {
+        $attributes = parent::htmlInputAttributes();
 
-        if ($this->placeholder) $attributes .= " placeholder=\"$this->placeholder\"";
-        if ($this->list)        $attributes .= " list=\"{$this->name}-list\"";
+        if ($this->placeholder) $attributes .= " placeholder=\"{$this->placeholder}\"";
+        if ($this->list)        $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";
 
         $attributes .= $this->validator->getPatternAttribute();
 
