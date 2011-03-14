@@ -55,10 +55,10 @@ class multiple extends abstracts\input {
      **/
     public function __toString() {
         $options        = '';
-        $value          = $this->getRenderedValue();
-        $classes        = $this->getRenderedClasses();
-        $requiredChar   = $this->getRenderedRequiredChar();
-        $attributes     = $this->getRenderedAttributes();
+        $value          = $this->htmlValue();
+        $classes        = $this->htmlClasses();
+        $requiredChar   = $this->htmlRequiredChar();
+        $attributes     = $this->htmlAttributes();
 
         if ($this->skin === 'select') {
 
@@ -70,7 +70,7 @@ class multiple extends abstracts\input {
                     "<span class=\"label\">$this->label$requiredChar</span>" .
                     "<select multiple name=\"$this->name[]\"$attributes>$options</select>" .
                 "</label>" .
-                $this->getRenderedErrorMessage() .
+                $this->htmlErrorMessage() .
             "</p>\n";
 
         } else {
@@ -89,7 +89,7 @@ class multiple extends abstracts\input {
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
                 "<span>$options</span>" .
-                $this->getRenderedErrorMessage() .
+                $this->htmlErrorMessage() .
             "</p>\n";
         }
     }

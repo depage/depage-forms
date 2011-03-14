@@ -199,7 +199,7 @@ abstract class input {
      *
      * @return $classes
      **/
-    protected function getRenderedClasses() {
+    protected function htmlClasses() {
         $classes = 'input-' . $this->type;
         
         if ($this->required) {
@@ -218,7 +218,7 @@ abstract class input {
      *
      * @return $this->requiredChar or empty string
      **/
-    protected function getRenderedRequiredChar() {
+    protected function htmlRequiredChar() {
         return ($this->required) ? "<em>$this->requiredChar</em>" : '';
     }
 
@@ -227,7 +227,7 @@ abstract class input {
      *
      * @return string HTML attribute
      **/
-    protected function getRenderedAttributes() {
+    protected function htmlAttributes() {
         $attributes = '';
 
         if ($this->required)    $attributes .= " required";
@@ -244,11 +244,11 @@ abstract class input {
      *
      * @return mixed
      **/
-    protected function getRenderedValue() {
+    protected function htmlValue() {
         return ($this->value === null) ? $this->defaultValue : $this->value;
     }
 
-    protected function getRenderedErrorMessage() {
+    protected function htmlErrorMessage() {
         return (!$this->valid && $this->value !== null) ? "<span class=\"errorMessage\">$this->errorMessage</span>" : "";
     }
 

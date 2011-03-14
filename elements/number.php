@@ -40,10 +40,10 @@ class number extends text {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $value          = $this->getRenderedValue();
-        $classes        = $this->getRenderedClasses();
-        $attributes     = $this->getRenderedAttributes();
-        $requiredChar   = $this->getRenderedrequiredChar();
+        $value          = $this->htmlValue();
+        $classes        = $this->htmlClasses();
+        $attributes     = $this->htmlAttributes();
+        $requiredChar   = $this->htmlrequiredChar();
         $min            = " min=\"$this->min\"";
         $max            = " max=\"$this->max\"";
         $step           = ($this->step !== null) ? " step=\"$this->step\"" : "";
@@ -53,7 +53,7 @@ class number extends text {
                 "<span class=\"label\">$this->label$requiredChar</span>" . 
                 "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
-            $this->getRenderedErrorMessage() .
+            $this->htmlErrorMessage() .
         "</p>";
     }
 
