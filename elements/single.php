@@ -11,7 +11,7 @@ class single extends abstracts\input {
     /** 
      * Contains list of selectable options.
      **/
-    protected $optionList = array();
+    protected $list = array();
 
     /**
      * @param $name input elements' name
@@ -23,7 +23,7 @@ class single extends abstracts\input {
 
         // single-choice-elements have values of type string
         $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : "";
-        $this->optionList   = (isset($parameters['optionList']))    ? $parameters['optionList']     : array();
+        $this->list   = (isset($parameters['list']))    ? $parameters['list']     : array();
         $this->skin         = (isset($parameters['skin']))          ? $parameters['skin']           : "radio";
     }
 
@@ -65,7 +65,7 @@ class single extends abstracts\input {
 
             // render HTML select
 
-            $options = $this->renderOptions($this->optionList, $value);
+            $options = $this->renderOptions($this->list, $value);
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<label>" .
                     "<span class=\"label\">$this->label$requiredChar</span>" .
@@ -77,7 +77,7 @@ class single extends abstracts\input {
 
             // render HTML checkbox
 
-            foreach($this->optionList as $index => $option) {
+            foreach($this->list as $index => $option) {
                 $selected = ($index === $value) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
                     "<label>" .
