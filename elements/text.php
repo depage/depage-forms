@@ -47,14 +47,12 @@ class text extends abstracts\input {
      * Renders HTML datalist.
      **/
     protected function htmlList() {
-        if ($this->list) {
+        if ($this->list && is_array($this->list)) {
             $htmlList = "<datalist id=\"{$this->name}-list\">";
 
             foreach ($this->list as $index => $option) {
-                if ( // if the array is associative
-                    is_array($this->list)
-                    && 0 !== count(array_diff_key($this->list, array_keys(array_keys($this->list))))
-                ) {
+                // if the array is associative
+                if (0 !== count(array_diff_key($this->list, array_keys(array_keys($this->list))))) {
                     $htmlList .= "<option value=\"$index\" label=\"$option\">";
                 } else {
                     $htmlList .= "<option value=\"$option\">";
@@ -77,6 +75,8 @@ class text extends abstracts\input {
 
         if ($this->placeholder) $attributes .= " placeholder=\"$this->placeholder\"";
         if ($this->list)        $attributes .= " list=\"{$this->name}-list\"";
+
+        $attributes .= $this->validator->getPatternAttribute();
 
         return $attributes;
     }

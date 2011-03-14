@@ -233,8 +233,6 @@ abstract class input {
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
 
-        $attributes .= $this->validator->getPatternAttribute();
-
         return $attributes;
     }
 
