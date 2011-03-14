@@ -78,6 +78,7 @@ abstract class input {
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
         $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : '*';
         $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                                   : 'Please enter valid data!';
+        $this->title        = (isset($parameters['title']))         ? $parameters['title']                                          : false;
     }
 
     /**
@@ -232,6 +233,7 @@ abstract class input {
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
+        if ($this->title)       $attributes .= " title=\"$this->title\"";
 
         return $attributes;
     }
