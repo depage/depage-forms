@@ -8,6 +8,11 @@ use depage\htmlform\abstracts;
  * HTML text input type.
  **/
 class text extends abstracts\input {
+    /**
+     * HTML placeholder attribute
+     **/
+     protected $placeholder;
+
      /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
@@ -17,7 +22,8 @@ class text extends abstracts\input {
         parent::__construct($name, $parameters, $formName);
 
         // textClass elements have values of type string
-        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : '';
+        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : '';
+        $this->placeholder  = (isset($parameters['placeholder']))   ? $parameters['placeholder']    : false;
     }
 
     /**
@@ -33,6 +39,17 @@ class text extends abstracts\input {
             "</label>" .
             $this->htmlErrorMessage() .
         "</p>\n";
+    }
+
+    /**
+     * Adds placeholder to the attribute list if it's set.
+     **/
+    protected function htmlAttributes() {
+        $attributes = parent::htmlAttributes();
+
+        if ($this->placeholder) $attributes .= " placeholder=\"$this->placeholder\"";
+
+        return $attributes;
     }
 
     /**
