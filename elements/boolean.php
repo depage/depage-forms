@@ -31,7 +31,7 @@ class boolean extends abstracts\input {
 
         return "<p id=\"$this->formName-$this->name\" class=\"" . $this->htmlClasses() . "\">" .
             "<label>" .
-                "<input type=\"checkbox\" name=\"$this->name\"" . $this->htmlAttributes() . " value=\"true\"$selected>" .
+                "<input type=\"checkbox\" name=\"$this->name\"" . $this->htmlInputAttributes() . " value=\"true\"$selected>" .
                 "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
             "</label>" .
             $this->htmlErrorMessage() .

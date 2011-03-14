@@ -228,7 +228,7 @@ abstract class input {
      *
      * @return string HTML attribute
      **/
-    protected function htmlAttributes() {
+    protected function htmlInputAttributes() {
         $attributes = '';
 
         if ($this->required)    $attributes .= " required";

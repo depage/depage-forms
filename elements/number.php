@@ -42,7 +42,7 @@ class number extends text {
     public function __toString() {
         $value          = $this->htmlValue();
         $classes        = $this->htmlClasses();
-        $attributes     = $this->htmlAttributes();
+        $attributes     = $this->htmlInputAttributes();
         $requiredChar   = $this->htmlrequiredChar();
         $min            = " min=\"$this->min\"";
         $max            = " max=\"$this->max\"";

@@ -36,7 +36,7 @@ class text extends abstracts\input {
         return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
             "<label>" .
                 "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlAttributes() . " value=\"" . $this->htmlValue() . "\">" .
+                "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
                 $this->htmlList() .
             "</label>" .
             $this->htmlErrorMessage() .
@@ -67,10 +67,10 @@ class text extends abstracts\input {
     }
 
     /**
-     * Adds placeholder to the attribute list if it's set.
+     * Renders text element specific attributes.
      **/
-    protected function htmlAttributes() {
-        $attributes = parent::htmlAttributes();
+    protected function htmlInputAttributes() {
+        $attributes = parent::htmlInputAttributes();
 
         if ($this->placeholder) $attributes .= " placeholder=\"{$this->placeholder}\"";
         if ($this->list)        $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";

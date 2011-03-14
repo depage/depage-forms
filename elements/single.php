@@ -58,7 +58,7 @@ class single extends abstracts\input {
         $value          = $this->htmlValue();
         $classes        = $this->htmlClasses();
         $requiredChar   = $this->htmlRequiredChar();
-        $attributes     = $this->htmlAttributes();
+        $attributes     = $this->htmlInputAttributes();
 
 
         if ($this->skin === "select") {
