@@ -8,6 +8,11 @@ use depage\htmlform\abstracts;
  * HTML text input type.
  **/
 class text extends abstracts\input {
+    /**
+     * HTML placeholder attribute
+     **/
+     protected $placeholder;
+
      /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
@@ -17,7 +22,9 @@ class text extends abstracts\input {
         parent::__construct($name, $parameters, $formName);
 
         // textClass elements have values of type string
-        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : '';
+        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : '';
+        $this->placeholder  = (isset($parameters['placeholder']))   ? $parameters['placeholder']    : false;
+        $this->list         = (isset($parameters['list']))          ? $parameters['list']           : false;
     }
 
     /**
@@ -25,13 +32,53 @@ class text extends abstracts\input {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        return "<p id=\"{$this->formName}-{$this->name}\" class=\"$class\">" .
+    public function __toString() {
+        return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
             "<label>" .
-                "<span class=\"label\">{$this->label}$requiredChar</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"$attributes value=\"$value\">" .
+                "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
+                "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlAttributes() . " value=\"" . $this->htmlValue() . "\">" .
+                $this->htmlList();
             "</label>" .
+            $this->htmlErrorMessage() .
         "</p>\n";
+    }
+
+    /**
+     * Renders HTML datalist.
+     **/
+    protected function htmlList() {
+        if ($this->list) {
+            $htmlList = "<datalist id=\"{$this->name}-list\">";
+
+            foreach ($this->list as $index => $option) {
+                if ( // if the array is associative
+                    is_array($this->list)
+                    && 0 !== count(array_diff_key($this->list, array_keys(array_keys($this->list))))
+                ) {
+                    $htmlList .= "<option value=\"$index\" label=\"$option\">";
+                } else {
+                    $htmlList .= "<option value=\"$option\">";
+                }
+            }
+
+            $htmlList .= "</datalist>";
+        } else {
+            $htmlList = "";
+        }
+
+        return $htmlList;
+    }
+
+    /**
+     * Adds placeholder to the attribute list if it's set.
+     **/
+    protected function htmlAttributes() {
+        $attributes = parent::htmlAttributes();
+
+        if ($this->placeholder) $attributes .= " placeholder=\"$this->placeholder\"";
+        if ($this->list)        $attributes .= " list=\"{$this->name}-list\"";
+
+        return $attributes;
     }
 
     /**

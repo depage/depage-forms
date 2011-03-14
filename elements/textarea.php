@@ -23,15 +23,16 @@ class textarea extends text {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
+    public function __toString() {
         $rows = ($this->rows !== null) ? " rows=\"$this->rows\"" : "";
         $cols = ($this->cols !== null) ? " cols=\"$this->cols\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->htmlClasses() . "\">" .
             "<label>" .
-                "<span class=\"label\">$this->label$requiredChar</span>" .
-                "<textarea name=\"$this->name\"$attributes $rows$cols>$value</textarea>" .
+                "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
+                "<textarea name=\"$this->name\"" . $this->htmlAttributes() . $rows . $cols . ">" . $this->htmlValue() . "</textarea>" .
             "</label>" .
+            $this->htmlErrorMessage() .
         "</p>\n";
     }
 }

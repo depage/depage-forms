@@ -45,7 +45,7 @@ class creditcard extends fieldset {
 
         $this->addSingle($this->name . "_card_type", array(
             'label' => "",
-            'optionList' => $options,
+            'list' => $options,
             'skin' => 'select',
         ));
         $this->addText($this->name . "_card_number", array(

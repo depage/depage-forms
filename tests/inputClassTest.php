@@ -42,12 +42,12 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected inputParametersNoArrayException.');
     }
 
-    public function testInputValid() {
+    public function testInputInalid() {
         $input = new inputTestClass('inputNameString', array(), 'formNameString');
         $this->assertEquals(false, $input->validate());
     }
 
-    public function testInputInvalid() {
+    public function testInputValid() {
         $input = new inputTestClass('inputNameString', array(), 'formNameString');
         $input->setValue('testValue');
         $this->assertEquals(true, $input->validate());

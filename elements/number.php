@@ -39,33 +39,21 @@ class number extends text {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        /**
-         * @todo temporary - remove once error reporting has been implemented
-         **/
-        if ($this->min !== null) {
-            $min = " min=\"$this->min\"";
-            if ($value < $this->min) {
-                $value = $this->min;
-            }
-        } else {
-            $min = "";
-        }
-        if ($this->max !== null) {
-            $max = " max=\"$this->max\"";
-            if ($value > $this->max) {
-                $value = $this->max;
-            }
-        } else {
-            $max = "";
-        }
-        $step = ($this->step !== null) ? " step=\"$this->step\"" : "";
+    public function __toString() {
+        $value          = $this->htmlValue();
+        $classes        = $this->htmlClasses();
+        $attributes     = $this->htmlAttributes();
+        $requiredChar   = $this->htmlrequiredChar();
+        $min            = " min=\"$this->min\"";
+        $max            = " max=\"$this->max\"";
+        $step           = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+        return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
             "<label>" . 
                 "<span class=\"label\">$this->label$requiredChar</span>" . 
                 "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
+            $this->htmlErrorMessage() .
         "</p>";
     }
 

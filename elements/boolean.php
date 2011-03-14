@@ -18,6 +18,7 @@ class boolean extends abstracts\input {
         
         // boolean-elements have values of type boolean
         $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : (bool) false;
+        $this->errorMessage = (isset($parameters['errorMessage'])) ? $parameters['errorMessage'] : 'Please check this box if you want to procede!';
     }
 
     /**
@@ -25,16 +26,15 @@ class boolean extends abstracts\input {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        $selected = ($value === true) ? " checked=\"yes\"" : '';
+    public function __toString() {
+        $selected = ($this->htmlValue() === true) ? " checked=\"yes\"" : '';
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
-            "<span>" .
-                "<label>" .
-                    "<input type=\"checkbox\" name=\"$this->name\"$attributes value=\"true\"$selected>" .
-                    "<span class=\"label\">$this->label$requiredChar</span>" .
-                "</label>" .
-            "</span>" .
+        return "<p id=\"$this->formName-$this->name\" class=\"" . $this->htmlClasses() . "\">" .
+            "<label>" .
+                "<input type=\"checkbox\" name=\"$this->name\"" . $this->htmlAttributes() . " value=\"true\"$selected>" .
+                "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
+            "</label>" .
+            $this->htmlErrorMessage() .
         "</p>\n";
     }
 

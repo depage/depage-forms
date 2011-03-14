@@ -11,7 +11,7 @@ class multiple extends abstracts\input {
     /** 
      * Contains list of selectable options.
      **/
-    protected $optionList = array();
+    protected $list = array();
 
     /**
      * @param $name input elements' name
@@ -23,7 +23,7 @@ class multiple extends abstracts\input {
         
         // multiple-choice-elements have values of type array
         $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : array();
-        $this->optionList   = (isset($parameters['optionList']))    ? $parameters['optionList']     : array();
+        $this->list   = (isset($parameters['list']))    ? $parameters['list']     : array();
         $this->skin         = (isset($parameters['skin']))          ? $parameters['skin']           : 'checkbox';
     }
 
@@ -53,26 +53,31 @@ class multiple extends abstracts\input {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $requiredChar, $class) {
-        $options = '';
+    public function __toString() {
+        $options        = '';
+        $value          = $this->htmlValue();
+        $classes        = $this->htmlClasses();
+        $requiredChar   = $this->htmlRequiredChar();
+        $attributes     = $this->htmlAttributes();
 
         if ($this->skin === 'select') {
 
             // render HTML select
 
-            $options = $this->renderOptions($this->optionList, $value);
-            return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+            $options = $this->renderOptions($this->list, $value);
+            return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<label>" .
                     "<span class=\"label\">$this->label$requiredChar</span>" .
                     "<select multiple name=\"$this->name[]\"$attributes>$options</select>" .
                 "</label>" .
+                $this->htmlErrorMessage() .
             "</p>\n";
 
         } else {
 
             // render HTML checkbox
 
-            foreach($this->optionList as $index => $option) {
+            foreach($this->list as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
                     "<label>" .
@@ -81,9 +86,10 @@ class multiple extends abstracts\input {
                     "</label>" .
                 "</span>";
             }
-            return "<p id=\"$this->formName-$this->name\" class=\"$class\">" .
+            return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<span class=\"label\">$this->label$requiredChar</span>" .
                 "<span>$options</span>" .
+                $this->htmlErrorMessage() .
             "</p>\n";
         }
     }

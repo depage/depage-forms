@@ -11,7 +11,7 @@ use depage\htmlform\validators;
 use depage\htmlform\exceptions;
 
 abstract class input {
-    /** 
+    /**
      * Input element type - HTML input type attribute.
      **/
     protected $type;
@@ -76,7 +76,7 @@ abstract class input {
         $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])       : validators\validator::factory($this->type);
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : ' *';
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : '*';
         $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                                   : 'Please enter valid data!';
     }
 
@@ -168,20 +168,6 @@ abstract class input {
     }
 
     /**
-     * Prepares element for HTML rendering and calls render() method.
-     *
-     * @return (string) HTML rendered element
-     **/
-    public function __toString() {
-        $value = ($this->value === null) ? $this->defaultValue : $this->value;
-        $attributes = $this->getAttributes();
-        $requiredChar = $this->getRequiredChar();
-        $class = $this->getClasses();
-
-        return $this->render($value, $attributes, $requiredChar, $class);
-    }
-
-    /**
      * Sets the HTML autofocus attribute of the current input element.
      *
      * @return void
@@ -213,7 +199,7 @@ abstract class input {
      *
      * @return $classes
      **/
-    protected function getClasses() {
+    protected function htmlClasses() {
         $classes = 'input-' . $this->type;
         
         if ($this->required) {
@@ -232,8 +218,8 @@ abstract class input {
      *
      * @return $this->requiredChar or empty string
      **/
-    protected function getRequiredChar() {
-        return ($this->required) ? "<em>$this->requiredChar</em>" : '';
+    protected function htmlRequiredChar() {
+        return ($this->required) ? " <em>$this->requiredChar</em>" : '';
     }
 
     /**
@@ -241,16 +227,37 @@ abstract class input {
      *
      * @return string HTML attribute
      **/
-    protected function getAttributes() {
+    protected function htmlAttributes() {
         $attributes = '';
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
-        if (!$this->valid)      $attributes .= " data-errorMessage=\"$this->errorMessage\"";
 
         $attributes .= $this->validator->getPatternAttribute();
 
         return $attributes;
+    }
+
+    /**
+     * Returns value prepared for rendering the element to HTML
+     *
+     * @return mixed
+     **/
+    protected function htmlValue() {
+        return ($this->value === null) ? $this->defaultValue : $this->value;
+    }
+
+    protected function htmlErrorMessage() {
+        if (!$this->valid
+            && $this->value !== null
+            && $this->errorMessage !== ""
+        ) {
+            $htmlErrorMessage = " <span class=\"errorMessage\">$this->errorMessage</span>";
+        } else {
+            $htmlErrorMessage = "";
+        }
+
+        return $htmlErrorMessage;
     }
 
     /**
