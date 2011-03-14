@@ -220,7 +220,7 @@ abstract class input {
      * @return $this->requiredChar or empty string
      **/
     protected function htmlRequiredChar() {
-        return ($this->required) ? " <em>$this->requiredChar</em>" : '';
+        return ($this->required) ? " <em>$this->requiredChar</em>" : "";
     }
 
     /**
@@ -229,7 +229,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlInputAttributes() {
-        $attributes = '';
+        $attributes = "data-errorMessage=\"$this->errorMessage\"";
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
