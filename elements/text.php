@@ -48,14 +48,14 @@ class text extends abstracts\input {
      **/
     protected function htmlList() {
         if ($this->list && is_array($this->list)) {
-            $htmlList = "<datalist id=\"{$this->name}-list\">";
+            $htmlList = "<datalist id=\"{$this->formName}-{$this->name}-list\">";
 
             foreach ($this->list as $index => $option) {
-                // if the array is associative
-                if (0 !== count(array_diff_key($this->list, array_keys(array_keys($this->list))))) {
-                    $htmlList .= "<option value=\"$index\" label=\"$option\">";
-                } else {
+                // associative arrays have index as value
+                if (is_int($index)) {
                     $htmlList .= "<option value=\"$option\">";
+                } else {
+                    $htmlList .= "<option value=\"$index\" label=\"$option\">";
                 }
             }
 
@@ -72,8 +72,8 @@ class text extends abstracts\input {
     protected function htmlAttributes() {
         $attributes = parent::htmlAttributes();
 
-        if ($this->placeholder) $attributes .= " placeholder=\"$this->placeholder\"";
-        if ($this->list)        $attributes .= " list=\"{$this->name}-list\"";
+        if ($this->placeholder) $attributes .= " placeholder=\"{$this->placeholder}\"";
+        if ($this->list)        $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";
 
         $attributes .= $this->validator->getPatternAttribute();
 
