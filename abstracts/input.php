@@ -76,7 +76,7 @@ abstract class input {
         $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])       : validators\validator::factory($this->type);
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : ' *';
+        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : '*';
         $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                                   : 'Please enter valid data!';
     }
 
@@ -219,7 +219,7 @@ abstract class input {
      * @return $this->requiredChar or empty string
      **/
     protected function htmlRequiredChar() {
-        return ($this->required) ? "<em>$this->requiredChar</em>" : '';
+        return ($this->required) ? " <em>$this->requiredChar</em>" : '';
     }
 
     /**
@@ -249,7 +249,7 @@ abstract class input {
     }
 
     protected function htmlErrorMessage() {
-        return (!$this->valid && $this->value !== null) ? "<span class=\"errorMessage\">$this->errorMessage</span>" : "";
+        return (!$this->valid && $this->value !== null) ? " <span class=\"errorMessage\">$this->errorMessage</span>" : "";
     }
 
     /**
