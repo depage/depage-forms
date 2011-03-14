@@ -34,7 +34,7 @@ class text extends abstracts\input {
      **/
     public function __toString() {
         return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
-            "<label>" .
+            "<label" . $this->htmlLabelAttributes() . ">" .
                 "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
                 "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
                 $this->htmlList() .

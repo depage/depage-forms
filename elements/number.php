@@ -26,12 +26,12 @@ class number extends text {
      **/
     public function __construct($name, $parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
-        
-        $this->defaultValue = (isset($parameters['defaultValue'])) ? $parameters['defaultValue'] : 0;
-        $this->min = (isset($parameters['min'])) ? $parameters['min'] : null;
-        $this->max = (isset($parameters['max'])) ? $parameters['max'] : null;
-        $this->step = (isset($parameters['step'])) ? $parameters['step'] : null;
-        $this->errorMessage = (isset($parameters['errorMessage'])) ? $parameters['errorMessage'] : 'Please enter a valid number!';
+
+        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : 0;
+        $this->min          = (isset($parameters['min']))           ? $parameters['min']            : null;
+        $this->max          = (isset($parameters['max']))           ? $parameters['max']            : null;
+        $this->step         = (isset($parameters['step']))          ? $parameters['step']           : null;
+        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']   : 'Please enter a valid number!';
     }
 
     /**
@@ -49,7 +49,7 @@ class number extends text {
         $step           = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
         return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
-            "<label>" . 
+            "<label" . $this->htmlLabelAttributes() . ">" .
                 "<span class=\"label\">$this->label$requiredChar</span>" . 
                 "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
