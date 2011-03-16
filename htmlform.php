@@ -71,13 +71,13 @@ class htmlform extends abstracts\container {
 
         parent::__construct($name, $parameters);
 
-        $this->submitLabel      = (isset($parameters['submitLabel']))       ? $parameters['submitLabel']    : 'submit';
-        $this->submitURL        = (isset($parameters['submitURL']))         ? $parameters['submitURL']      : $_SERVER['REQUEST_URI'];
-        $this->method           = (isset($parameters['method']))            ? $parameters['method']         : 'post';
-        $this->successURL   = (isset($parameters['successURL']))    ? $parameters['successURL'] : $_SERVER['REQUEST_URI'];
-        $this->validator        = (isset($parameters['validator']))         ? $parameters['validator']      : null;
-        $this->ttl              = (isset($parameters['ttl']))               ? $parameters['ttl']            : null;
-        $this->currentStepId    = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
+        $this->submitLabel      = (isset($parameters['submitLabel']))   ? $parameters['submitLabel']    : 'submit';
+        $this->submitURL        = (isset($parameters['submitURL']))     ? $parameters['submitURL']      : $_SERVER['REQUEST_URI'];
+        $this->method           = (isset($parameters['method']))        ? $parameters['method']         : 'post';
+        $this->successURL       = (isset($parameters['successURL']))    ? $parameters['successURL']     : $_SERVER['REQUEST_URI'];
+        $this->validator        = (isset($parameters['validator']))     ? $parameters['validator']      : null;
+        $this->ttl              = (isset($parameters['ttl']))           ? $parameters['ttl']            : null;
+        $this->currentStepId    = (isset($_GET['step']))                ? $_GET['step']                 : 0;
 
         // check if there's an open session
         if (!session_id()) {

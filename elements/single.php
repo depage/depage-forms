@@ -57,7 +57,7 @@ class single extends abstracts\input {
         $options        = '';
         $value          = $this->htmlValue();
         $classes        = $this->htmlClasses();
-        $requiredChar   = $this->htmlRequiredChar();
+        $marker         = $this->htmlMarker();
         $attributes     = $this->htmlInputAttributes();
 
 
@@ -68,7 +68,7 @@ class single extends abstracts\input {
             $options = $this->renderOptions($this->list, $value);
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<label" . $this->htmlLabelAttributes() . ">" .
-                    "<span class=\"label\">$this->label$requiredChar</span>" .
+                    "<span class=\"label\">$this->label$marker</span>" .
                     "<select name=\"$this->name\"$attributes>$options</select>" .
                 "</label>" .
             $this->htmlErrorMessage() .
@@ -87,7 +87,7 @@ class single extends abstracts\input {
                 "</span>";
             }
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
-                "<span class=\"label\">$this->label$requiredChar</span>" .
+                "<span class=\"label\">$this->label$marker</span>" .
                 "<span>$options</span>" .
                 $this->htmlErrorMessage() .
             "</p>\n";

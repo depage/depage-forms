@@ -73,12 +73,12 @@ abstract class input {
         $this->name         = $name;
         $this->formName     = $formName;
 
-        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator'])       : validators\validator::factory($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                          : $this->name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                       : false;
-        $this->requiredChar = (isset($parameters['requiredChar']))  ? $parameters['requiredChar']                                   : '*';
-        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                                   : 'Please enter valid data!';
-        $this->title        = (isset($parameters['title']))         ? $parameters['title']                                          : false;
+        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator']) : validators\validator::factory($this->type);
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                    : $this->name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                 : false;
+        $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']                                   : '*';
+        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                             : 'Please enter valid data!';
+        $this->title        = (isset($parameters['title']))         ? $parameters['title']                                    : false;
     }
 
     /**
@@ -217,10 +217,10 @@ abstract class input {
     /**
      * Returns current input elements required - indicator.
      *
-     * @return $this->requiredChar or empty string
+     * @return $this->marker or empty string
      **/
-    protected function htmlRequiredChar() {
-        return ($this->required) ? " <em>$this->requiredChar</em>" : "";
+    protected function htmlMarker() {
+        return ($this->required) ? " <em>$this->marker</em>" : "";
     }
 
     /**

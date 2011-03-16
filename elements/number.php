@@ -40,17 +40,17 @@ class number extends text {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $value          = $this->htmlValue();
-        $classes        = $this->htmlClasses();
-        $attributes     = $this->htmlInputAttributes();
-        $requiredChar   = $this->htmlrequiredChar();
-        $min            = " min=\"$this->min\"";
-        $max            = " max=\"$this->max\"";
-        $step           = ($this->step !== null) ? " step=\"$this->step\"" : "";
+        $value      = $this->htmlValue();
+        $classes    = $this->htmlClasses();
+        $attributes = $this->htmlInputAttributes();
+        $marker     = $this->htmlMarker();
+        $min        = " min=\"$this->min\"";
+        $max        = " max=\"$this->max\"";
+        $step       = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
         return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
             "<label" . $this->htmlLabelAttributes() . ">" .
-                "<span class=\"label\">$this->label$requiredChar</span>" . 
+                "<span class=\"label\">$this->label$marker</span>" .
                 "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
             "</label>" .
             $this->htmlErrorMessage() .
