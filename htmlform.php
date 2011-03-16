@@ -31,11 +31,11 @@ class htmlform extends abstracts\container {
     /**
      * HTML form action attribute.
      **/
-    protected $action;
+    protected $submitURL;
     /**
      * Specifies where the user is redirected once the form-data is valid.
      **/
-    protected $successAddress;
+    protected $successURL;
     /**
      * Contains the submit button label of the form.
      **/
@@ -72,12 +72,12 @@ class htmlform extends abstracts\container {
         parent::__construct($name, $parameters);
 
         $this->submitLabel      = (isset($parameters['submitLabel']))       ? $parameters['submitLabel']    : 'submit';
-        $this->action           = (isset($parameters['action']))            ? $parameters['action']         : $_SERVER['REQUEST_URI'];
+        $this->submitURL        = (isset($parameters['submitURL']))         ? $parameters['submitURL']      : $_SERVER['REQUEST_URI'];
         $this->method           = (isset($parameters['method']))            ? $parameters['method']         : 'post';
-        $this->successAddress   = (isset($parameters['successAddress']))    ? $parameters['successAddress'] : $_SERVER['REQUEST_URI'];
+        $this->successURL   = (isset($parameters['successURL']))    ? $parameters['successURL'] : $_SERVER['REQUEST_URI'];
         $this->validator        = (isset($parameters['validator']))         ? $parameters['validator']      : null;
-        $this->currentStepId    = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
         $this->ttl              = (isset($parameters['ttl']))               ? $parameters['ttl']            : null;
+        $this->currentStepId    = (isset($_GET['step']))                    ? $_GET['step']                 : 0;
 
         // check if there's an open session
         if (!session_id()) {
@@ -223,7 +223,7 @@ class htmlform extends abstracts\container {
         }
         $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
-        return "<form id=\"$this->name\" name=\"$this->name\" method=\"$this->method\" action=\"$this->action\">" .
+        return "<form id=\"$this->name\" name=\"$this->name\" method=\"$this->method\" action=\"$this->submitURL\">" .
             $renderedElements . $renderedSubmit .
         "</form>";
     }
@@ -239,7 +239,7 @@ class htmlform extends abstracts\container {
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if ($this->validate()) {
-                $this->redirect($this->successAddress);
+                $this->redirect($this->successURL);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
                 $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
