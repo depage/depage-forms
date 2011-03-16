@@ -9,13 +9,13 @@ namespace depage\htmlform;
 use depage\htmlform\elements;
 
 function autoload($class) {
-        $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
-        $file = __DIR__ . '/' .  $class . '.php';
+    $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
+    $file = __DIR__ . '/' .  $class . '.php';
 
-        if (file_exists($file)) {
-            require_once($file);
-        }
+    if (file_exists($file)) {
+        require_once($file);
     }
+}
 
 spl_autoload_register(__NAMESPACE__ . '\autoload');
 
@@ -87,7 +87,7 @@ class htmlform extends abstracts\container {
         $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
 
         $this->sessionExpiry();
-        
+
         // create a hidden input element to tell forms apart
         $this->addHidden('formName', array('defaultValue' => $this->name));
     }
@@ -101,6 +101,7 @@ class htmlform extends abstracts\container {
                 && ($timestamp - $this->sessionSlot['timestamp'] > $this->ttl)
             ) {
                 $this->clearSession();
+                $this->sessionSlot =& $_SESSION[$this->sessionSlotName];
             }
 
             $this->sessionSlot['timestamp'] = $timestamp;
@@ -223,8 +224,8 @@ class htmlform extends abstracts\container {
         $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
 
         return "<form id=\"$this->name\" name=\"$this->name\" method=\"$this->method\" action=\"$this->action\">" .
-                $renderedElements . $renderedSubmit .
-            "</form>";
+            $renderedElements . $renderedSubmit .
+        "</form>";
     }
 
     /**
