@@ -23,7 +23,7 @@ class single extends abstracts\input {
 
         // single-choice-elements have values of type string
         $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : "";
-        $this->list   = (isset($parameters['list']))    ? $parameters['list']     : array();
+        $this->list         = (isset($parameters['list']))          ? $parameters['list']           : array();
         $this->skin         = (isset($parameters['skin']))          ? $parameters['skin']           : "radio";
     }
 
@@ -41,7 +41,7 @@ class single extends abstracts\input {
             if (is_array($option)) {
                 $options .= "<optgroup label=\"$index\">" . $this->renderOptions($option, $value) . "</optgroup>";
             } else {
-                $selected = ($index === $value) ? ' selected' : '';
+                $selected = ($index == $value) ? ' selected' : '';
                 $options .= "<option value=\"$index\"$selected>$option</option>";
             }
         }
