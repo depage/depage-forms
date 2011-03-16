@@ -38,7 +38,10 @@ abstract class container {
      *  @param $parameters array of container parameters, HTML attributes
      *  @return void
      **/
-    public function __construct($name, $parameters = array()) {
+    public function __construct($name, &$parameters = array()) {
+        // converts index to lower case so parameters are case independent
+        $parameters = array_change_key_case($parameters);
+
         $this->checkContainerName($name);
         $this->name = $name;
     }

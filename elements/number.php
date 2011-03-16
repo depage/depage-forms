@@ -24,14 +24,14 @@ class number extends text {
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    public function __construct($name, $parameters, $formName) {
+    public function __construct($name, &$parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
 
-        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : 0;
+        $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : 0;
         $this->min          = (isset($parameters['min']))           ? $parameters['min']            : null;
         $this->max          = (isset($parameters['max']))           ? $parameters['max']            : null;
         $this->step         = (isset($parameters['step']))          ? $parameters['step']           : null;
-        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']   : 'Please enter a valid number!';
+        $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']   : 'Please enter a valid number!';
     }
 
     /**

@@ -65,7 +65,7 @@ abstract class input {
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    public function __construct($name, $parameters, $formName) {
+    public function __construct($name, &$parameters, $formName) {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
@@ -73,11 +73,14 @@ abstract class input {
         $this->name         = $name;
         $this->formName     = $formName;
 
+        // converts index to lower case so parameters are case independent
+        $parameters = array_change_key_case($parameters);
+
         $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator']) : validators\validator::factory($this->type);
         $this->label        = (isset($parameters['label']))         ? $parameters['label']                                    : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']                                 : false;
         $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']                                   : '*';
-        $this->errorMessage = (isset($parameters['errorMessage']))  ? $parameters['errorMessage']                             : 'Please enter valid data!';
+        $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']                             : 'Please enter valid data!';
         $this->title        = (isset($parameters['title']))         ? $parameters['title']                                    : false;
     }
 

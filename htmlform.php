@@ -71,10 +71,10 @@ class htmlform extends abstracts\container {
 
         parent::__construct($name, $parameters);
 
-        $this->submitLabel      = (isset($parameters['submitLabel']))   ? $parameters['submitLabel']    : 'submit';
-        $this->submitURL        = (isset($parameters['submitURL']))     ? $parameters['submitURL']      : $_SERVER['REQUEST_URI'];
+        $this->submitLabel      = (isset($parameters['submitlabel']))   ? $parameters['submitlabel']    : 'submit';
+        $this->submitURL        = (isset($parameters['submiturl']))     ? $parameters['submiturl']      : $_SERVER['REQUEST_URI'];
         $this->method           = (isset($parameters['method']))        ? $parameters['method']         : 'post';
-        $this->successURL       = (isset($parameters['successURL']))    ? $parameters['successURL']     : $_SERVER['REQUEST_URI'];
+        $this->successURL       = (isset($parameters['successurl']))    ? $parameters['successurl']     : $_SERVER['REQUEST_URI'];
         $this->validator        = (isset($parameters['validator']))     ? $parameters['validator']      : null;
         $this->ttl              = (isset($parameters['ttl']))           ? $parameters['ttl']            : null;
         $this->currentStepId    = (isset($_GET['step']))                ? $_GET['step']                 : 0;
@@ -89,7 +89,7 @@ class htmlform extends abstracts\container {
         $this->sessionExpiry();
 
         // create a hidden input element to tell forms apart
-        $this->addHidden('formName', array('defaultValue' => $this->name));
+        $this->addHidden('formName', array('defaultvalue' => $this->name));
     }
 
     private function sessionExpiry() {
