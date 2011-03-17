@@ -9,10 +9,10 @@ class creditcard extends fieldset {
     public function __construct($name, $parameters = array()) {
         parent::__construct($name, $parameters);
 
-        $this->labelNumber          = (isset($parameters['labelNumber']))           ? $parameters['labelNumber']            : "Creditcard Number";
-        $this->labelCheck           = (isset($parameters['labelCheck']))            ? $parameters['labelCheck']             : "CVV/CVC";
-        $this->labelExpirationDate  = (isset($parameters['labelExpirationDate']))   ? $parameters['labelExpirationDate']    : "Expiration Date MM/YY";
-        $this->labelOwner           = (isset($parameters['labelOwner']))            ? $parameters['labelOwner']             : "Card Owner";
+        $this->labelNumber          = (isset($parameters['labelnumber']))           ? $parameters['labelnumber']            : "Creditcard Number";
+        $this->labelCheck           = (isset($parameters['labelcheck']))            ? $parameters['labelcheck']             : "CVV/CVC";
+        $this->labelExpirationDate  = (isset($parameters['labelexpirationdate']))   ? $parameters['labelexpirationdate']    : "Expiration Date MM/YY";
+        $this->labelOwner           = (isset($parameters['labelowner']))            ? $parameters['labelowner']             : "Card Owner";
         $this->cardtypes            = (isset($parameters['cardtypes']))             ? $parameters['cardtypes']              : array(
             "visa",
             "americanexpress",

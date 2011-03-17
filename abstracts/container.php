@@ -38,7 +38,11 @@ abstract class container {
      *  @param $parameters array of container parameters, HTML attributes
      *  @return void
      **/
-    public function __construct($name, $parameters = array()) {
+    public function __construct($name, &$parameters = array()) {
+        // converts index to lower case so parameters are case independent
+        $parameters = array_change_key_case($parameters);
+
+        $this->log = (isset($parameters['log'])) ? $parameters['log'] : null;
         $this->checkContainerName($name);
         $this->name = $name;
     }
@@ -72,6 +76,8 @@ abstract class container {
      **/
     public function addElement($type, $name, $parameters = array()) {
         $this->_checkElementType($type);
+
+        $parameters['log'] = $this->log;
 
         $newElement = new $type($name, $parameters, $this->name);
 
@@ -177,5 +183,13 @@ abstract class container {
             }
         }
         return $allElements;
+    }
+
+    protected function log($argument, $type) {
+        if (is_callable(array($this->log, 'log'))) {
+            $this->log->log($argument, $type);
+        } else {
+            error_log($argument);
+        }
     }
 }

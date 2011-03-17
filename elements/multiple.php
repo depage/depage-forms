@@ -22,8 +22,8 @@ class multiple extends abstracts\input {
         parent::__construct($name, $parameters, $formName);
         
         // multiple-choice-elements have values of type array
-        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : array();
-        $this->list   = (isset($parameters['list']))    ? $parameters['list']     : array();
+        $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : array();
+        $this->list         = (isset($parameters['list']))          ? $parameters['list']           : array();
         $this->skin         = (isset($parameters['skin']))          ? $parameters['skin']           : 'checkbox';
     }
 
@@ -54,11 +54,11 @@ class multiple extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $options        = '';
-        $value          = $this->htmlValue();
-        $classes        = $this->htmlClasses();
-        $requiredChar   = $this->htmlRequiredChar();
-        $attributes     = $this->htmlInputAttributes();
+        $options    = '';
+        $value      = $this->htmlValue();
+        $classes    = $this->htmlClasses();
+        $marker     = $this->htmlMarker();
+        $attributes = $this->htmlInputAttributes();
 
         if ($this->skin === 'select') {
 
@@ -67,7 +67,7 @@ class multiple extends abstracts\input {
             $options = $this->renderOptions($this->list, $value);
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
                 "<label" . $this->htmlLabelAttributes() . ">" .
-                    "<span class=\"label\">$this->label$requiredChar</span>" .
+                    "<span class=\"label\">$this->label$marker</span>" .
                     "<select multiple name=\"$this->name[]\"$attributes>$options</select>" .
                 "</label>" .
                 $this->htmlErrorMessage() .
@@ -87,7 +87,7 @@ class multiple extends abstracts\input {
                 "</span>";
             }
             return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
-                "<span class=\"label\">$this->label$requiredChar</span>" .
+                "<span class=\"label\">$this->label$marker</span>" .
                 "<span>$options</span>" .
                 $this->htmlErrorMessage() .
             "</p>\n";

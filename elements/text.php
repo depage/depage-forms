@@ -18,11 +18,11 @@ class text extends abstracts\input {
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    public function __construct($name, $parameters, $formName) {
+    public function __construct($name, &$parameters, $formName) {
         parent::__construct($name, $parameters, $formName);
 
         // textClass elements have values of type string
-        $this->defaultValue = (isset($parameters['defaultValue']))  ? $parameters['defaultValue']   : '';
+        $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : '';
         $this->placeholder  = (isset($parameters['placeholder']))   ? $parameters['placeholder']    : false;
         $this->list         = (isset($parameters['list']))          ? $parameters['list']           : false;
     }
@@ -35,7 +35,7 @@ class text extends abstracts\input {
     public function __toString() {
         return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
             "<label" . $this->htmlLabelAttributes() . ">" .
-                "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
+                "<span class=\"label\">" . $this->label . $this->htmlMarker() . "</span>" .
                 "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
                 $this->htmlList() .
             "</label>" .

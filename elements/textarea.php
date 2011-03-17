@@ -29,7 +29,7 @@ class textarea extends text {
 
         return "<p id=\"$this->formName-$this->name\" class=\"" . $this->htmlClasses() . "\">" .
             "<label" . $this->htmlLabelAttributes() . ">" .
-                "<span class=\"label\">" . $this->label . $this->htmlRequiredChar() . "</span>" .
+                "<span class=\"label\">" . $this->label . $this->htmlMarker() . "</span>" .
                 "<textarea name=\"$this->name\"" . $this->htmlInputAttributes() . $rows . $cols . ">" . $this->htmlValue() . "</textarea>" .
             "</label>" .
             $this->htmlErrorMessage() .
