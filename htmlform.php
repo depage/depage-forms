@@ -221,9 +221,9 @@ class htmlform extends abstracts\container {
                 $renderedElements .= $element;
             }
         }
-        $renderedSubmit = "<p id=\"$this->name-submit\"><input type=\"submit\" name=\"submit\" value=\"$this->submitLabel\"></p>";
+        $renderedSubmit = "<p id=\"{$this->name}-submit\"><input type=\"submit\" name=\"submit\" value=\"{$this->submitLabel}\"></p>";
 
-        return "<form id=\"$this->name\" name=\"$this->name\" method=\"$this->method\" action=\"$this->submitURL\">" .
+        return "<form id=\"{$this->name}\" name=\"{$this->name}\" method=\"{$this->method}\" action=\"{$this->submitURL}\">" .
             $renderedElements . $renderedSubmit .
         "</form>";
     }

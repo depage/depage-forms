@@ -36,7 +36,7 @@ class text extends abstracts\input {
         return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
             "<label" . $this->htmlLabelAttributes() . ">" .
                 "<span class=\"label\">" . $this->label . $this->htmlMarker() . "</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
                 $this->htmlList() .
             "</label>" .
             $this->htmlErrorMessage() .
