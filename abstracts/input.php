@@ -66,6 +66,9 @@ abstract class input {
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
     public function __construct($name, &$parameters, $formName) {
+
+        $this->log          = (isset($parameters['log']))           ? $parameters['log']                                        : null;
+
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
@@ -76,12 +79,15 @@ abstract class input {
         // converts index to lower case so parameters are case independent
         $parameters = array_change_key_case($parameters);
 
-        $this->validator    = (isset($parameters['validator']))     ? validators\validator::factory($parameters['validator']) : validators\validator::factory($this->type);
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']                                    : $this->name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']                                 : false;
-        $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']                                   : '*';
-        $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']                             : 'Please enter valid data!';
-        $this->title        = (isset($parameters['title']))         ? $parameters['title']                                    : false;
+        $this->validator    = (isset($parameters['validator']))
+            ? validators\validator::factory($parameters['validator'], $this->log)
+            : validators\validator::factory($this->type, $this->log);
+
+        $this->label        = (isset($parameters['label']))         ? $parameters['label']          : $this->name;
+        $this->required     = (isset($parameters['required']))      ? $parameters['required']       : false;
+        $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']         : '*';
+        $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']   : 'Please enter valid data!';
+        $this->title        = (isset($parameters['title']))         ? $parameters['title']          : false;
     }
 
     /**
@@ -300,6 +306,14 @@ abstract class input {
         }
         if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name))  {
             throw new exceptions\invalidInputNameException();
+        }
+    }
+
+    protected function log($argument, $type) {
+        if (is_callable(array($this->log, 'log'))) {
+            $this->log->log($argument, $type);
+        } else {
+            error_log($argument);
         }
     }
 }
