@@ -48,10 +48,10 @@ class number extends text {
         $max        = " max=\"$this->max\"";
         $step       = ($this->step !== null) ? " step=\"$this->step\"" : "";
 
-        return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
+        return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
             "<label" . $this->htmlLabelAttributes() . ">" .
-                "<span class=\"label\">$this->label$marker</span>" .
-                "<input name=\"$this->name\" type=\"$this->type\"$max$min$step$attributes value=\"$value\">" .
+                "<span class=\"label\">{$this->label}{$marker}</span>" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$attributes} value=\"{$value}\">" .
             "</label>" .
             $this->htmlErrorMessage() .
         "</p>\n";

@@ -67,7 +67,7 @@ abstract class input {
      **/
     public function __construct($name, &$parameters, $formName) {
 
-        $this->log          = (isset($parameters['log']))           ? $parameters['log']                                        : null;
+        $this->log          = (isset($parameters['log']))           ? $parameters['log']            : null;
 
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);

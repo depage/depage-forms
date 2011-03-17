@@ -39,10 +39,10 @@ class single extends abstracts\input {
         $options = '';
         foreach($optionsArray as $index => $option) {
             if (is_array($option)) {
-                $options .= "<optgroup label=\"$index\">" . $this->renderOptions($option, $value) . "</optgroup>";
+                $options .= "<optgroup label=\"{$index}\">" . $this->renderOptions($option, $value) . "</optgroup>";
             } else {
                 $selected = ($index == $value) ? ' selected' : '';
-                $options .= "<option value=\"$index\"$selected>$option</option>";
+                $options .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
             }
         }
         return $options;
@@ -66,10 +66,10 @@ class single extends abstracts\input {
             // render HTML select
 
             $options = $this->renderOptions($this->list, $value);
-            return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
+            return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<label" . $this->htmlLabelAttributes() . ">" .
-                    "<span class=\"label\">$this->label$marker</span>" .
-                    "<select name=\"$this->name\"$attributes>$options</select>" .
+                    "<span class=\"label\">{$this->label}{$marker}</span>" .
+                    "<select name=\"{$this->name}\"{$attributes}>{$options}</select>" .
                 "</label>" .
             $this->htmlErrorMessage() .
             "</p>\n";
@@ -81,14 +81,14 @@ class single extends abstracts\input {
                 $selected = ($index === $value) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
                     "<label" . $this->htmlLabelAttributes() . ">" .
-                        "<input type=\"radio\" name=\"$this->name\"$attributes value=\"$index\"$selected>" .
-                        "<span>$option</span>" .
+                        "<input type=\"radio\" name=\"{$this->name}\"{$attributes} value=\"{$index}\"{$selected}>" .
+                        "<span>{$option}</span>" .
                     "</label>" .
                 "</span>";
             }
-            return "<p id=\"$this->formName-$this->name\" class=\"$classes\">" .
-                "<span class=\"label\">$this->label$marker</span>" .
-                "<span>$options</span>" .
+            return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
+                "<span class=\"label\">{$this->label}{$marker}</span>" .
+                "<span>{$options}</span>" .
                 $this->htmlErrorMessage() .
             "</p>\n";
         }
