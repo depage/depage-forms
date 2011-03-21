@@ -1,11 +1,11 @@
 <?php
 namespace depage\htmlform\validators;
 
-class emailValidator extends regExValidator {
+class tel extends regEx {
     public function __construct($log = null) {
         parent::__construct($log);
 
-        $this->regEx ='/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/';
+        $this->regEx = '/^[0-9,+,(), ,]{1,}(,[0-9]+){0,}$/';
         $this->patternAttribute = "";
     }
 }
