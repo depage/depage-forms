@@ -22,7 +22,7 @@ class singleElementTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSingleValidNotRequiredNotEmpty() {
-        $this->single->setValue(array());
+        $this->single->setValue('valueString');
         $this->assertEquals($this->single->validate(), true);
     }
 
