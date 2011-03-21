@@ -338,16 +338,6 @@ class htmlform extends abstracts\container {
     }
 
     /**
-    * Gets value of an input element by name.
-    * 
-    * @param $name name of the input element we're looking for
-    * @return (string) or (array) - value of an input element
-    **/
-    public function getValue($name) {
-        return $this->getElement($name)->getValue(); // @todo check if input exists
-    }
-
-    /**
      * Allows to manually populate the forms' input elements with values by
      * parsing an array of name-value pairs.
      *
