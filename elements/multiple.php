@@ -77,6 +77,9 @@ class multiple extends abstracts\input {
 
             // render HTML checkbox
 
+            // HTML5 validator hack (to avoid awkward checkbox validation (all boxes need to be checked if required))
+            $attributes = str_replace(' required', '', $attributes);
+
             foreach($this->list as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
