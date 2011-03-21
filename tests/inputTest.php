@@ -9,12 +9,24 @@ class inputTestClass extends input {
         $parameters['validator'] = 'text';
         parent::__construct($name, $parameters, $formName);
     }
+
+    public function getHtmlClasses() {
+        return $this->htmlClasses();
+    }
+
+    public function getHtmlErrorMessage() {
+        return $this->htmlErrorMessage();
+    }
+
+    public function setValid($valid = true) {
+        $this->valid = (bool) $valid;
+    }
 }
 
 class inputTest extends PHPUnit_Framework_TestCase {
     public function testInputNameNoStringException() {
         try {
-            $input = new inputTestClass(true, array(), 'formNameString');
+            $input = new inputTestClass(true, array(), 'formName');
         }
         catch (exceptions\inputNameNoStringException $expected) {
             return;
@@ -24,7 +36,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
     
     public function testInvalidInputNameException() {
         try {
-            $input = new inputTestClass(' ', array(), 'formNameString');
+            $input = new inputTestClass(' ', array(), 'formName');
         }
         catch (exceptions\invalidInputNameException $expected) {
             return;
@@ -34,7 +46,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
 
     public function testInputParametersNoArrayException() {
         try {
-            $input = new inputTestClass('inputNameString', 'string', 'formNameString');
+            $input = new inputTestClass('inputName', 'string', 'formName');
         }
         catch (exceptions\inputParametersNoArrayException $expected) {
             return;
@@ -43,19 +55,39 @@ class inputTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testInputInalid() {
-        $input = new inputTestClass('inputNameString', array(), 'formNameString');
+        $input = new inputTestClass('inputName', array(), 'formName');
         $this->assertEquals(false, $input->validate());
     }
 
     public function testInputValid() {
-        $input = new inputTestClass('inputNameString', array(), 'formNameString');
+        $input = new inputTestClass('inputName', array(), 'formName');
         $input->setValue('testValue');
         $this->assertEquals(true, $input->validate());
     }
 
     public function testGetName() {
-        $input = new inputTestClass('inputNameString', array(), 'formNameString');
-        $this->assertEquals('inputNameString', $input->getName());
+        $input = new inputTestClass('inputName', array(), 'formName');
+        $this->assertEquals('inputName', $input->getName());
+    }
+
+    public function testHtmlClasses() {
+        $input = new inputTestClass('inputName', array('required' => true), 'formName');
+        $input->setValue('');
+
+        $this->assertEquals($input->getHtmlClasses(), 'input-inputtestclass required error');
+    }
+
+    public function testHtmlErrorMessage() {
+        $input = new inputTestClass('inputName', array(), 'formName');
+
+        // valid input element => epmty error message
+        $this->assertEquals($input->getHtmlErrorMessage(), '');
+
+        // invalid input element
+        $input->setValid(false);
+        // set value (null by default)
+        $input->setValue('');
+        $this->assertEquals($input->getHtmlErrorMessage(), ' <span class="errorMessage">Please enter valid data!</span>');
     }
 }
 ?>

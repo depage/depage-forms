@@ -1,4 +1,4 @@
 <?php
-    $_SERVER['REQUEST_URI'] = '/jobs/forms/test.php';
+    $_SERVER['REQUEST_URI'] = '';
     session_start();
 ?>
