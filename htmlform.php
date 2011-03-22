@@ -71,7 +71,7 @@ class htmlform extends abstracts\container {
 
         parent::__construct($name, $parameters);
 
-        $this->submitLabel      = (isset($parameters['submitlabel']))   ? $parameters['submitlabel']    : 'submit';
+        $this->submitLabel      = (isset($parameters['label']))         ? $parameters['label']          : 'submit';
         $this->submitURL        = (isset($parameters['submiturl']))     ? $parameters['submiturl']      : $_SERVER['REQUEST_URI'];
         $this->method           = (isset($parameters['method']))        ? $parameters['method']         : 'post';
         $this->successURL       = (isset($parameters['successurl']))    ? $parameters['successurl']     : $_SERVER['REQUEST_URI'];
@@ -221,7 +221,7 @@ class htmlform extends abstracts\container {
                 $renderedElements .= $element;
             }
         }
-        $renderedSubmit = "<p id=\"{$this->name}-submit\"><input type=\"submit\" name=\"submit\" value=\"{$this->submitLabel}\"></p>";
+        $renderedSubmit = "<p id=\"{$this->name}-submit\"><input type=\"submit\" value=\"{$this->submitLabel}\"></p>";
 
         return "<form id=\"{$this->name}\" name=\"{$this->name}\" method=\"{$this->method}\" action=\"{$this->submitURL}\">" .
             $renderedElements . $renderedSubmit .

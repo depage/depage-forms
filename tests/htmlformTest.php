@@ -19,8 +19,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToStringSimple() {
-    $rendered = '<form id="formName" name="formName" method="post" action="' . $_SERVER['REQUEST_URI'] . '"><input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">
-<p id="formName-submit"><input type="submit" name="submit" value="submit"></p></form>';
+    $rendered = '<form id="formName" name="formName" method="post" action="' . $_SERVER['REQUEST_URI'] . '"><input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" . '<p id="formName-submit"><input type="submit" value="submit"></p></form>';
         $form = new htmlform('formName');
 
         $this->assertEquals($rendered, $form->__toString());
