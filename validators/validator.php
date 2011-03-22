@@ -17,12 +17,12 @@ class validator {
 
     public static function factory($argument, $log = null) {
         if (($argument[0] === '/') && ($argument[strlen($argument)-1] ==='/')) {
-            $regExValidator = new regExValidator($log);
+            $regExValidator = new regEx($log);
             $regExValidator->regEx = $argument;
 
             return $regExValidator;
         } else {
-            $type = 'depage\\htmlform\\validators\\' . $argument . 'Validator';
+            $type = 'depage\\htmlform\\validators\\' . $argument;
 
             if (class_exists($type)) {
                 return new $type($log);

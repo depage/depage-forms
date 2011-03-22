@@ -1,7 +1,7 @@
 <?php
 namespace depage\htmlform\validators;
 
-class urlValidator extends regExValidator {
+class url extends regEx {
     public function __construct($log = null) {
         parent::__construct($log);
 

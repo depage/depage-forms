@@ -79,8 +79,8 @@ class fieldset extends abstracts\container {
         foreach($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
-        return "<fieldset id=\"$this->name\" name=\"$this->name\">" .
-            "<legend>$this->label</legend>$renderedElements" .
+        return "<fieldset id=\"" . $this->form->getName() . "-{$this->name}\" name=\"{$this->name}\">" .
+            "<legend>{$this->label}</legend>{$renderedElements}" .
         "</fieldset>\n";
     }
 }

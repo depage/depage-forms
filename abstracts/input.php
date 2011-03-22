@@ -191,17 +191,8 @@ abstract class input {
      *
      * @return void
      **/
-    public function setRequired() {
-        $this->required = true;
-    }
-
-    /**
-     * Unsets the the HTML required attribute of the current input element.
-     *
-     * @return void
-     **/
-    public function setNotRequired() {
-        $this->required = false;
+    public function setRequired($required = true) {
+        $this->required = (bool) $required;
     }
 
     /**

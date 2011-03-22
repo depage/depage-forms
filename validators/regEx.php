@@ -1,7 +1,7 @@
 <?php
 namespace depage\htmlform\validators;
 
-class regExValidator extends validator {
+class regEx extends validator {
     /**
      * Regular expression
      **/
