@@ -27,14 +27,22 @@ class boolean extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
+        $formName           = $this->htmlFormName();
+        $classes            = $this->htmlClasses();
+        $labelAttributes    = $this->htmlLabelAttributes();
+        $inputAttributes    = $this->htmlInputAttributes();
+        $label              = $this->htmlLabel();
+        $marker             = $this->htmlMarker();
+        $errorMessage       = $this->htmlErrorMessage();
+
         $selected = ($this->htmlValue() === true) ? " checked=\"yes\"" : '';
 
-        return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
-            "<label" . $this->htmlLabelAttributes() . ">" .
-                "<input type=\"checkbox\" name=\"{$this->name}\"" . $this->htmlInputAttributes() . " value=\"true\"{$selected}>" .
-                "<span class=\"label\">" . $this->label . $this->htmlMarker() . "</span>" .
+        return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+            "<label{$labelAttributes}>" .
+                "<input type=\"checkbox\" name=\"{$this->name}\" {$inputAttributes} value=\"true\"{$selected}>" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
             "</label>" .
-            $this->htmlErrorMessage() .
+            $errorMessage .
         "</p>\n";
     }
 

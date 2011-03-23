@@ -40,21 +40,46 @@ class number extends text {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $value      = $this->htmlValue();
-        $classes    = $this->htmlClasses();
-        $attributes = $this->htmlInputAttributes();
-        $marker     = $this->htmlMarker();
-        $min        = " min=\"$this->min\"";
-        $max        = " max=\"$this->max\"";
-        $step       = ($this->step !== null) ? " step=\"$this->step\"" : "";
+        $value              = $this->htmlValue();
+        $classes            = $this->htmlClasses();
+        $inputAttributes    = $this->htmlInputAttributes();
+        $labelAttributes    = $this->htmlLabelAttributes();
+        $marker             = $this->htmlMarker();
+        $label              = $this->htmlLabel();
+        $min                = $this->htmlMin();
+        $max                = $this->htmlMax();
+        $step               = $this->htmlStep();
+        $formName           = $this->htmlFormName();
+        $errorMessage       = $this->htmlErrorMessage();
 
-        return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-            "<label" . $this->htmlLabelAttributes() . ">" .
-                "<span class=\"label\">{$this->label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$attributes} value=\"{$value}\">" .
+        return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+            "<label{$labelAttributes}>" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$inputAttributes} value=\"{$value}\">" .
             "</label>" .
-            $this->htmlErrorMessage() .
+            $errorMessage .
         "</p>\n";
+    }
+
+    /**
+     * Returns string of HTML min attribute.
+     **/
+    protected function htmlMin() {
+        return ($this->min === null) ? "" : " min=\"" . htmlentities($this->min, ENT_QUOTES) . "\"";
+    }
+
+    /**
+     * Returns string of HTML max attribute.
+     **/
+    protected function htmlMax() {
+        return ($this->max === null) ? "" : " max=\"" . htmlentities($this->max, ENT_QUOTES) . "\"";
+    }
+
+    /**
+     * Returns string of HTML step attribute.
+     **/
+    protected function htmlStep() {
+        return ($this->step === null) ? "" : " step=\"" . htmlentities($this->step, ENT_QUOTES) . "\"";
     }
 
     /**

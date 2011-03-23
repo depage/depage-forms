@@ -95,7 +95,8 @@ abstract class input {
      **/
     public function __call($functionName, $functionArguments) {
         if (substr($functionName, 0, 4) === 'html') {
-            $attribute = strtolower(str_replace('html', '', $functionName));
+            $attribute = str_replace('html', '', $functionName);
+            $attribute{0} = strtolower($attribute{0});
 
             return htmlentities($this->$attribute, ENT_QUOTES);
         } else {
@@ -215,7 +216,7 @@ abstract class input {
      * @return $classes
      **/
     protected function htmlClasses() {
-        $classes = 'input-' . $this->type;
+        $classes = 'input-' . htmlentities($this->type, ENT_QUOTES);
         
         if ($this->required) {
             $classes .= ' required';
@@ -226,7 +227,6 @@ abstract class input {
             }
         }
 
-        $classes = htmlentities($classes, ENT_QUOTES);
         return $classes;
     }
 

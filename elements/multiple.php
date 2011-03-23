@@ -39,10 +39,10 @@ class multiple extends abstracts\input {
         $options = '';
         foreach($optionsArray as $index => $option) {
             if (is_array($option)) {
-                $options .= "<optgroup label=\"$index\">" . $this->htmlList($option, $value) . "</optgroup>";
+                $options .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
             } else {
                 $selected = (in_array($index, $value)) ? ' selected' : '';
-                $options .= "<option value=\"$index\"$selected>$option</option>";
+                $options .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
             }
         }
         return $options;
@@ -61,16 +61,17 @@ class multiple extends abstracts\input {
         $inputAttributes    = $this->htmlInputAttributes();
         $errorMessage       = $this->htmlErrorMessage();
         $labelAttributes    = $this->htmlLabelAttributes();
+        $label              = $this->htmlLabel();
+        $formName           = $this->htmlFormName();
 
         if ($this->skin === 'select') {
-
             // render HTML select
 
             $list = $this->htmlList($this->list, $value);
 
-            return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
+            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<label{$labelAttributes}>" .
-                    "<span class=\"label\">{$this->label}{$marker}</span>" .
+                    "<span class=\"label\">{$label}{$marker}</span>" .
                     "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
@@ -90,8 +91,8 @@ class multiple extends abstracts\input {
                 "</span>";
             }
 
-            return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<span class=\"label\">{$this->label}{$marker}</span>" .
+            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
                 $errorMessage .
             "</p>\n";

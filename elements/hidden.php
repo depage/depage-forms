@@ -6,6 +6,10 @@ namespace depage\htmlform\elements;
  **/
 class hidden extends text {
     public function __toString() {
-        return "<input name=\"{$this->name}\" id=\"{$this->formName}-{$this->name}\" type=\"{$this->type}\" class=\"" . $this->htmlClasses() . "\" value=\"" . $this->htmlValue() . "\">\n";
+        $formName   = $this->htmlFormName();
+        $classes    = $this->htmlClasses();
+        $value      = $this->htmlValue();
+
+        return "<input name=\"{$this->name}\" id=\"{$formName}-{$this->name}\" type=\"{$this->type}\" class=\"{$classes}\" value=\"{$value}\">\n";
     }
 }
