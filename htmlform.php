@@ -214,7 +214,11 @@ class htmlform extends abstracts\container {
      * @return (string)
      **/
     public function __toString() {
-        $renderedElements = '';
+        $renderedElements   = '';
+        $label              = $this->htmlLabel();
+        $method             = $this->htmlMethod();
+        $submitURL          = $this->htmlSubmitURL();
+
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
             if (
@@ -224,10 +228,10 @@ class htmlform extends abstracts\container {
                 $renderedElements .= $element;
             }
         }
-        $renderedSubmit = "<p id=\"{$this->name}-submit\"><input type=\"submit\" value=\"{$this->label}\"></p>";
 
-        return "<form id=\"{$this->name}\" name=\"{$this->name}\" method=\"{$this->method}\" action=\"{$this->submitURL}\">" .
-            $renderedElements . $renderedSubmit .
+        return "<form id=\"{$this->name}\" name=\"{$this->name}\" method=\"{$method}\" action=\"{$submitURL}\">" .
+            $renderedElements .
+            "<p id=\"{$this->name}-submit\"><input type=\"submit\" value=\"{$label}\"></p>" .
         "</form>";
     }
 

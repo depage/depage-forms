@@ -55,16 +55,17 @@ abstract class container {
      * attributes for element rendering.
      **/
     public function __call($functionName, $functionArguments) {
-        if (substr($functionName, 0, 3) === 'add') {
+        if (substr($functionName, 0, 4) === 'html') {
+            $attribute = str_replace('html', '', $functionName);
+            $attribute{0} = strtolower($attribute{0});
+
+            return htmlentities($this->$attribute, ENT_QUOTES);
+        } else if (substr($functionName, 0, 3) === 'add') {
             $type       = strtolower(str_replace('add', '\\depage\\htmlform\\elements\\', $functionName));
             $name       = (isset($functionArguments[0]))    ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1])      ? $functionArguments[1] : array();
 
             return $this->addElement($type, $name, $parameters);
-        } else if (substr($functionName, 0, 4) === 'html') {
-            $attribute = strtolower(str_replace('html', '', $functionName));
-
-            return htmlentities($this->$attribute, ENT_QUOTES);
         } else {
             trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }

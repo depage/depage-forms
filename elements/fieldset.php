@@ -75,12 +75,16 @@ class fieldset extends abstracts\container {
      * @return string
      **/
      public function __toString() {
-        $renderedElements = '';
+        $renderedElements   = '';
+        $formName           = $this->form->getName();
+        $label              = $this->htmlLabel();
+
         foreach($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
-        return "<fieldset id=\"" . $this->form->getName() . "-{$this->name}\" name=\"{$this->name}\">" .
-            "<legend>{$this->label}</legend>{$renderedElements}" .
+
+        return "<fieldset id=\"{$formName}-{$this->name}\" name=\"{$this->name}\">" .
+            "<legend>{$label}</legend>{$renderedElements}" .
         "</fieldset>\n";
     }
 }
