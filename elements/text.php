@@ -33,13 +33,23 @@ class text extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        return "<p id=\"{$this->formName}-{$this->name}\" class=\"" . $this->htmlClasses() . "\">" .
-            "<label" . $this->htmlLabelAttributes() . ">" .
-                "<span class=\"label\">" . $this->label . $this->htmlMarker() . "</span>" .
-                "<input name=\"{$this->name}\" type=\"{$this->type}\"" . $this->htmlInputAttributes() . " value=\"" . $this->htmlValue() . "\">" .
-                $this->htmlList() .
+        $value              = $this->htmlValue();
+        $formName           = $this->htmlFormName();
+        $classes            = $this->htmlClasses();
+        $labelAttributes    = $this->htmlLabelAttributes();
+        $inputAttributes    = $this->htmlInputAttributes();
+        $marker             = $this->htmlMarker();
+        $label              = $this->htmlLabel();
+        $list               = $this->htmlList();
+        $errorMessage       = $this->htmlErrorMessage();
+
+        return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+            "<label{$labelAttributes}>" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$inputAttributes} value=\"{$value}\">" .
+                $list .
             "</label>" .
-            $this->htmlErrorMessage() .
+            $errorMessage .
         "</p>\n";
     }
 

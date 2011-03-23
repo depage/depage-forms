@@ -35,14 +35,14 @@ class multiple extends abstracts\input {
      * @param $value value that is to be marked as selecteѕ
      * @return (string) options-part of the HTML-select-element
      **/
-    private function renderOptions($optionsArray, $value) {
+    private function htmlList($optionsArray, $value) {
         $options = '';
         foreach($optionsArray as $index => $option) {
             if (is_array($option)) {
-                $options .= "<optgroup label=\"$index\">" . $this->renderOptions($option, $value) . "</optgroup>";
+                $options .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
             } else {
                 $selected = (in_array($index, $value)) ? ' selected' : '';
-                $options .= "<option value=\"$index\"$selected>$option</option>";
+                $options .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
             }
         }
         return $options;
@@ -54,47 +54,67 @@ class multiple extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $options    = '';
-        $value      = $this->htmlValue();
-        $classes    = $this->htmlClasses();
-        $marker     = $this->htmlMarker();
-        $attributes = $this->htmlInputAttributes();
+        $list               = '';
+        $value              = $this->htmlValue();
+        $classes            = $this->htmlClasses();
+        $marker             = $this->htmlMarker();
+        $inputAttributes    = $this->htmlInputAttributes();
+        $errorMessage       = $this->htmlErrorMessage();
+        $labelAttributes    = $this->htmlLabelAttributes();
+        $label              = $this->htmlLabel();
+        $formName           = $this->htmlFormName();
 
         if ($this->skin === 'select') {
-
             // render HTML select
 
-            $options = $this->renderOptions($this->list, $value);
-            return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<label" . $this->htmlLabelAttributes() . ">" .
-                    "<span class=\"label\">{$this->label}{$marker}</span>" .
-                    "<select multiple name=\"{$this->name}[]\"{$attributes}>{$options}</select>" .
+            $list = $this->htmlList($this->list, $value);
+
+            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+                "<label{$labelAttributes}>" .
+                    "<span class=\"label\">{$label}{$marker}</span>" .
+                    "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
-                $this->htmlErrorMessage() .
+                $errorMessage .
             "</p>\n";
 
         } else {
-
             // render HTML checkbox
-
-            // HTML5 validator hack (to avoid awkward checkbox validation (all boxes need to be checked if required))
-            $attributes = str_replace(' required', '', $attributes);
 
             foreach($this->list as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
-                $options .= "<span>" .
-                    "<label" . $this->htmlLabelAttributes() . ">" .
-                        "<input type=\"checkbox\" name=\"{$this->name}[]\"{$attributes} value=\"{$index}\"{$selected}>" .
+
+                $list .= "<span>" .
+                "<label{$labelAttributes}>" .
+                        "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .
                 "</span>";
             }
-            return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<span class=\"label\">{$this->label}{$marker}</span>" .
-                "<span>{$options}</span>" .
-                $this->htmlErrorMessage() .
+
+            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span>{$list}</span>" .
+                $errorMessage .
             "</p>\n";
         }
+    }
+
+    /**
+     * Returns string of HTML attributes for input element. (overrides
+     * input->htmlInputAttributes to avoid awkward HTML5 checkbox validation (all
+     * boxes need to be checked if required))
+     *
+     * @return string HTML attribute
+     **/
+    protected function htmlInputAttributes() {
+        $attributes = "data-errorMessage=\"$this->errorMessage\"";
+
+        // HTML5 validator hack
+        if ($this->required && $this->skin != 'select') $attributes .= " required";
+        if ($this->autofocus)                           $attributes .= " autofocus";
+
+        $attributes = htmlentities($attributes, ENT_QUOTES);
+        return $attributes;
     }
 
     /**

@@ -54,7 +54,7 @@ abstract class input {
     /**
      * HTML autofocus attribute
      **/
-    private $autofocus = false;
+    protected $autofocus = false;
     /**
      * HTML pattern attribute
      **/
@@ -89,6 +89,21 @@ abstract class input {
         $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']   : 'Please enter valid data!';
         $this->title        = (isset($parameters['title']))         ? $parameters['title']          : false;
     }
+
+    /**
+     * Returns respective HTML escaped attributes for element rendering.
+     **/
+    public function __call($functionName, $functionArguments) {
+        if (substr($functionName, 0, 4) === 'html') {
+            $attribute = str_replace('html', '', $functionName);
+            $attribute{0} = strtolower($attribute{0});
+
+            return htmlentities($this->$attribute, ENT_QUOTES);
+        } else {
+            trigger_error("Call to undefined method $functionName", E_USER_ERROR);
+        }
+    }
+
 
     /**
      * Returns the name of current input element.
@@ -201,7 +216,7 @@ abstract class input {
      * @return $classes
      **/
     protected function htmlClasses() {
-        $classes = 'input-' . $this->type;
+        $classes = 'input-' . htmlentities($this->type, ENT_QUOTES);
         
         if ($this->required) {
             $classes .= ' required';
@@ -211,6 +226,7 @@ abstract class input {
                 $classes .= ' error';
             }
         }
+
         return $classes;
     }
 
@@ -220,7 +236,7 @@ abstract class input {
      * @return $this->marker or empty string
      **/
     protected function htmlMarker() {
-        return ($this->required) ? " <em>$this->marker</em>" : "";
+        return ($this->required) ? " <em>" . htmlentities($this->marker, ENT_QUOTES) . "</em>" : "";
     }
 
     /**
@@ -229,7 +245,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlInputAttributes() {
-        $attributes = "data-errorMessage=\"$this->errorMessage\"";
+        $attributes = "data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
@@ -243,11 +259,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlLabelAttributes() {
-        $attributes = '';
-
-        if ($this->title) $attributes .= " title=\"$this->title\"";
-
-        return $attributes;
+        return ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
     }
 
     /**
@@ -264,12 +276,12 @@ abstract class input {
             && $this->value !== null
             && $this->errorMessage !== ""
         ) {
-            $htmlErrorMessage = " <span class=\"errorMessage\">$this->errorMessage</span>";
+            $errorMessage = " <span class=\"errorMessage\">" . htmlentities($this->errorMessage, ENT_QUOTES) . "</span>";
         } else {
-            $htmlErrorMessage = "";
+            $errorMessage = "";
         }
 
-        return $htmlErrorMessage;
+        return $errorMessage;
     }
 
     /**
