@@ -211,6 +211,8 @@ abstract class input {
                 $classes .= ' error';
             }
         }
+
+        $classes = htmlentities($classes, ENT_QUOTES);
         return $classes;
     }
 
@@ -220,7 +222,7 @@ abstract class input {
      * @return $this->marker or empty string
      **/
     protected function htmlMarker() {
-        return ($this->required) ? " <em>$this->marker</em>" : "";
+        return ($this->required) ? " <em>" . htmlentities($this->marker, ENT_QUOTES) . "</em>" : "";
     }
 
     /**
@@ -234,6 +236,7 @@ abstract class input {
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
 
+        $attributes = htmlentities($attributes, ENT_QUOTES);
         return $attributes;
     }
 
@@ -245,6 +248,7 @@ abstract class input {
     protected function htmlLabelAttributes() {
         $attributes = ($this->title) ? " title=\"$this->title\"" : "";
 
+        $attributes = htmlentities($attributes, ENT_QUOTES);
         return $attributes;
     }
 
@@ -262,12 +266,12 @@ abstract class input {
             && $this->value !== null
             && $this->errorMessage !== ""
         ) {
-            $htmlErrorMessage = " <span class=\"errorMessage\">$this->errorMessage</span>";
+            $errorMessage = " <span class=\"errorMessage\">" . htmlentities($this->errorMessage, ENT_QUOTES) . "</span>";
         } else {
-            $htmlErrorMessage = "";
+            $errorMessage = "";
         }
 
-        return $htmlErrorMessage;
+        return $errorMessage;
     }
 
     /**

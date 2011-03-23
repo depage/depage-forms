@@ -77,7 +77,6 @@ class multiple extends abstracts\input {
             "</p>\n";
 
         } else {
-
             // render HTML checkbox
 
             foreach($this->list as $index => $option) {
@@ -90,6 +89,7 @@ class multiple extends abstracts\input {
                     "</label>" .
                 "</span>";
             }
+
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<span class=\"label\">{$this->label}{$marker}</span>" .
                 "<span>{$options}</span>" .
@@ -112,6 +112,7 @@ class multiple extends abstracts\input {
         if ($this->required && $this->skin != 'select') $attributes .= " required";
         if ($this->autofocus)                           $attributes .= " autofocus";
 
+        $attributes = htmlentities($attributes, ENT_QUOTES);
         return $attributes;
     }
 
