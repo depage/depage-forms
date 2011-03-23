@@ -54,11 +54,13 @@ class single extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $options        = '';
-        $value          = $this->htmlValue();
-        $classes        = $this->htmlClasses();
-        $marker         = $this->htmlMarker();
-        $attributes     = $this->htmlInputAttributes();
+        $options            = '';
+        $value              = $this->htmlValue();
+        $classes            = $this->htmlClasses();
+        $marker             = $this->htmlMarker();
+        $inputAttributes    = $this->htmlInputAttributes();
+        $errorMessage       = $this->htmlErrorMessage();
+        $labelAttributes    = $this->htmlLabelAttributes();
 
 
         if ($this->skin === "select") {
@@ -67,11 +69,11 @@ class single extends abstracts\input {
 
             $options = $this->renderOptions($this->list, $value);
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<label" . $this->htmlLabelAttributes() . ">" .
+                "<label$labelAttributes>" .
                     "<span class=\"label\">{$this->label}{$marker}</span>" .
-                    "<select name=\"{$this->name}\"{$attributes}>{$options}</select>" .
+                    "<select name=\"{$this->name}\"{$inputAttributes}>{$options}</select>" .
                 "</label>" .
-            $this->htmlErrorMessage() .
+                $errorMessage .
             "</p>\n";
         } else {
 
@@ -80,8 +82,8 @@ class single extends abstracts\input {
             foreach($this->list as $index => $option) {
                 $selected = ($index === $value) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
-                    "<label" . $this->htmlLabelAttributes() . ">" .
-                        "<input type=\"radio\" name=\"{$this->name}\"{$attributes} value=\"{$index}\"{$selected}>" .
+                "<label$labelAttributes>" .
+                        "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .
                 "</span>";
@@ -89,7 +91,7 @@ class single extends abstracts\input {
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<span class=\"label\">{$this->label}{$marker}</span>" .
                 "<span>{$options}</span>" .
-                $this->htmlErrorMessage() .
+                $errorMessage .
             "</p>\n";
         }
     }

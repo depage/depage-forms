@@ -54,7 +54,7 @@ abstract class input {
     /**
      * HTML autofocus attribute
      **/
-    private $autofocus = false;
+    protected $autofocus = false;
     /**
      * HTML pattern attribute
      **/
@@ -243,9 +243,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlLabelAttributes() {
-        $attributes = '';
-
-        if ($this->title) $attributes .= " title=\"$this->title\"";
+        $attributes = ($this->title) ? " title=\"$this->title\"" : "";
 
         return $attributes;
     }
