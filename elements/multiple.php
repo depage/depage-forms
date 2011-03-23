@@ -35,11 +35,11 @@ class multiple extends abstracts\input {
      * @param $value value that is to be marked as selecteѕ
      * @return (string) options-part of the HTML-select-element
      **/
-    private function renderOptions($optionsArray, $value) {
+    private function htmlList($optionsArray, $value) {
         $options = '';
         foreach($optionsArray as $index => $option) {
             if (is_array($option)) {
-                $options .= "<optgroup label=\"$index\">" . $this->renderOptions($option, $value) . "</optgroup>";
+                $options .= "<optgroup label=\"$index\">" . $this->htmlList($option, $value) . "</optgroup>";
             } else {
                 $selected = (in_array($index, $value)) ? ' selected' : '';
                 $options .= "<option value=\"$index\"$selected>$option</option>";
@@ -54,7 +54,7 @@ class multiple extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $options            = '';
+        $list               = '';
         $value              = $this->htmlValue();
         $classes            = $this->htmlClasses();
         $marker             = $this->htmlMarker();
@@ -66,12 +66,12 @@ class multiple extends abstracts\input {
 
             // render HTML select
 
-            $options = $this->renderOptions($this->list, $value);
+            $list = $this->htmlList($this->list, $value);
 
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<label{$labelAttributes}>" .
                     "<span class=\"label\">{$this->label}{$marker}</span>" .
-                    "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$options}</select>" .
+                    "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
             "</p>\n";
@@ -82,7 +82,7 @@ class multiple extends abstracts\input {
             foreach($this->list as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
 
-                $options .= "<span>" .
+                $list .= "<span>" .
                 "<label{$labelAttributes}>" .
                         "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
@@ -92,7 +92,7 @@ class multiple extends abstracts\input {
 
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<span class=\"label\">{$this->label}{$marker}</span>" .
-                "<span>{$options}</span>" .
+                "<span>{$list}</span>" .
                 $errorMessage .
             "</p>\n";
         }
