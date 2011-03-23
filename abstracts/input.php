@@ -91,6 +91,20 @@ abstract class input {
     }
 
     /**
+     * Returns respective HTML escaped attributes for element rendering.
+     **/
+    public function __call($functionName, $functionArguments) {
+        if (substr($functionName, 0, 4) === 'html') {
+            $attribute = strtolower(str_replace('html', '', $functionName));
+
+            return htmlentities($this->$attribute, ENT_QUOTES);
+        } else {
+            trigger_error("Call to undefined method $functionName", E_USER_ERROR);
+        }
+    }
+
+
+    /**
      * Returns the name of current input element.
      *
      * @return $this->name
@@ -231,12 +245,11 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlInputAttributes() {
-        $attributes = "data-errorMessage=\"$this->errorMessage\"";
+        $attributes = "data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
 
-        $attributes = htmlentities($attributes, ENT_QUOTES);
         return $attributes;
     }
 
@@ -246,10 +259,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlLabelAttributes() {
-        $attributes = ($this->title) ? " title=\"$this->title\"" : "";
-
-        $attributes = htmlentities($attributes, ENT_QUOTES);
-        return $attributes;
+        return ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
     }
 
     /**

@@ -51,16 +51,20 @@ abstract class container {
      * Allows for various input element types and fieldsets. Accepts methods
      * that start with "add" and tries to call $this->addElement() to instantiate
      * the respective class.
-     *
-     * @param $name string - name of the element
-     * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
+     * Methods that start with "html" return the respective HTML escaped
+     * attributes for element rendering.
      **/
     public function __call($functionName, $functionArguments) {
         if (substr($functionName, 0, 3) === 'add') {
-            $type = strtolower(str_replace('add', '\\depage\\htmlform\\elements\\', $functionName));
-            $name = (isset($functionArguments[0])) ? $functionArguments[0] : '';
-            $parameters = isset($functionArguments[1]) ? $functionArguments[1] : array();
+            $type       = strtolower(str_replace('add', '\\depage\\htmlform\\elements\\', $functionName));
+            $name       = (isset($functionArguments[0]))    ? $functionArguments[0] : '';
+            $parameters = isset($functionArguments[1])      ? $functionArguments[1] : array();
+
             return $this->addElement($type, $name, $parameters);
+        } else if (substr($functionName, 0, 4) === 'html') {
+            $attribute = strtolower(str_replace('html', '', $functionName));
+
+            return htmlentities($this->$attribute, ENT_QUOTES);
         } else {
             trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }

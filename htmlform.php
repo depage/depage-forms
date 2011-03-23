@@ -304,7 +304,6 @@ class htmlform extends abstracts\container {
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
 
-        // @todo necessary?
         if ($this->valid === null) {
             return (bool) $this->sessionSlot['formIsValid'];
         } else {

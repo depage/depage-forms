@@ -69,7 +69,7 @@ class single extends abstracts\input {
 
             $options = $this->renderOptions($this->list, $value);
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<label$labelAttributes>" .
+                "<label{$labelAttributes}>" .
                     "<span class=\"label\">{$this->label}{$marker}</span>" .
                     "<select name=\"{$this->name}\"{$inputAttributes}>{$options}</select>" .
                 "</label>" .
@@ -82,7 +82,7 @@ class single extends abstracts\input {
             foreach($this->list as $index => $option) {
                 $selected = ($index === $value) ? " checked=\"yes\"" : '';
                 $options .= "<span>" .
-                "<label$labelAttributes>" .
+                "<label{$labelAttributes}>" .
                         "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .

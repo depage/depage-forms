@@ -69,7 +69,7 @@ class multiple extends abstracts\input {
             $options = $this->renderOptions($this->list, $value);
 
             return "<p id=\"{$this->formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<label$labelAttributes>" .
+                "<label{$labelAttributes}>" .
                     "<span class=\"label\">{$this->label}{$marker}</span>" .
                     "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$options}</select>" .
                 "</label>" .
@@ -83,7 +83,7 @@ class multiple extends abstracts\input {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
 
                 $options .= "<span>" .
-                "<label$labelAttributes>" .
+                "<label{$labelAttributes}>" .
                         "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .
