@@ -46,7 +46,7 @@ class text extends abstracts\input {
         return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
             "<label{$labelAttributes}>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$inputAttributes} value=\"{$value}\">" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\" {$inputAttributes} value=\"{$value}\">" .
                 $list .
             "</label>" .
             $errorMessage .
@@ -58,14 +58,17 @@ class text extends abstracts\input {
      **/
     protected function htmlList() {
         if ($this->list && is_array($this->list)) {
-            $htmlList = "<datalist id=\"{$this->formName}-{$this->name}-list\">";
+            $formName   = $this->htmlFormName();
+            $options    = parent::htmlList($this->list);
 
-            foreach ($this->list as $index => $option) {
+            $htmlList = "<datalist id=\"{$formName}-{$this->name}-list\">";
+
+            foreach ($options as $index => $option) {
                 // associative arrays have index as value
                 if (is_int($index)) {
-                    $htmlList .= "<option value=\"$option\">";
+                    $htmlList .= "<option value=\"{$option}\">";
                 } else {
-                    $htmlList .= "<option value=\"$index\" label=\"$option\">";
+                    $htmlList .= "<option value=\"{$index}\" label=\"{$option}\">";
                 }
             }
 
