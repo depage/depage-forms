@@ -284,6 +284,21 @@ abstract class input {
         return $errorMessage;
     }
 
+    protected function htmlList($options) {
+        if (is_array($options)) {
+            $htmlOptions = array();
+
+            foreach($options as $index => $option) {
+                if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
+                if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
+
+                $htmlOptions[$index] = $option;
+            }
+            return $htmlOptions;
+        }
+        return $options;
+    }
+
     /**
      * Throws an exception if $parameters isn't of type array.
      *

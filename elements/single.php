@@ -28,24 +28,47 @@ class single extends abstracts\input {
     }
 
     /**
-     * Renders HTML - option list part of select element.
-     * Works recursively in case of optgroups.
+     * Renders HTML - option list part of select element. Works recursively in
+     * case of optgroups. If no parameters are parsed, it uses the list
+     * attribute of this element.
      *
-     * @param $optionsArray array of list elements and subgroups
-     * @param $value value that is to be marked as selecteѕ
+     * @param $options array of list elements and subgroups
+     * @param $value value to be marked as selected
      * @return (string) options-part of the HTML-select-element
      **/
-    private function htmlList($optionsArray, $value) {
-        $options = '';
-        foreach($optionsArray as $index => $option) {
-            if (is_array($option)) {
-                $options .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
-            } else {
-                $selected = ($index == $value) ? ' selected' : '';
-                $options .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
+    protected function htmlList($options = null, $value = null) {
+        if ($value == null)     $value      = $this->htmlValue();
+        if ($options == null)   $options    = $this->list;
+
+        $options    = parent::htmlList($options);
+        $list       = '';
+
+        if ($this->skin === "select") {
+            foreach($options as $index => $option) {
+                if (is_array($option)) {
+                    $list       .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
+                } else {
+                    $selected   = ($index == $value) ? ' selected' : '';
+                    $list       .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
+                }
+            }
+        } else {
+            $inputAttributes = $this->htmlInputAttributes();
+            $labelAttributes = $this->htmlLabelAttributes();
+
+            foreach($options as $index => $option) {
+                // typecasted for non-associative arrays
+                $selected = ((string) $index === $value) ? " checked=\"yes\"" : '';
+
+                $list .= "<span>" .
+                "<label{$labelAttributes}>" .
+                        "<input type=\"radio\" name=\"{$this->name}\" {$inputAttributes} value=\"{$index}\"{$selected}>" .
+                        "<span>{$option}</span>" .
+                    "</label>" .
+                "</span>";
             }
         }
-        return $options;
+        return $list;
     }
 
     /**
@@ -54,44 +77,31 @@ class single extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $list               = '';
-        $value              = $this->htmlValue();
         $classes            = $this->htmlClasses();
         $marker             = $this->htmlMarker();
-        $inputAttributes    = $this->htmlInputAttributes();
         $errorMessage       = $this->htmlErrorMessage();
-        $labelAttributes    = $this->htmlLabelAttributes();
         $formName           = $this->htmlFormName();
         $label              = $this->htmlLabel();
-
+        $list               = $this->htmlList();
 
         if ($this->skin === "select") {
             // render HTML select
-
-            $list = $this->htmlList($this->list, $value);
+            $inputAttributes = $this->htmlInputAttributes();
+            $labelAttributes = $this->htmlLabelAttributes();
 
             return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<label{$labelAttributes}>" .
                     "<span class=\"label\">{$label}{$marker}</span>" .
-                    "<select name=\"{$this->name}\"{$inputAttributes}>{$list}</select>" .
+                    "<select name=\"{$this->name}\" {$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
             "</p>\n";
         } else {
-            // render HTML checkbox
+            // render HTML radio button list
 
-            foreach($this->list as $index => $option) {
-                $selected = ($index === $value) ? " checked=\"yes\"" : '';
-                $list .= "<span>" .
-                "<label{$labelAttributes}>" .
-                        "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
-                        "<span>{$option}</span>" .
-                    "</label>" .
-                "</span>";
-            }
             return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
-                "<span>{$options}</span>" .
+                "<span>{$list}</span>" .
                 $errorMessage .
             "</p>\n";
         }
