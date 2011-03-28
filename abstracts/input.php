@@ -83,6 +83,7 @@ abstract class input {
             ? validators\validator::factory($parameters['validator'], $this->log)
             : validators\validator::factory($this->type, $this->log);
 
+        $this->autofocus    = (isset($parameters['autofocus']))     ? $parameters['autofocus']      : false;
         $this->label        = (isset($parameters['label']))         ? $parameters['label']          : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']       : false;
         $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']         : '*';
