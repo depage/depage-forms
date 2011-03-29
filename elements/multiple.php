@@ -85,6 +85,7 @@ class multiple extends abstracts\input {
 
         if ($this->skin === 'select') {
             // render HTML select
+
             $inputAttributes = $this->htmlInputAttributes();
             $labelAttributes = $this->htmlLabelAttributes();
 
