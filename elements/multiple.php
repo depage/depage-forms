@@ -54,14 +54,13 @@ class multiple extends abstracts\input {
             }
         } else {
             $inputAttributes = $this->htmlInputAttributes();
-            $labelAttributes = $this->htmlLabelAttributes();
 
             foreach($options as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
 
                 $list .= "<span>" .
-                "<label{$labelAttributes}>" .
-                        "<input type=\"checkbox\" name=\"{$this->name}[]\" {$inputAttributes} value=\"{$index}\"{$selected}>" .
+                    "<label>" .
+                        "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .
                 "</span>";
@@ -76,30 +75,28 @@ class multiple extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $classes            = $this->htmlClasses();
         $marker             = $this->htmlMarker();
-        $errorMessage       = $this->htmlErrorMessage();
         $label              = $this->htmlLabel();
-        $formName           = $this->htmlFormName();
         $list               = $this->htmlList();
+        $wrapperAttributes  = $this->htmlWrapperAttributes();
+        $errorMessage       = $this->htmlErrorMessage();
 
         if ($this->skin === 'select') {
             // render HTML select
-            $inputAttributes = $this->htmlInputAttributes();
-            $labelAttributes = $this->htmlLabelAttributes();
 
-            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<label{$labelAttributes}>" .
+            $inputAttributes = $this->htmlInputAttributes();
+
+            return "<p {$wrapperAttributes}>" .
+                "<label>" .
                     "<span class=\"label\">{$label}{$marker}</span>" .
-                    "<select multiple name=\"{$this->name}[]\" {$inputAttributes}>{$list}</select>" .
+                    "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
             "</p>\n";
-
         } else {
             // render HTML checkbox
 
-            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
+            return "<p {$wrapperAttributes}>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
                 $errorMessage .
@@ -115,7 +112,7 @@ class multiple extends abstracts\input {
      * @return string HTML attribute
      **/
     protected function htmlInputAttributes() {
-        $attributes = "data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
+        $attributes = '';
 
         // HTML5 validator hack
         if ($this->required && $this->skin != 'select') $attributes .= " required";

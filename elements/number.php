@@ -41,21 +41,19 @@ class number extends text {
      **/
     public function __toString() {
         $value              = $this->htmlValue();
-        $classes            = $this->htmlClasses();
         $inputAttributes    = $this->htmlInputAttributes();
-        $labelAttributes    = $this->htmlLabelAttributes();
         $marker             = $this->htmlMarker();
         $label              = $this->htmlLabel();
         $min                = $this->htmlMin();
         $max                = $this->htmlMax();
         $step               = $this->htmlStep();
-        $formName           = $this->htmlFormName();
+        $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
 
-        return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
-            "<label{$labelAttributes}>" .
+        return "<p {$wrapperAttributes}>" .
+            "<label>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$inputAttributes} value=\"{$value}\">" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$inputAttributes} value=\"{$value}\">";
             "</label>" .
             $errorMessage .
         "</p>\n";

@@ -34,19 +34,17 @@ class text extends abstracts\input {
      **/
     public function __toString() {
         $value              = $this->htmlValue();
-        $formName           = $this->htmlFormName();
-        $classes            = $this->htmlClasses();
-        $labelAttributes    = $this->htmlLabelAttributes();
         $inputAttributes    = $this->htmlInputAttributes();
         $marker             = $this->htmlMarker();
         $label              = $this->htmlLabel();
         $list               = $this->htmlList();
+        $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
 
-        return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
-            "<label{$labelAttributes}>" .
+        return "<p {$wrapperAttributes}>" .
+            "<label>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$this->type}\" {$inputAttributes} value=\"{$value}\">" .
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$inputAttributes} value=\"{$value}\">" .
                 $list .
             "</label>" .
             $errorMessage .

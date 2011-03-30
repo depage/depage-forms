@@ -83,6 +83,7 @@ abstract class input {
             ? validators\validator::factory($parameters['validator'], $this->log)
             : validators\validator::factory($this->type, $this->log);
 
+        $this->autofocus    = (isset($parameters['autofocus']))     ? $parameters['autofocus']      : false;
         $this->label        = (isset($parameters['label']))         ? $parameters['label']          : $this->name;
         $this->required     = (isset($parameters['required']))      ? $parameters['required']       : false;
         $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']         : '*';
@@ -245,7 +246,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlInputAttributes() {
-        $attributes = "data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
+        $attributes = '';
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
@@ -253,13 +254,21 @@ abstract class input {
         return $attributes;
     }
 
-   /**
-     * Returns string of HTML attributes for label element.
+    /**
+     * Returns string of HTML attributes for element wrapper paragraph.
      *
      * @return string HTML attribute
      **/
-    protected function htmlLabelAttributes() {
-        return ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
+    protected function htmlWrapperAttributes() {
+        $attributes = "id=\"{$this->formName}-{$this->name}\" ";
+
+        $attributes .= "class=\"" . $this->htmlClasses() . "\"";
+
+        $attributes .= ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
+
+        $attributes .= " data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
+
+        return $attributes;
     }
 
     /**
