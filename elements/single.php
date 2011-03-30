@@ -99,7 +99,7 @@ class single extends abstracts\input {
             return "<p {$wrapperAttributes}>" .
                 "<label>" .
                     "<span class=\"label\">{$label}{$marker}</span>" .
-                    "<span>{$list}</span>";
+                    "<span>{$list}</span>" .
                 "</label>" .
                 $errorMessage .
             "</p>\n";

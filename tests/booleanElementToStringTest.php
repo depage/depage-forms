@@ -44,8 +44,8 @@ class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-boolean" data-errorMessage="er&quot;&gt;rorMessage">' .
-            '<label title="ti&quot;&gt;tle">' .
+        $expected = '<p id="formName-elementName" class="input-boolean" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+            '<label>' .
                 '<input type="checkbox" name="elementName" value="true">' .
                 '<span class="label">la&quot;&gt;bel</span>' .
             '</label>' .
