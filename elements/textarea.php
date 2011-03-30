@@ -31,6 +31,7 @@ class textarea extends text {
         $rows               = $this->htmlRows();
         $cols               = $this->htmlCols();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
+        $errorMessage       = $this->htmlErrorMessage();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .

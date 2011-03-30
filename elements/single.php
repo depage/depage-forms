@@ -48,7 +48,7 @@ class single extends abstracts\input {
                 if (is_array($option)) {
                     $list       .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
                 } else {
-                    $selected   = ($index == $value) ? ' selected' : '';
+                    $selected   = ((string) $index === $value) ? ' selected' : '';
                     $list       .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
                 }
             }
