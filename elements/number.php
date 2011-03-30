@@ -49,11 +49,13 @@ class number extends text {
         $step               = $this->htmlStep();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $list               = $this->htmlList();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$inputAttributes} value=\"{$value}\">";
+                "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$inputAttributes} value=\"{$value}\">" .
+                $list .
             "</label>" .
             $errorMessage .
         "</p>\n";
