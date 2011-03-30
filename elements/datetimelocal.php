@@ -12,12 +12,20 @@ class datetimelocal extends text {
      *
      * @return string of HTML rendered element
      **/
-    public function render($value, $attributes, $marker, $class) {
-        return "<p id=\"{$this->formName}-{$this->name}\" class=\"$class\">" .
+    public function __toString() {
+        $wrapperAttributes  = $this->htmlWrapperAttributes();
+        $label              = $this->htmlLabel();
+        $marker             = $this->htmlMarker();
+        $value              = $this->htmlValue();
+        $inputAttributes    = $this->htmlInputAttributes();
+        $errorMessage       = $this->htmlErrorMessage();
+
+        return "<p {$wrapperAttributes}>" .
             "<label>" .
-                "<span class=\"label\">{$this->label}$marker</span>" .
-                "<input name=\"$this->name\" type=\"datetime-local\"$attributes value=\"$value\">" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<input name=\"{$this->name}\" type=\"datetime-local\"{$inputAttributes} value=\"{$value}\">" .
             "</label>" .
+            $errorMessage .
         "</p>\n";
     }
 }
