@@ -246,7 +246,7 @@ abstract class input {
      * @return string HTML attribute
      **/
     protected function htmlInputAttributes() {
-        $attributes = "data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
+        $attributes = '';
 
         if ($this->required)    $attributes .= " required";
         if ($this->autofocus)   $attributes .= " autofocus";
@@ -254,13 +254,21 @@ abstract class input {
         return $attributes;
     }
 
-   /**
-     * Returns string of HTML attributes for label element.
+    /**
+     * Returns string of HTML attributes for element wrapper paragraph.
      *
      * @return string HTML attribute
      **/
-    protected function htmlLabelAttributes() {
-        return ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
+    protected function htmlWrapperAttributes() {
+        $attributes = "id=\"{$this->formName}-{$this->name}\" ";
+
+        $attributes .= "class=\"" . $this->htmlClasses() . "\"";
+
+        $attributes .= ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
+
+        $attributes .= " data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
+
+        return $attributes;
     }
 
     /**

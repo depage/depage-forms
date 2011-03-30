@@ -54,15 +54,14 @@ class single extends abstracts\input {
             }
         } else {
             $inputAttributes = $this->htmlInputAttributes();
-            $labelAttributes = $this->htmlLabelAttributes();
 
             foreach($options as $index => $option) {
                 // typecasted for non-associative arrays
                 $selected = ((string) $index === $value) ? " checked=\"yes\"" : '';
 
                 $list .= "<span>" .
-                "<label{$labelAttributes}>" .
-                        "<input type=\"radio\" name=\"{$this->name}\" {$inputAttributes} value=\"{$index}\"{$selected}>" .
+                    "<label>" .
+                        "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .
                 "</span>";
@@ -77,31 +76,31 @@ class single extends abstracts\input {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $classes            = $this->htmlClasses();
         $marker             = $this->htmlMarker();
-        $errorMessage       = $this->htmlErrorMessage();
-        $formName           = $this->htmlFormName();
         $label              = $this->htmlLabel();
         $list               = $this->htmlList();
+        $wrapperAttributes  = $this->htmlWrapperAttributes();
+        $errorMessage       = $this->htmlErrorMessage();
 
         if ($this->skin === "select") {
             // render HTML select
             $inputAttributes = $this->htmlInputAttributes();
-            $labelAttributes = $this->htmlLabelAttributes();
 
-            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<label{$labelAttributes}>" .
+            return "<p {$wrapperAttributes}>" .
+                "<label>" .
                     "<span class=\"label\">{$label}{$marker}</span>" .
-                    "<select name=\"{$this->name}\" {$inputAttributes}>{$list}</select>" .
+                    "<select name=\"{$this->name}\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
             "</p>\n";
         } else {
             // render HTML radio button list
 
-            return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
-                "<span>{$list}</span>" .
+            return "<p {$wrapperAttributes}>" .
+                "<label>" .
+                    "<span class=\"label\">{$label}{$marker}</span>" .
+                    "<span>{$list}</span>";
+                "</label>" .
                 $errorMessage .
             "</p>\n";
         }

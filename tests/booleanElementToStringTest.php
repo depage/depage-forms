@@ -6,9 +6,9 @@ use depage\htmlform\elements\boolean;
 
 class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
     public function testSimple() {
-        $expected = '<p id="formName-elementName" class="input-boolean">' .
+        $expected = '<p id="formName-elementName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed!">' .
             '<label>' .
-                '<input type="checkbox" name="elementName" data-errorMessage="Please check this box if you want to proceed!" value="true">' .
+                '<input type="checkbox" name="elementName" value="true">' .
                 '<span class="label">elementName</span>' .
             '</label>' .
         '</p>' . "\n";
@@ -18,9 +18,9 @@ class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testChecked() {
-        $expected = '<p id="formName-elementName" class="input-boolean">' .
+        $expected = '<p id="formName-elementName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed!">' .
             '<label>' .
-                '<input type="checkbox" name="elementName" data-errorMessage="Please check this box if you want to proceed!" value="true" checked="yes">' .
+                '<input type="checkbox" name="elementName" value="true" checked="yes">' .
                 '<span class="label">elementName</span>' .
             '</label>' .
         '</p>' . "\n";
@@ -31,9 +31,9 @@ class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testRequired() {
-        $expected = '<p id="formName-elementName" class="input-boolean required">' .
+        $expected = '<p id="formName-elementName" class="input-boolean required" data-errorMessage="Please check this box if you want to proceed!">' .
             '<label>' .
-                '<input type="checkbox" name="elementName" data-errorMessage="Please check this box if you want to proceed!" required value="true">' .
+                '<input type="checkbox" name="elementName" required value="true">' .
                 '<span class="label">elementName <em>*</em></span>' .
             '</label>' .
         '</p>' . "\n";
@@ -44,9 +44,9 @@ class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-boolean">' .
+        $expected = '<p id="formName-elementName" class="input-boolean" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label title="ti&quot;&gt;tle">' .
-                '<input type="checkbox" name="elementName" data-errorMessage="er&quot;&gt;rorMessage" value="true">' .
+                '<input type="checkbox" name="elementName" value="true">' .
                 '<span class="label">la&quot;&gt;bel</span>' .
             '</label>' .
         '</p>' . "\n";

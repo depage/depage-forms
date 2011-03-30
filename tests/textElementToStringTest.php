@@ -7,10 +7,10 @@ use depage\htmlform\elements\text;
 
 class textElementToStringTest extends PHPUnit_Framework_TestCase {
     public function testSimple() {
-        $expected = '<p id="formName-elementName" class="input-text">' .
+        $expected = '<p id="formName-elementName" class="input-text" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName</span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" value="">' .
+                '<input name="elementName" type="text" value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -19,10 +19,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testValue() {
-        $expected = '<p id="formName-elementName" class="input-text">' .
+        $expected = '<p id="formName-elementName" class="input-text" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName</span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" value="testValue">' .
+                '<input name="elementName" type="text" value="testValue">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -32,10 +32,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testRequired() {
-        $expected = '<p id="formName-elementName" class="input-text required">' .
+        $expected = '<p id="formName-elementName" class="input-text required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName <em>*</em></span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" required value="">' .
+                '<input name="elementName" type="text" required value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -45,10 +45,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testList() {
-        $expected ='<p id="formName-elementName" class="input-text">' .
+        $expected ='<p id="formName-elementName" class="input-text" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName</span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" list="formName-elementName-list" value="">' .
+                '<input name="elementName" type="text" list="formName-elementName-list" value="">' .
                 '<datalist id="formName-elementName-list">' .
                     '<option value="item1">' .
                     '<option value="item2">' .
@@ -65,10 +65,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testAssociativeList() {
-        $expected = '<p id="formName-elementName" class="input-text">' .
+        $expected = '<p id="formName-elementName" class="input-text" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName</span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" list="formName-elementName-list" value="">' .
+                '<input name="elementName" type="text" list="formName-elementName-list" value="">' .
                 '<datalist id="formName-elementName-list">' .
                     '<option value="key1" label="item1">' .
                     '<option value="key2" label="item2">' .
@@ -89,10 +89,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-text">' .
-            '<label title="ti&quot;&gt;tle">' .
+        $expected = '<p id="formName-elementName" class="input-text" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+            '<label>' .
                 '<span class="label">la&quot;&gt;bel</span>' .
-                '<input name="elementName" type="text" data-errorMessage="er&quot;&gt;rorMessage" value="">' .
+                '<input name="elementName" type="text" value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -107,10 +107,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHtmlEscapedList() {
-        $expected = '<p id="formName-elementName" class="input-text">' .
+        $expected = '<p id="formName-elementName" class="input-text" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName</span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" list="formName-elementName-list" value="">' .
+                '<input name="elementName" type="text" list="formName-elementName-list" value="">' .
                 '<datalist id="formName-elementName-list">' .
                     '<option value="it&quot;&gt;em1">' .
                     '<option value="it&quot;&gt;em2">' .
@@ -127,10 +127,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
      public function testEscapedAssociativeList() {
-        $expected = '<p id="formName-elementName" class="input-text">' .
+        $expected = '<p id="formName-elementName" class="input-text" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName</span>' .
-                '<input name="elementName" type="text" data-errorMessage="Please enter valid data!" list="formName-elementName-list" value="">' .
+                '<input name="elementName" type="text" list="formName-elementName-list" value="">' .
                 '<datalist id="formName-elementName-list">' .
                     '<option value="ke&quot;&gt;y1" label="it&quot;&gt;em1">' .
                     '<option value="ke&quot;&gt;y2" label="it&quot;&gt;em2">' .

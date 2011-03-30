@@ -24,19 +24,16 @@ class textarea extends text {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        $formName           = $this->htmlFormName();
-        $classes            = $this->htmlClasses();
-        $labelAttributes    = $this->htmlLabelAttributes();
         $label              = $this->htmlLabel();
         $marker             = $this->htmlMarker();
         $inputAttributes    = $this->htmlInputAttributes();
         $value              = $this->htmlValue();
         $rows               = $this->htmlRows();
         $cols               = $this->htmlCols();
-        $errorMessage       = $this->htmlErrorMessage();
+        $wrapperAttributes  = $this->htmlWrapperAttributes();
 
-        return "<p id=\"{$formName}-{$this->name}\" class=\"{$classes}\">" .
-            "<label{$labelAttributes}>" .
+        return "<p {$wrapperAttributes}>" .
+            "<label>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
                 "<textarea name=\"{$this->name}\"{$inputAttributes}{$rows}{$cols}>{$value}</textarea>" .
             "</label>" .
