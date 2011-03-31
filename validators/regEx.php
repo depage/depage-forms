@@ -5,12 +5,10 @@ class regEx extends validator {
     /**
      * Regular expression
      **/
-    public $regEx = "//";
+    protected $regEx = "//";
 
     public function __construct($log = null) {
         parent::__construct($log);
-
-        $this->patternAttribute = " pattern=\"" . substr($this->regEx, 1,-1) . "\"";
     }
 
     public function validate($value) {
@@ -21,5 +19,13 @@ class regEx extends validator {
         }
 
         return $match;
+    }
+
+    public function setRegEx($regEx) {
+        $this->regEx = $regEx;
+    }
+
+    public function getPatternAttribute() {
+        return " pattern=\"" . substr($this->regEx, 1,-1) . "\"";;
     }
 }

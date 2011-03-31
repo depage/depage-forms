@@ -3,10 +3,6 @@ namespace depage\htmlform\validators;
 
 class validator {
     /**
-     * HTML pattern Attrbute.
-     **/
-    protected $patternAttribute = "";
-    /**
      * Log object
      **/
     protected $log;
@@ -16,9 +12,9 @@ class validator {
     }
 
     public static function factory($argument, $log = null) {
-        if (($argument[0] === '/') && ($argument[strlen($argument)-1] ==='/')) {
+        if (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
             $regExValidator = new regEx($log);
-            $regExValidator->regEx = $argument;
+            $regExValidator->setRegEx($argument);
 
             return $regExValidator;
         } else {
@@ -30,10 +26,6 @@ class validator {
                 return new validator($log);
             }
         }
-    }
-
-    public function getPatternAttribute() {
-        return $this->patternAttribute;
     }
 
     public function validate($value) {
