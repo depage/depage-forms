@@ -44,10 +44,10 @@ class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-boolean" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-elementName" class="input-boolean required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
-                '<input type="checkbox" name="elementName" value="true">' .
-                '<span class="label">la&quot;&gt;bel</span>' .
+                '<input type="checkbox" name="elementName" required value="true">' .
+                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
             '</label>' .
         '</p>' . "\n";
 
@@ -56,6 +56,7 @@ class booleanElementToStringTest extends PHPUnit_Framework_TestCase {
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
+            'required'      => true,
         );
         $boolean = new boolean('elementName', $parameters, 'formName');
         $this->assertEquals($expected, $boolean->__toString());
