@@ -18,12 +18,6 @@ class html {
      * @param $htmlString string of HTML to be printed
      **/
     public function __construct($htmlString) {
-        $htmlString = (string) $htmlString;
-        
-        if (!is_string($htmlString)) {
-            throw new exceptions\htmlNoStringException();
-        }
-
         $this->htmlString = $htmlString;
     }
 
@@ -33,6 +27,6 @@ class html {
      * @return string of HTML rendered element
      **/
     public function __toString() {
-        return $this->htmlString;
+        return (string) $this->htmlString;
     }
 }
