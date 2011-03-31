@@ -83,12 +83,4 @@ class boolean extends abstracts\input {
 
         return $this->value;
     }
-
-    /**
-     * Converts value to element specific type. (in this case setValue does
-     * all the work, so this is mainly for coherence)
-     **/
-    protected function typeCastValue() {
-        $this->value = (bool) $this->value;
-    }
 }
