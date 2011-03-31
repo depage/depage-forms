@@ -176,7 +176,7 @@ abstract class container {
      * Walks recursively through current containers' elements to compile a list
      * of input elements.
      *
-     * @return $allInputs array of input elements
+     * @return $allElements array of input elements
      **/
     public function getElements() {
         $allElements = array();

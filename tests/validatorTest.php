@@ -4,6 +4,26 @@ require_once('../validators/validator.php');
 
 use depage\htmlform\validators\validator;
 
+class logTestClass {
+    public $error = array(
+        'argument'  => '',
+        'type'      => '',
+    );
+
+    public function log($argument, $type) {
+        $this->error = array(
+            'argument'  => $argument,
+            'type'      => $type,
+        );
+    }
+}
+
+class validatorTestClass extends validator {
+    public function testLog($argument, $type) {
+        $this->log ($argument, $type);
+    }
+}
+
 class validatorTest extends \PHPUnit_Framework_TestCase {
     public function testText() {
         $textValidator = validator::factory('text');
@@ -45,5 +65,19 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
 
         $anyValidator = validator::factory('foo');
         $this->assertEquals('', $anyValidator->getPatternAttribute());
+    }
+
+    public function testRegExLog() {
+        $log        = new logTestClass;
+        $validator  = new validatorTestClass($log);
+
+        $validator->testLog('argumentString', 'typeString');
+
+        $expected = array(
+            'argument'  => 'argumentString',
+            'type'      => 'typeString',
+        );
+
+        $this->assertEquals($expected, $log->error);
     }
 }

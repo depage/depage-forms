@@ -32,8 +32,7 @@ class containerTest extends PHPUnit_Framework_TestCase {
     public function testInvalidContainerNameException() {
         try {
             $input = new containerTestClass(' ', array());
-        }
-        catch (exceptions\invalidContainerNameException $expected) {
+        } catch (exceptions\invalidContainerNameException $expected) {
             return;
         }
         $this->fail('Expected invalidContainerNameException.');
@@ -42,8 +41,7 @@ class containerTest extends PHPUnit_Framework_TestCase {
     public function testContainerNameNoStringException() {
         try {
             $input = new containerTestClass(42, array());
-        }
-        catch (exceptions\ContainerNameNoStringException $expected) {
+        } catch (exceptions\ContainerNameNoStringException $expected) {
             return;
         }
         $this->fail('Expected ContainerNameNoStringException.');
