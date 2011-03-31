@@ -35,4 +35,15 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $numberValidator->validate(5, 0, 10));
         $this->assertEquals(true, $numberValidator->validate(5, null, null));
     }
+
+    public function testGetPatternAttribute() {
+        $regExValidator = validator::factory('/[a-z]/');
+        $this->assertEquals(' pattern="[a-z]"', $regExValidator->getPatternAttribute());
+
+        $telValidator = validator::factory('tel');
+        $this->assertEquals('', $telValidator->getPatternAttribute());
+
+        $anyValidator = validator::factory('foo');
+        $this->assertEquals('', $anyValidator->getPatternAttribute());
+    }
 }
