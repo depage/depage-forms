@@ -39,4 +39,10 @@ class validator {
             error_log($argument);
         }
     }
+
+    public function getPatternAttribute() {
+        if (isset($this->regEx)) {
+            return " pattern=\"" . htmlentities(substr($this->regEx, 1,-1)) . "\"";
+        }
+    }
 }

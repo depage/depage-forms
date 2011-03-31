@@ -24,8 +24,4 @@ class regEx extends validator {
     public function setRegEx($regEx) {
         $this->regEx = $regEx;
     }
-
-    public function getPatternAttribute() {
-        return " pattern=\"" . substr($this->regEx, 1,-1) . "\"";;
-    }
 }

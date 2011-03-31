@@ -6,6 +6,9 @@ class tel extends regEx {
         parent::__construct($log);
 
         $this->regEx = '/^[0-9,+,(), ,]+(,[0-9]+)*$/';
-        $this->patternAttribute = "";
+    }
+
+    public function getPatternAttribute() {
+        return '';
     }
 }
