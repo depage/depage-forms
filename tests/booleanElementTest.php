@@ -10,11 +10,25 @@ class booleanElementTest extends PHPUnit_Framework_TestCase {
         $this->boolean = new boolean('nameString', $ref = array(), 'formName');
     }
 
-    public function testBooleanSetValue() {
+    public function testBooleanInstantiate() {
         $this->assertEquals($this->boolean->getName(), 'nameString');
+    }
 
+    public function testBooleanSetValue() {
         $this->boolean->setValue(true);
         $this->assertEquals($this->boolean->getValue(), true);
+
+        $this->boolean->setValue('true');
+        $this->assertEquals($this->boolean->getValue(), true);
+
+        $this->boolean->setValue('foo');
+        $this->assertEquals($this->boolean->getValue(), false);
+
+        $this->boolean->setValue(array());
+        $this->assertEquals($this->boolean->getValue(), false);
+
+        $this->boolean->setValue(1);
+        $this->assertEquals($this->boolean->getValue(), false);
     }
 
     public function testBooleanNotRequiredFalse() {

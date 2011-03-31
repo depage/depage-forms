@@ -19,10 +19,13 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToStringSimple() {
-    $rendered = '<form id="formName" name="formName" method="post" action="' . $_SERVER['REQUEST_URI'] . '"><input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" . '<p id="formName-submit"><input type="submit" value="submit"></p></form>';
-        $form = new htmlform('formName');
+        $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="' . $_SERVER['REQUEST_URI'] . '">' . "\n" .
+            '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<p id="formName-submit"><input type="submit" value="submit"></p>' . "\n" .
+        '</form>';
 
-        $this->assertEquals($rendered, $form->__toString());
+        $form = new htmlform('formName');
+        $this->assertEquals($expected, $form->__toString());
     }
 
     public function testEmptyFormBeforePostValidation() {

@@ -89,10 +89,10 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-text" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-elementName" class="input-text required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
-                '<span class="label">la&quot;&gt;bel</span>' .
-                '<input name="elementName" type="text" value="">' .
+                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+                '<input name="elementName" type="text" required value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -101,6 +101,7 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
+            'required'      => true,
         );
         $text = new text('elementName', $parameters, 'formName');
         $this->assertEquals($expected, $text->__toString());
