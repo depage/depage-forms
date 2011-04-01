@@ -126,14 +126,15 @@ abstract class container {
     }
 
     /**
-     * Sets current containers' elements' required-HTML attribute recursively
-     * to true.
+     * Sets current containers' elements' required-HTML attribute recursively.
      *
      * @return void
      **/
-    public function setRequired() {
+    public function setRequired($required) {
+        $required = (bool) $required;
+
         foreach ($this->elements as $element) {
-            $element->setRequired();
+            $element->setRequired($required);
         }
     }
 
@@ -176,7 +177,7 @@ abstract class container {
      * Walks recursively through current containers' elements to compile a list
      * of input elements.
      *
-     * @return $allInputs array of input elements
+     * @return $allElements array of input elements
      **/
     public function getElements() {
         $allElements = array();

@@ -4,6 +4,13 @@ require_once('../validators/validator.php');
 
 use depage\htmlform\validators\validator;
 
+class validatorTestClass extends validator {
+    // needed for testLog() ($this->log() is protected)
+    public function log($argument, $type) {
+        parent::log ($argument, $type);
+    }
+}
+
 class validatorTest extends \PHPUnit_Framework_TestCase {
     public function testText() {
         $textValidator = validator::factory('text');
@@ -34,5 +41,30 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(false, $numberValidator->validate(-10, 0, 10));
         $this->assertEquals(true, $numberValidator->validate(5, 0, 10));
         $this->assertEquals(true, $numberValidator->validate(5, null, null));
+    }
+
+    public function testGetPatternAttribute() {
+        $regExValidator = validator::factory('/[a-z]/');
+        $this->assertEquals(' pattern="[a-z]"', $regExValidator->getPatternAttribute());
+
+        $telValidator = validator::factory('tel');
+        $this->assertEquals('', $telValidator->getPatternAttribute());
+
+        $anyValidator = validator::factory('foo');
+        $this->assertEquals('', $anyValidator->getPatternAttribute());
+    }
+
+    public function testLog() {
+        $log        = new logTestClass;
+        $validator  = new validatorTestClass($log);
+
+        $validator->log('argumentString', 'typeString');
+
+        $expected = array(
+            'argument'  => 'argumentString',
+            'type'      => 'typeString',
+        );
+
+        $this->assertEquals($expected, $log->error);
     }
 }
