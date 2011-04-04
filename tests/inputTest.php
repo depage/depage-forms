@@ -118,7 +118,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
         }
 
     public function testUndefinedMethodError() {
-        $input = new inputTestClass('inputName', array(), 'formName');
+        $parameters = array();
+        $input = new inputTestClass('inputName', $parameters, 'formName');
 
         set_error_handler(array($this, 'undefinedMethodHandler'));
         try {
