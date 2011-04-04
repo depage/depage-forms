@@ -26,6 +26,11 @@ class inputTestClass extends input {
     public function getAutofocus() {
         return $this->autofocus;
     }
+
+    // needed for testLog() (input::log() is protected)
+    public function log($argument, $type) {
+        parent::log($argument, $type);
+    }
 }
 
 class inputTest extends PHPUnit_Framework_TestCase {
@@ -112,6 +117,21 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($input->getAutofocus());
     }
 
+    public function testLog() {
+        $log        = new logTestClass;
+
+        $parameters = array('log' => $log);
+        $input      = new inputTestClass('inputName', $parameters, 'formName');
+
+        $input->log('argumentString', 'typeString');
+
+        $expected = array(
+            'argument'  => 'argumentString',
+            'type'      => 'typeString',
+        );
+
+        $this->assertEquals($expected, $log->error);
+    }
     public function undefinedMethodHandler($errno) {
             if ($errno = 256) throw new undefinedMethodException;
             return;

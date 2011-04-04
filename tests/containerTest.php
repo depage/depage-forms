@@ -15,7 +15,7 @@ class containerTestClass extends container {
         $this->elements[] = $element;
     }
 
-    // needed for testLog() ($this->log() is protected)
+    // needed for testLog() (container::log() is protected)
     public function log($argument, $type) {
         parent::log($argument, $type);
     }
