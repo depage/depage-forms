@@ -7,9 +7,9 @@ use depage\htmlform\elements\fieldset;
 
 class fieldsetElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->form = new htmlform('formName');
         $this->fieldset = new fieldset('fieldsetName');
 
+        $this->form = new htmlform('formName');
         $this->fieldset->setParentForm($this->form);
     }
 
@@ -35,7 +35,7 @@ class fieldsetElementTest extends PHPUnit_Framework_TestCase {
     public function testAddElementText() {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
-            '<p id="fieldsetName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+            '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
                 '<label>' .
                     '<span class="label">textName</span>' .
                     '<input name="textName" type="text" value="">' .
