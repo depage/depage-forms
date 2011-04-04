@@ -293,7 +293,7 @@ abstract class input {
         return $errorMessage;
     }
 
-    protected function htmlList($options) {
+    protected function htmlList($options = null) {
         if (is_array($options)) {
             $htmlOptions = array();
 

@@ -54,7 +54,7 @@ class text extends abstracts\input {
     /**
      * Renders HTML datalist.
      **/
-    protected function htmlList() {
+    protected function htmlList($options = null) {
         if ($this->list && is_array($this->list)) {
             $formName   = $this->htmlFormName();
             $options    = parent::htmlList($this->list);

@@ -59,7 +59,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected inputParametersNoArrayException.');
     }
 
-    public function testInputInalid() {
+    public function testInputInvalid() {
         $input = new inputTestClass('inputName', array(), 'formName');
         $this->assertEquals(false, $input->validate());
     }
@@ -110,6 +110,24 @@ class inputTest extends PHPUnit_Framework_TestCase {
 
         $input->setAutofocus(true);
         $this->assertTrue($input->getAutofocus());
+    }
+
+    public function undefinedMethodHandler($errno) {
+            if ($errno = 256) throw new undefinedMethodException;
+            return;
+        }
+
+    public function testUndefinedMethodError() {
+        $input = new inputTestClass('inputName', array(), 'formName');
+
+        set_error_handler(array($this, 'undefinedMethodHandler'));
+        try {
+            $input->__call('undefined', 'argumentString');
+        } catch (undefinedMethodException $expected) {
+            restore_error_handler();
+            return;
+        }
+        $this->fail('Expected undefinedMethodException');
     }
 }
 ?>

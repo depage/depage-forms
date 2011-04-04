@@ -14,7 +14,8 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $text = new text('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $text = new text('elementName', $parameters, 'formName');
         $this->assertEquals($expected, $text->__toString());
     }
 
@@ -26,7 +27,8 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $text = new text('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $text = new text('elementName', $parameters, 'formName');
         $text->setValue('testValue');
         $this->assertEquals($expected, $text->__toString());
     }
@@ -39,8 +41,8 @@ class textElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $text = new text('elementName', $ref = array(), 'formName');
-        $text->setRequired();
+        $parameters = array('required' => true);
+        $text = new text('elementName', $parameters, 'formName');
         $this->assertEquals($expected, $text->__toString());
     }
 

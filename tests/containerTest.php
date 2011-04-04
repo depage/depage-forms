@@ -35,9 +35,6 @@ class testElement {
 /**
  * needed to convert undefined method error to catchable exception.
  **/
-class undefinedMethodException extends \exception {
-}
-
 class containerTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->container = new containerTestClass('containerNameString');
@@ -123,16 +120,18 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $log->error);
     }
 
-    public function testUndefinedMethodError() {
-        function undefinedMethodHandler($errno) {
+    public function undefinedMethodHandler($errno) {
             if ($errno = 256) throw new undefinedMethodException;
             return;
         }
-        set_error_handler('undefinedMethodHandler');
+
+    public function testUndefinedMethodError() {
+        set_error_handler(array($this, 'undefinedMethodHandler'));
 
         try {
             $this->container->__call('undefined', 'argumentString');
         } catch (undefinedMethodException $expected) {
+            restore_error_handler();
             return;
         }
         $this->fail('Expected undefinedMethodException');
