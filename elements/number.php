@@ -86,7 +86,11 @@ class number extends text {
      * Overrides parent method to add min and max values
      **/
     protected function validatorCall() {
-        return $this->validator->validate($this->value, $this->min, $this->max);
+        $parameters = array(
+            'min' => $this->min,
+            'max' => $this->max,
+        );
+        return $this->validator->validate($this->value, $parameters);
     }
 
     /**

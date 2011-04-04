@@ -37,10 +37,10 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
 
     public function testNumber() {
         $numberValidator = validator::factory('number');
-        $this->assertEquals(false, $numberValidator->validate('letters', null, null));
-        $this->assertEquals(false, $numberValidator->validate(-10, 0, 10));
-        $this->assertEquals(true, $numberValidator->validate(5, 0, 10));
-        $this->assertEquals(true, $numberValidator->validate(5, null, null));
+        $this->assertEquals(false,  $numberValidator->validate('letters',   array('min' => null,    'max' => null)));
+        $this->assertEquals(false,  $numberValidator->validate(-10,         array('min' => 0,       'max' => 10)));
+        $this->assertEquals(true,   $numberValidator->validate(5,           array('min' => 0,       'max' => 10)));
+        $this->assertEquals(true,   $numberValidator->validate(5,           array('min' => null,    'max' => null)));
     }
 
     public function testGetPatternAttribute() {

@@ -11,7 +11,7 @@ class regEx extends validator {
         parent::__construct($log);
     }
 
-    public function validate($value) {
+    public function validate($value, $parameters = array()) {
         $match = (bool) preg_match($this->regEx, $value);
 
         if (preg_last_error() !== PREG_NO_ERROR) {
