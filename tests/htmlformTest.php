@@ -21,7 +21,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     public function testToStringSimple() {
         $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="' . $_SERVER['REQUEST_URI'] . '">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
-            '<p id="formName-submit"><input type="submit" value="submit"></p>' . "\n" .
+            '<p id="formName-submit">' .
+                '<input type="submit" value="submit">' .
+            '</p>' . "\n" .
         '</form>';
 
         $form = new htmlform('formName');
@@ -48,8 +50,30 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $form->populate(array('text1Name' => 'text1Value'));
 
-        $this->assertTrue((bool) strpos($text1->__toString(), 'value="text1Value"'));
-        $this->assertTrue((bool) strpos($text2->__toString(), 'value=""'));
+        // populate() only sets (protected) default value. The easiest way to check is to render it.
+        $expectedText1 = '<p id="formName-text1Name" class="input-text" data-errorMessage="Please enter valid data!">' .
+            '<label>' .
+                '<span class="label">text1Name</span>' .
+                '<input name="text1Name" type="text" value="text1Value">' .
+            '</label>' .
+        '</p>' . "\n";
+        $expectedText2 = '<p id="formName-text2Name" class="input-text" data-errorMessage="Please enter valid data!">' .
+            '<label>' .
+                '<span class="label">text2Name</span>' .
+                '<input name="text2Name" type="text" value="">' .
+            '</label>' .
+        '</p>' . "\n";
+
+        $this->assertEquals($expectedText1, $text1->__toString());
+        $this->assertEquals($expectedText2, $text2->__toString());
+    }
+
+    public function testAddStep() {
+        $form = new htmlform('formName');
+        $step = $form->addStep('stepName');
+
+        $this->assertEquals('stepName', $step->getName());
+        $this->assertInstanceOf('\\depage\\htmlform\\elements\\step', $step);
     }
 }
 ?>
