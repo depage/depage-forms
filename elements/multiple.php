@@ -22,9 +22,9 @@ class multiple extends abstracts\input {
         parent::__construct($name, $parameters, $formName);
         
         // multiple-choice-elements have values of type array
-        $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : array();
-        $this->list         = (isset($parameters['list']))          ? $parameters['list']           : array();
-        $this->skin         = (isset($parameters['skin']))          ? $parameters['skin']           : 'checkbox';
+        $this->defaultValue = (isset($parameters['defaultvalue']))                          ? $parameters['defaultvalue']   : array();
+        $this->list         = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list']           : array();
+        $this->skin         = (isset($parameters['skin']))                                  ? $parameters['skin']           : 'checkbox';
     }
 
     /**
