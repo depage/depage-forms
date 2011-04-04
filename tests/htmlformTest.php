@@ -11,7 +11,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->form->addHidden('duplicate', array());
         try {
-            $this->form->addHidden('duplicate', array());
+            $this->form->addFieldset('duplicate', array());
         } catch (exceptions\duplicateElementNameException $expected) {
             return;
         }
