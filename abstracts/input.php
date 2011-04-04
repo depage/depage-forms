@@ -293,19 +293,16 @@ abstract class input {
         return $errorMessage;
     }
 
-    protected function htmlList($options = null) {
-        if (is_array($options)) {
-            $htmlOptions = array();
+    protected function htmlList($options = array()) {
+        $htmlOptions = array();
 
-            foreach($options as $index => $option) {
-                if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
-                if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
+        foreach($options as $index => $option) {
+            if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
+            if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
 
-                $htmlOptions[$index] = $option;
-            }
-            return $htmlOptions;
+            $htmlOptions[$index] = $option;
         }
-        return $options;
+        return $htmlOptions;
     }
 
     /**

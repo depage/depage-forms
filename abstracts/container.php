@@ -79,12 +79,13 @@ abstract class container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return $newElement
      **/
-    public function addElement($type, $name, $parameters = array()) {
+    protected function addElement($type, $name, $parameters = array()) {
         $this->_checkElementType($type);
 
         $parameters['log'] = $this->log;
 
-        $newElement = new $type($name, $parameters, $this->name);
+        $formName = (isset($this->form)) ? $this->form->getName() : $this->name;
+        $newElement = new $type($name, $parameters, $formName);
 
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;

@@ -22,9 +22,9 @@ class text extends abstracts\input {
         parent::__construct($name, $parameters, $formName);
 
         // textClass elements have values of type string
-        $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : '';
-        $this->placeholder  = (isset($parameters['placeholder']))   ? $parameters['placeholder']    : false;
-        $this->list         = (isset($parameters['list']))          ? $parameters['list']           : false;
+        $this->defaultValue = (isset($parameters['defaultvalue']))                          ? $parameters['defaultvalue']   : '';
+        $this->placeholder  = (isset($parameters['placeholder']))                           ? $parameters['placeholder']    : false;
+        $this->list         = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list']           : false;
     }
 
     /**

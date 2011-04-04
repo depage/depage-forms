@@ -6,7 +6,8 @@ use depage\htmlform\elements\multiple;
 
 class multipleElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->multiple = new multiple('nameString', $ref = array(), 'formName');
+        $parameters = array();
+        $this->multiple = new multiple('nameString', $parameters, 'formName');
     }
 
     public function testMultipleSetValue() {
@@ -14,6 +15,9 @@ class multipleElementTest extends PHPUnit_Framework_TestCase {
 
         $this->multiple->setValue(array('1'=>'1'));
         $this->assertEquals($this->multiple->getValue(), array('1'=>'1'));
+
+        $this->multiple->setValue('');
+        $this->assertEquals($this->multiple->getValue(), array());
     }
 
     public function testMultipleNotRequiredEmpty() {

@@ -117,7 +117,7 @@ class htmlform extends abstracts\container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-    public function addElement($type, $name, $parameters = array()) {
+    protected function addElement($type, $name, $parameters = array()) {
         $this->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters);
