@@ -14,7 +14,8 @@ class numberElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $number = new number('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $number = new number('elementName', $parameters, 'formName');
         $this->assertEquals($expected, $number->__toString());
     }
 
@@ -26,7 +27,8 @@ class numberElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $number = new number('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $number = new number('elementName', $parameters, 'formName');
         $number->setValue(7331);
         $this->assertEquals($expected, $number->__toString());
     }
@@ -39,7 +41,8 @@ class numberElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $number = new number('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $number = new number('elementName', $parameters, 'formName');
         $number->setRequired();
         $this->assertEquals($expected, $number->__toString());
     }

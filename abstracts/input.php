@@ -198,8 +198,8 @@ abstract class input {
      *
      * @return void
      **/
-    public function setAutofocus() {
-        $this->autofocus = true;
+    public function setAutofocus($autofocus = true) {
+        $this->autofocus = (bool) $autofocus;
     }
 
     /**
@@ -293,7 +293,7 @@ abstract class input {
         return $errorMessage;
     }
 
-    protected function htmlList($options) {
+    protected function htmlList($options = null) {
         if (is_array($options)) {
             $htmlOptions = array();
 

@@ -21,6 +21,11 @@ class inputTestClass extends input {
     public function setValid($valid = true) {
         $this->valid = (bool) $valid;
     }
+
+    // needed for testSetAutofocus
+    public function getAutofocus() {
+        return $this->autofocus;
+    }
 }
 
 class inputTest extends PHPUnit_Framework_TestCase {
@@ -54,7 +59,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected inputParametersNoArrayException.');
     }
 
-    public function testInputInalid() {
+    public function testInputInvalid() {
         $input = new inputTestClass('inputName', array(), 'formName');
         $this->assertEquals(false, $input->validate());
     }
@@ -88,6 +93,42 @@ class inputTest extends PHPUnit_Framework_TestCase {
         // set value (null by default)
         $input->setValue('');
         $this->assertEquals($input->getHtmlErrorMessage(), ' <span class="errorMessage">Please enter valid data!</span>');
+    }
+
+    public function testSetAutofocus() {
+        $input = new inputTestClass('inputName', array(), 'formName');
+
+        // initially autofocus is set to false
+        $this->assertFalse($input->getAutofocus());
+
+        // no parameter means true
+        $input->setAutofocus();
+        $this->assertTrue($input->getAutofocus());
+
+        $input->setAutofocus(false);
+        $this->assertFalse($input->getAutofocus());
+
+        $input->setAutofocus(true);
+        $this->assertTrue($input->getAutofocus());
+    }
+
+    public function undefinedMethodHandler($errno) {
+            if ($errno = 256) throw new undefinedMethodException;
+            return;
+        }
+
+    public function testUndefinedMethodError() {
+        $parameters = array();
+        $input = new inputTestClass('inputName', $parameters, 'formName');
+
+        set_error_handler(array($this, 'undefinedMethodHandler'));
+        try {
+            $input->__call('undefined', 'argumentString');
+        } catch (undefinedMethodException $expected) {
+            restore_error_handler();
+            return;
+        }
+        $this->fail('Expected undefinedMethodException');
     }
 }
 ?>

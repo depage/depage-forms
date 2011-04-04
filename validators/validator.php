@@ -28,7 +28,7 @@ class validator {
         }
     }
 
-    public function validate($value) {
+    public function validate($value, $parameters = array()) {
         return true;
     }
 

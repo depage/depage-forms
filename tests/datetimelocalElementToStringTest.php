@@ -14,7 +14,8 @@ class datetimelocalElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $datetimelocal = new datetimelocal('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
         $this->assertEquals($expected, $datetimelocal->__toString());
     }
 
@@ -26,7 +27,8 @@ class datetimelocalElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $datetimelocal = new datetimelocal('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
         $datetimelocal->setValue(7331);
         $this->assertEquals($expected, $datetimelocal->__toString());
     }
@@ -39,7 +41,8 @@ class datetimelocalElementToStringTest extends PHPUnit_Framework_TestCase {
             '</label>' .
         '</p>' . "\n";
 
-        $datetimelocal = new datetimelocal('elementName', $ref = array(), 'formName');
+        $parameters = array();
+        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
         $datetimelocal->setRequired();
         $this->assertEquals($expected, $datetimelocal->__toString());
     }

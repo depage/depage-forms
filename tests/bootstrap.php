@@ -15,5 +15,6 @@ class logTestClass {
         );
     }
 }
-
+    
+class undefinedMethodException extends \exception {}
 ?>

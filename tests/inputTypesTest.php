@@ -114,7 +114,6 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\text', $inputs[1]);
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\range', $inputs[1]);
     }
-
     public function testAddColor() {
         $this->form->addColor('nameString');
         $inputs = $this->form->getElements();

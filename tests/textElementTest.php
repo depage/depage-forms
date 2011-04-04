@@ -6,12 +6,15 @@ use depage\htmlform\elements\text;
 
 class textElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->text = new text('nameString', $ref = array(), 'formName');
+        $parameters = array();
+        $this->text = new text('nameString', $parameters, 'formName');
+    }
+
+    public function testGetName() {
+        $this->assertEquals($this->text->getName(), 'nameString');
     }
 
     public function testTextSetValue() {
-        $this->assertEquals($this->text->getName(), 'nameString');
-
         $this->text->setValue('valueString');
         $this->assertEquals($this->text->getValue(), 'valueString');
     }
