@@ -198,8 +198,8 @@ abstract class input {
      *
      * @return void
      **/
-    public function setAutofocus() {
-        $this->autofocus = true;
+    public function setAutofocus($autofocus = true) {
+        $this->autofocus = (bool) $autofocus;
     }
 
     /**

@@ -12,7 +12,7 @@ class regEx extends validator {
     }
 
     public function validate($value) {
-        $match = preg_match($this->regEx, $value) ? true : false;
+        $match = (bool) preg_match($this->regEx, $value);
 
         if (preg_last_error() !== PREG_NO_ERROR) {
             $this->log("Regular expression warning: error code " . preg_last_error());

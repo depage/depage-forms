@@ -21,6 +21,11 @@ class inputTestClass extends input {
     public function setValid($valid = true) {
         $this->valid = (bool) $valid;
     }
+
+    // needed for testSetAutofocus
+    public function getAutofocus() {
+        return $this->autofocus;
+    }
 }
 
 class inputTest extends PHPUnit_Framework_TestCase {
@@ -88,6 +93,23 @@ class inputTest extends PHPUnit_Framework_TestCase {
         // set value (null by default)
         $input->setValue('');
         $this->assertEquals($input->getHtmlErrorMessage(), ' <span class="errorMessage">Please enter valid data!</span>');
+    }
+
+    public function testSetAutofocus() {
+        $input = new inputTestClass('inputName', array(), 'formName');
+
+        // initially autofocus is set to false
+        $this->assertFalse($input->getAutofocus());
+
+        // no parameter means true
+        $input->setAutofocus();
+        $this->assertTrue($input->getAutofocus());
+
+        $input->setAutofocus(false);
+        $this->assertFalse($input->getAutofocus());
+
+        $input->setAutofocus(true);
+        $this->assertTrue($input->getAutofocus());
     }
 }
 ?>
