@@ -51,15 +51,15 @@ class htmlform extends abstracts\container {
     /**
      * Contains current step number.
      **/
-    protected $currentStepId;
+    private $currentStepId;
     /**
      * Contains array of step object references.
      **/
-    protected $steps = array();
+    private $steps = array();
     /**
      * Time for session expiry
      **/
-    protected $ttl;
+    private $ttl;
 
     /**
      * @param $name string - form name

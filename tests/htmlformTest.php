@@ -75,5 +75,49 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('stepName', $step->getName());
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\step', $step);
     }
+
+    /**
+     * Since getCurrentElements() is private we need to go through
+     * inCurrentStep() and updateInputValue() in order to test it.
+     *
+     * This test is set up so that the update call happens when we're in the
+     * right step (1). Hence, the element value should change to 'text0Value'.
+     **/
+    public function testGetCurrentElementsInStep() {
+        $_POST['formName']  = 'formName';
+        $_POST['text0Name'] = 'text0Value';
+        $_GET['step']       = '1';
+
+        $form   = new htmlform('formName');
+        $step0  = $form->addStep('step0');
+        $step1  = $form->addStep('step1');
+        $text0  = $step1->addText('text0Name');
+
+        $form->updateInputValue('text0Name');
+
+        $this->assertEquals('text0Value', $text0->getValue());
+    }
+
+    /**
+     * Since getCurrentElements() is private we need to go through
+     * inCurrentStep() and updateInputValue() in order to test it.
+     *
+     * This test is set up so that the update call happens when we're not in
+     * the current step, so the initial value shouldn't change.
+     **/
+    public function testGetCurrentElementsNotInStep() {
+        $_POST['formName']  = 'formName';
+        $_POST['text0Name'] = 'text0Value';
+        $_GET['step']       = '0';
+
+        $form   = new htmlform('formName');
+        $step0  = $form->addStep('step0');
+        $step1  = $form->addStep('step1');
+        $text0  = $step1->addText('text0Name');
+
+        $form->updateInputValue('text0Name');
+
+        $this->assertNull($text0->getValue());
+    }
 }
 ?>
