@@ -196,7 +196,7 @@ class htmlform extends abstracts\container {
             if ($element instanceof elements\fieldset) {
                 if (
                     !($element instanceof elements\step)
-                    || ($element == $this->steps[$this->currentStepId])
+                    || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
                 ) {
                     $currentElements = array_merge($currentElements, $element->getElements());
                 }

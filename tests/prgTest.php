@@ -7,7 +7,7 @@ use depage\htmlform\htmlform;
 /**
  * Custom htmlform class with overidden redirect method for easier testing
  **/
-class testHtmlform extends htmlform {
+class htmlformTestClass extends htmlform {
     public $testRedirect;
 
     public function redirect($url) {
@@ -20,10 +20,10 @@ class prgTest extends PHPUnit_Framework_TestCase {
      * Testing the test...
      **/
     public function testRedirect() {
-        $this->form = new testHtmlform('htmlformNameString');
+        $this->form = new htmlformTestClass('formName');
         $this->form->redirect('http://www.depage.net');
 
-        $this->assertEquals($this->form->testRedirect, 'http://www.depage.net');
+        $this->assertEquals('http://www.depage.net', $this->form->testRedirect);
     }
 
     /**
@@ -32,10 +32,10 @@ class prgTest extends PHPUnit_Framework_TestCase {
      **/
     public function testProcessOnPost() {
         // setting up the post-data (form-name and value for a text-element)
-        $_POST['formName'] = 'htmlformNameString';
+        $_POST['formName'] = 'formName';
         $_POST['postedText'] = 'submitted';
 
-        $form = new testHtmlform('htmlformNameString');
+        $form = new htmlformTestClass('formName', array('successURL' => 'http://www.depagecms.net'));
 
         $postedTextElement = $form->addText('postedText');
         $unpostedTextElement = $form->addText('unpostedText');
@@ -44,12 +44,12 @@ class prgTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($postedTextElement->getValue(), 'submitted');
         // tests value that hasn't been posted (set to null, then converted to empty string by setValue())
         $this->assertInternalType('string', $unpostedTextElement->getValue());
-        $this->assertEquals($unpostedTextElement->getValue(), '');
+        $this->assertEquals('', $unpostedTextElement->getValue());
 
         $form->process();
         $this->assertTrue($form->validate());
         // should redirect to success address
-        $this->assertEquals($form->testRedirect, $_SERVER['REQUEST_URI']);
+        $this->assertEquals('http://www.depagecms.net', $form->testRedirect);
     }
 
     /**
@@ -58,13 +58,40 @@ class prgTest extends PHPUnit_Framework_TestCase {
      **/
     public function testProcessOnGet() {
         // setting up session-data for text-element
-        $_SESSION['htmlformNameString-data']['storedText'] = 'stored';
+        $_SESSION['formName-data']['storedText'] = 'stored';
 
-        $form = new testHtmlform('htmlformNameString');
+        $form = new htmlformTestClass('formName');
 
         $storedTextElement = $form->addText('storedText');
 
         // tests value from session
-        $this->assertEquals($storedTextElement->getValue(), 'stored');
+        $this->assertEquals('stored', $storedTextElement->getValue());
+    }
+
+    /**
+     * Test process() method for forms with steps. Setting an invalid step 
+     * number forces call of getFirstInvalidStep(). 
+     *
+     * The first invalid step should be step1.
+     **/
+    public function testProcessSteps() {
+        $_POST['formName'] = 'formName';
+
+        $_GET['step'] = 'bogusStepId';
+
+        $form = new htmlformTestClass('formName');
+        $step0 = $form->addStep('step0');
+        $step1 = $form->addStep('step1');
+        $step2 = $form->addStep('step2');
+        $mail0 = $step0->addEmail('mail0');
+        $mail0->setValue('valid@email.com');
+        $mail1 = $step1->addEmail('mail1');
+        $mail1->setValue('invalidEmail');
+        $mail2 = $step2->addEmail('mail2');
+        $mail2->setValue('invalidEmail');
+
+        $form->process();
+
+        $this->assertEquals('/?step=1', $form->testRedirect);
     }
 }

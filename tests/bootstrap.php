@@ -1,5 +1,5 @@
 <?php
-$_SERVER['REQUEST_URI'] = '';
+$_SERVER['REQUEST_URI'] = 'http://www.depagecms.net/';
 session_start();
 
 class logTestClass {
