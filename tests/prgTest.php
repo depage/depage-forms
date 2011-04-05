@@ -94,4 +94,31 @@ class prgTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('/?step=1', $form->testRedirect);
     }
+
+    /**
+     * Tests getFirstInvalidStep() for fieldset outside steps. Setting an
+     * invalid step number forces call of getFirstInvalidStep(). When all steps
+     * are valid and the free fieldset is invalid it should jump to the last
+     * step.
+     **/
+    public function testStepsFreeFieldset() {
+        $_POST['formName'] = 'formName';
+
+        $_GET['step'] = 'bogusStepId';
+
+        $form = new htmlformTestClass('formName');
+        $step0 = $form->addStep('step0');
+        $step1 = $form->addStep('step1');
+        $fieldset = $form->addFieldset('fieldset');
+        $mail0 = $step0->addEmail('mail0');
+        $mail0->setValue('valid@email.com');
+        $mail1 = $step1->addEmail('mail1');
+        $mail1->setValue('valid@email.com');
+        $mail2 = $fieldset->addEmail('mail2');
+        $mail2->setValue('invalidemail');
+
+        $form->process();
+
+        $this->assertEquals('/?step=1', $form->testRedirect);
+    }
 }
