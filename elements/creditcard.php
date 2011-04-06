@@ -6,21 +6,20 @@ namespace depage\htmlform\elements;
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
 class creditcard extends fieldset {
-    public function __construct($name, $parameters = array()) {
-        parent::__construct($name, $parameters);
+    protected function setDefaults() {
+        parent::setDefaults();
 
-        $this->labelNumber          = (isset($parameters['labelnumber']))           ? $parameters['labelnumber']            : "Creditcard Number";
-        $this->labelCheck           = (isset($parameters['labelcheck']))            ? $parameters['labelcheck']             : "CVV/CVC";
-        $this->labelExpirationDate  = (isset($parameters['labelexpirationdate']))   ? $parameters['labelexpirationdate']    : "Expiration Date MM/YY";
-        $this->labelOwner           = (isset($parameters['labelowner']))            ? $parameters['labelowner']             : "Card Owner";
-        $this->cardtypes            = (isset($parameters['cardtypes']))             ? $parameters['cardtypes']              : array(
+        $this->defaults['labelNumber']          = "Creditcard Number";
+        $this->defaults['labelCheck']           = "CVV/CVC";
+        $this->defaults['labelExpirationDate']  = "Expiration Date MM/YY";
+        $this->defaults['labelOwner']           = "Card Owner";
+        $this->defaults['cardtypes']            = array(
             "visa",
             "americanexpress",
             "mastercard",
         );
-
     }
-    
+
     /**
      * adds creditcard-inputs to fieldset
      *
@@ -43,6 +42,7 @@ class creditcard extends fieldset {
             }
         }
 
+        /* @todo re-enable after fix
         $this->addSingle($this->name . "_card_type", array(
             'label' => "",
             'list' => $options,
@@ -67,6 +67,7 @@ class creditcard extends fieldset {
             'label' => $this->labelOwner,
             'required' => true,
         ));
+        */
     }
 
     /**

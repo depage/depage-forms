@@ -32,19 +32,28 @@ abstract class container {
      * Holds input element, fieldset and custom HTML object references.
      **/
     protected $elementsAndHtml = array();
+    protected $log;
 
     /**
      *  @param $name string - container name
      *  @param $parameters array of container parameters, HTML attributes
      *  @return void
      **/
-    public function __construct($name, &$parameters = array()) {
-        // converts index to lower case so parameters are case independent
-        $parameters = array_change_key_case($parameters);
-
-        $this->log = (isset($parameters['log'])) ? $parameters['log'] : null;
+    public function __construct($name, $parameters = array()) {
         $this->checkContainerName($name);
         $this->name = $name;
+
+        $this->setDefaults();
+        $parameters = array_change_key_case($parameters);
+        foreach ($this->defaults as $parameter => $default) {
+            $this->$parameter = isset($parameters[strtolower($parameter)]) ? $parameters[strtolower($parameter)] : $default;
+        }
+
+        $this->addChildElements();
+    }
+
+    protected function setDefaults() {
+        $this->defaults['log'] = null;
     }
 
     /**
@@ -91,6 +100,14 @@ abstract class container {
         $this->elementsAndHtml[] = $newElement;
 
         return $newElement;
+    }
+
+    /**
+     * overridable method to add child elements
+     *
+     * @return void
+     **/
+    protected function addChildElements() {
     }
 
     /**

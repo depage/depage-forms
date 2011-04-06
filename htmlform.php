@@ -59,7 +59,7 @@ class htmlform extends abstracts\container {
     /**
      * Time for session expiry
      **/
-    private $ttl;
+    protected $ttl;
     /**
      * Form validation result/status.
      **/
@@ -75,12 +75,6 @@ class htmlform extends abstracts\container {
 
         parent::__construct($name, $parameters);
 
-        $this->label            = (isset($parameters['label']))         ? $parameters['label']          : 'submit';
-        $this->submitURL        = (isset($parameters['submiturl']))     ? $parameters['submiturl']      : $_SERVER['REQUEST_URI'];
-        $this->method           = (isset($parameters['method']))        ? $parameters['method']         : 'post';
-        $this->successURL       = (isset($parameters['successurl']))    ? $parameters['successurl']     : $_SERVER['REQUEST_URI'];
-        $this->validator        = (isset($parameters['validator']))     ? $parameters['validator']      : null;
-        $this->ttl              = (isset($parameters['ttl']))           ? $parameters['ttl']            : null;
         $this->currentStepId    = (isset($_GET['step']))                ? $_GET['step']                 : 0;
 
         // check if there's an open session
@@ -95,7 +89,18 @@ class htmlform extends abstracts\container {
         $this->valid = (isset($this->sessionSlot['formIsValid'])) ? $this->sessionSlot['formIsValid'] : null;
 
         // create a hidden input element to tell forms apart
-        $this->addHidden('formName', array('defaultvalue' => $this->name));
+        $this->addHidden('formName', array('defaultValue' => $this->name));
+    }
+
+    protected function setDefaults() {
+        parent::setDefaults();
+
+        $this->defaults['label']        = 'submit';
+        $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
+        $this->defaults['method']       = 'post';
+        $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
+        $this->defaults['validator']    = null;
+        $this->defaults['ttl']          = null;
     }
 
     private function sessionExpiry() {
