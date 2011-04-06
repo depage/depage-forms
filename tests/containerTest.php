@@ -32,11 +32,11 @@ class testElement {
 class containerTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->form         = new nameTestForm;
-        $this->container    = new containerTestClass('containerNameString', array(), $this->form);
+        $this->container    = new containerTestClass('containerName', array(), $this->form);
     }
 
     public function testContainerConstruct() {
-        $this->assertEquals($this->container->getName(), 'containerNameString');
+        $this->assertEquals($this->container->getName(), 'containerName');
     }
 
     public function testContainerGetElements() {

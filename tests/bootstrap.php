@@ -27,5 +27,5 @@ class nameTestForm {
     public function updateInputValue() {}
 }
 
-class undefinedMethodException extends \exception {}
+class undefinedMethodException extends exception {}
 ?>

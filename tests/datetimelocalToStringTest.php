@@ -5,8 +5,7 @@ use depage\htmlform\elements\datetimelocal;
 class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
-        $parameters = array();
-        $this->datetimelocal = new datetimelocal('datetimelocalName', $parameters, $this->form);
+        $this->datetimelocal = new datetimelocal('datetimelocalName', array(), $this->form);
     }
 
     public function testSimple() {

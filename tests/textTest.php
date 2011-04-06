@@ -4,9 +4,8 @@ use depage\htmlform\elements\text;
 
 class textTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters = array();
         $this->form = new nameTestForm;
-        $this->text = new text('nameString', $parameters, $this->form);
+        $this->text = new text('nameString', array(), $this->form);
     }
 
     public function testGetName() {

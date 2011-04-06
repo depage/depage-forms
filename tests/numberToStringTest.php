@@ -4,9 +4,8 @@ use depage\htmlform\elements\number;
 
 class numberToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters = array();
         $this->form     = new nameTestForm;
-        $this->number   = new number('numberName', $parameters, $this->form);
+        $this->number   = new number('numberName', array(), $this->form);
     }
 
     public function testSimple() {

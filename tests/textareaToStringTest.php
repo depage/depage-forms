@@ -4,9 +4,8 @@ use depage\htmlform\elements\textarea;
 
 class textareaToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters     = array();
         $this->form     = new nameTestForm;
-        $this->textarea = new textarea('textareaName', $parameters, $this->form);
+        $this->textarea = new textarea('textareaName', array(), $this->form);
     }
  
     public function testSimple() {

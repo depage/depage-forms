@@ -5,7 +5,7 @@ use depage\htmlform\elements\email;
 class emailTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form     = new nameTestForm;
-        $this->email    = new email('emailName', $ref = array(), $this->form);
+        $this->email    = new email('emailName', array(), $this->form);
     }
 
     public function testEmailSetValue() {

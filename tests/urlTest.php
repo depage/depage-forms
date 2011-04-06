@@ -4,9 +4,8 @@ use depage\htmlform\elements\url;
 
 class urlTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters = array();
         $this->form = new nameTestForm;
-        $this->url  = new url('urlName', $parameters, $this->form);
+        $this->url  = new url('urlName', array(), $this->form);
     }
 
     public function testUrlSetValue() {

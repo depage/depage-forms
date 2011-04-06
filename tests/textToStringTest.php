@@ -4,9 +4,8 @@ use depage\htmlform\elements\text;
 
 class textToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters = array();
         $this->form = new nameTestForm;
-        $this->text = new text('textName', $parameters, $this->form);
+        $this->text = new text('textName', array(), $this->form);
     }
 
     public function testSimple() {
