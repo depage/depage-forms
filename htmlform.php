@@ -299,7 +299,10 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * Calls parent class validate() method.
+     * Form validation - validates form elements returns validation result and
+     * writes it to session. Also calls custom validator if available.
+     *
+     * @return (bool) validation result
      **/
     public function validate() {
         // onValidate hook for custom required/validation rules
