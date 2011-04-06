@@ -115,5 +115,23 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $_SESSION['formName-data']['formName'] = 'formName';
         $this->assertFalse($form->isEmpty());
     }
+
+    /**
+     * There's no need to rebuild the entire form with all its elements on the
+     * success page in order to check the validation result. The form object
+     * alone can check its validation result in the session data.
+     **/
+    public function testValidationResultWithoutValidate() {
+        $form = new htmlform('formName');
+        $this->assertNull($form->valid);
+
+        $_SESSION['form2Name-data']['formIsValid'] = true;
+        $form2 = new htmlform('form2Name');
+        $this->assertTrue($form2->valid);
+
+        $_SESSION['form3Name-data']['formIsValid'] = false;
+        $form3 = new htmlform('form3Name');
+        $this->assertFalse($form3->valid);
+    }
 }
 ?>
