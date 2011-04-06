@@ -60,6 +60,10 @@ class htmlform extends abstracts\container {
      * Time for session expiry
      **/
     private $ttl;
+    /**
+     * Form validation result/status.
+     **/
+    public $valid;
 
     /**
      * @param $name string - form name
@@ -87,6 +91,8 @@ class htmlform extends abstracts\container {
         $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
 
         $this->sessionExpiry();
+
+        $this->valid = (isset($this->sessionSlot['formIsValid'])) ? $this->sessionSlot['formIsValid'] : null;
 
         // create a hidden input element to tell forms apart
         $this->addHidden('formName', array('defaultvalue' => $this->name));
@@ -293,7 +299,10 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * Calls parent class validate() method.
+     * Form validation - validates form elements returns validation result and
+     * writes it to session. Also calls custom validator if available.
+     *
+     * @return (bool) validation result
      **/
     public function validate() {
         // onValidate hook for custom required/validation rules
@@ -308,24 +317,16 @@ class htmlform extends abstracts\container {
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
 
-        if ($this->valid === null) {
-            return (bool) $this->sessionSlot['formIsValid'];
-        } else {
-            return $this->valid;
-        }
+        return $this->valid;
     }
 
     /**
-     * Retuns if form has been submitted before
+     * Returns wether form has been submitted before or not.
      *
      * @return (bool) session status
      **/
     public function isEmpty() {
-        if (isset($this->sessionSlot['formName'])) {
-            return $this->sessionSlot['formName'] != $this->name;
-        } else {
-            return true;
-        }
+        return !isset($this->sessionSlot['formName']);
     }
 
     /**

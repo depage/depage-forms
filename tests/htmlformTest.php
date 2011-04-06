@@ -107,5 +107,63 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertNull($text0->getValue());
     }
+
+    public function testIsEmpty() {
+        $form = new htmlform('formName');
+        $this->assertTrue($form->isEmpty());
+
+        $_SESSION['formName-data']['formName'] = 'formName';
+        $this->assertFalse($form->isEmpty());
+    }
+
+    /**
+     * There's no need to rebuild the entire form with all its elements on the
+     * success page in order to check the validation result. The form object
+     * alone can check its validation result in the session data.
+     **/
+    public function testValidationResultWithoutValidate() {
+        $form = new htmlform('formName');
+        $this->assertNull($form->valid);
+
+        $_SESSION['form2Name-data']['formIsValid'] = true;
+        $form2 = new htmlform('form2Name');
+        $this->assertTrue($form2->valid);
+
+        $_SESSION['form3Name-data']['formIsValid'] = false;
+        $form3 = new htmlform('form3Name');
+        $this->assertFalse($form3->valid);
+    }
+
+    /**
+     * Forms can accept a custom validator function as a parameter. It's called
+     * when the rest of the form is successfully validated and an array of form
+     * element values is parsed to it.
+     **/
+    public function testCustomValidator() {
+        //custom validator function (valid)
+        $validator = function () { return true; };
+
+        // pretend the form has been submitted before
+        $_SESSION['formName-data']['formName'] = 'formName';
+
+        // building the form with custom validator
+        $form = new htmlform('formName', array('validator' => $validator));
+        $form->validate();
+
+        $this->assertTrue($form->valid);
+
+
+        //custom validator function (invalid)
+        $validator2 = function () { return false; };
+
+        // pretending the form has been submitted before
+        $_SESSION['form2Name-data']['form2Name'] = 'form2Name';
+
+        // building the form with custom validator
+        $form2 = new htmlform('form2Name', array('validator' => $validator2));
+        $form2->validate();
+
+        $this->assertFalse($form2->valid);
+    }
 }
 ?>
