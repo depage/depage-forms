@@ -21,7 +21,7 @@ abstract class container {
      **/
     protected $valid;
     /**
-     * True if the containers elements have been validated before.
+     * Container validation result/status.
      **/
     protected $validated = false;
     /**
