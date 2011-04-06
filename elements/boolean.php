@@ -9,16 +9,12 @@ use depage\htmlform\abstracts;
  **/
 class boolean extends abstracts\input {
     /**
-     * @param $name input elements' name
-     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+     * collects initial values across subclasses.
      **/
-    public function __construct($name, $parameters, $form) {
-        parent::__construct($name, $parameters, $form);
-        
-        // boolean-elements have values of type boolean
-        $this->defaultValue = (isset($parameters['defaultvalue'])) ? $parameters['defaultvalue'] : (bool) false;
-        $this->errorMessage = (isset($parameters['errormessage'])) ? $parameters['errormessage'] : 'Please check this box if you want to proceed!';
+    protected function setDefaults() {
+        parent::setDefaults();
+        $this->defaults['defaultValue'] = false;
+        $this->defaults['errorMessage'] = 'Please check this box if you want to proceed!';
     }
 
     /**

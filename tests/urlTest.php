@@ -2,11 +2,10 @@
 
 use depage\htmlform\elements\url;
 
-class urlElementTest extends PHPUnit_Framework_TestCase {
+class urlTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters = array();
         $this->form = new nameTestForm;
-        $this->url  = new url('urlName', $parameters, $this->form);
+        $this->url  = new url('urlName', array(), $this->form);
     }
 
     public function testUrlSetValue() {

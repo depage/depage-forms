@@ -7,15 +7,13 @@ namespace depage\htmlform\elements;
  **/
 class textarea extends text {
     /**
-     * @param $name input elements' name
-     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+     * collects initial values across subclasses.
      **/
-    public function __construct($name, $parameters, $form) {
-        parent::__construct($name, $parameters, $form);
+    protected function setDefaults() {
+        parent::setDefaults();
 
-        $this->rows = (isset($parameters['rows'])) ? $parameters['rows'] : null;
-        $this->cols = (isset($parameters['cols'])) ? $parameters['cols'] : null;
+        $this->defaults['rows'] = null;
+        $this->defaults['cols'] = null;
     }
 
     /**

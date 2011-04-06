@@ -2,11 +2,10 @@
 
 use depage\htmlform\elements\multiple;
 
-class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
+class multipleToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
-        $parameters = array();
-        $this->multiple = new multiple('elementName', $parameters, $this->form);
+        $this->multiple = new multiple('elementName', array(), $this->form);
     }
 
     public function testCheckbox() {

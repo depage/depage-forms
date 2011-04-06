@@ -3,8 +3,6 @@
 use depage\htmlform\htmlform;
 
 class inputTypesTest extends PHPUnit_Framework_TestCase {
-    protected $form;
-
     protected function setUp() {
         $this->form = new htmlform('formNameString');
     }

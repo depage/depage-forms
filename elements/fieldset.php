@@ -13,6 +13,9 @@ class fieldset extends abstracts\container {
      **/
     protected $form;
 
+    /**
+     * collects initial values across subclasses.
+     **/
     protected function setDefaults() {
         $this->defaults['label'] = $this->name;
     }

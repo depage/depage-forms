@@ -3,7 +3,7 @@
 use depage\htmlform\htmlform;
 use depage\htmlform\elements\fieldset;
 
-class fieldsetElementTest extends PHPUnit_Framework_TestCase {
+class fieldsetTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm('formName');
         $this->fieldset = new fieldset('fieldsetName', array(), $this->form);

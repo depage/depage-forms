@@ -19,19 +19,17 @@ class number extends text {
      **/
     protected $step;
     
-   /**
-     * @param $name input elements' name
-     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+    /**
+     * collects initial values across subclasses.
      **/
-    public function __construct($name, &$parameters, $form) {
-        parent::__construct($name, $parameters, $form);
+    protected function setDefaults() {
+        parent::setDefaults();
 
-        $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : 0;
-        $this->min          = (isset($parameters['min']))           ? $parameters['min']            : null;
-        $this->max          = (isset($parameters['max']))           ? $parameters['max']            : null;
-        $this->step         = (isset($parameters['step']))          ? $parameters['step']           : null;
-        $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']   : 'Please enter a valid number!';
+        $this->defaults['defaultValue'] = 0;
+        $this->defaults['min']          = null;
+        $this->defaults['max']          = null;
+        $this->defaults['step']         = null;
+        $this->defaults['errorMessage'] = 'Please enter a valid number!';
     }
 
     /**

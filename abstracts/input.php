@@ -63,12 +63,9 @@ abstract class input {
     /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+     * @param $form parent form object.
      **/
-    public function __construct($name, &$parameters, $form) {
-
-        $this->log          = (isset($parameters['log']))           ? $parameters['log']            : null;
-
+    public function __construct($name, $parameters, $form) {
         $this->_checkInputName($name);
         $this->_checkInputParameters($parameters);
 
@@ -76,19 +73,25 @@ abstract class input {
         $this->name         = $name;
         $this->formName     = $form->getName();
 
-        // converts index to lower case so parameters are case independent
-        $parameters = array_change_key_case($parameters);
-
         $this->validator    = (isset($parameters['validator']))
             ? validators\validator::factory($parameters['validator'], $this->log)
             : validators\validator::factory($this->type, $this->log);
 
-        $this->autofocus    = (isset($parameters['autofocus']))     ? $parameters['autofocus']      : false;
-        $this->label        = (isset($parameters['label']))         ? $parameters['label']          : $this->name;
-        $this->required     = (isset($parameters['required']))      ? $parameters['required']       : false;
-        $this->marker       = (isset($parameters['marker']))        ? $parameters['marker']         : '*';
-        $this->errorMessage = (isset($parameters['errormessage']))  ? $parameters['errormessage']   : 'Please enter valid data!';
-        $this->title        = (isset($parameters['title']))         ? $parameters['title']          : false;
+        $this->setDefaults();
+        $parameters = array_change_key_case($parameters);
+        foreach ($this->defaults as $parameter => $default) {
+            $this->$parameter = isset($parameters[strtolower($parameter)]) ? $parameters[strtolower($parameter)] : $default;
+        }
+    }
+
+    protected function setDefaults() {
+        $this->defaults['log']          = null;
+        $this->defaults['autofocus']    = false;
+        $this->defaults['label']        = $this->name;
+        $this->defaults['required']     = false;
+        $this->defaults['marker']       = '*';
+        $this->defaults['errorMessage'] = 'Please enter valid data!';
+        $this->defaults['title']        = false;
     }
 
     /**

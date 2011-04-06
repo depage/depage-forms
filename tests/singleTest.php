@@ -2,11 +2,10 @@
 
 use depage\htmlform\elements\single;
 
-class singleElementTest extends PHPUnit_Framework_TestCase {
+class singleTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $parameters     = array();
         $this->form     = new nameTestForm;
-        $this->single   = new single('singleName', $parameters, $this->form);
+        $this->single   = new single('singleName', array(), $this->form);
     }
 
     public function testSingleSetValue() {
