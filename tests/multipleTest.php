@@ -2,7 +2,7 @@
 
 use depage\htmlform\elements\multiple;
 
-class multipleElementTest extends PHPUnit_Framework_TestCase {
+class multipleTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
         $this->form     = new nameTestForm;

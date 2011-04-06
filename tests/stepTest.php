@@ -3,7 +3,7 @@
 use depage\htmlform\htmlform;
 use depage\htmlform\elements\step;
 
-class stepElementTest extends PHPUnit_Framework_TestCase {
+class stepTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
         $this->step = new step('stepName', array(), $this->form);

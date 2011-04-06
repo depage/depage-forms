@@ -2,7 +2,7 @@
 
 use depage\htmlform\elements\single;
 
-class singleElementToStringTest extends PHPUnit_Framework_TestCase {
+class singleToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters     = array();
         $this->form     = new nameTestForm;

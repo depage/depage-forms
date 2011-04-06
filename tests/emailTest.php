@@ -2,7 +2,7 @@
 
 use depage\htmlform\elements\email;
 
-class emailElementTest extends PHPUnit_Framework_TestCase {
+class emailTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->email    = new email('emailName', $ref = array(), $this->form);

@@ -2,7 +2,7 @@
 
 use depage\htmlform\elements\hidden;
 
-class hiddenElementTest extends PHPUnit_Framework_TestCase {
+class hiddenTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
         $this->form     = new nameTestForm;

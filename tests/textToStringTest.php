@@ -2,7 +2,7 @@
 
 use depage\htmlform\elements\text;
 
-class textElementToStringTest extends PHPUnit_Framework_TestCase {
+class textToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
         $this->form = new nameTestForm;

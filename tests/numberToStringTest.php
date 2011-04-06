@@ -2,7 +2,7 @@
 
 use depage\htmlform\elements\number;
 
-class numberElementToStringTest extends PHPUnit_Framework_TestCase {
+class numberToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
         $this->form     = new nameTestForm;
