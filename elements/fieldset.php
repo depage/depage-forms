@@ -17,16 +17,6 @@ class fieldset extends abstracts\container {
         $this->defaults['label'] = $this->name;
     }
 
-    /**
-     * sets parent form of fieldset
-     *
-     * @param $form object - parent form object
-     * @return void
-     **/
-    public function setParentForm($form) {
-        $this->form = $form;
-    }
-
     /** 
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements
@@ -36,15 +26,12 @@ class fieldset extends abstracts\container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-     public function addElement($type, $name, $parameters = array()) {
+     public function addElement($type, $name, $parameters = array(), $form) {
         $this->form->checkElementName($name);
 
-        $newElement = parent::addElement($type, $name, $parameters);
+        $newElement = parent::addElement($type, $name, $parameters, $form);
 
-        if ($newElement instanceof fieldset) {
-            // if it's a fieldset it needs to know which form it belongs to
-            $newElement->setParentForm($this->form);
-        } else {
+        if ( !($newElement instanceof fieldset) ) {
             $this->form->updateInputValue($name);
         }
 

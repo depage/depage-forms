@@ -4,11 +4,6 @@ use depage\htmlform\abstracts\container;
 use depage\htmlform\exceptions;
 
 class containerTestClass extends container {
-    // needed to instantiate (container is abstract)
-    public function __construct($name, $parameters = array()) {
-        parent::__construct($name, $parameters);
-    }
-
     // needed for testSetRequired()
     public function addTestElement($element) {
         $this->elements[] = $element;
@@ -36,7 +31,8 @@ class testElement {
  **/
 class containerTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
-        $this->container = new containerTestClass('containerNameString');
+        $this->form         = new nameTestForm;
+        $this->container    = new containerTestClass('containerNameString', array(), $this->form);
     }
 
     public function testContainerConstruct() {
@@ -55,7 +51,7 @@ class containerTest extends PHPUnit_Framework_TestCase {
 
     public function testInvalidContainerNameException() {
         try {
-            new containerTestClass(' ', array());
+            new containerTestClass(' ', array(), $this->form);
         } catch (exceptions\invalidContainerNameException $expected) {
             return;
         }
@@ -64,7 +60,7 @@ class containerTest extends PHPUnit_Framework_TestCase {
 
     public function testContainerNameNoStringException() {
         try {
-            new containerTestClass(42, array());
+            new containerTestClass(42, array(), $this->form);
         } catch (exceptions\containerNameNoStringException $expected) {
             return;
         }
@@ -107,7 +103,7 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $log        = new logTestClass;
 
         $parameters = array('log' => $log);
-        $container  = new containerTestClass('containerName', $parameters);
+        $container  = new containerTestClass('containerName', $parameters, $this->form);
 
         $container->log('argumentString', 'typeString');
 

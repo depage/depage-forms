@@ -5,7 +5,8 @@ use depage\htmlform\elements\hidden;
 class hiddenElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
-        $this->hidden = new hidden('nameString', $parameters, 'formName');
+        $this->form     = new nameTestForm;
+        $this->hidden   = new hidden('nameString', $parameters, $this->form);
     }
 
     public function testHiddenSetValue() {

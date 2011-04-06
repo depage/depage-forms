@@ -42,7 +42,6 @@ class creditcard extends fieldset {
             }
         }
 
-        /* @todo re-enable after fix
         $this->addSingle($this->name . "_card_type", array(
             'label' => "",
             'list' => $options,
@@ -67,7 +66,6 @@ class creditcard extends fieldset {
             'label' => $this->labelOwner,
             'required' => true,
         ));
-        */
     }
 
     /**

@@ -70,10 +70,10 @@ class htmlform extends abstracts\container {
      * @param $parameters array of form parameters, HTML attributes
      * @return void
      **/
-    public function __construct($name, $parameters = array()) {
+    public function __construct($name, $parameters = array(), $form = null) {
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
-        parent::__construct($name, $parameters);
+        parent::__construct($name, $parameters, $this);
 
         $this->currentStepId    = (isset($_GET['step']))                ? $_GET['step']                 : 0;
 
@@ -128,15 +128,12 @@ class htmlform extends abstracts\container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-    protected function addElement($type, $name, $parameters = array()) {
+    protected function addElement($type, $name, $parameters = array(), $form = null) {
         $this->checkElementName($name);
 
-        $newElement = parent::addElement($type, $name, $parameters);
+        $newElement = parent::addElement($type, $name, $parameters, $this);
 
         if ($newElement instanceof elements\fieldset) {
-            // if it's a fieldset it needs to know which form it belongs to
-            $newElement->setParentForm($this);
-
             if ($newElement instanceof elements\step) {
                 $this->steps[] = $newElement;
             }

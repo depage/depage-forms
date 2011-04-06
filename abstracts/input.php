@@ -65,7 +65,7 @@ abstract class input {
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    public function __construct($name, &$parameters, $formName) {
+    public function __construct($name, &$parameters, $form) {
 
         $this->log          = (isset($parameters['log']))           ? $parameters['log']            : null;
 
@@ -74,7 +74,7 @@ abstract class input {
 
         $this->type         = strtolower(str_replace('depage\\htmlform\\elements\\', '', get_class($this)));
         $this->name         = $name;
-        $this->formName     = $formName;
+        $this->formName     = $form->getName();
 
         // converts index to lower case so parameters are case independent
         $parameters = array_change_key_case($parameters);

@@ -3,52 +3,52 @@
 use depage\htmlform\elements\datetimelocal;
 
 class datetimelocalElementToStringTest extends PHPUnit_Framework_TestCase {
+    public function setUp() {
+        $this->form = new nameTestForm;
+        $parameters = array();
+        $this->datetimelocal = new datetimelocal('datetimelocalName', $parameters, $this->form);
+    }
+
     public function testSimple() {
-        $expected = '<p id="formName-elementName" class="input-datetimelocal" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data!">' .
             '<label>' .
-                '<span class="label">elementName</span>' .
-                '<input name="elementName" type="datetime-local" value="">' .
+                '<span class="label">datetimelocalName</span>' .
+                '<input name="datetimelocalName" type="datetime-local" value="">' .
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array();
-        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
-        $this->assertEquals($expected, $datetimelocal->__toString());
+        $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
 
     public function testValue() {
-        $expected = '<p id="formName-elementName" class="input-datetimelocal" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data!">' .
             '<label>' .
-                '<span class="label">elementName</span>' .
-                '<input name="elementName" type="datetime-local" value="7331">' .
+                '<span class="label">datetimelocalName</span>' .
+                '<input name="datetimelocalName" type="datetime-local" value="7331">' .
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array();
-        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
-        $datetimelocal->setValue(7331);
-        $this->assertEquals($expected, $datetimelocal->__toString());
+        $this->datetimelocal->setValue(7331);
+        $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
 
     public function testRequired() {
-        $expected = '<p id="formName-elementName" class="input-datetimelocal required" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
-                '<span class="label">elementName <em>*</em></span>' .
-                '<input name="elementName" type="datetime-local" required value="">' .
+                '<span class="label">datetimelocalName <em>*</em></span>' .
+                '<input name="datetimelocalName" type="datetime-local" required value="">' .
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array();
-        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
-        $datetimelocal->setRequired();
-        $this->assertEquals($expected, $datetimelocal->__toString());
+        $this->datetimelocal->setRequired();
+        $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
-                '<input name="elementName" type="datetime-local" required value="">' .
+                '<input name="datetimelocalName" type="datetime-local" required value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -59,7 +59,7 @@ class datetimelocalElementToStringTest extends PHPUnit_Framework_TestCase {
             'title'         => 'ti">tle',
             'required'      => true,
         );
-        $datetimelocal = new datetimelocal('elementName', $parameters, 'formName');
+        $datetimelocal = new datetimelocal('datetimelocalName', $parameters, $this->form);
         $this->assertEquals($expected, $datetimelocal->__toString());
     }
 }

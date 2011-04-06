@@ -4,9 +4,9 @@ use depage\htmlform\abstracts\input;
 use depage\htmlform\exceptions;
 
 class inputTestClass extends input {
-    public function __construct($name, $parameters, $formName) {
+    public function __construct($name, $parameters, $form) {
         $parameters['validator'] = 'text';
-        parent::__construct($name, $parameters, $formName);
+        parent::__construct($name, $parameters, $form);
     }
 
     public function getHtmlClasses() {
@@ -33,9 +33,14 @@ class inputTestClass extends input {
 }
 
 class inputTest extends PHPUnit_Framework_TestCase {
+    public function setUp() {
+        $this->form     = new nameTestForm;
+        $this->input    = new inputTestClass('inputName', array(), $this->form);
+    }
+
     public function testInputNameNoStringException() {
         try {
-            $input = new inputTestClass(true, array(), 'formName');
+            $input = new inputTestClass(true, array(), $this->form);
         }
         catch (exceptions\inputNameNoStringException $expected) {
             return;
@@ -45,7 +50,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
     
     public function testInvalidInputNameException() {
         try {
-            $input = new inputTestClass(' ', array(), 'formName');
+            $input = new inputTestClass(' ', array(), $this->form);
         }
         catch (exceptions\invalidInputNameException $expected) {
             return;
@@ -55,7 +60,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
 
     public function testInputParametersNoArrayException() {
         try {
-            $input = new inputTestClass('inputName', 'string', 'formName');
+            $input = new inputTestClass('inputName', 'string', $this->form);
         }
         catch (exceptions\inputParametersNoArrayException $expected) {
             return;
@@ -64,63 +69,57 @@ class inputTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testInputInvalid() {
-        $input = new inputTestClass('inputName', array(), 'formName');
-        $this->assertEquals(false, $input->validate());
+        $this->assertEquals(false, $this->input->validate());
     }
 
     public function testInputValid() {
-        $input = new inputTestClass('inputName', array(), 'formName');
-        $input->setValue('testValue');
-        $this->assertEquals(true, $input->validate());
+        $this->input->setValue('testValue');
+        $this->assertEquals(true, $this->input->validate());
     }
 
     public function testGetName() {
-        $input = new inputTestClass('inputName', array(), 'formName');
-        $this->assertEquals('inputName', $input->getName());
+        $this->assertEquals('inputName', $this->input->getName());
     }
 
     public function testHtmlClasses() {
-        $input = new inputTestClass('inputName', array('required' => true), 'formName');
+        $parameters = array('required' => true);
+        $input = new inputTestClass('inputName', $parameters, $this->form);
         $input->setValue('');
 
         $this->assertEquals($input->getHtmlClasses(), 'input-inputtestclass required error');
     }
 
     public function testHtmlErrorMessage() {
-        $input = new inputTestClass('inputName', array(), 'formName');
-
         // valid input element => epmty error message
-        $this->assertEquals($input->getHtmlErrorMessage(), '');
+        $this->assertEquals($this->input->getHtmlErrorMessage(), '');
 
         // invalid input element
-        $input->setValid(false);
+        $this->input->setValid(false);
         // set value (null by default)
-        $input->setValue('');
-        $this->assertEquals($input->getHtmlErrorMessage(), ' <span class="errorMessage">Please enter valid data!</span>');
+        $this->input->setValue('');
+        $this->assertEquals($this->input->getHtmlErrorMessage(), ' <span class="errorMessage">Please enter valid data!</span>');
     }
 
     public function testSetAutofocus() {
-        $input = new inputTestClass('inputName', array(), 'formName');
-
         // initially autofocus is set to false
-        $this->assertFalse($input->getAutofocus());
+        $this->assertFalse($this->input->getAutofocus());
 
         // no parameter means true
-        $input->setAutofocus();
-        $this->assertTrue($input->getAutofocus());
+        $this->input->setAutofocus();
+        $this->assertTrue($this->input->getAutofocus());
 
-        $input->setAutofocus(false);
-        $this->assertFalse($input->getAutofocus());
+        $this->input->setAutofocus(false);
+        $this->assertFalse($this->input->getAutofocus());
 
-        $input->setAutofocus(true);
-        $this->assertTrue($input->getAutofocus());
+        $this->input->setAutofocus(true);
+        $this->assertTrue($this->input->getAutofocus());
     }
 
     public function testLog() {
         $log        = new logTestClass;
 
         $parameters = array('log' => $log);
-        $input      = new inputTestClass('inputName', $parameters, 'formName');
+        $input      = new inputTestClass('inputName', $parameters, $this->form);
 
         $input->log('argumentString', 'typeString');
 
@@ -137,12 +136,9 @@ class inputTest extends PHPUnit_Framework_TestCase {
         }
 
     public function testUndefinedMethodError() {
-        $parameters = array();
-        $input = new inputTestClass('inputName', $parameters, 'formName');
-
         set_error_handler(array($this, 'undefinedMethodHandler'));
         try {
-            $input->__call('undefined', 'argumentString');
+            $this->input->__call('undefined', 'argumentString');
         } catch (undefinedMethodException $expected) {
             restore_error_handler();
             return;

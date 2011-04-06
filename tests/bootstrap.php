@@ -17,6 +17,15 @@ class logTestClass {
         );
     }
 }
-    
+
+class nameTestForm {
+    public function getName() {
+        return 'formName';
+    }
+
+    public function checkElementName() {}
+    public function updateInputValue() {}
+}
+
 class undefinedMethodException extends \exception {}
 ?>

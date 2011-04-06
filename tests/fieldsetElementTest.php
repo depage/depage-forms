@@ -5,10 +5,8 @@ use depage\htmlform\elements\fieldset;
 
 class fieldsetElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->fieldset = new fieldset('fieldsetName');
-
-        $this->form = new htmlform('formName');
-        $this->fieldset->setParentForm($this->form);
+        $this->form = new nameTestForm('formName');
+        $this->fieldset = new fieldset('fieldsetName', array(), $this->form);
     }
 
     public function testToString() {
@@ -18,19 +16,19 @@ class fieldsetElementTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
 
-    public function testAddElementFieldset() {
+    public function testAddFieldset() {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
             '<fieldset id="formName-secondFieldsetName" name="secondFieldsetName">' .
                 '<legend>secondFieldsetName</legend>' .
             '</fieldset>' . "\n" .
         '</fieldset>' . "\n";
-        $this->fieldset->addElement('depage\\htmlform\\elements\\fieldset', 'secondFieldsetName');
+        $this->fieldset->addFieldset('secondFieldsetName');
 
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
 
-    public function testAddElementText() {
+    public function testAddText() {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
             '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
@@ -41,7 +39,7 @@ class fieldsetElementTest extends PHPUnit_Framework_TestCase {
             '</p>' . "\n" .
         '</fieldset>' . "\n";
 
-        $this->fieldset->addElement('depage\\htmlform\\elements\\text', 'textName');
+        $this->fieldset->addText('textName');
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
 }

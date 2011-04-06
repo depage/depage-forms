@@ -24,8 +24,8 @@ class number extends text {
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    public function __construct($name, &$parameters, $formName) {
-        parent::__construct($name, $parameters, $formName);
+    public function __construct($name, &$parameters, $form) {
+        parent::__construct($name, $parameters, $form);
 
         $this->defaultValue = (isset($parameters['defaultvalue']))  ? $parameters['defaultvalue']   : 0;
         $this->min          = (isset($parameters['min']))           ? $parameters['min']            : null;

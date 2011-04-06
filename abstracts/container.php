@@ -33,15 +33,17 @@ abstract class container {
      **/
     protected $elementsAndHtml = array();
     protected $log;
+    protected $form;
 
     /**
      *  @param $name string - container name
      *  @param $parameters array of container parameters, HTML attributes
      *  @return void
      **/
-    public function __construct($name, $parameters = array()) {
+    public function __construct($name, $parameters = array(), $form) {
         $this->checkContainerName($name);
         $this->name = $name;
+        $this->form = $form;
 
         $this->setDefaults();
         $parameters = array_change_key_case($parameters);
@@ -74,7 +76,7 @@ abstract class container {
             $name       = (isset($functionArguments[0]))    ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1])      ? $functionArguments[1] : array();
 
-            return $this->addElement($type, $name, $parameters);
+            return $this->addElement($type, $name, $parameters, $this->form);
         } else {
             trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }
@@ -88,13 +90,12 @@ abstract class container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return $newElement
      **/
-    protected function addElement($type, $name, $parameters = array()) {
+    protected function addElement($type, $name, $parameters = array(), $form) {
         $this->_checkElementType($type);
 
         $parameters['log'] = $this->log;
 
-        $formName = (isset($this->form)) ? $this->form->getName() : $this->name;
-        $newElement = new $type($name, $parameters, $formName);
+        $newElement = new $type($name, $parameters, $form);
 
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;
