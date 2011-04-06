@@ -365,7 +365,7 @@ class htmlform extends abstracts\container {
      * @return (array) of form-data similar to $_POST
      **/
     public function getValues() {
-        return $this->sessionSlot;
+        return (isset($this->sessionSlot)) ? $this->sessionSlot : null;
     }
 
     /** 
@@ -387,6 +387,7 @@ class htmlform extends abstracts\container {
      **/
     public function clearSession() {
         unset($_SESSION[$this->sessionSlotName]);
+        unset($this->sessionSlot);
     }
 
     /**
