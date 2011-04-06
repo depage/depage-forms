@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/textarea.php');
-
 use depage\htmlform\elements\textarea;
 
 class textareaElementToStringTest extends PHPUnit_Framework_TestCase {

@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/number.php');
-
 use depage\htmlform\elements\number;
 
 class numberElementToStringTest extends PHPUnit_Framework_TestCase {

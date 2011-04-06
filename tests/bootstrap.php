@@ -2,6 +2,8 @@
 $_SERVER['REQUEST_URI'] = 'http://www.depagecms.net/';
 session_start();
 
+require_once('../htmlform.php');
+
 class logTestClass {
     public $error = array(
         'argument'  => '',

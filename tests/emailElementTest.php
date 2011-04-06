@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/email.php');
-
 use depage\htmlform\elements\email;
 
 class emailElementTest extends PHPUnit_Framework_TestCase {

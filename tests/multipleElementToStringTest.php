@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/multiple.php');
-
 use depage\htmlform\elements\multiple;
 
 class multipleElementToStringTest extends PHPUnit_Framework_TestCase {

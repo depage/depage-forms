@@ -1,7 +1,5 @@
 <?php
 
-require_once('../validators/validator.php');
-
 use depage\htmlform\validators\validator;
 
 class validatorTestClass extends validator {

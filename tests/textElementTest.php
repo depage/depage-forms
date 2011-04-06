@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/text.php');
-
 use depage\htmlform\elements\text;
 
 class textElementTest extends PHPUnit_Framework_TestCase {

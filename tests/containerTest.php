@@ -1,5 +1,4 @@
 <?php
-require_once('../abstracts/container.php');
 
 use depage\htmlform\abstracts\container;
 use depage\htmlform\exceptions;

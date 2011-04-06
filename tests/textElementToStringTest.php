@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/text.php');
-
 use depage\htmlform\elements\text;
 
 class textElementToStringTest extends PHPUnit_Framework_TestCase {

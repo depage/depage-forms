@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/hidden.php');
-
 use depage\htmlform\elements\hidden;
 
 class hiddenElementTest extends PHPUnit_Framework_TestCase {

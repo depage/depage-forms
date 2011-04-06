@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/datetimelocal.php');
-
 use depage\htmlform\elements\datetimelocal;
 
 class datetimelocalElementToStringTest extends PHPUnit_Framework_TestCase {

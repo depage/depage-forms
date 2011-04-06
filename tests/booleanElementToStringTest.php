@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/boolean.php');
-
 use depage\htmlform\elements\boolean;
 
 class booleanElementToStringTest extends PHPUnit_Framework_TestCase {

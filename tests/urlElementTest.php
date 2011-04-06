@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/url.php');
-
 use depage\htmlform\elements\url;
 
 class urlElementTest extends PHPUnit_Framework_TestCase {

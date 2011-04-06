@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/single.php');
-
 use depage\htmlform\elements\single;
 
 class singleElementToStringTest extends PHPUnit_Framework_TestCase {

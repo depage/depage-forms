@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/single.php');
-
 use depage\htmlform\elements\single;
 
 class singleElementTest extends PHPUnit_Framework_TestCase {

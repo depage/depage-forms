@@ -1,5 +1,4 @@
 <?php
-require_once('../abstracts/input.php');
 
 use depage\htmlform\abstracts\input;
 use depage\htmlform\exceptions;

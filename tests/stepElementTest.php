@@ -1,7 +1,5 @@
 <?php
 
-require_once('../htmlform.php');
-
 use depage\htmlform\htmlform;
 use depage\htmlform\elements\step;
 

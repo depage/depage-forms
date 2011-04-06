@@ -1,8 +1,5 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/boolean.php');
-
 use depage\htmlform\elements\boolean;
 
 class booleanElementTest extends PHPUnit_Framework_TestCase {
