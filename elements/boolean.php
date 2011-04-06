@@ -13,8 +13,8 @@ class boolean extends abstracts\input {
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
      * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
      **/
-    public function __construct($name, $parameters, $formName) {
-        parent::__construct($name, $parameters, $formName);
+    public function __construct($name, $parameters, $form) {
+        parent::__construct($name, $parameters, $form);
         
         // boolean-elements have values of type boolean
         $this->defaultValue = (isset($parameters['defaultvalue'])) ? $parameters['defaultvalue'] : (bool) false;

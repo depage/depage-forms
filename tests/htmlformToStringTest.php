@@ -1,7 +1,5 @@
 <?php
 
-require_once('../htmlform.php');
-
 use depage\htmlform\htmlform;
 
 class htmlformToStringTest extends PHPUnit_Framework_TestCase {

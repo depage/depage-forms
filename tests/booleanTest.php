@@ -1,13 +1,11 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/boolean.php');
-
 use depage\htmlform\elements\boolean;
 
-class booleanElementTest extends PHPUnit_Framework_TestCase {
+class booleanTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->boolean = new boolean('nameString', $ref = array(), 'formName');
+        $this->form     = new nameTestForm();
+        $this->boolean  = new boolean('nameString', array(), $this->form);
     }
 
     public function testBooleanInstantiate() {

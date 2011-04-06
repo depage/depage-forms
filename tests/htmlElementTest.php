@@ -1,7 +1,5 @@
 <?php
 
-require_once('../elements/html.php');
-
 use depage\htmlform\elements\html;
 
 class htmlElementTest extends PHPUnit_Framework_TestCase {

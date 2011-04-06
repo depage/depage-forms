@@ -1,19 +1,21 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/multiple.php');
-
 use depage\htmlform\elements\multiple;
 
 class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
+    public function setUp() {
+        $this->form = new nameTestForm;
+        $parameters = array();
+        $this->multiple = new multiple('elementName', $parameters, $this->form);
+    }
+
     public function testCheckbox() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName</span>' .
             '<span></span>' .
         '</p>' . "\n";
 
-        $multiple = new multiple('elementName', $parameters = array(), 'formName');
-        $this->assertEquals($expected, $multiple->__toString());
+        $this->assertEquals($expected, $this->multiple->__toString());
     }
 
     public function testSelect() {
@@ -25,7 +27,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
         '</p>' . "\n";
 
         $parameters = array('skin' => 'select');
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -35,9 +37,8 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             '<span></span>' .
         '</p>' . "\n";
 
-        $multiple = new multiple('elementName', $parameters = array(), 'formName');
-        $multiple->setRequired();
-        $this->assertEquals($expected, $multiple->__toString());
+        $this->multiple->setRequired();
+        $this->assertEquals($expected, $this->multiple->__toString());
     }
 
     public function testSelectRequired() {
@@ -49,7 +50,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
         '</p>' . "\n";
 
         $parameters = array('skin' => 'select');
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $multiple->setRequired();
         $this->assertEquals($expected, $multiple->__toString());
     }
@@ -82,7 +83,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
         $parameters = array(
             'list' => array('item1', 'item2', 'item3')
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -102,7 +103,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             'skin' => 'select',
             'list' => array('item1', 'item2', 'item3')
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -138,7 +139,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
                 'key3' => 'item3',
             )
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -162,7 +163,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
                 'key3' => 'item3',
             )
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -196,7 +197,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
                 'key4' => 'item4',
             )
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -213,7 +214,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             'title'         => 'ti">tle',
             'required'      => true,
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -233,7 +234,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             'skin'          => 'select',
             'required'      => true,
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -265,7 +266,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
         $parameters = array(
             'list' => array('it">em1', 'it">em2', 'it">em3'),
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -285,7 +286,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             'list' => array('it">em1', 'it">em2', 'it">em3'),
             'skin' => 'select',
         );
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -322,7 +323,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             )
         );
 
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 
@@ -347,7 +348,7 @@ class multipleElementToStringTest extends PHPUnit_Framework_TestCase {
             ),
         );
 
-        $multiple = new multiple('elementName', $parameters, 'formName');
+        $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
 

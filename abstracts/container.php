@@ -32,19 +32,30 @@ abstract class container {
      * Holds input element, fieldset and custom HTML object references.
      **/
     protected $elementsAndHtml = array();
+    protected $log;
+    protected $form;
 
     /**
      *  @param $name string - container name
      *  @param $parameters array of container parameters, HTML attributes
      *  @return void
      **/
-    public function __construct($name, &$parameters = array()) {
-        // converts index to lower case so parameters are case independent
-        $parameters = array_change_key_case($parameters);
-
-        $this->log = (isset($parameters['log'])) ? $parameters['log'] : null;
+    public function __construct($name, $parameters = array(), $form) {
         $this->checkContainerName($name);
         $this->name = $name;
+        $this->form = $form;
+
+        $this->setDefaults();
+        $parameters = array_change_key_case($parameters);
+        foreach ($this->defaults as $parameter => $default) {
+            $this->$parameter = isset($parameters[strtolower($parameter)]) ? $parameters[strtolower($parameter)] : $default;
+        }
+
+        $this->addChildElements();
+    }
+
+    protected function setDefaults() {
+        $this->defaults['log'] = null;
     }
 
     /**
@@ -65,7 +76,7 @@ abstract class container {
             $name       = (isset($functionArguments[0]))    ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1])      ? $functionArguments[1] : array();
 
-            return $this->addElement($type, $name, $parameters);
+            return $this->addElement($type, $name, $parameters, $this->form);
         } else {
             trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }
@@ -79,18 +90,25 @@ abstract class container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return $newElement
      **/
-    protected function addElement($type, $name, $parameters = array()) {
+    protected function addElement($type, $name, $parameters = array(), $form) {
         $this->_checkElementType($type);
 
         $parameters['log'] = $this->log;
 
-        $formName = (isset($this->form)) ? $this->form->getName() : $this->name;
-        $newElement = new $type($name, $parameters, $formName);
+        $newElement = new $type($name, $parameters, $form);
 
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;
 
         return $newElement;
+    }
+
+    /**
+     * overridable method to add child elements
+     *
+     * @return void
+     **/
+    protected function addChildElements() {
     }
 
     /**

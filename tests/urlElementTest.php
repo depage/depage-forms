@@ -1,16 +1,16 @@
 <?php
 
-require_once('../elements/url.php');
-
 use depage\htmlform\elements\url;
 
 class urlElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->url = new url('nameString', $ref = array(), 'formName');
+        $parameters = array();
+        $this->form = new nameTestForm;
+        $this->url  = new url('urlName', $parameters, $this->form);
     }
 
     public function testUrlSetValue() {
-        $this->assertEquals($this->url->getName(), 'nameString');
+        $this->assertEquals($this->url->getName(), 'urlName');
 
         $this->url->setValue('valueString');
         $this->assertEquals($this->url->getValue(), 'valueString');

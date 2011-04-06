@@ -1,57 +1,54 @@
 <?php
 
-require_once('../abstracts/input.php');
-require_once('../elements/number.php');
-
 use depage\htmlform\elements\number;
 
 class numberElementToStringTest extends PHPUnit_Framework_TestCase {
+    public function setUp() {
+        $parameters = array();
+        $this->form     = new nameTestForm;
+        $this->number   = new number('numberName', $parameters, $this->form);
+    }
+
     public function testSimple() {
-        $expected = '<p id="formName-elementName" class="input-number" data-errorMessage="Please enter a valid number!">' .
+        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number!">' .
             '<label>' .
-                '<span class="label">elementName</span>' .
-                '<input name="elementName" type="number" value="0">' .
+                '<span class="label">numberName</span>' .
+                '<input name="numberName" type="number" value="0">' .
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array();
-        $number = new number('elementName', $parameters, 'formName');
-        $this->assertEquals($expected, $number->__toString());
+        $this->assertEquals($expected, $this->number->__toString());
     }
 
     public function testValue() {
-        $expected = '<p id="formName-elementName" class="input-number" data-errorMessage="Please enter a valid number!">' .
+        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number!">' .
             '<label>' .
-                '<span class="label">elementName</span>' .
-                '<input name="elementName" type="number" value="7331">' .
+                '<span class="label">numberName</span>' .
+                '<input name="numberName" type="number" value="7331">' .
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array();
-        $number = new number('elementName', $parameters, 'formName');
-        $number->setValue(7331);
-        $this->assertEquals($expected, $number->__toString());
+        $this->number->setValue(7331);
+        $this->assertEquals($expected, $this->number->__toString());
     }
 
     public function testRequired() {
-        $expected = '<p id="formName-elementName" class="input-number required" data-errorMessage="Please enter a valid number!">' .
+        $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number!">' .
             '<label>' .
-                '<span class="label">elementName <em>*</em></span>' .
-                '<input name="elementName" type="number" required value="0">' .
+                '<span class="label">numberName <em>*</em></span>' .
+                '<input name="numberName" type="number" required value="0">' .
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array();
-        $number = new number('elementName', $parameters, 'formName');
-        $number->setRequired();
-        $this->assertEquals($expected, $number->__toString());
+        $this->number->setRequired();
+        $this->assertEquals($expected, $this->number->__toString());
     }
 
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-elementName" class="input-number required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-numberName" class="input-number required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
-                '<input name="elementName" type="number" required value="0">' .
+                '<input name="numberName" type="number" required value="0">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -62,7 +59,7 @@ class numberElementToStringTest extends PHPUnit_Framework_TestCase {
             'title'         => 'ti">tle',
             'required'      => true,
         );
-        $number = new number('elementName', $parameters, 'formName');
+        $number = new number('numberName', $parameters, $this->form);
         $this->assertEquals($expected, $number->__toString());
     }
 }

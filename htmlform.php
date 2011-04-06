@@ -59,7 +59,7 @@ class htmlform extends abstracts\container {
     /**
      * Time for session expiry
      **/
-    private $ttl;
+    protected $ttl;
     /**
      * Form validation result/status.
      **/
@@ -70,17 +70,11 @@ class htmlform extends abstracts\container {
      * @param $parameters array of form parameters, HTML attributes
      * @return void
      **/
-    public function __construct($name, $parameters = array()) {
+    public function __construct($name, $parameters = array(), $form = null) {
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
-        parent::__construct($name, $parameters);
+        parent::__construct($name, $parameters, $this);
 
-        $this->label            = (isset($parameters['label']))         ? $parameters['label']          : 'submit';
-        $this->submitURL        = (isset($parameters['submiturl']))     ? $parameters['submiturl']      : $_SERVER['REQUEST_URI'];
-        $this->method           = (isset($parameters['method']))        ? $parameters['method']         : 'post';
-        $this->successURL       = (isset($parameters['successurl']))    ? $parameters['successurl']     : $_SERVER['REQUEST_URI'];
-        $this->validator        = (isset($parameters['validator']))     ? $parameters['validator']      : null;
-        $this->ttl              = (isset($parameters['ttl']))           ? $parameters['ttl']            : null;
         $this->currentStepId    = (isset($_GET['step']))                ? $_GET['step']                 : 0;
 
         // check if there's an open session
@@ -95,7 +89,18 @@ class htmlform extends abstracts\container {
         $this->valid = (isset($this->sessionSlot['formIsValid'])) ? $this->sessionSlot['formIsValid'] : null;
 
         // create a hidden input element to tell forms apart
-        $this->addHidden('formName', array('defaultvalue' => $this->name));
+        $this->addHidden('formName', array('defaultValue' => $this->name));
+    }
+
+    protected function setDefaults() {
+        parent::setDefaults();
+
+        $this->defaults['label']        = 'submit';
+        $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
+        $this->defaults['method']       = 'post';
+        $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
+        $this->defaults['validator']    = null;
+        $this->defaults['ttl']          = null;
     }
 
     private function sessionExpiry() {
@@ -123,15 +128,12 @@ class htmlform extends abstracts\container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-    protected function addElement($type, $name, $parameters = array()) {
+    protected function addElement($type, $name, $parameters = array(), $form = null) {
         $this->checkElementName($name);
 
-        $newElement = parent::addElement($type, $name, $parameters);
+        $newElement = parent::addElement($type, $name, $parameters, $this);
 
         if ($newElement instanceof elements\fieldset) {
-            // if it's a fieldset it needs to know which form it belongs to
-            $newElement->setParentForm($this);
-
             if ($newElement instanceof elements\step) {
                 $this->steps[] = $newElement;
             }
@@ -365,7 +367,7 @@ class htmlform extends abstracts\container {
      * @return (array) of form-data similar to $_POST
      **/
     public function getValues() {
-        return $this->sessionSlot;
+        return (isset($this->sessionSlot)) ? $this->sessionSlot : null;
     }
 
     /** 
@@ -387,6 +389,7 @@ class htmlform extends abstracts\container {
      **/
     public function clearSession() {
         unset($_SESSION[$this->sessionSlotName]);
+        unset($this->sessionSlot);
     }
 
     /**

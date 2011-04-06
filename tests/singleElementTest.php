@@ -1,16 +1,16 @@
 <?php
 
-require_once('../elements/single.php');
-
 use depage\htmlform\elements\single;
 
 class singleElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->single = new single('nameString', $ref = array(), 'formName');
+        $parameters     = array();
+        $this->form     = new nameTestForm;
+        $this->single   = new single('singleName', $parameters, $this->form);
     }
 
     public function testSingleSetValue() {
-        $this->assertEquals($this->single->getName(), 'nameString');
+        $this->assertEquals($this->single->getName(), 'singleName');
 
         $this->single->setValue('valueString');
         $this->assertEquals($this->single->getValue(), 'valueString');

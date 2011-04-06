@@ -1,13 +1,12 @@
 <?php
 
-require_once('../elements/text.php');
-
 use depage\htmlform\elements\text;
 
 class textElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
-        $this->text = new text('nameString', $parameters, 'formName');
+        $this->form = new nameTestForm;
+        $this->text = new text('nameString', $parameters, $this->form);
     }
 
     public function testGetName() {

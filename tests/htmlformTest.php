@@ -1,7 +1,5 @@
 <?php
 
-require_once('../htmlform.php');
-
 use depage\htmlform\htmlform;
 use depage\htmlform\exceptions;
 
@@ -164,6 +162,15 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $form2->validate();
 
         $this->assertFalse($form2->valid);
+    }
+
+    public function testClearSession() {
+        $_SESSION['formName-data']['formName'] = 'formName';
+        $form = new htmlform('formName');
+
+        $form->clearSession();
+
+        $this->assertNull($form->getValues());
     }
 }
 ?>

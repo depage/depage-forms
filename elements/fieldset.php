@@ -13,35 +13,8 @@ class fieldset extends abstracts\container {
      **/
     protected $form;
 
-    /**
-     * @param $name string - fieldset name
-     * @param $parameters array of fieldset parameters, HTML attributes
-     * @return void
-     **/
-    public function __construct($name, $parameters = array()) {
-        parent::__construct($name, $parameters);
-
-        $this->label = (isset($parameters['label'])) ? $parameters['label'] : $this->name; 
-    }
-
-    /**
-     * sets parent form of fieldset
-     *
-     * @param $form object - parent form object
-     * @return void
-     **/
-    public function setParentForm($form) {
-        $this->form = $form;
-
-        $this->addChildElements();
-    }
-
-    /**
-     * overridable method to add child elements
-     *
-     * @return void
-     **/
-    protected function addChildElements() {
+    protected function setDefaults() {
+        $this->defaults['label'] = $this->name;
     }
 
     /** 
@@ -53,15 +26,12 @@ class fieldset extends abstracts\container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newInput
      **/
-     public function addElement($type, $name, $parameters = array()) {
+     public function addElement($type, $name, $parameters = array(), $form) {
         $this->form->checkElementName($name);
 
-        $newElement = parent::addElement($type, $name, $parameters);
+        $newElement = parent::addElement($type, $name, $parameters, $form);
 
-        if ($newElement instanceof fieldset) {
-            // if it's a fieldset it needs to know which form it belongs to
-            $newElement->setParentForm($this->form);
-        } else {
+        if ( !($newElement instanceof fieldset) ) {
             $this->form->updateInputValue($name);
         }
 

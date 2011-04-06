@@ -2,6 +2,8 @@
 $_SERVER['REQUEST_URI'] = 'http://www.depagecms.net/';
 session_start();
 
+require_once('../htmlform.php');
+
 class logTestClass {
     public $error = array(
         'argument'  => '',
@@ -15,6 +17,15 @@ class logTestClass {
         );
     }
 }
-    
+
+class nameTestForm {
+    public function getName() {
+        return 'formName';
+    }
+
+    public function checkElementName() {}
+    public function updateInputValue() {}
+}
+
 class undefinedMethodException extends \exception {}
 ?>

@@ -1,13 +1,12 @@
 <?php
 
-require_once('../elements/multiple.php');
-
 use depage\htmlform\elements\multiple;
 
 class multipleElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $parameters = array();
-        $this->multiple = new multiple('nameString', $parameters, 'formName');
+        $this->form     = new nameTestForm;
+        $this->multiple = new multiple('nameString', $parameters, $this->form);
     }
 
     public function testMultipleSetValue() {

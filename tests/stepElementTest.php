@@ -1,16 +1,12 @@
 <?php
 
-require_once('../htmlform.php');
-
 use depage\htmlform\htmlform;
 use depage\htmlform\elements\step;
 
 class stepElementTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
-        $this->step = new step('stepName');
-
-        $this->form = new htmlform('formName');
-        $this->step->setParentForm($this->form);
+        $this->form = new nameTestForm;
+        $this->step = new step('stepName', array(), $this->form);
     }
 
     public function testToString() {
@@ -18,16 +14,16 @@ class stepElementTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->step->__toString());
     }
 
-    public function testAddElementFieldset() {
+    public function testAddFieldset() {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
         '</fieldset>' . "\n";
-        $this->step->addElement('depage\\htmlform\\elements\\fieldset', 'fieldsetName');
+        $this->step->addFieldset('fieldsetName');
 
         $this->assertEquals($expected, $this->step->__toString());
     }
 
-    public function testAddElementText() {
+    public function testAddText() {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
                 '<label>' .
                     '<span class="label">textName</span>' .
@@ -35,7 +31,7 @@ class stepElementTest extends PHPUnit_Framework_TestCase {
                 '</label>' .
             '</p>' . "\n";
 
-        $this->step->addElement('depage\\htmlform\\elements\\text', 'textName');
+        $this->step->addText('textName');
         $this->assertEquals($expected, $this->step->__toString());
     }
 }
