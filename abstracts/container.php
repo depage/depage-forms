@@ -32,13 +32,20 @@ abstract class container {
      * Holds input element, fieldset and custom HTML object references.
      **/
     protected $elementsAndHtml = array();
+    /**
+     * Log object reference
+     **/
     protected $log;
+    /**
+     * Parent form object reference
+     **/
     protected $form;
 
     /**
-     *  @param $name string - container name
-     *  @param $parameters array of container parameters, HTML attributes
-     *  @return void
+     * @param $name string - container name
+     * @param $parameters array of container parameters, HTML attributes
+     * @param $form parent form object.
+     * @return void
      **/
     public function __construct($name, $parameters = array(), $form) {
         $this->checkContainerName($name);

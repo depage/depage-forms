@@ -6,6 +6,9 @@ namespace depage\htmlform\elements;
  * The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
 class creditcard extends fieldset {
+    /**
+     * collects initial values across subclasses.
+     **/
     protected function setDefaults() {
         parent::setDefaults();
 

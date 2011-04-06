@@ -16,15 +16,23 @@ class text extends abstracts\input {
      /**
      * @param $name input elements' name
      * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $formName name of the parent HTML form. Used to identify the element once it's rendered.
+     * @param $form parent form object.
      **/
-    public function __construct($name, &$parameters, $form) {
+    public function __construct($name, $parameters, $form) {
         parent::__construct($name, $parameters, $form);
 
+        $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : false;
+    }
+
+    /**
+     * collects initial values across subclasses.
+     **/
+    protected function setDefaults() {
+        parent::setDefaults();
+
         // textClass elements have values of type string
-        $this->defaultValue = (isset($parameters['defaultvalue']))                          ? $parameters['defaultvalue']   : '';
-        $this->placeholder  = (isset($parameters['placeholder']))                           ? $parameters['placeholder']    : false;
-        $this->list         = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list']           : false;
+        $this->defaults['defaultValue'] = '';
+        $this->defaults['placeholder']  = false;
     }
 
     /**
