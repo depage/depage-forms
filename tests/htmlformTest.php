@@ -107,5 +107,13 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertNull($text0->getValue());
     }
+
+    public function testIsEmpty() {
+        $form = new htmlform('formName');
+        $this->assertTrue($form->isEmpty());
+
+        $_SESSION['formName-data']['formName'] = 'formName';
+        $this->assertFalse($form->isEmpty());
+    }
 }
 ?>
