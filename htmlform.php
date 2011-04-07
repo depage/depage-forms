@@ -90,6 +90,7 @@ class htmlform extends abstracts\container {
 
         // create a hidden input element to tell forms apart
         $this->addHidden('formName', array('defaultValue' => $this->name));
+        $this->addChildElements();
     }
 
     /**

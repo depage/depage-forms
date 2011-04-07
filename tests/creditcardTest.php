@@ -7,6 +7,7 @@ class creditcardTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
         $this->creditcard = new creditcard('creditcardName', array(), $this->form);
+        $this->creditcard->addChildElements();
     }
 
     public function testGetName() {

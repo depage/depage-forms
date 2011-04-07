@@ -7,6 +7,7 @@ class creditcardToStringTest extends PHPUnit_Framework_TestCase {
         $form = new nameTestForm();
 
         $creditcard = new creditcard('creditcardName', array(), $form);
+        $creditcard->addChildElements();
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName">' .
             '<legend>creditcardName</legend>' .

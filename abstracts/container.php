@@ -35,8 +35,6 @@ abstract class container extends item {
         $this->form = $form;
 
         parent::__construct($name, $parameters, $form);
-
-        $this->addChildElements();
     }
 
     /**
@@ -76,6 +74,9 @@ abstract class container extends item {
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;
 
+        if ($newElement instanceof container) {
+            $newElement->addChildElements();
+        }
         return $newElement;
     }
 
@@ -84,7 +85,7 @@ abstract class container extends item {
      *
      * @return void
      **/
-    protected function addChildElements() {
+    public function addChildElements() {
     }
 
     /**
