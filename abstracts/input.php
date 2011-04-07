@@ -8,17 +8,12 @@
 namespace depage\htmlform\abstracts;
 
 use depage\htmlform\validators;
-use depage\htmlform\exceptions;
 
-abstract class input {
+abstract class input extends item {
     /**
      * Input element type - HTML input type attribute.
      **/
     protected $type;
-    /**
-     * Input element name.
-     **/
-    protected $name;
     /**
      * Input element - HTML label
      **/
@@ -40,14 +35,6 @@ abstract class input {
      **/
     protected $validator;
     /**
-     * Contains current input elements' validation status.
-     **/
-    protected $valid = false;
-    /**
-     * True if the element has been validated before.
-     **/
-    protected $validated = false;
-    /**
      * HTML classes attribute for rendering the input element.
      **/
     protected $classes;
@@ -66,56 +53,28 @@ abstract class input {
      * @param $form parent form object.
      **/
     public function __construct($name, $parameters, $form) {
-        $this->_checkInputName($name);
-        $this->_checkInputParameters($parameters);
-
         $this->type         = strtolower(str_replace('depage\\htmlform\\elements\\', '', get_class($this)));
-        $this->name         = $name;
         $this->formName     = $form->getName();
+
+        parent::__construct($name, $parameters, $form);
 
         $this->validator    = (isset($parameters['validator']))
             ? validators\validator::factory($parameters['validator'], $this->log)
             : validators\validator::factory($this->type, $this->log);
-
-        $this->setDefaults();
-        $parameters = array_change_key_case($parameters);
-        foreach ($this->defaults as $parameter => $default) {
-            $this->$parameter = isset($parameters[strtolower($parameter)]) ? $parameters[strtolower($parameter)] : $default;
-        }
     }
 
+    /**
+     * collects initial values across subclasses.
+     **/
     protected function setDefaults() {
-        $this->defaults['log']          = null;
+        parent::setDefaults();
+
         $this->defaults['autofocus']    = false;
         $this->defaults['label']        = $this->name;
         $this->defaults['required']     = false;
         $this->defaults['marker']       = '*';
         $this->defaults['errorMessage'] = 'Please enter valid data!';
         $this->defaults['title']        = false;
-    }
-
-    /**
-     * Returns respective HTML escaped attributes for element rendering.
-     **/
-    public function __call($functionName, $functionArguments) {
-        if (substr($functionName, 0, 4) === 'html') {
-            $attribute = str_replace('html', '', $functionName);
-            $attribute{0} = strtolower($attribute{0});
-
-            return htmlentities($this->$attribute, ENT_QUOTES);
-        } else {
-            trigger_error("Call to undefined method $functionName", E_USER_ERROR);
-        }
-    }
-
-
-    /**
-     * Returns the name of current input element.
-     *
-     * @return $this->name
-     **/
-    public function getName() {
-        return $this->name;
     }
 
     /**
@@ -306,41 +265,5 @@ abstract class input {
             $htmlOptions[$index] = $option;
         }
         return $htmlOptions;
-    }
-
-    /**
-     * Throws an exception if $parameters isn't of type array.
-     *
-     * @param $parameters parameters for input element constructor
-     * @return void
-     **/
-    private function _checkInputParameters($parameters) {
-        if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new exceptions\inputParametersNoArrayException();
-        }
-    }
-    
-    /**
-     * Checks if name of input element is of type string and not empty.
-     * Otherwise throws an exception.
-     * 
-     * @params $name name of input element
-     * @return void
-     **/
-    private function _checkInputName($name) {
-        if (!is_string($name)) {
-            throw new exceptions\inputNameNoStringException();
-        }
-        if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name))  {
-            throw new exceptions\invalidInputNameException();
-        }
-    }
-
-    protected function log($argument, $type) {
-        if (is_callable(array($this->log, 'log'))) {
-            $this->log->log($argument, $type);
-        } else {
-            error_log($argument);
-        }
     }
 }

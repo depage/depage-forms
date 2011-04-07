@@ -38,34 +38,34 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->input    = new inputTestClass('inputName', array(), $this->form);
     }
 
-    public function testInputNameNoStringException() {
+    public function testItemNameNoStringException() {
         try {
             $input = new inputTestClass(true, array(), $this->form);
         }
-        catch (exceptions\inputNameNoStringException $expected) {
+        catch (exceptions\itemNameNoStringException $expected) {
             return;
         }
-        $this->fail('Expected inputNameNoStringException.');
+        $this->fail('Expected itemNameNoStringException.');
     }
     
-    public function testInvalidInputNameException() {
+    public function testInvalidItemNameException() {
         try {
             $input = new inputTestClass(' ', array(), $this->form);
         }
-        catch (exceptions\invalidInputNameException $expected) {
+        catch (exceptions\invalidItemNameException $expected) {
             return;
         }
-        $this->fail('Expected invalidInputNameException.');
+        $this->fail('Expected invalidItemNameException.');
     }
 
-    public function testInputParametersNoArrayException() {
+    public function testItemParametersNoArrayException() {
         try {
             $input = new inputTestClass('inputName', 'string', $this->form);
         }
-        catch (exceptions\inputParametersNoArrayException $expected) {
+        catch (exceptions\itemParametersNoArrayException $expected) {
             return;
         }
-        $this->fail('Expected inputParametersNoArrayException.');
+        $this->fail('Expected itemParametersNoArrayException.');
     }
 
     public function testInputInvalid() {
@@ -130,6 +130,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $log->error);
     }
+
     public function undefinedMethodHandler($errno) {
             if ($errno = 256) throw new undefinedMethodException;
             return;
