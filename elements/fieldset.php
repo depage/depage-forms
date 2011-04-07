@@ -31,10 +31,10 @@ class fieldset extends abstracts\container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return object $newElement
      **/
-     public function addElement($type, $name, $parameters, $form) {
+     public function addElement($type, $name, $parameters) {
         $this->form->checkElementName($name);
 
-        $newElement = parent::addElement($type, $name, $parameters, $form);
+        $newElement = parent::addElement($type, $name, $parameters);
 
         if ( !($newElement instanceof fieldset) ) {
             $this->form->updateInputValue($name);

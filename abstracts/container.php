@@ -52,7 +52,7 @@ abstract class container extends item {
             $name       = (isset($functionArguments[0]))    ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1])      ? $functionArguments[1] : array();
 
-            return $this->addElement($type, $name, $parameters, $this->form);
+            return $this->addElement($type, $name, $parameters);
         } else {
             return parent::__call($functionName, $functionArguments);
         }
@@ -66,12 +66,12 @@ abstract class container extends item {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return $newElement
      **/
-    protected function addElement($type, $name, $parameters = array(), $form) {
+    protected function addElement($type, $name, $parameters) {
         $this->_checkElementType($type);
 
         $parameters['log'] = $this->log;
 
-        $newElement = new $type($name, $parameters, $form);
+        $newElement = new $type($name, $parameters, $this->form);
 
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;
