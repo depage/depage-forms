@@ -80,6 +80,6 @@ class creditcard extends fieldset {
      * @return void
      **/
     public function validate() {
-        parent::validate();
+        return parent::validate();
     }
 }

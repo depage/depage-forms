@@ -17,6 +17,8 @@ class fieldset extends abstracts\container {
      * collects initial values across subclasses.
      **/
     protected function setDefaults() {
+        parent::setDefaults();
+
         $this->defaults['label'] = $this->name;
     }
 
@@ -24,12 +26,12 @@ class fieldset extends abstracts\container {
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements
      * 
-     * @param $type input type or fieldset
+     * @param $type input element type or fieldset
      * @param $name string - name of the element
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
-     * @return object $newInput
+     * @return object $newElement
      **/
-     public function addElement($type, $name, $parameters = array(), $form) {
+     public function addElement($type, $name, $parameters, $form) {
         $this->form->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters, $form);
