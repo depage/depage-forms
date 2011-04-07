@@ -9,9 +9,9 @@ class hiddenTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHiddenSetValue() {
-        $this->assertEquals($this->hidden->getName(), 'nameString');
+        $this->assertEquals('nameString', $this->hidden->getName());
 
         $this->hidden->setValue('valueString');
-        $this->assertEquals($this->hidden->getValue(), 'valueString');
+        $this->assertEquals('valueString', $this->hidden->getValue());
     }
 }

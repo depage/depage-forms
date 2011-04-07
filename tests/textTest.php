@@ -5,31 +5,31 @@ use depage\htmlform\elements\text;
 class textTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
-        $this->text = new text('nameString', array(), $this->form);
+        $this->text = new text('textName', array(), $this->form);
     }
 
     public function testGetName() {
-        $this->assertEquals($this->text->getName(), 'nameString');
+        $this->assertEquals('textName', $this->text->getName());
     }
 
     public function testTextSetValue() {
         $this->text->setValue('valueString');
-        $this->assertEquals($this->text->getValue(), 'valueString');
+        $this->assertEquals('valueString', $this->text->getValue());
     }
 
     public function testTextNotRequiredEmpty() {
         $this->text->setValue('');
-        $this->assertEquals($this->text->validate(), true);
+        $this->assertTrue($this->text->validate());
     }
 
     public function testTextValidNotRequiredNotEmpty() {
         $this->text->setValue('valueString');
-        $this->assertEquals($this->text->validate(), true);
+        $this->assertTrue($this->text->validate());
     }
 
     public function testTextRequiredEmpty() {
         $this->text->setRequired();
         $this->text->setValue('');
-        $this->assertEquals($this->text->validate(), false);
+        $this->assertFalse($this->text->validate());
     }
 }

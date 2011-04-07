@@ -9,30 +9,30 @@ class emailTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testEmailSetValue() {
-        $this->assertEquals($this->email->getName(), 'emailName');
+        $this->assertEquals('emailName', $this->email->getName());
 
         $this->email->setValue('valueString');
-        $this->assertEquals($this->email->getValue(), 'valueString');
+        $this->assertEquals('valueString', $this->email->getValue());
     }
 
     public function testEmailNotRequiredEmpty() {
         $this->email->setValue('');
-        $this->assertEquals($this->email->validate(), true);
+        $this->assertTrue($this->email->validate());
     }
 
     public function testEmailValidNotRequiredNotEmpty() {
         $this->email->setValue('mail@depage.com');
-        $this->assertEquals($this->email->validate(), true);
+        $this->assertTrue($this->email->validate());
     }
 
     public function testEmailInvalidNotRequired() {
         $this->email->setValue('valueString');
-        $this->assertEquals($this->email->validate(), false);
+        $this->assertFalse($this->email->validate());
     }
 
     public function testEmailRequiredEmpty() {
         $this->email->setRequired();
         $this->email->setValue('');
-        $this->assertEquals($this->email->validate(), false);
+        $this->assertFalse($this->email->validate());
     }
 }

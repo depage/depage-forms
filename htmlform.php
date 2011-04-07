@@ -75,7 +75,7 @@ class htmlform extends abstracts\container {
 
         parent::__construct($name, $parameters, $this);
 
-        $this->currentStepId    = (isset($_GET['step']))                ? $_GET['step']                 : 0;
+        $this->currentStepId = (isset($_GET['step'])) ? $_GET['step'] : 0;
 
         // check if there's an open session
         if (!session_id()) {
@@ -92,6 +92,9 @@ class htmlform extends abstracts\container {
         $this->addHidden('formName', array('defaultValue' => $this->name));
     }
 
+    /**
+     * collects initial values across subclasses.
+     **/
     protected function setDefaults() {
         parent::setDefaults();
 
@@ -133,13 +136,8 @@ class htmlform extends abstracts\container {
 
         $newElement = parent::addElement($type, $name, $parameters, $this);
 
-        if ($newElement instanceof elements\fieldset) {
-            if ($newElement instanceof elements\step) {
-                $this->steps[] = $newElement;
-            }
-        } else {
-            $this->updateInputValue($name);
-        }
+        if ($newElement instanceof elements\step)   { $this->steps[] = $newElement; }
+        if ($newElement instanceof abstracts\input) { $this->updateInputValue($name); }
 
         return $newElement;
     }

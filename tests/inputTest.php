@@ -69,12 +69,12 @@ class inputTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testInputInvalid() {
-        $this->assertEquals(false, $this->input->validate());
+        $this->assertFalse($this->input->validate());
     }
 
     public function testInputValid() {
         $this->input->setValue('testValue');
-        $this->assertEquals(true, $this->input->validate());
+        $this->assertTrue($this->input->validate());
     }
 
     public function testGetName() {
@@ -86,7 +86,7 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $input = new inputTestClass('inputName', $parameters, $this->form);
         $input->setValue('');
 
-        $this->assertEquals($input->getHtmlClasses(), 'input-inputtestclass required error');
+        $this->assertEquals('input-inputtestclass required error', $input->getHtmlClasses());
     }
 
     public function testHtmlErrorMessage() {
