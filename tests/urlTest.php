@@ -9,30 +9,30 @@ class urlTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testUrlSetValue() {
-        $this->assertEquals($this->url->getName(), 'urlName');
+        $this->assertEquals('urlName', $this->url->getName());
 
         $this->url->setValue('valueString');
-        $this->assertEquals($this->url->getValue(), 'valueString');
+        $this->assertEquals('valueString', $this->url->getValue());
     }
 
     public function testUrlNotRequiredEmpty() {
         $this->url->setValue('');
-        $this->assertEquals($this->url->validate(), true);
+        $this->assertTrue($this->url->validate());
     }
 
     public function testUrlValidNotRequiredNotEmpty() {
         $this->url->setValue('http://www.depage.com');
-        $this->assertEquals($this->url->validate(), true);
+        $this->assertTrue($this->url->validate());
     }
 
     public function testUrlInvalidNotRequired() {
         $this->url->setValue('valueString');
-        $this->assertEquals($this->url->validate(), false);
+        $this->assertFalse($this->url->validate());
     }
 
     public function testUrlRequiredEmpty() {
         $this->url->setRequired();
         $this->url->setValue('');
-        $this->assertEquals($this->url->validate(), false);
+        $this->assertFalse($this->url->validate());
     }
 }

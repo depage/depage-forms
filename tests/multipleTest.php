@@ -9,28 +9,28 @@ class multipleTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testMultipleSetValue() {
-        $this->assertEquals($this->multiple->getName(), 'nameString');
+        $this->assertEquals('nameString', $this->multiple->getName());
 
         $this->multiple->setValue(array('1'=>'1'));
-        $this->assertEquals($this->multiple->getValue(), array('1'=>'1'));
+        $this->assertEquals(array('1'=>'1'), $this->multiple->getValue());
 
         $this->multiple->setValue('');
-        $this->assertEquals($this->multiple->getValue(), array());
+        $this->assertEquals(array(), $this->multiple->getValue());
     }
 
     public function testMultipleNotRequiredEmpty() {
         $this->multiple->setValue(array());
-        $this->assertEquals($this->multiple->validate(), true);
+        $this->assertTrue($this->multiple->validate());
     }
 
     public function testMultipleValidNotRequiredNotEmpty() {
         $this->multiple->setValue(array('1'=>'1'));
-        $this->assertEquals($this->multiple->validate(), true);
+        $this->assertTrue($this->multiple->validate());
     }
 
     public function testMultipleRequiredEmpty() {
         $this->multiple->setRequired();
         $this->multiple->setValue(array());
-        $this->assertEquals($this->multiple->validate(), false);
+        $this->assertFalse($this->multiple->validate());
     }
 }

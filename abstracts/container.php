@@ -47,7 +47,7 @@ abstract class container {
      * @param $form parent form object.
      * @return void
      **/
-    public function __construct($name, $parameters = array(), $form) {
+    public function __construct($name, $parameters, $form) {
         $this->checkContainerName($name);
         $this->name = $name;
         $this->form = $form;

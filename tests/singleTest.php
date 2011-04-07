@@ -9,25 +9,25 @@ class singleTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSingleSetValue() {
-        $this->assertEquals($this->single->getName(), 'singleName');
+        $this->assertEquals('singleName', $this->single->getName());
 
         $this->single->setValue('valueString');
-        $this->assertEquals($this->single->getValue(), 'valueString');
+        $this->assertEquals('valueString', $this->single->getValue());
     }
 
     public function testSingleNotRequiredEmpty() {
         $this->single->setValue('');
-        $this->assertEquals($this->single->validate(), true);
+        $this->assertTrue($this->single->validate());
     }
 
     public function testSingleValidNotRequiredNotEmpty() {
         $this->single->setValue('valueString');
-        $this->assertEquals($this->single->validate(), true);
+        $this->assertTrue($this->single->validate());
     }
 
     public function testSingleRequiredEmpty() {
         $this->single->setRequired();
         $this->single->setValue('');
-        $this->assertEquals($this->single->validate(), false);
+        $this->assertFalse($this->single->validate());
     }
 }
