@@ -11,19 +11,7 @@ namespace depage\htmlform\abstracts;
 use depage\htmlform\elements;
 use depage\htmlform\exceptions;
 
-abstract class container {
-    /**
-     * Name of the container.
-     **/
-    protected $name;
-    /**
-     * Is true if all container elements are valid, false if one of them isn't.
-     **/
-    protected $valid;
-    /**
-     * Container validation result/status.
-     **/
-    protected $validated = false;
+abstract class container extends item {
     /**
      * Holds references to input elements and fieldsets.
      **/
@@ -32,10 +20,6 @@ abstract class container {
      * Holds input element, fieldset and custom HTML object references.
      **/
     protected $elementsAndHtml = array();
-    /**
-     * Log object reference
-     **/
-    protected $log;
     /**
      * Parent form object reference
      **/
@@ -48,21 +32,9 @@ abstract class container {
      * @return void
      **/
     public function __construct($name, $parameters, $form) {
-        $this->checkContainerName($name);
-        $this->name = $name;
         $this->form = $form;
 
-        $this->setDefaults();
-        $parameters = array_change_key_case($parameters);
-        foreach ($this->defaults as $parameter => $default) {
-            $this->$parameter = isset($parameters[strtolower($parameter)]) ? $parameters[strtolower($parameter)] : $default;
-        }
-
-        $this->addChildElements();
-    }
-
-    protected function setDefaults() {
-        $this->defaults['log'] = null;
+        parent::__construct($name, $parameters, $form);
     }
 
     /**
@@ -73,19 +45,14 @@ abstract class container {
      * attributes for element rendering.
      **/
     public function __call($functionName, $functionArguments) {
-        if (substr($functionName, 0, 4) === 'html') {
-            $attribute = str_replace('html', '', $functionName);
-            $attribute{0} = strtolower($attribute{0});
-
-            return htmlentities($this->$attribute, ENT_QUOTES);
-        } else if (substr($functionName, 0, 3) === 'add') {
+        if (substr($functionName, 0, 3) === 'add') {
             $type       = strtolower(str_replace('add', '\\depage\\htmlform\\elements\\', $functionName));
             $name       = (isset($functionArguments[0]))    ? $functionArguments[0] : '';
             $parameters = isset($functionArguments[1])      ? $functionArguments[1] : array();
 
-            return $this->addElement($type, $name, $parameters, $this->form);
+            return $this->addElement($type, $name, $parameters);
         } else {
-            trigger_error("Call to undefined method $functionName", E_USER_ERROR);
+            return parent::__call($functionName, $functionArguments);
         }
     }
 
@@ -97,16 +64,19 @@ abstract class container {
      * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
      * @return $newElement
      **/
-    protected function addElement($type, $name, $parameters = array(), $form) {
+    protected function addElement($type, $name, $parameters) {
         $this->_checkElementType($type);
 
         $parameters['log'] = $this->log;
 
-        $newElement = new $type($name, $parameters, $form);
+        $newElement = new $type($name, $parameters, $this->form);
 
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;
 
+        if ($newElement instanceof container) {
+            $newElement->addChildElements();
+        }
         return $newElement;
     }
 
@@ -115,7 +85,7 @@ abstract class container {
      *
      * @return void
      **/
-    protected function addChildElements() {
+    public function addChildElements() {
     }
 
     /**
@@ -164,21 +134,6 @@ abstract class container {
         }
     }
 
-    /**
-     * Checks if desired container name is a valid string. Throws an exception
-     * if it isn't.
-     *
-     * @param $name container name to be checked
-     **/
-    protected function checkContainerName($name) {
-        if (!is_string($name)) {
-            throw new exceptions\containerNameNoStringException();
-        }
-        if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name)) {
-            throw new exceptions\invalidContainerNameException();
-        }
-    }
-
     /** 
      * Checks if an input type class exists. Throws an exception if it doesn't.
      *
@@ -188,15 +143,6 @@ abstract class container {
         if (!class_exists($type)) {
             throw new exceptions\unknownInputTypeException();
         }
-    }
-
-    /**
-     * Returns current containers name.
-     *
-     * @return $this->name
-     **/
-    public function getName() {
-        return $this->name;
     }
 
     /**
@@ -215,13 +161,5 @@ abstract class container {
             }
         }
         return $allElements;
-    }
-
-    protected function log($argument, $type) {
-        if (is_callable(array($this->log, 'log'))) {
-            $this->log->log($argument, $type);
-        } else {
-            error_log($argument);
-        }
     }
 }

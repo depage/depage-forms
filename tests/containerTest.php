@@ -49,19 +49,19 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($text2, $elements[1]);
     }
 
-    public function testInvalidContainerNameException() {
+    public function testInvalidItemNameException() {
         try {
             new containerTestClass(' ', array(), $this->form);
-        } catch (exceptions\invalidContainerNameException $expected) {
+        } catch (exceptions\invalidItemNameException $expected) {
             return;
         }
-        $this->fail('Expected invalidContainerNameException.');
+        $this->fail('Expected invalidItemNameException.');
     }
 
-    public function testContainerNameNoStringException() {
+    public function testItemNameNoStringException() {
         try {
             new containerTestClass(42, array(), $this->form);
-        } catch (exceptions\containerNameNoStringException $expected) {
+        } catch (exceptions\itemNameNoStringException $expected) {
             return;
         }
         $this->fail('Expected containerNameNoStringException.');

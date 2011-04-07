@@ -30,7 +30,7 @@ class creditcard extends fieldset {
      *
      * @return void
      **/
-    protected function addChildElements() {
+    public function addChildElements() {
         parent::addChildElements();
 
         $cardnames = array(
@@ -80,6 +80,6 @@ class creditcard extends fieldset {
      * @return void
      **/
     public function validate() {
-        parent::validate();
+        return parent::validate();
     }
 }
