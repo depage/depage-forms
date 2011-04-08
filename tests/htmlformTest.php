@@ -3,7 +3,13 @@
 use depage\htmlform\htmlform;
 use depage\htmlform\exceptions;
 
+/**
+ * General tests for the htmlform class.
+ **/
 class htmlformTest extends PHPUnit_Framework_TestCase {
+    /**
+     * Throw exception when subelements have the same name.
+     **/
     public function testDuplicateElementNameException() {
         $this->form = new htmlform('formName');
 
@@ -16,6 +22,10 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected duplicateElementNameException.');
     }
 
+    /**
+     * Unsubmitted forms have to be invalid, so we don't redirect to success
+     * page right away.
+     **/
     public function testEmptyFormBeforePostValidation() {
         $_SESSION = array('formName-data' => array());
         $this->form = new htmlform('formName');
@@ -23,18 +33,33 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($this->form->validate());
     }
 
+    /**
+     * Get subelement by name. By default there is a hidden element called
+     * 'formName'.
+     **/
     public function testGetElement() {
         $this->form = new htmlform('formName');
         $this->assertEquals('formName', $this->form->getElement('formName')->getName());
+        // method returns false if element not found
         $this->assertFalse($this->form->getElement('bogusInputName'));
     }
 
+    /**
+     * "Populating" the forms subelements with values.
+     **/
     public function testPopulate() {
         $form = new htmlform('formName');
         $text1 = $form->addText('text1Name');
         $text2 = $form->addText('text2Name');
 
-        $form->populate(array('text1Name' => 'text1Value'));
+        $values = array(
+            // for $text1
+            'text1Name'             => 'text1Value',
+            // should be ignored
+            'unexistentElementName' => 'testValue',
+        );
+
+        $form->populate($values);
 
         // populate() only sets (protected) default value. The easiest way to check is to render it.
         $expectedText1 = '<p id="formName-text1Name" class="input-text" data-errorMessage="Please enter valid data!">' .
@@ -54,6 +79,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedText2, $text2->__toString());
     }
 
+    /**
+     * Adding step element.
+     **/
     public function testAddStep() {
         $form = new htmlform('formName');
         $step = $form->addStep('stepName');
@@ -106,6 +134,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertNull($text0->getValue());
     }
 
+    /**
+     * Tests if form has already been submitted
+     **/
     public function testIsEmpty() {
         $form = new htmlform('formName');
         $this->assertTrue($form->isEmpty());
@@ -164,6 +195,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($form2->valid);
     }
 
+    /**
+     * See if deleting the forms session slot works.
+     **/
     public function testClearSession() {
         $_SESSION['formName-data']['formName'] = 'formName';
         $form = new htmlform('formName');

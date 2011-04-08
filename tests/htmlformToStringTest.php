@@ -2,7 +2,13 @@
 
 use depage\htmlform\htmlform;
 
+/**
+ * Tests rendering the form.
+ **/
 class htmlformToStringTest extends PHPUnit_Framework_TestCase {
+     /**
+     * Form with default setup
+     **/
     public function testSimple() {
         $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
