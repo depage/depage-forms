@@ -7,9 +7,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     public function testDuplicateElementNameException() {
         $this->form = new htmlform('formName');
 
-        $this->form->addHidden('duplicate', array());
+        $this->form->addFieldset('duplicate');
         try {
-            $this->form->addFieldset('duplicate', array());
+            $this->form->addHidden('duplicate');
         } catch (exceptions\duplicateElementNameException $expected) {
             return;
         }

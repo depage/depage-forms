@@ -141,7 +141,7 @@ abstract class container extends item {
      **/
     private function _checkElementType($type) {
         if (!class_exists($type)) {
-            throw new exceptions\unknownInputTypeException();
+            throw new exceptions\unknownElementTypeException();
         }
     }
 
@@ -151,11 +151,14 @@ abstract class container extends item {
      *
      * @return $allElements array of input elements
      **/
-    public function getElements() {
+    public function getElements($includeFieldsets = false) {
         $allElements = array();
-        foreach($this->elements as $element) {  
+        foreach($this->elements as $element) {
             if ($element instanceof elements\fieldset) {
                 $allElements = array_merge($allElements, $element->getElements());
+                if ($includeFieldsets) {
+                    $allElements[] = $element;
+                }
             } else {
                 $allElements[] = $element;
             }
