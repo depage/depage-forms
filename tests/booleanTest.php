@@ -14,7 +14,7 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     /**
      * Constructor test.
      **/
-    public function testInstantiate() {
+    public function testConstruct() {
         $this->assertEquals('booleanName', $this->boolean->getName());
     }
 

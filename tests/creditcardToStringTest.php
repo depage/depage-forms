@@ -2,7 +2,13 @@
 
 use depage\htmlform\elements\creditcard;
 
+/**
+ * Tests for creditcard element rendering.
+ **/
 class creditcardToStringTest extends PHPUnit_Framework_TestCase {
+    /**
+     * Element with default setup
+     **/
     public function testSimple() {
         $form = new nameTestForm();
 
