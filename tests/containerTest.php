@@ -72,11 +72,17 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected unknownElementTypeException.');
     }
 
+    /**
+     * Tests addHtml method.
+     **/
     public function testAddHtml() {
         $html = $this->container->addHtml('htmlString');
         $this->assertEquals('htmlString', $html->__toString());
     }
 
+    /**
+     * Tests setting multiple subelements required attribute
+     **/
     public function testSetRequired() {
         $element1 = new testElement;
         $element2 = new testElement;

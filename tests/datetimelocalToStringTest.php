@@ -2,12 +2,18 @@
 
 use depage\htmlform\elements\datetimelocal;
 
+/**
+ * Tests for datetime-local input element rendering.
+ **/
 class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
         $this->datetimelocal = new datetimelocal('datetimelocalName', array(), $this->form);
     }
 
+    /**
+     * Element with default setup
+     **/
     public function testSimple() {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -19,6 +25,9 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
 
+    /**
+     * Tests rendering with value set.
+     **/
     public function testValue() {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -31,6 +40,9 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
 
+    /**
+     * Rendered element with set required attribute
+     **/
     public function testRequired() {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -43,6 +55,9 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
 
+    /**
+     * Tests html escaping of attributes that can be set by instantiation parameters
+     **/
     public function testHtmlEscaping() {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .

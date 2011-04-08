@@ -12,7 +12,7 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * "Empty" element
+     * Element with default setup
      **/
     public function testSimple() {
         $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed!">' .
