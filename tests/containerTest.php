@@ -60,13 +60,16 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($text2, $elements[2]);
     }
 
+    /**
+     * Exception on unknown element type.
+     **/
     public function test_checkElementType() {
         try {
             $this->container->addElement('bogusType', 'elementName');
-        } catch (exceptions\unknownInputTypeException $expected) {
+        } catch (exceptions\unknownElementTypeException $expected) {
             return;
         }
-        $this->fail('Expected unknownInputTypeException.');
+        $this->fail('Expected unknownElementTypeException.');
     }
 
     public function testAddHtml() {

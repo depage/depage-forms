@@ -141,7 +141,7 @@ abstract class container extends item {
      **/
     private function _checkElementType($type) {
         if (!class_exists($type)) {
-            throw new exceptions\unknownInputTypeException();
+            throw new exceptions\unknownElementTypeException();
         }
     }
 
