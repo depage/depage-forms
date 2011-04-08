@@ -3,15 +3,13 @@
 use depage\htmlform\abstracts\container;
 use depage\htmlform\exceptions;
 
+/**
+ * Container is abstract, so we need this test class to instantiate it.
+ **/
 class containerTestClass extends container {
     // needed for testSetRequired()
     public function addTestElement($element) {
         $this->elements[] = $element;
-    }
-
-    // needed for testLog() (container::log() is protected)
-    public function log($argument, $type) {
-        parent::log($argument, $type);
     }
 }
 
@@ -27,7 +25,7 @@ class testElement {
 }
 
 /**
- * needed to convert undefined method error to catchable exception.
+ * General tests for the container class.
  **/
 class containerTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
@@ -35,36 +33,31 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->container    = new containerTestClass('containerName', array(), $this->form);
     }
 
-    public function testContainerConstruct() {
+    /**
+     * Constructor test.
+     **/
+    public function testConstruct() {
         $this->assertEquals('containerName', $this->container->getName());
     }
 
-    public function testContainerGetElements() {
-        $text1 = $this->container->addText('text1');
-        $this->container->addFieldset('fieldset1');
-        $text2 = $this->container->addText('text2');
+    /**
+     * Tests method to get subelements of container.
+     **/
+    public function testGetElements() {
+        $text1      = $this->container->addText('text1');
+        $fieldset   = $this->container->addFieldset('fieldset');
+        $text2      = $this->container->addText('text2');
 
+        // input elements only
         $elements = $this->container->getElements();
         $this->assertEquals($text1, $elements[0]);
         $this->assertEquals($text2, $elements[1]);
-    }
 
-    public function testInvalidItemNameException() {
-        try {
-            new containerTestClass(' ', array(), $this->form);
-        } catch (exceptions\invalidItemNameException $expected) {
-            return;
-        }
-        $this->fail('Expected invalidItemNameException.');
-    }
-
-    public function testItemNameNoStringException() {
-        try {
-            new containerTestClass(42, array(), $this->form);
-        } catch (exceptions\itemNameNoStringException $expected) {
-            return;
-        }
-        $this->fail('Expected containerNameNoStringException.');
+        // elements including other container elements
+        $elements = $this->container->getElements(true);
+        $this->assertEquals($text1, $elements[0]);
+        $this->assertEquals($fieldset, $elements[1]);
+        $this->assertEquals($text2, $elements[2]);
     }
 
     public function test_checkElementType() {
@@ -97,38 +90,5 @@ class containerTest extends PHPUnit_Framework_TestCase {
 
         $this->assertFalse($element1->required);
         $this->assertFalse($element2->required);
-    }
-
-    public function testLog() {
-        $log        = new logTestClass;
-
-        $parameters = array('log' => $log);
-        $container  = new containerTestClass('containerName', $parameters, $this->form);
-
-        $container->log('argumentString', 'typeString');
-
-        $expected = array(
-            'argument'  => 'argumentString',
-            'type'      => 'typeString',
-        );
-
-        $this->assertEquals($expected, $log->error);
-    }
-
-    public function undefinedMethodHandler($errno) {
-            if ($errno = 256) throw new undefinedMethodException;
-            return;
-        }
-
-    public function testUndefinedMethodError() {
-        set_error_handler(array($this, 'undefinedMethodHandler'));
-
-        try {
-            $this->container->__call('undefined', 'argumentString');
-        } catch (undefinedMethodException $expected) {
-            restore_error_handler();
-            return;
-        }
-        $this->fail('Expected undefinedMethodException');
     }
 }

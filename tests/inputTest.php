@@ -1,7 +1,6 @@
 <?php
 
 use depage\htmlform\abstracts\input;
-use depage\htmlform\exceptions;
 
 class inputTestClass extends input {
     public function __construct($name, $parameters, $form) {
@@ -25,47 +24,12 @@ class inputTestClass extends input {
     public function getAutofocus() {
         return $this->autofocus;
     }
-
-    // needed for testLog() (input::log() is protected)
-    public function log($argument, $type) {
-        parent::log($argument, $type);
-    }
 }
 
 class inputTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->input    = new inputTestClass('inputName', array(), $this->form);
-    }
-
-    public function testItemNameNoStringException() {
-        try {
-            $input = new inputTestClass(true, array(), $this->form);
-        }
-        catch (exceptions\itemNameNoStringException $expected) {
-            return;
-        }
-        $this->fail('Expected itemNameNoStringException.');
-    }
-    
-    public function testInvalidItemNameException() {
-        try {
-            $input = new inputTestClass(' ', array(), $this->form);
-        }
-        catch (exceptions\invalidItemNameException $expected) {
-            return;
-        }
-        $this->fail('Expected invalidItemNameException.');
-    }
-
-    public function testItemParametersNoArrayException() {
-        try {
-            $input = new inputTestClass('inputName', 'string', $this->form);
-        }
-        catch (exceptions\itemParametersNoArrayException $expected) {
-            return;
-        }
-        $this->fail('Expected itemParametersNoArrayException.');
     }
 
     public function testInputInvalid() {
@@ -113,38 +77,6 @@ class inputTest extends PHPUnit_Framework_TestCase {
 
         $this->input->setAutofocus(true);
         $this->assertTrue($this->input->getAutofocus());
-    }
-
-    public function testLog() {
-        $log        = new logTestClass;
-
-        $parameters = array('log' => $log);
-        $input      = new inputTestClass('inputName', $parameters, $this->form);
-
-        $input->log('argumentString', 'typeString');
-
-        $expected = array(
-            'argument'  => 'argumentString',
-            'type'      => 'typeString',
-        );
-
-        $this->assertEquals($expected, $log->error);
-    }
-
-    public function undefinedMethodHandler($errno) {
-            if ($errno = 256) throw new undefinedMethodException;
-            return;
-        }
-
-    public function testUndefinedMethodError() {
-        set_error_handler(array($this, 'undefinedMethodHandler'));
-        try {
-            $this->input->__call('undefined', 'argumentString');
-        } catch (undefinedMethodException $expected) {
-            restore_error_handler();
-            return;
-        }
-        $this->fail('Expected undefinedMethodException');
     }
 }
 ?>

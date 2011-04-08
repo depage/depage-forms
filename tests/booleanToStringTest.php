@@ -2,12 +2,18 @@
 
 use depage\htmlform\elements\boolean;
 
+/**
+ * Tests for boolean input element rendering.
+ **/
 class booleanToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form     = new nameTestForm();
         $this->boolean  = new boolean('booleanName', array(), $this->form);
     }
 
+    /**
+     * "Empty" element
+     **/
     public function testSimple() {
         $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed!">' .
             '<label>' .
@@ -19,6 +25,9 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->boolean->__toString());
     }
 
+    /**
+     * Checked element
+     **/
     public function testChecked() {
         $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed!">' .
             '<label>' .
@@ -31,6 +40,9 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->boolean->__toString());
     }
 
+    /**
+     * Rendered element with set required attribute
+     **/
     public function testRequired() {
         $expected = '<p id="formName-booleanName" class="input-boolean required" data-errorMessage="Please check this box if you want to proceed!">' .
             '<label>' .
@@ -43,6 +55,9 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->boolean->__toString());
     }
 
+    /**
+     * Tests html escaping of attributes that can be set by instantiation parameters
+     **/
     public function testHtmlEscaping() {
         $expected = '<p id="formName-booleanName" class="input-boolean required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
