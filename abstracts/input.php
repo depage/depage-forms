@@ -239,7 +239,7 @@ abstract class input extends element {
      * @return mixed
      **/
     protected function htmlValue() {
-        return ($this->value === null) ? $this->htmlDefaultValue() : $this->value;
+        return ($this->value === null) ? input::htmlList($this->defaultValue) : $this->value;
     }
 
     protected function htmlErrorMessage() {
@@ -255,14 +255,26 @@ abstract class input extends element {
         return $errorMessage;
     }
 
+    /**
+     * Escapes HTML in strings and arrays of strings
+     *
+     * @params (mixed) $options
+     * @return (mixed) $htmlOptions HTML escaped value
+     **/
     protected function htmlList($options = array()) {
-        $htmlOptions = array();
+        if (is_string($options)) {
+            $htmlOptions = htmlentities($options);
+        } elseif (is_array($options)) {
+            $htmlOptions = array();
 
-        foreach($options as $index => $option) {
-            if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
-            if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
+            foreach($options as $index => $option) {
+                if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
+                if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
 
-            $htmlOptions[$index] = $option;
+                $htmlOptions[$index] = $option;
+            }
+        } else {
+            $htmlOptions = $options;
         }
         return $htmlOptions;
     }
