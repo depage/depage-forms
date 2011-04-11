@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 /**
- * The abstract item class contains the basic attributes of container and input
+ * The abstract element class contains the basic attributes of container and input
  * elements.
  **/
 
@@ -9,17 +9,17 @@ namespace depage\htmlform\abstracts;
 
 use depage\htmlform\exceptions;
 
-abstract class item {
+abstract class element {
     /**
-     * Item name.
+     * Element name.
      **/
     protected $name;
     /**
-     * Contains item validation status/result.
+     * Contains element validation status/result.
      **/
     protected $valid;
     /**
-     * True if the item has been validated before.
+     * True if the element has been validated before.
      **/
     protected $validated = false;
     /**
@@ -32,7 +32,7 @@ abstract class item {
         $this->checkParameters($parameters);
 
         $this->name = $name;
-        
+
         $this->setDefaults();
         $parameters = array_change_key_case($parameters);
         foreach ($this->defaults as $parameter => $default) {
@@ -48,7 +48,7 @@ abstract class item {
     }
 
     /**
-     * Returns respective HTML escaped attributes for item rendering.
+     * Returns respective HTML escaped attributes for element rendering.
      **/
     public function __call($functionName, $functionArguments) {
         if (substr($functionName, 0, 4) === 'html') {
@@ -62,7 +62,7 @@ abstract class item {
     }
 
     /**
-     * Returns the item name.
+     * Returns the element name.
      *
      * @return $this->name
      **/
@@ -77,23 +77,23 @@ abstract class item {
      **/
     private function checkParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new exceptions\itemParametersNoArrayException();
+            throw new exceptions\elementParametersNoArrayException();
         }
     }
 
     /**
-     * Checks if item name is of type string and not empty.
+     * Checks if element name is of type string and not empty.
      * Otherwise throws an exception.
-     * 
-     * @params $name item name
+     *
+     * @params $name element name
      * @return void
      **/
     private function checkName($name) {
         if (!is_string($name)) {
-            throw new exceptions\itemNameNoStringException();
+            throw new exceptions\elementNameNoStringException();
         }
         if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name))  {
-            throw new exceptions\invalidItemNameException();
+            throw new exceptions\invalidElementNameException();
         }
     }
 

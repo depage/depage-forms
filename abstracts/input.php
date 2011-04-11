@@ -9,7 +9,7 @@ namespace depage\htmlform\abstracts;
 
 use depage\htmlform\validators;
 
-abstract class input extends item {
+abstract class input extends element {
     /**
      * Input element type - HTML input type attribute.
      **/

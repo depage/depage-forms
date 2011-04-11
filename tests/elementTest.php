@@ -1,12 +1,12 @@
 <?php
 
-use depage\htmlform\abstracts\item;
+use depage\htmlform\abstracts\element;
 use depage\htmlform\exceptions;
 
 /**
- * Item is abstract, so we need this test class to instantiate it.
+ * Element is abstract, so we need this test class to instantiate it.
  **/
-class itemTestClass extends item {
+class elementTestClass extends element {
     // required for testSetParameters()
     protected function setDefaults() {
         parent::setDefaults();
@@ -16,7 +16,7 @@ class itemTestClass extends item {
         $this->defaults['TESTValue3'] = null;
     }
 
-    // needed for testLog() (item::log() is protected)
+    // needed for testLog() (element::log() is protected)
     public function log($argument, $type) {
         parent::log($argument, $type);
     }
@@ -28,12 +28,12 @@ class itemTestClass extends item {
 class undefinedMethodException extends exception {}
 
 /**
- * General tests for the item class.
+ * General tests for the element class.
  **/
-class itemTest extends PHPUnit_Framework_TestCase {
+class elementTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->form = new nameTestForm;
-        $this->item = new itemTestClass('itemName', array(), $this->form);
+        $this->element = new elementTestClass('elementName', array(), $this->form);
     }
 
     /**
@@ -47,62 +47,62 @@ class itemTest extends PHPUnit_Framework_TestCase {
             'testvalue3' => '3',
         );
 
-        $item = new itemTestClass('itemName', $parameters, null);
+        $element = new elementTestClass('elementName', $parameters, null);
 
-        $this->assertEquals('1', $item->testValue1);
-        $this->assertEquals('2', $item->TestValue2);
-        $this->assertEquals('3', $item->TESTValue3);
-        $this->assertNull($item->testvalue3);
+        $this->assertEquals('1', $element->testValue1);
+        $this->assertEquals('2', $element->TestValue2);
+        $this->assertEquals('3', $element->TESTValue3);
+        $this->assertNull($element->testvalue3);
     }
 
     /**
-     * Throw an exception on іnvalid item name.
+     * Throw an exception on іnvalid element name.
      **/
-    public function testInvalidItemNameException() {
+    public function testInvalidElementNameException() {
         try {
-            new itemTestClass(' ', array(), null);
-        } catch (exceptions\invalidItemNameException $expected) {
+            new elementTestClass(' ', array(), null);
+        } catch (exceptions\invalidElementNameException $expected) {
             return;
         }
-        $this->fail('Expected invalidItemNameException.');
+        $this->fail('Expected invalidElementNameException.');
     }
 
     /**
      * Throw an exception if name type isn't string.
      **/
-    public function testItemNameNoStringException() {
+    public function testElementNameNoStringException() {
         try {
-            new itemTestClass(42, array(), null);
-        } catch (exceptions\itemNameNoStringException $expected) {
+            new elementTestClass(42, array(), null);
+        } catch (exceptions\elementNameNoStringException $expected) {
             return;
         }
-        $this->fail('Expected itemNameNoStringException.');
+        $this->fail('Expected elementNameNoStringException.');
     }
 
     /**
-     * Item parameters need to be of type array.
+     * Element parameters need to be of type array.
      **/
-    public function testItemParametersNoArrayException() {
+    public function testElementParametersNoArrayException() {
         try {
             $input = new inputTestClass('inputName', 'string', $this->form);
         }
-        catch (exceptions\itemParametersNoArrayException $expected) {
+        catch (exceptions\elementParametersNoArrayException $expected) {
             return;
         }
-        $this->fail('Expected itemParametersNoArrayException.');
+        $this->fail('Expected elementParametersNoArrayException.');
     }
 
     /**
-     * Tests parsing a log object reference to the item. And calling it's log
+     * Tests parsing a log object reference to the element. And calling it's log
      * method.
      **/
     public function testLog() {
         $log        = new logTestClass;
 
         $parameters = array('log' => $log);
-        $item       = new itemTestClass('itemName', $parameters, $this->form);
+        $element       = new elementTestClass('elementName', $parameters, $this->form);
 
-        $item->log('argumentString', 'typeString');
+        $element->log('argumentString', 'typeString');
 
         $expected = array(
             'argument'  => 'argumentString',
@@ -121,7 +121,7 @@ class itemTest extends PHPUnit_Framework_TestCase {
         }
 
     /**
-     * If item::__call can't match a custom method, it triggers an
+     * If element::__call can't match a custom method, it triggers an
      * undefinedMethodError. We test this with our error handler by throwing
      * and catching an exception.
      **/
@@ -129,7 +129,7 @@ class itemTest extends PHPUnit_Framework_TestCase {
         set_error_handler(array($this, 'undefinedMethodHandler'));
 
         try {
-            $this->item->__call('undefined', 'argumentString');
+            $this->element->__call('undefined', 'argumentString');
         } catch (undefinedMethodException $expected) {
             restore_error_handler();
             return;
