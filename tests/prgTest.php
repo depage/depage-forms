@@ -13,6 +13,9 @@ class htmlformTestClass extends htmlform {
     }
 }
 
+/**
+* Testing Post/Redirect/Get-relevant behavior
+**/
 class prgTest extends PHPUnit_Framework_TestCase {
     /**
      * Testing the test...

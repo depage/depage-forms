@@ -2,12 +2,18 @@
 
 use depage\htmlform\elements\number;
 
+/**
+ * Tests for boolean input element rendering.
+ **/
 class numberToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->number   = new number('numberName', array(), $this->form);
     }
 
+    /**
+     * Element with default setup
+     **/
     public function testSimple() {
         $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number!">' .
             '<label>' .
@@ -19,6 +25,9 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->number->__toString());
     }
 
+    /**
+     * Tests rendering with value set.
+     **/
     public function testValue() {
         $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number!">' .
             '<label>' .
@@ -31,6 +40,9 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->number->__toString());
     }
 
+    /**
+     * Rendered element with set required attribute
+     **/
     public function testRequired() {
         $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number!">' .
             '<label>' .
@@ -43,6 +55,9 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->number->__toString());
     }
 
+    /**
+     * Tests html escaping of attributes that can be set by instantiation parameters
+     **/
     public function testHtmlEscaping() {
         $expected = '<p id="formName-numberName" class="input-number required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .

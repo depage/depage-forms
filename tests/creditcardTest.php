@@ -14,7 +14,7 @@ class creditcardTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * getName method
+     * Constructor test, getName()
      **/
     public function testGetName() {
         $this->assertEquals('creditcardName', $this->creditcard->getName());

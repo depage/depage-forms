@@ -3,17 +3,26 @@
 use depage\htmlform\htmlform;
 use depage\htmlform\elements\step;
 
-class stepTest extends PHPUnit_Framework_TestCase {
+/**
+ * Tests for step container element rendering.
+ **/
+class stepToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
         $this->step = new step('stepName', array(), $this->form);
     }
 
-    public function testToString() {
+    /**
+     * Element with default setup (empty)
+     **/
+    public function testSimple() {
         $expected = '';
         $this->assertEquals($expected, $this->step->__toString());
     }
 
+    /**
+     * With fieldset subelement.
+     **/
     public function testAddFieldset() {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
@@ -23,6 +32,9 @@ class stepTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->step->__toString());
     }
 
+    /**
+     * With text subelement
+     **/
     public function testAddText() {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
                 '<label>' .

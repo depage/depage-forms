@@ -4,7 +4,7 @@ use depage\htmlform\htmlform;
 use depage\htmlform\elements\fieldset;
 
 /**
- * General tests for the fieldset element.
+ * Tests for fieldset container element rendering.
  **/
 class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {

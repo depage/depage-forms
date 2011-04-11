@@ -23,6 +23,11 @@ class itemTestClass extends item {
 }
 
 /**
+ * Replacement exception for undefinedMethod Error
+ **/
+class undefinedMethodException extends exception {}
+
+/**
  * General tests for the item class.
  **/
 class itemTest extends PHPUnit_Framework_TestCase {
@@ -108,7 +113,7 @@ class itemTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * required fo testUndefinedMethodError
+     * required for testUndefinedMethodError
      **/
     public function undefinedMethodHandler($errno) {
             if ($errno = 256) throw new undefinedMethodException;
