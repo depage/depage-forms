@@ -3,7 +3,7 @@ namespace depage\htmlform\validators;
 
 class regEx extends validator {
     /**
-     * Regular expression
+     * Validators' regular expression
      **/
     protected $regEx = "//";
 
@@ -15,7 +15,8 @@ class regEx extends validator {
         $match = (bool) preg_match($this->regEx, $value);
 
         if (preg_last_error() !== PREG_NO_ERROR) {
-            $this->log("Regular expression warning: error code " . preg_last_error());
+            // @todo set error type
+            $this->log("Regular expression warning: error code " . preg_last_error(), null);
         }
 
         return $match;
