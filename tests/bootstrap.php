@@ -7,7 +7,7 @@ require_once('../htmlform.php');
 
 
 /**
- * Dummy test class (for item & validator tests)
+ * Dummy test class (for element & validator tests)
  **/
 class logTestClass {
     public $error = array(

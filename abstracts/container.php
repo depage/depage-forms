@@ -11,7 +11,7 @@ namespace depage\htmlform\abstracts;
 use depage\htmlform\elements;
 use depage\htmlform\exceptions;
 
-abstract class container extends item {
+abstract class container extends element {
     /**
      * Holds references to input elements and fieldsets.
      **/

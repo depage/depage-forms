@@ -1,6 +1,7 @@
 <?php
 
 use depage\htmlform\validators\validator;
+use depage\htmlform\validators\regEx;
 
 /**
  * Dummy validator class
@@ -11,6 +12,21 @@ class validatorTestClass extends validator {
         parent::log ($argument, $type);
     }
 }
+
+/**
+ * Dummy regEx validator class
+ **/
+class regExTestClass extends regEx {
+    public function __construct($regEx, $log) {
+        parent::__construct($log);
+        $this->regEx = $regEx;
+    }
+    // needed for testLog() ($this->log() is protected)
+    public function log($argument, $type) {
+        parent::log ($argument, $type);
+    }
+}
+
 
 /**
  * General tests for the validator class.
@@ -96,4 +112,24 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $log->error);
     }
+
+    /**
+     * Testing error logging on preg_match error.
+     * Example error from http://php.net/manual/en/function.preg-last-error.php
+     **/
+    public function testPregError() {
+        $log        = new logTestClass;
+        $regEx      = '/(?:\D+|<\d+>)*[!?]/';
+        $validator  = new regExTestClass($regEx, $log);
+
+        $validator->validate('foobar foobar foobar');
+
+        $expected = array(
+            'argument'  => 'Regular expression warning: error code 2',
+            'type'      => null,
+        );
+
+        $this->assertEquals($expected, $log->error);
+    }
+
 }

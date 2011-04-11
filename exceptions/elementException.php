@@ -2,5 +2,5 @@
 
 namespace depage\htmlform\exceptions;
 
-class itemException extends \exception {
+class elementException extends \exception {
 }
