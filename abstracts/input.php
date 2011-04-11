@@ -239,7 +239,7 @@ abstract class input extends element {
      * @return mixed
      **/
     protected function htmlValue() {
-        return ($this->value === null) ? $this->defaultValue : $this->value;
+        return ($this->value === null) ? $this->htmlDefaultValue() : $this->value;
     }
 
     protected function htmlErrorMessage() {
