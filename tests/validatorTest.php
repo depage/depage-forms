@@ -2,6 +2,9 @@
 
 use depage\htmlform\validators\validator;
 
+/**
+ * Dummy validator class
+ **/
 class validatorTestClass extends validator {
     // needed for testLog() ($this->log() is protected)
     public function log($argument, $type) {
@@ -9,30 +12,48 @@ class validatorTestClass extends validator {
     }
 }
 
+/**
+ * General tests for the validator class.
+ **/
 class validatorTest extends \PHPUnit_Framework_TestCase {
+    /**
+     * Text validator always returns true
+     **/
     public function testText() {
         $textValidator = validator::factory('text');
         $this->assertTrue($textValidator->validate('anyString'));
     }
 
+    /**
+     * Email validator test
+     **/
     public function testEmail() {
         $emailValidator = validator::factory('email');
         $this->assertFalse($emailValidator->validate('anyString'));
         $this->assertTrue($emailValidator->validate('test@depage.net'));
     }
 
-   public function testUrl() {
+    /**
+     * Url validator test
+     **/
+    public function testUrl() {
         $urlValidator = validator::factory('url');
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('http://www.depage.net'));
     }
 
+    /**
+     * Creating a custom validator by parsing a regular expression
+     **/
     public function testCustomRegEx() {
         $customValidator = validator::factory('/[a-zA-Z]/');
         $this->assertFalse($customValidator->validate('1234'));
         $this->assertTrue($customValidator->validate('letters'));
     }
 
+    /**
+     * Number validator test; using limits set in parameter array
+     **/
     public function testNumber() {
         $numberValidator = validator::factory('number');
         $this->assertFalse($numberValidator->validate('letters',   array('min' => null,    'max' => null)));
@@ -41,19 +62,27 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($numberValidator->validate(5,           array('min' => null,    'max' => null)));
     }
 
+    /**
+     * Getting HTML5 pattern attribute for various validator types
+     **/
     public function testGetPatternAttribute() {
+        // custom validator returns formatted regular expression
         $regExValidator = validator::factory('/[a-z]/');
         $this->assertEquals(' pattern="[a-z]"', $regExValidator->getPatternAttribute());
 
+        // telephone number validator returns empty string (tel inputs are automatically validated)
         $telValidator = validator::factory('tel');
         $this->assertInternalType('string', $telValidator->getPatternAttribute());
         $this->assertEquals('', $telValidator->getPatternAttribute());
 
+        // unknown validators are turned into text validators -> they accept anything -> empty string
         $anyValidator = validator::factory('foo');
         $this->assertInternalType('string', $telValidator->getPatternAttribute());
         $this->assertEquals('', $anyValidator->getPatternAttribute());
     }
-
+    /**
+     * Testing the internal log method
+     **/
     public function testLog() {
         $log        = new logTestClass;
         $validator  = new validatorTestClass($log);

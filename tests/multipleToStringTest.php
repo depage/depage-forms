@@ -2,12 +2,18 @@
 
 use depage\htmlform\elements\multiple;
 
+/**
+ * Tests for multiple input element rendering.
+ **/
 class multipleToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form = new nameTestForm;
         $this->multiple = new multiple('elementName', array(), $this->form);
     }
 
+    /**
+     * Element with default setup and checkbox skin.
+     **/
     public function testCheckbox() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName</span>' .
@@ -17,6 +23,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->multiple->__toString());
     }
 
+    /**
+     * Element with default setup and select skin.
+     **/
     public function testSelect() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -30,6 +39,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered checkbox with 'required' attribute set.
+     **/
     public function testCheckboxRequired() {
         $expected = '<p id="formName-elementName" class="input-multiple required" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName <em>*</em></span>' .
@@ -40,6 +52,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->multiple->__toString());
     }
 
+    /**
+     * Rendered select input with 'required' attribute set.
+     **/
     public function testSelectRequired() {
         $expected = '<p id="formName-elementName" class="input-multiple required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -54,6 +69,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered checkbox with option list
+     **/
     public function testCheckboxList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName</span>' .
@@ -86,6 +104,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered select input with option list
+     **/
     public function testSelectList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -106,6 +127,10 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered checkbox input with option list. List Parameters are parsed as
+     * associative array.
+     **/
     public function testCheckboxAssociativeList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName</span>' .
@@ -142,6 +167,10 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered select input with option list. List Parameters are parsed as
+     * associative array.
+     **/
     public function testSelectAssociativeList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -166,6 +195,10 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered select input with optgroups. List parameters are parsed in
+     * two-dimensional array.
+     **/
     public function testSelectOptgroups() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -200,6 +233,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered checkbox; tests html escaping of attributes that can be set by instantiation parameters.
+     **/
     public function testCheckboxHtmlEscaping() {
         $expected = '<p id="formName-elementName" class="input-multiple required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
@@ -217,6 +253,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered select input; tests html escaping of attributes that can be set by instantiation parameters.
+     **/
     public function testSelectHtmlEscaping() {
         $expected = '<p id="formName-elementName" class="input-multiple required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
@@ -237,6 +276,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered checkbox; tests html escaping of option list.
+     **/
     public function testHtmlCheckboxEscapedList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName</span>' .
@@ -269,6 +311,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered select input; tests html escaping of option list.
+     **/
     public function testHtmlSelectEscapedList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -289,6 +334,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered checkbox; tests html escaping of associative option list.
+     **/
      public function testCheckboxEscapedAssociativeList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<span class="label">elementName</span>' .
@@ -326,6 +374,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $multiple->__toString());
     }
 
+    /**
+     * Rendered select input; tests html escaping of associative option list.
+     **/
     public function testSelectEscapedAssociativeList() {
         $expected = '<p id="formName-elementName" class="input-multiple" data-errorMessage="Please enter valid data!">' .
             '<label>' .

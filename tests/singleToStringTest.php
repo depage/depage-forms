@@ -2,12 +2,18 @@
 
 use depage\htmlform\elements\single;
 
+/**
+ * Tests for multiple input element rendering.
+ **/
 class singleToStringTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->single   = new single('singleName', array(), $this->form);
     }
 
+    /**
+     * Element with default setup and radio skin.
+     **/
     public function testRadio() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -19,6 +25,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->single->__toString());
     }
 
+    /**
+     * Element with default setup and "select" skin.
+     **/
     public function testSelect() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -32,6 +41,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered radio input with 'required' attribute set.
+     **/
     public function testRadioRequired() {
         $expected = '<p id="formName-singleName" class="input-single required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -44,6 +56,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->single->__toString());
     }
 
+    /**
+     * Rendered "select" input with 'required' attribute set.
+     **/
     public function testSelectRequired() {
         $expected = '<p id="formName-singleName" class="input-single required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -58,6 +73,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered radio input with option list
+     **/
     public function testRadioList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -92,6 +110,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered "select" input with option list
+     **/
     public function testSelectList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -112,6 +133,10 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered radio input with option list. List Parameters are parsed as
+     * associative array.
+     **/
     public function testRadioAssociativeList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -150,6 +175,10 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered "select" input with option list. List Parameters are parsed as
+     * associative array.
+     **/
     public function testSelectAssociativeList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -174,6 +203,10 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered select input with optgroups. List parameters are parsed in
+     * two-dimensional array.
+     **/
     public function testSelectOptgroups() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -208,6 +241,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered radio input; tests html escaping of attributes that can be set by instantiation parameters.
+     **/
     public function testRadioHtmlEscaping() {
         $expected = '<p id="formName-singleName" class="input-single required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
@@ -227,6 +263,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered "select" input; tests html escaping of attributes that can be set by instantiation parameters.
+     **/
     public function testSelectHtmlEscaping() {
         $expected = '<p id="formName-singleName" class="input-single required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
@@ -247,6 +286,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered radio input; tests html escaping of option list.
+     **/
     public function testHtmlRadioEscapedList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -281,6 +323,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered select input; tests html escaping of option list.
+     **/
     public function testHtmlSelectEscapedList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -301,6 +346,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered radio input; tests html escaping of associative option list.
+     **/
      public function testRadioEscapedAssociativeList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .
@@ -340,6 +388,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $single->__toString());
     }
 
+    /**
+     * Rendered "select" input; tests html escaping of associative option list.
+     **/
     public function testSelectEscapedAssociativeList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
             '<label>' .

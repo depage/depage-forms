@@ -12,14 +12,14 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Constructor test.
+     * Constructor test, getName()
      **/
     public function testConstruct() {
         $this->assertEquals('booleanName', $this->boolean->getName());
     }
 
     /**
-     * Tests setValue method with various values.
+     * Tests setValue method with various values. (typecasting)
      **/
     public function testBooleanSetValue() {
         $this->boolean->setValue(true);

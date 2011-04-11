@@ -2,8 +2,13 @@
 $_SERVER['REQUEST_URI'] = 'http://www.depagecms.net/';
 session_start();
 
+// using the autoloader from the main class
 require_once('../htmlform.php');
 
+
+/**
+ * Dummy test class (for item & validator tests)
+ **/
 class logTestClass {
     public $error = array(
         'argument'  => '',
@@ -18,6 +23,9 @@ class logTestClass {
     }
 }
 
+/**
+ * Dummy form class
+ **/
 class nameTestForm {
     public function getName() {
         return 'formName';
@@ -26,6 +34,4 @@ class nameTestForm {
     public function checkElementName() {}
     public function updateInputValue() {}
 }
-
-class undefinedMethodException extends exception {}
 ?>

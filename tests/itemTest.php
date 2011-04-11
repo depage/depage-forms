@@ -3,7 +3,11 @@
 use depage\htmlform\abstracts\item;
 use depage\htmlform\exceptions;
 
+/**
+ * Item is abstract, so we need this test class to instantiate it.
+ **/
 class itemTestClass extends item {
+    // required for testSetParameters()
     protected function setDefaults() {
         parent::setDefaults();
 
@@ -18,6 +22,14 @@ class itemTestClass extends item {
     }
 }
 
+/**
+ * Replacement exception for undefinedMethod Error
+ **/
+class undefinedMethodException extends exception {}
+
+/**
+ * General tests for the item class.
+ **/
 class itemTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->form = new nameTestForm;
@@ -42,7 +54,10 @@ class itemTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('3', $item->TESTValue3);
         $this->assertNull($item->testvalue3);
     }
-    
+
+    /**
+     * Throw an exception on іnvalid item name.
+     **/
     public function testInvalidItemNameException() {
         try {
             new itemTestClass(' ', array(), null);
@@ -52,6 +67,9 @@ class itemTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected invalidItemNameException.');
     }
 
+    /**
+     * Throw an exception if name type isn't string.
+     **/
     public function testItemNameNoStringException() {
         try {
             new itemTestClass(42, array(), null);
@@ -61,6 +79,9 @@ class itemTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected itemNameNoStringException.');
     }
 
+    /**
+     * Item parameters need to be of type array.
+     **/
     public function testItemParametersNoArrayException() {
         try {
             $input = new inputTestClass('inputName', 'string', $this->form);
@@ -71,6 +92,10 @@ class itemTest extends PHPUnit_Framework_TestCase {
         $this->fail('Expected itemParametersNoArrayException.');
     }
 
+    /**
+     * Tests parsing a log object reference to the item. And calling it's log
+     * method.
+     **/
     public function testLog() {
         $log        = new logTestClass;
 
@@ -87,11 +112,19 @@ class itemTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $log->error);
     }
 
+    /**
+     * required for testUndefinedMethodError
+     **/
     public function undefinedMethodHandler($errno) {
             if ($errno = 256) throw new undefinedMethodException;
             return;
         }
 
+    /**
+     * If item::__call can't match a custom method, it triggers an
+     * undefinedMethodError. We test this with our error handler by throwing
+     * and catching an exception.
+     **/
     public function testUndefinedMethodError() {
         set_error_handler(array($this, 'undefinedMethodHandler'));
 
