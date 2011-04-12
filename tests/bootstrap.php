@@ -15,7 +15,7 @@ class logTestClass {
         'type'      => '',
     );
 
-    public function log($argument, $type) {
+    public function log($argument, $type = null) {
         $this->error = array(
             'argument'  => $argument,
             'type'      => $type,

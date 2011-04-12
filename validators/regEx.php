@@ -22,7 +22,7 @@ class regEx extends validator {
 
         if (preg_last_error() !== PREG_NO_ERROR) {
             // @todo set error type
-            $this->log("Regular expression warning: error code " . preg_last_error(), null);
+            $this->log("Regular expression warning: error code " . preg_last_error());
         }
 
         return $match;
