@@ -179,7 +179,7 @@ abstract class input extends element {
      * @return $classes
      **/
     protected function htmlClasses() {
-        $classes = 'input-' . htmlentities($this->type, ENT_QUOTES);
+        $classes = 'input-' . $this->htmlEscape($this->type);
         
         if ($this->required) {
             $classes .= ' required';
@@ -199,7 +199,7 @@ abstract class input extends element {
      * @return $this->marker or empty string
      **/
     protected function htmlMarker() {
-        return ($this->required) ? " <em>" . htmlentities($this->marker, ENT_QUOTES) . "</em>" : "";
+        return ($this->required) ? " <em>" . $this->htmlEscape($this->marker) . "</em>" : "";
     }
 
     /**
@@ -226,9 +226,9 @@ abstract class input extends element {
 
         $attributes .= "class=\"" . $this->htmlClasses() . "\"";
 
-        $attributes .= ($this->title) ? " title=\"" . htmlentities($this->title, ENT_QUOTES) . "\"" : "";
+        $attributes .= ($this->title) ? " title=\"" . $this->htmlEscape($this->title) . "\"" : "";
 
-        $attributes .= " data-errorMessage=\"" . htmlentities($this->errorMessage, ENT_QUOTES) . "\"";
+        $attributes .= " data-errorMessage=\"" . $this->htmlEscape($this->errorMessage) . "\"";
 
         return $attributes;
     }
@@ -239,7 +239,7 @@ abstract class input extends element {
      * @return mixed
      **/
     protected function htmlValue() {
-        return ($this->value === null) ? input::htmlList($this->defaultValue) : $this->value;
+        return ($this->value === null) ? $this->htmlEscape($this->defaultValue) : $this->value;
     }
 
     protected function htmlErrorMessage() {
@@ -247,7 +247,7 @@ abstract class input extends element {
             && $this->value !== null
             && $this->errorMessage !== ""
         ) {
-            $errorMessage = " <span class=\"errorMessage\">" . htmlentities($this->errorMessage, ENT_QUOTES) . "</span>";
+            $errorMessage = " <span class=\"errorMessage\">" . $this->htmlEscape($this->errorMessage) . "</span>";
         } else {
             $errorMessage = "";
         }
@@ -261,7 +261,7 @@ abstract class input extends element {
      * @param   $options        (mixed) value to be HTML escaped
      * @return  $htmlOptions    (mixed) HTML escaped value
      **/
-    protected function htmlList($options = array()) {
+    protected function htmlEscape($options = array()) {
         if (is_string($options)) {
             $htmlOptions = htmlentities($options);
         } elseif (is_array($options)) {

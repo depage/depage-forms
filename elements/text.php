@@ -65,7 +65,7 @@ class text extends abstracts\input {
     protected function htmlList($options = null) {
         if ($this->list && is_array($this->list)) {
             $formName   = $this->htmlFormName();
-            $options    = parent::htmlList($this->list);
+            $options    = $this->htmlEscape($this->list);
 
             $htmlList = "<datalist id=\"{$formName}-{$this->name}-list\">";
 

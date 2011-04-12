@@ -48,7 +48,7 @@ class single extends abstracts\input {
         if ($value == null)     $value      = $this->htmlValue();
         if ($options == null)   $options    = $this->list;
 
-        $options    = parent::htmlList($options);
+        $options    = $this->htmlEscape($options);
         $list       = '';
 
         if ($this->skin === "select") {
