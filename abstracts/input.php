@@ -141,8 +141,8 @@ abstract class input extends element {
     /**
      * Allows to manually set the current input elements value.
      *
-     * @param $newValue contains the new value
-     * @return $this->value
+     * @param   $newDefaultValue contains the new value
+     * @return  $this->value
      **/
     public function setDefaultValue($newDefaultValue) {
         $this->defaultValue = $newDefaultValue;
@@ -258,8 +258,8 @@ abstract class input extends element {
     /**
      * Escapes HTML in strings and arrays of strings
      *
-     * @params (mixed) $options
-     * @return (mixed) $htmlOptions HTML escaped value
+     * @param   $options        (mixed) value to be HTML escaped
+     * @return  $htmlOptions    (mixed) HTML escaped value
      **/
     protected function htmlList($options = array()) {
         if (is_string($options)) {

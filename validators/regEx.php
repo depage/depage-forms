@@ -1,16 +1,22 @@
 <?php
 namespace depage\htmlform\validators;
 
+/**
+ * Custom validator for input elements.
+ **/
 class regEx extends validator {
     /**
      * Validators' regular expression
      **/
     protected $regEx = "//";
 
-    public function __construct($log = null) {
-        parent::__construct($log);
-    }
-
+    /**
+     * Overrides validator::validate; regular expression validation.
+     *
+     * @param   $value      (string)    value to be validated
+     * @param   $parameters (array)     validation parameters
+     * @return              (bool)      validation result
+     **/
     public function validate($value, $parameters = array()) {
         $match = (bool) preg_match($this->regEx, $value);
 
