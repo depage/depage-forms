@@ -82,22 +82,23 @@ abstract class element {
     }
 
     /**
-     * Checks if element name is of type string and not empty.
-     * Otherwise throws an exception.
+     * Checks that element name is of type string, not empty and doesn't
+     * contain invalid characters. Otherwise throws an exception.
      *
-     * @params $name element name
-     * @return void
+     * @param   $name (mixed) element name
+     * @return  void
      **/
     private function checkName($name) {
-        if (!is_string($name)) {
-            throw new exceptions\elementNameNoStringException();
-        }
-        if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name))  {
+        if (
+            !is_string($name)
+            || trim($name) === ''
+            || preg_match('/[^a-zA-Z0-9_]/', $name)
+        )  {
             throw new exceptions\invalidElementNameException();
         }
     }
 
-    protected function log($argument, $type) {
+    protected function log($argument, $type = null) {
         if (is_callable(array($this->log, 'log'))) {
             $this->log->log($argument, $type);
         } else {

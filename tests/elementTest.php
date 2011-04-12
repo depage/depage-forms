@@ -17,7 +17,7 @@ class elementTestClass extends element {
     }
 
     // needed for testLog() (element::log() is protected)
-    public function log($argument, $type) {
+    public function log($argument, $type = null) {
         parent::log($argument, $type);
     }
 }
@@ -56,9 +56,9 @@ class elementTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Throw an exception on іnvalid element name.
+     * Throw an exception on empty element name.
      **/
-    public function testInvalidElementNameException() {
+    public function testEmptyElementNameException() {
         try {
             new elementTestClass(' ', array(), null);
         } catch (exceptions\invalidElementNameException $expected) {
@@ -73,10 +73,22 @@ class elementTest extends PHPUnit_Framework_TestCase {
     public function testElementNameNoStringException() {
         try {
             new elementTestClass(42, array(), null);
-        } catch (exceptions\elementNameNoStringException $expected) {
+        } catch (exceptions\invalidElementNameException $expected) {
             return;
         }
-        $this->fail('Expected elementNameNoStringException.');
+        $this->fail('Expected invalidElementNameException.');
+    }
+
+    /**
+     * Throw an exception if name contains invalid characters.
+     **/
+    public function testInvalidElementNameException() {
+        try {
+            new elementTestClass('/', array(), null);
+        } catch (exceptions\invalidElementNameException $expected) {
+            return;
+        }
+        $this->fail('Expected invalidElementNameException.');
     }
 
     /**
