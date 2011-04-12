@@ -22,6 +22,11 @@ class testElement {
     public function setRequired($required) {
         $this->required = $required;
     }
+
+    // required for getElement test
+    public function getName() {
+        return 'testElementName';
+    }
 }
 
 /**
@@ -99,5 +104,18 @@ class containerTest extends PHPUnit_Framework_TestCase {
 
         $this->assertFalse($element1->required);
         $this->assertFalse($element2->required);
+    }
+
+    /**
+     * Get sub-element by name.
+     **/
+    public function testGetElement() {
+        $element = new testElement;
+
+        $this->container->addTestElement($element);
+
+        $this->assertEquals($element, $this->container->getElement('testElementName'));
+        // method returns false if element not found
+        $this->assertFalse($this->container->getElement('bogusInputName'));
     }
 }

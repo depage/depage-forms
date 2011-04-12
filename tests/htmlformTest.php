@@ -34,17 +34,6 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Get subelement by name. By default there is a hidden element called
-     * 'formName'.
-     **/
-    public function testGetElement() {
-        $this->form = new htmlform('formName');
-        $this->assertEquals('formName', $this->form->getElement('formName')->getName());
-        // method returns false if element not found
-        $this->assertFalse($this->form->getElement('bogusInputName'));
-    }
-
-    /**
      * "Populating" the forms subelements with values.
      **/
     public function testPopulate() {

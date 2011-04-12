@@ -165,4 +165,19 @@ abstract class container extends element {
         }
         return $allElements;
     }
+
+    /**
+     * Gets input/container element by name.
+     *
+     * @param $name string - name of the input element we're looking for
+     * @return $input object - input element or fieldset
+     **/
+    public function getElement($name) {
+        foreach($this->getElements() as $element) {
+            if ($name === $element->getName()) {
+                return $element;
+            }
+        }
+        return false;
+    }
 }
