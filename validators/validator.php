@@ -76,7 +76,7 @@ class validator {
      **/
     public function getPatternAttribute() {
         if (isset($this->regEx)) {
-            return ' pattern="' . htmlentities(substr($this->regEx, 1,-1)) . '"';
+            return ' pattern="' . htmlentities(substr($this->regEx, 1,-1), ENT_QUOTES) . '"';
         }
     }
 }
