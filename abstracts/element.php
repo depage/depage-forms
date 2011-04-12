@@ -55,7 +55,7 @@ abstract class element {
             $attribute = str_replace('html', '', $functionName);
             $attribute{0} = strtolower($attribute{0});
 
-            return htmlentities($this->$attribute, ENT_QUOTES);
+            return $this->htmlEscape($this->$attribute);
         } else {
             trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }
@@ -104,5 +104,29 @@ abstract class element {
         } else {
             error_log($argument);
         }
+    }
+
+    /**
+     * Escapes HTML in strings and arrays of strings
+     *
+     * @param   $options        (mixed) value to be HTML escaped
+     * @return  $htmlOptions    (mixed) HTML escaped value
+     **/
+    protected function htmlEscape($options = array()) {
+        if (is_string($options)) {
+            $htmlOptions = htmlentities($options);
+        } elseif (is_array($options)) {
+            $htmlOptions = array();
+
+            foreach($options as $index => $option) {
+                if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
+                if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
+
+                $htmlOptions[$index] = $option;
+            }
+        } else {
+            $htmlOptions = $options;
+        }
+        return $htmlOptions;
     }
 }
