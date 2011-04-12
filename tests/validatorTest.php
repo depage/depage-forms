@@ -8,7 +8,7 @@ use depage\htmlform\validators\regEx;
  **/
 class validatorTestClass extends validator {
     // needed for testLog() ($this->log() is protected)
-    public function log($argument, $type) {
+    public function log($argument, $type = null) {
         parent::log ($argument, $type);
     }
 }
@@ -22,7 +22,7 @@ class regExTestClass extends regEx {
         $this->regEx = $regEx;
     }
     // needed for testLog() ($this->log() is protected)
-    public function log($argument, $type) {
+    public function log($argument, $type = null) {
         parent::log ($argument, $type);
     }
 }

@@ -63,21 +63,21 @@ class number extends text {
      * Returns string of HTML min attribute.
      **/
     protected function htmlMin() {
-        return ($this->min === null) ? "" : " min=\"" . htmlentities($this->min, ENT_QUOTES) . "\"";
+        return ($this->min === null) ? "" : " min=\"" . $this->htmlEscape($this->min) . "\"";
     }
 
     /**
      * Returns string of HTML max attribute.
      **/
     protected function htmlMax() {
-        return ($this->max === null) ? "" : " max=\"" . htmlentities($this->max, ENT_QUOTES) . "\"";
+        return ($this->max === null) ? "" : " max=\"" . $this->htmlEscape($this->max) . "\"";
     }
 
     /**
      * Returns string of HTML step attribute.
      **/
     protected function htmlStep() {
-        return ($this->step === null) ? "" : " step=\"" . htmlentities($this->step, ENT_QUOTES) . "\"";
+        return ($this->step === null) ? "" : " step=\"" . $this->htmlEscape($this->step) . "\"";
     }
 
     /**

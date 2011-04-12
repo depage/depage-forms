@@ -44,13 +44,13 @@ class textarea extends text {
      * Returns string of HTML rows attribute.
      **/
     protected function htmlRows() {
-        return ($this->rows === null) ? "" : " rows=\"" . htmlentities($this->rows, ENT_QUOTES) . "\"";
+        return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
     }
 
     /**
      * Returns string of HTML cols attribute.
      **/
     protected function htmlCols() {
-        return ($this->cols === null) ? "" : " cols=\"" . htmlentities($this->cols, ENT_QUOTES) . "\"";
+        return ($this->cols === null) ? "" : " cols=\"" . $this->htmlEscape($this->cols) . "\"";
     }
 }

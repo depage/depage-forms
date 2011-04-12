@@ -55,7 +55,7 @@ abstract class element {
             $attribute = str_replace('html', '', $functionName);
             $attribute{0} = strtolower($attribute{0});
 
-            return htmlentities($this->$attribute, ENT_QUOTES);
+            return $this->htmlEscape($this->$attribute);
         } else {
             trigger_error("Call to undefined method $functionName", E_USER_ERROR);
         }
@@ -75,33 +75,58 @@ abstract class element {
      * @param $parameters parameters for input element constructor
      * @return void
      **/
-    private function checkParameters($parameters) {
+    protected function checkParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new exceptions\elementParametersNoArrayException();
+            throw new exceptions\elementParametersNoArrayException('Element "' . $this->getName() . '": parameters must be of type array.');
         }
     }
 
     /**
-     * Checks if element name is of type string and not empty.
-     * Otherwise throws an exception.
+     * Checks that element name is of type string, not empty and doesn't
+     * contain invalid characters. Otherwise throws an exception.
      *
-     * @params $name element name
-     * @return void
+     * @param   $name (mixed) element name
+     * @return  void
      **/
     private function checkName($name) {
-        if (!is_string($name)) {
-            throw new exceptions\elementNameNoStringException();
-        }
-        if ((trim($name) === '') || preg_match('/[^a-zA-Z0-9_]/', $name))  {
-            throw new exceptions\invalidElementNameException();
+        if (
+            !is_string($name)
+            || trim($name) === ''
+            || preg_match('/[^a-zA-Z0-9_]/', $name)
+        )  {
+            throw new exceptions\invalidElementNameException('"' . $name . '" is not a valid element name.');
         }
     }
 
-    protected function log($argument, $type) {
+    protected function log($argument, $type = null) {
         if (is_callable(array($this->log, 'log'))) {
             $this->log->log($argument, $type);
         } else {
             error_log($argument);
         }
+    }
+
+    /**
+     * Escapes HTML in strings and arrays of strings
+     *
+     * @param   $options        (mixed) value to be HTML escaped
+     * @return  $htmlOptions    (mixed) HTML escaped value
+     **/
+    protected function htmlEscape($options = array()) {
+        if (is_string($options)) {
+            $htmlOptions = htmlentities($options);
+        } elseif (is_array($options)) {
+            $htmlOptions = array();
+
+            foreach($options as $index => $option) {
+                if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
+                if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
+
+                $htmlOptions[$index] = $option;
+            }
+        } else {
+            $htmlOptions = $options;
+        }
+        return $htmlOptions;
     }
 }

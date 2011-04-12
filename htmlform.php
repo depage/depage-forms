@@ -20,8 +20,9 @@ function autoload($class) {
 spl_autoload_register(__NAMESPACE__ . '\autoload');
 
 /**
- * The class htmlform is the main tool of the htmlform library. It generates HTML
- * fieldsets and input elements. It also contains the PHP session handlers.
+ * The class htmlform is the main tool of the htmlform library. It generates
+ * input elements and container elements. It also contains the PHP session 
+ * handlers.
  **/
 class htmlform extends abstracts\container {
     /**
@@ -33,7 +34,7 @@ class htmlform extends abstracts\container {
      **/
     protected $submitURL;
     /**
-     * Specifies where the user is redirected once the form-data is valid.
+     * Specifies where the user is redirected to, once the form-data is valid.
      **/
     protected $successURL;
     /**
@@ -41,7 +42,7 @@ class htmlform extends abstracts\container {
      **/
     protected $label;
     /**
-     * Contains the name of the array in the PHP session holding the form-data.
+     * Contains the name of the array in the PHP session, holding the form-data.
      **/
     protected $sessionSlotName;
     /**
@@ -66,8 +67,9 @@ class htmlform extends abstracts\container {
     public $valid;
 
     /**
-     * @param $name string - form name
-     * @param $parameters array of form parameters, HTML attributes
+     * @param $name         string - form name
+     * @param $parameters   array of form parameters, HTML attributes
+     * @param $form         (object) $form object reference (not needed in this case)
      * @return void
      **/
     public function __construct($name, $parameters = array(), $form = null) {
@@ -331,21 +333,6 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * Gets input element/fieldset by name.
-     *
-     * @param $name string - name of the input element we're looking for
-     * @return $input object - input element or fieldset
-     **/
-    public function getElement($name) {
-        foreach($this->getElements() as $element) {
-            if ($name === $element->getName()) {
-                return $element;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Allows to manually populate the forms' input elements with values by
      * parsing an array of name-value pairs.
      *
@@ -378,7 +365,7 @@ class htmlform extends abstracts\container {
     public function checkElementName($name) {
         foreach($this->getElements(true) as $element) {
             if ($element->getName() === $name) {
-                throw new exceptions\duplicateElementNameException();
+                throw new exceptions\duplicateElementNameException("Element name \"{$name}\" already in use.");
             }
         }
     }
