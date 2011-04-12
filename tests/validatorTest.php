@@ -59,6 +59,15 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * Tel validator test
+     **/
+    public function testTel() {
+        $urlValidator = validator::factory('tel');
+        $this->assertFalse($urlValidator->validate('anyString'));
+        $this->assertTrue($urlValidator->validate('+(123)-32 2.3'));
+    }
+
+    /**
      * Creating a custom validator by parsing a regular expression
      **/
     public function testCustomRegEx() {
