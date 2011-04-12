@@ -66,6 +66,7 @@ abstract class container extends element {
      **/
     protected function addElement($type, $name, $parameters) {
         $this->_checkElementType($type);
+        $this->checkParameters($parameters);
 
         $parameters['log'] = $this->log;
 

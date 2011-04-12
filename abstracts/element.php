@@ -75,9 +75,9 @@ abstract class element {
      * @param $parameters parameters for input element constructor
      * @return void
      **/
-    private function checkParameters($parameters) {
+    protected function checkParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new exceptions\elementParametersNoArrayException();
+            throw new exceptions\elementParametersNoArrayException('Element "' . $this->getName() . '": parameters must be of type array.');
         }
     }
 
@@ -94,7 +94,7 @@ abstract class element {
             || trim($name) === ''
             || preg_match('/[^a-zA-Z0-9_]/', $name)
         )  {
-            throw new exceptions\invalidElementNameException();
+            throw new exceptions\invalidElementNameException('"' . $name . '" is not a valid element name.');
         }
     }
 

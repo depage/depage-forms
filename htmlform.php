@@ -365,7 +365,7 @@ class htmlform extends abstracts\container {
     public function checkElementName($name) {
         foreach($this->getElements(true) as $element) {
             if ($element->getName() === $name) {
-                throw new exceptions\duplicateElementNameException();
+                throw new exceptions\duplicateElementNameException("Element name \"{$name}\" already in use.");
             }
         }
     }
