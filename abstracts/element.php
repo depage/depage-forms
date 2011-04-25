@@ -114,13 +114,13 @@ abstract class element {
      **/
     protected function htmlEscape($options = array()) {
         if (is_string($options)) {
-            $htmlOptions = htmlentities($options);
+            $htmlOptions = htmlspecialchars($options);
         } elseif (is_array($options)) {
             $htmlOptions = array();
 
             foreach($options as $index => $option) {
-                if (is_string($index))  $index  = htmlentities($index, ENT_QUOTES);
-                if (is_string($option)) $option = htmlentities($option, ENT_QUOTES);
+                if (is_string($index))  $index  = htmlspecialchars($index, ENT_QUOTES);
+                if (is_string($option)) $option = htmlspecialchars($option, ENT_QUOTES);
 
                 $htmlOptions[$index] = $option;
             }
