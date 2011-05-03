@@ -16,8 +16,6 @@ use depage\htmlform\exceptions;
  **/
 abstract class element {
     /**
-     * @brief que?
-     *
      * Element name.
      **/
     protected $name;

@@ -1,7 +1,7 @@
 <?php 
 /**
  * @file container.php
- * @brief abstract container class
+ * @brief abstract container element class
  **/
 
 namespace depage\htmlform\abstracts;
@@ -34,7 +34,7 @@ abstract class container extends element {
      *
      * @param   $name           (string)    container name
      * @param   $parameters     (array)     container parameters, HTML attributes
-     * @param   $form           (object)    parent form object.
+     * @param   $form           (object)    parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
