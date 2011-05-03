@@ -1,16 +1,23 @@
 <?php
-
 /**
- * The abstract element class contains the basic attributes of container and input
- * elements.
+ * @file    element.php
+ * @brief   element class
  **/
 
 namespace depage\htmlform\abstracts;
 
 use depage\htmlform\exceptions;
 
+/**
+ * @brief behold: the über-class
+ *
+ * The abstract element class contains the basic attributes and tools of
+ * container and input elements.
+ **/
 abstract class element {
     /**
+     * @brief que?
+     *
      * Element name.
      **/
     protected $name;
@@ -27,6 +34,14 @@ abstract class element {
      **/
     protected $log;
 
+    /**
+     * @brief   element class constructor
+     *
+     * @param   $name       (string)    element name
+     * @param   $parameters (array)     element parameters, HTML attributes
+     * @param   $form       (object)    parent form object reference
+     * @return  void
+     **/
     public function __construct($name, $parameters, $form) {
         $this->checkName($name);
         $this->checkParameters($parameters);
@@ -41,39 +56,52 @@ abstract class element {
     }
 
     /**
-     * collects initial values across subclasses.
+     * @brief   Collects initial values across subclasses.
+     *
+     * @return  void
      **/
     protected function setDefaults() {
         $this->defaults['log'] = null;
     }
 
     /**
+     * @brief   HTML escaping
+     *
      * Returns respective HTML escaped attributes for element rendering.
+     *
+     * @param   $function   (string)    function name
+     * @param   $arguments  (array)     function arguments
+     * @return              (mixed)     HTML escaped value
+     *
+     * @see     htmlEscape()
      **/
-    public function __call($functionName, $functionArguments) {
-        if (substr($functionName, 0, 4) === 'html') {
-            $attribute = str_replace('html', '', $functionName);
+    public function __call($function, $arguments) {
+        if (substr($function, 0, 4) === 'html') {
+            $attribute = str_replace('html', '', $function);
             $attribute{0} = strtolower($attribute{0});
 
             return $this->htmlEscape($this->$attribute);
         } else {
-            trigger_error("Call to undefined method $functionName", E_USER_ERROR);
+            trigger_error("Call to undefined method $function", E_USER_ERROR);
         }
     }
 
     /**
-     * Returns the element name.
+     * @brief   Returns the element name.
      *
-     * @return $this->name
+     * @return  $this->name (string) element name
      **/
     public function getName() {
         return $this->name;
     }
+
     /**
+     * @brief   checks element parameters
+     *
      * Throws an exception if $parameters isn't of type array.
      *
-     * @param $parameters parameters for input element constructor
-     * @return void
+     * @param   $parameters (array) parameters for element constructor
+     * @return  void
      **/
     protected function checkParameters($parameters) {
         if ((isset($parameters)) && (!is_array($parameters))) {
@@ -82,10 +110,12 @@ abstract class element {
     }
 
     /**
+     * @brief   checks for valid element name
+     *
      * Checks that element name is of type string, not empty and doesn't
      * contain invalid characters. Otherwise throws an exception.
      *
-     * @param   $name (mixed) element name
+     * @param   $name (string) element name
      * @return  void
      **/
     private function checkName($name) {
@@ -98,6 +128,16 @@ abstract class element {
         }
     }
 
+    /**
+     * @brief error & warning logger
+     *
+     * If the element is constructed with a custom log object the logging
+     * happens there, otherwise the PHP error_log function is used.
+     *
+     * @param   $argument (string) message
+     * @param   $type     (string) type of log message
+     * @return  void
+     **/
     protected function log($argument, $type = null) {
         if (is_callable(array($this->log, 'log'))) {
             $this->log->log($argument, $type);
@@ -107,10 +147,12 @@ abstract class element {
     }
 
     /**
-     * Escapes HTML in strings and arrays of strings
+     * @brief   Escapes HTML in strings and arrays of strings
      *
-     * @param   $options        (mixed) value to be HTML escaped
+     * @param   $options        (mixed) value to be HTML-escaped
      * @return  $htmlOptions    (mixed) HTML escaped value
+     *
+     * @see     __call()
      **/
     protected function htmlEscape($options = array()) {
         if (is_string($options)) {

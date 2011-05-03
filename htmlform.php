@@ -1,7 +1,7 @@
 <?php 
 /**
- * @file htmlform.php
- * @brief htmlform class and autoloader
+ * @file    htmlform.php
+ * @brief   htmlform class and autoloader
  **/
 
 /**
@@ -54,7 +54,7 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * @brief main interface to users
  *
  * The class htmlform is the main tool of the htmlform library. It generates
- * input elements and container elements. It also contains the PHP session 
+ * input elements and container elements. It also contains the PHP session
  * handlers.
  **/
 class htmlform extends abstracts\container {
@@ -100,11 +100,11 @@ class htmlform extends abstracts\container {
     public $valid;
 
     /**
-     * @brief class constructor
+     * @brief   htmlform class constructor
      *
      * @param   $name       (string)    form name
      * @param   $parameters (array)     form parameters, HTML attributes
-     * @param   $form       (object)    $form object reference (not used in this case)
+     * @param   $form       (object)    parent form object reference (not used in this case)
      * @return  void
      **/
     public function __construct($name, $parameters = array(), $form = null) {
@@ -131,9 +131,9 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Collects initial values across subclasses.
+     * @brief   Collects initial values across subclasses.
      *
-     * @return void
+     * @return  void
      **/
     protected function setDefaults() {
         parent::setDefaults();
@@ -147,12 +147,12 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Deletes session when it expires.
+     * @brief   Deletes session when it expires.
      *
      * checks if session lifetime exceeds ttl value and deletes it. Updates
      * timestamp.
      *
-     * @return void
+     * @return  void
      **/
     private function sessionExpiry() {
         if (isset($this->ttl) && is_numeric($this->ttl)) {
@@ -171,7 +171,7 @@ class htmlform extends abstracts\container {
     }
 
     /** 
-     * @brief Adds input or fieldset elements to htmlform.
+     * @brief   Adds input or fieldset elements to htmlform.
      *
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements.
@@ -193,14 +193,14 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Updates the value of an associated input element
+     * @brief   Updates the value of an associated input element
      *
      * Sets the input elements' value. If there is post-data - we'll use that
      * to update the value of the input element and the session. If not - we 
      * take the value that's already in the session. If the value is neither in
      * the session nor in the post-data - nothing happens.
      *
-     * @param   $name the name of the input element
+     * @param   $name (string) name of the input element
      * @return  void
      **/
     public function updateInputValue($name) {
@@ -219,7 +219,7 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Checks if the element named $name is in the current step.
+     * @brief   Checks if the element named $name is in the current step.
      *
      * @param   $name   (string)    name of element
      * @return          (bool)      says wether it's in the current step
@@ -229,14 +229,14 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Validates step number of GET request.
+     * @brief   Validates step number of GET request.
      *
      * Validates step number of the GET request. If it's out of range it's
      * reset to the number of the first invalid step. (only to be used after
      * the form is completely created, because the step elements have to be
      * counted)
      *
-     * @return void
+     * @return  void
      **/
     private function setCurrentStep() {
         if (!is_numeric($this->currentStepId)
@@ -248,9 +248,9 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Returns an array of input elements contained in the current step.
+     * @brief   Returns an array of input elements contained in the current step.
      *
-     * @return (array) element objects
+     * @return  (array) element objects
      **/
     private function getCurrentElements() {
         $currentElements = array();
@@ -271,12 +271,12 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Renders form to HTML.
+     * @brief   Renders form to HTML.
      *
      * Renders the htmlform object to HTML code. If the form contains elements
      * it calls their rendering methods.
      *
-     * @return (string) HTML code
+     * @return  (string) HTML code
      **/
     public function __toString() {
         $renderedElements   = '';
@@ -301,15 +301,15 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Calls form validation and handles redirects.
+     * @brief   Calls form validation and handles redirects.
      *
      * Implememts the Post/Redirect/Get strategy. Redirects to success Address
      * on succesful validation otherwise redirects to first invalid step or
      * back to form.
      *
-     * @see     validate()
-     *
      * @return  void
+     *
+     * @see     validate()
      **/
     public function process() {
         $this->setCurrentStep();
@@ -327,13 +327,13 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Returns first step that didn't pass validation.
+     * @brief   Returns first step that didn't pass validation.
      *
      * Checks steps consecutively and returns the number of the first one that
      * isn't valid (steps need to be submitted at least once to count as valid).
      * Form must have been validated before calling this method.
      *
-     * @return $stepNumber (int) number of first invalid step
+     * @return  $stepNumber (int) number of first invalid step
      **/
     private function getFirstInvalidStep() {
         if ( count($this->steps ) > 0) {
@@ -365,14 +365,14 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Validates the forms subelements.
+     * @brief   Validates the forms subelements.
      *
      * Form validation - validates form elements returns validation result and
      * writes it to session. Also calls custom validator if available.
      *
-     * @see     process()
-     *
      * @return  (bool) validation result
+     *
+     * @see     process()
      **/
     public function validate() {
         // onValidate hook for custom required/validation rules
@@ -391,16 +391,16 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Returns wether form has been submitted before or not.
+     * @brief   Returns wether form has been submitted before or not.
      *
-     * @return (bool) session status
+     * @return  (bool) session status
      **/
     public function isEmpty() {
         return !isset($this->sessionSlot['formName']);
     }
 
     /**
-     * @brief Fills subelement values.
+     * @brief   Fills subelement values.
      *
      * Allows to manually populate the forms' input elements with values by
      * parsing an array of name-value pairs.
@@ -418,16 +418,16 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Gets form-data from current PHP session.
+     * @brief   Gets form-data from current PHP session.
      *
-     * @return (array) form-data
+     * @return  (array) form-data
      **/
     public function getValues() {
         return (isset($this->sessionSlot)) ? $this->sessionSlot : null;
     }
 
     /**
-     * @brief Checks for duplicate subelement names.
+     * @brief   Checks for duplicate subelement names.
      *
      * Checks within the form if an input element or fieldset name is already
      * taken. If so, it throws an exception.
@@ -444,9 +444,9 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Deletes the current forms' PHP session data.
+     * @brief   Deletes the current forms' PHP session data.
      *
-     * @return void
+     * @return  void
      **/
     public function clearSession() {
         unset($_SESSION[$this->sessionSlotName]);
@@ -454,12 +454,13 @@ class htmlform extends abstracts\container {
     }
 
     /**
-     * @brief Validation hook
+     * @brief   Validation hook
      *
      * Can be overridden with custom validation rules, field-required rules etc.
      *
-     * @see     validate()
      * @return  void
+     *
+     * @see     validate()
      **/
     protected function onValidate() {}
 }
