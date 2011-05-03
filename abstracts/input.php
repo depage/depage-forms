@@ -16,39 +16,39 @@ use depage\htmlform\validators;
  **/
 abstract class input extends element {
     /**
-     * Input element type - HTML input type attribute.
+     * @brief Input element type - HTML input type attribute.
      **/
     protected $type;
     /**
-     * Input element - HTML label
+     * @brief Input element - HTML label
      **/
     protected $label;
     /**
-     * True if the input element is required to hold a value to be valid.
+     * @brief True if the input element is required to hold a value to be valid.
      **/
     protected $required;
     /**
-     * Name of the parent HTML form. Used to identify the element once it's rendered.
+     * @brief Name of the parent HTML form. Used to identify the element once it's rendered.
      **/
     protected $formName;
     /**
-     * Input elements's value.
+     * @brief Input elements's value.
      **/
     protected $value = null;
     /**
-     * Holds validator object reference.
+     * @brief Holds validator object reference.
      **/
     protected $validator;
     /**
-     * HTML classes attribute for rendering the input element.
+     * @brief HTML classes attribute for rendering the input element.
      **/
     protected $classes;
     /**
-     * HTML autofocus attribute
+     * @brief HTML autofocus attribute
      **/
     protected $autofocus = false;
     /**
-     * HTML pattern attribute
+     * @brief HTML pattern attribute
      **/
     protected $pattern = false;
 
@@ -138,8 +138,8 @@ abstract class input extends element {
     /**
      * @brief   set the input element value
      *
-     * Allows to manually set the current input elements value. Additionally
-     * performs typecasting to element specific datatype.
+     * Sets the current input elements value. Additionally performs typecasting
+     * to element specific datatype.
      *
      * @param   $newValue       (mixed) new value
      * @return  $this->value    (mixed) typecasted new value

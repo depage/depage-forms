@@ -59,43 +59,43 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  **/
 class htmlform extends abstracts\container {
     /**
-     * HTML form method attribute.
+     * @brief HTML form method attribute.
      * */
     protected $method;
     /**
-     * HTML form action attribute.
+     * @brief HTML form action attribute.
      **/
     protected $submitURL;
     /**
-     * Specifies where the user is redirected to, once the form-data is valid.
+     * @brief Specifies where the user is redirected to, once the form-data is valid.
      **/
     protected $successURL;
     /**
-     * Contains the submit button label of the form.
+     * @brief Contains the submit button label of the form.
      **/
     protected $label;
     /**
-     * Contains the name of the array in the PHP session, holding the form-data.
+     * @brief Contains the name of the array in the PHP session, holding the form-data.
      **/
     protected $sessionSlotName;
     /**
-     * PHP session handle.
+     * @brief PHP session handle.
      **/
     protected $sessionSlot;
     /**
-     * Contains current step number.
+     * @brief Contains current step number.
      **/
     private $currentStepId;
     /**
-     * Contains array of step object references.
+     * @brief Contains array of step object references.
      **/
     private $steps = array();
     /**
-     * Time for session expiry
+     * @brief Time until session expiry (seconds)
      **/
     protected $ttl;
     /**
-     * Form validation result/status.
+     * @brief Form validation result/status.
      **/
     public $valid;
 

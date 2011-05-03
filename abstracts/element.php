@@ -16,19 +16,19 @@ use depage\htmlform\exceptions;
  **/
 abstract class element {
     /**
-     * Element name.
+     * @brief Element name.
      **/
     protected $name;
     /**
-     * Contains element validation status/result.
+     * @brief Contains element validation status/result.
      **/
     protected $valid;
     /**
-     * True if the element has been validated before.
+     * @brief True if the element has been validated before.
      **/
     protected $validated = false;
     /**
-     * Log object reference
+     * @brief Log object reference
      **/
     protected $log;
 

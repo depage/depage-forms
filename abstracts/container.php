@@ -17,15 +17,15 @@ use depage\htmlform\exceptions;
  **/
 abstract class container extends element {
     /**
-     * References to input elements and fieldsets.
+     * @brief References to input elements and fieldsets.
      **/
     protected $elements = array();
     /**
-     * Input element, fieldset and custom HTML object references.
+     * @brief Input element, fieldset and custom HTML object references.
      **/
     protected $elementsAndHtml = array();
     /**
-     * Parent form object reference
+     * @brief Parent form object reference
      **/
     protected $form;
 
