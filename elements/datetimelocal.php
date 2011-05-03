@@ -1,18 +1,23 @@
 <?php
+/**
+ * @file    datetimelocal.php
+ * @brief   datetime-local input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML datetimelocal input type.
+ * @brief   HTML datetime-local input type.
  *
- * @todo dummy - no validator implemented yet
+ * @todo    dummy - no validator implemented yet
  **/
 class datetimelocal extends text {
     /**
-     * Renders element to HTML. datetime-local needs its own rendering method 
-     * because of the minus sign.
+     * @brief   Renders element to HTML.
      *
-     * @return string of HTML rendered element
+     * datetime-local needs its own rendering method because of the minus sign.
+     *
+     * @return  (string) HTML-rendered element
      **/
     public function __toString() {
         $wrapperAttributes  = $this->htmlWrapperAttributes();

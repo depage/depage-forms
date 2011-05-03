@@ -1,20 +1,24 @@
-<?php 
+<?php
+/**
+ * @file    fieldset.php
+ * @brief   fieldset container element
+ **/
 
 namespace depage\htmlform\elements;
 
 use depage\htmlform\abstracts;
 
 /**
- * The fieldset class holds HTML-fieldset specific attributes and methods.
+ * @brief The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
 class fieldset extends abstracts\container {
     /**
-     * Contains reference to current fieldsets' parent HTML form.
+     * @brief parent HTML form.
      **/
     protected $form;
 
     /**
-     * collects initial values across subclasses.
+     * @brief collects initial values across subclasses.
      **/
     protected function setDefaults() {
         parent::setDefaults();
@@ -22,14 +26,19 @@ class fieldset extends abstracts\container {
         $this->defaults['label'] = $this->name;
     }
 
-    /** 
+    /**
+     * @brief Generates sub-elements.
+     *
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements
-     * 
-     * @param $type input element type or fieldset
-     * @param $name string - name of the element
-     * @param $parameters array of element attributes: HTML attributes, validation parameters etc.
-     * @return object $newElement
+     *
+     * @param   $type       (string) elememt type
+     * @param   $name       (string) element name
+     * @param   $parameters (array)  element attributes: HTML attributes, validation parameters etc.
+     * @return  $newElement (object) new element object
+     *
+     * @see     __call()
+     * @see     addChildElements()
      **/
      public function addElement($type, $name, $parameters) {
         $this->form->checkElementName($name);
@@ -44,10 +53,11 @@ class fieldset extends abstracts\container {
     }
 
     /**
-     * Renders the fieldset as HTML code. If the fieldset contains elements it
-     * calls their rendering methods.
+     * @brief   Renders the fieldset to HTML code.
      *
-     * @return string
+     * If the fieldset contains subelements it calls their rendering methods.
+     *
+     * @return  (string) HTML-rendered fieldset
      **/
      public function __toString() {
         $renderedElements   = '';

@@ -1,15 +1,19 @@
-<?php 
+<?php
+/**
+ * @file    multiple.php
+ * @brief   multiple input element
+ **/
 
 namespace depage\htmlform\elements;
 
 use depage\htmlform\abstracts;
 
 /**
- * HTML-multiple-choice input type i.e. checkbox and select.
+ * @brief HTML-multiple-choice input type i.e. checkbox and select.
  **/
 class multiple extends abstracts\input {
     /** 
-     * Contains list of selectable options.
+     * @brief Contains list of selectable options.
      **/
     protected $list = array();
 

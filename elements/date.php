@@ -1,11 +1,15 @@
 <?php
+/**
+ * @file    date.php
+ * @brief   date input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML date input type.
+ * @brief   HTML date input type.
  *
- * @todo dummy - no validator implemented yet
+ * @todo    dummy - no validator implemented yet
  **/
 class date extends text {
 }

@@ -73,7 +73,7 @@ abstract class container extends element {
 
     /**
      * @brief Generates sub-elements.
-     * 
+     *
      * Adds new child elements to $this->elements.
      *
      * @param   $type       (string) elememt type

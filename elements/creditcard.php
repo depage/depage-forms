@@ -1,13 +1,17 @@
-<?php 
+<?php
+/**
+ * @file    creditcard.php
+ * @brief   creditcard fieldset element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * The fieldset class holds HTML-fieldset specific attributes and methods.
+ * @brief Default creditcard fieldset.
  **/
 class creditcard extends fieldset {
     /**
-     * collects initial values across subclasses.
+     * @brief collects initial values across subclasses.
      **/
     protected function setDefaults() {
         parent::setDefaults();
@@ -24,11 +28,11 @@ class creditcard extends fieldset {
     }
 
     /**
-     * adds creditcard-inputs to fieldset
+     * @brief   adds creditcard-inputs to fieldset
      *
-     * @todo check regular expressions based on (?): http://www.regular-expressions.info/creditcard.html
+     * @todo    check regular expressions based on (?): http://www.regular-expressions.info/creditcard.html
      *
-     * @return void
+     * @return  void
      **/
     public function addChildElements() {
         parent::addChildElements();
@@ -72,12 +76,12 @@ class creditcard extends fieldset {
     }
 
     /**
-     * Validate the creditcard data
+     * @brief   Validate the creditcard data
      *
-     * @todo validate based on (?): http://www-sst.informatik.tu-cottbus.de/~db/doc/Java/GalileoComputing-JavaInsel/java-04.htm#t321
-     * @todo validate specific to cardtype
+     * @todo    validate based on (?): http://www-sst.informatik.tu-cottbus.de/~db/doc/Java/GalileoComputing-JavaInsel/java-04.htm#t321
+     * @todo    validate specific to cardtype
      *
-     * @return void
+     * @return  (bool) validation result
      **/
     public function validate() {
         return parent::validate();

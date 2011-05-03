@@ -1,13 +1,17 @@
 <?php
+/**
+ * @file    email.php
+ * @brief   email input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML email input type.
+ * @brief HTML email input type.
  **/
 class email extends text {
     /**
-     * collects initial values across subclasses.
+     * @brief collects initial values across subclasses.
      **/
     protected function setDefaults() {
         parent::setDefaults();

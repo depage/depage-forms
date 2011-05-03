@@ -1,11 +1,15 @@
 <?php
+/**
+ * @file    month.php
+ * @brief   month input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML month input type.
+ * @brief   HTML month input type.
  *
- * @todo dummy - no validator implemented yet
+ * @todo    dummy - no validator implemented yet
  **/
 class month extends text {
 }

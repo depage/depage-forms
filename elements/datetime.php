@@ -1,9 +1,13 @@
 <?php
+/**
+ * @file    datetime.php
+ * @brief   datetime input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML datetime input type.
+ * @brief HTML datetime input type.
  *
  * @todo dummy - no validator implemented yet
  **/
