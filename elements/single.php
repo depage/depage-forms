@@ -1,22 +1,29 @@
-<?php 
+<?php
+/**
+ * @file    single.php
+ * @brief   single input element
+ **/
 
 namespace depage\htmlform\elements;
 
 use depage\htmlform\abstracts;
 
 /** 
- * HTML-single-choice input type i.e. radio and select.
+ * @brief HTML-single-choice input type i.e. radio and select.
  **/
 class single extends abstracts\input {
     /** 
-     * Contains list of selectable options.
+     * @brief Contains list of selectable options.
      **/
     protected $list = array();
 
     /**
-     * @param $name input elements' name
-     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $form parent form object.
+     * @brief   single class constructor
+     *
+     * @param   $name       (string)    element name
+     * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
+     * @param   $form       (object)    parent form object
+     * @return  void
      **/
     public function __construct($name, $parameters, $form) {
         parent::__construct($name, $parameters, $form);
@@ -25,7 +32,9 @@ class single extends abstracts\input {
     }
 
     /**
-     * collects initial values across subclasses.
+     * @brief   collects initial values across subclasses
+     *
+     * @return  void
      **/
     protected function setDefaults() {
         parent::setDefaults();
@@ -36,13 +45,14 @@ class single extends abstracts\input {
     }
 
     /**
-     * Renders HTML - option list part of select element. Works recursively in
-     * case of optgroups. If no parameters are parsed, it uses the list
-     * attribute of this element.
+     * @brief   Renders HTML - option list part of select/radio single element
      *
-     * @param $options array of list elements and subgroups
-     * @param $value value to be marked as selected
-     * @return (string) options-part of the HTML-select-element
+     * Works recursively in case of select-optgroups. If no parameters are
+     * parsed, it uses the list attribute of this element.
+     *
+     * @param   $options    (array)     list elements and subgroups
+     * @param   $value      (string)    value to be marked as selected
+     * @return  $list       (string)    options-part of the HTML-select-element
      **/
     protected function htmlList($options = null, $value = null) {
         if ($value == null)     $value      = $this->htmlValue();
@@ -79,9 +89,9 @@ class single extends abstracts\input {
     }
 
     /**
-     * Renders element to HTML.
+     * @brief   Renders element to HTML.
      *
-     * @return string of HTML rendered element
+     * @return  (string) HTML rendered element
      **/
     public function __toString() {
         $marker             = $this->htmlMarker();
@@ -115,7 +125,9 @@ class single extends abstracts\input {
     }
 
     /**
-     * Converts value to element specific type.
+     * @brief   Converts value to element specific type.
+     *
+     * @return  void
      **/
     protected function typeCastValue() {
         $this->value = (string) $this->value;

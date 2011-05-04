@@ -1,11 +1,15 @@
 <?php
+/**
+ * @file    week.php
+ * @brief   week input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML week input type.
+ * @brief   HTML week input type
  *
- * @todo dummy - no validator implemented yet
+ * @todo    dummy - no validator implemented yet
  **/
 class week extends text {
 }

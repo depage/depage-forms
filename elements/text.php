@@ -1,22 +1,29 @@
 <?php
+/**
+ * @file    text.php
+ * @brief   text input element
+ **/
 
 namespace depage\htmlform\elements;
 
 use depage\htmlform\abstracts;
 
 /**
- * HTML text input type.
+ * @brief HTML text input type.
  **/
 class text extends abstracts\input {
     /**
-     * HTML placeholder attribute
+     * @brief HTML placeholder attribute
      **/
      protected $placeholder;
 
      /**
-     * @param $name input elements' name
-     * @param $parameters array of input element parameters, HTML attributes, validator specs etc.
-     * @param $form parent form object.
+     * @brief   multiple class constructor
+     *
+     * @param   $name       (string)    element name
+     * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
+     * @param   $form       (object)    parent form object
+     * @return  void
      **/
     public function __construct($name, $parameters, $form) {
         parent::__construct($name, $parameters, $form);
@@ -25,7 +32,9 @@ class text extends abstracts\input {
     }
 
     /**
-     * collects initial values across subclasses.
+     * @brief   collects initial values across subclasses
+     *
+     * @return  void
      **/
     protected function setDefaults() {
         parent::setDefaults();
@@ -36,9 +45,9 @@ class text extends abstracts\input {
     }
 
     /**
-     * Renders element to HTML.
+     * @brief   Renders element to HTML.
      *
-     * @return string of HTML rendered element
+     * @return  (string) HTML rendered element
      **/
     public function __toString() {
         $value              = $this->htmlValue();
@@ -60,7 +69,10 @@ class text extends abstracts\input {
     }
 
     /**
-     * Renders HTML datalist.
+     * @brief   Renders HTML datalist
+     *
+     * @param   $options    (array)     datalist
+     * @return  $htmlList   (string)    rendered HTML datalist
      **/
     protected function htmlList($options = null) {
         if ($this->list && is_array($this->list)) {
@@ -86,7 +98,9 @@ class text extends abstracts\input {
     }
 
     /**
-     * Renders text element specific attributes.
+     * @brief renders text element specific HTML attributes
+     *
+     * @return $attributes (string) rendered HTML attributes
      **/
     protected function htmlInputAttributes() {
         $attributes = parent::htmlInputAttributes();
@@ -100,7 +114,9 @@ class text extends abstracts\input {
     }
 
     /**
-     * Converts value to element specific type.
+     * @brief   Converts value to element specific type.
+     *
+     * @return  void
      **/
     protected function typeCastValue() {
         $this->value = (string) $this->value;

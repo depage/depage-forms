@@ -1,18 +1,23 @@
 <?php
+/**
+ * @file    elements/url.php
+ * @brief   url input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML url input type.
+ * @brief HTML url input type
  **/
 class url extends text {
     /**
-     * collects initial values across subclasses.
+     * @brief   collects initial values across subclasses
+     *
+     * @return  void
      **/
     protected function setDefaults() {
         parent::setDefaults();
 
         $this->defaults['errorMessage'] = 'Please enter a valid URL!';
     }
-
 }

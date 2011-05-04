@@ -1,9 +1,13 @@
 <?php
+/**
+ * @file    elements/range.php
+ * @brief   range input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML range input type.
+ * @brief HTML range input type.
  **/
 class range extends number {
 }

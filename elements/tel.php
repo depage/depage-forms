@@ -1,13 +1,19 @@
 <?php
+/**
+ * @file    elements/tel.php
+ * @brief   tel input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML tel input type.
+ * @brief HTML tel input type.
  **/
 class tel extends text {
     /**
-     * collects initial values across subclasses.
+     * @brief   collects initial values across subclasses
+     *
+     * @return  void
      **/
     protected function setDefaults() {
         parent::setDefaults();

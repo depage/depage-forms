@@ -1,6 +1,6 @@
 <?php
 /**
- * @file    email.php
+ * @file    elements/email.php
  * @brief   email input element
  **/
 

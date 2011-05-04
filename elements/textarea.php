@@ -1,13 +1,19 @@
 <?php
+/**
+ * @file    textarea.php
+ * @brief   textarea input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /**
- * HTML textarea element.
+ * @brief HTML textarea element.
  **/
 class textarea extends text {
     /**
-     * collects initial values across subclasses.
+     * @brief   collects initial values across subclasses
+     *
+     * @return  void
      **/
     protected function setDefaults() {
         parent::setDefaults();
@@ -17,9 +23,9 @@ class textarea extends text {
     }
 
     /**
-     * Renders element to HTML.
+     * @brief   Renders element to HTML.
      *
-     * @return string of HTML rendered element
+     * @return  (string) HTML rendered element
      **/
     public function __toString() {
         $label              = $this->htmlLabel();
@@ -41,14 +47,18 @@ class textarea extends text {
     }
 
     /**
-     * Returns string of HTML rows attribute.
+     * @brief   Renders HTML rows attribute
+     *
+     * @return  (string) HTML rows attribute
      **/
     protected function htmlRows() {
         return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
     }
 
     /**
-     * Returns string of HTML cols attribute.
+     * @brief   Renders HTML cols attribute
+     *
+     * @return  (string) HTML cols attribute
      **/
     protected function htmlCols() {
         return ($this->cols === null) ? "" : " cols=\"" . $this->htmlEscape($this->cols) . "\"";

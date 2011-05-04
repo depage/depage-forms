@@ -1,9 +1,13 @@
 <?php
+/**
+ * @file    password.php
+ * @brief   password input element
+ **/
 
 namespace depage\htmlform\elements;
 
 /** 
- * HTML password input type.
+ * @brief HTML password input type.
  **/
 class password extends text {
 }
