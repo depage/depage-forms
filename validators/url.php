@@ -1,12 +1,17 @@
 <?php
+/**
+ * @file    validators/url.php
+ * @brief   url validator
+ **/
+
 namespace depage\htmlform\validators;
 
 /**
- * Validator for url input elements.
+ * @brief default validator for url input elements
  **/
 class url extends validator {
     /**
-     * Overrides validator::validate; url validation.
+     * @brief   url validator
      *
      * @param   $url        (string)    url to be validated
      * @param   $parameters (array)     validation parameters
