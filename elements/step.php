@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief Steps break up forms into separate consecutive parts
  **/
 class step extends fieldset {
+    // {{{ __toString()
     /**
      * @brief renders step container to HTML
      *
@@ -25,4 +26,5 @@ class step extends fieldset {
         }
         return $renderedElements;
     }
+    // }}}
 }

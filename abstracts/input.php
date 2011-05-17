@@ -15,6 +15,7 @@ use depage\htmlform\validators;
  * HTML input element types. It handles validation and value manipulation.
  **/
 abstract class input extends element {
+    // {{{ variables
     /**
      * @brief Input element type - HTML input type attribute.
      **/
@@ -51,7 +52,9 @@ abstract class input extends element {
      * @brief HTML pattern attribute
      **/
     protected $pattern = false;
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   input class constructor
      *
@@ -70,7 +73,9 @@ abstract class input extends element {
             ? validators\validator::factory($parameters['validator'], $this->log)
             : validators\validator::factory($this->type, $this->log);
     }
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   Collects initial values across subclasses.
      *
@@ -86,7 +91,9 @@ abstract class input extends element {
         $this->defaults['errorMessage'] = 'Please enter valid data!';
         $this->defaults['title']        = false;
     }
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief   Validates input element
      *
@@ -107,7 +114,9 @@ abstract class input extends element {
         }
         return $this->valid;
     }
+    // }}}
 
+    // {{{ validatorCall()
     /**
      * @brief   custom validator call hook
      *
@@ -118,7 +127,9 @@ abstract class input extends element {
     protected function validatorCall() {
         return $this->validator->validate($this->value);
     }
+    // }}}
 
+    // {{{ isEmpty()
     /**
      * @brief   says wether the element value is empty
      *
@@ -134,7 +145,9 @@ abstract class input extends element {
             && ($this->value !== false)
         );
     }
+    // }}}
 
+    // {{{ setValue()
     /**
      * @brief   set the input element value
      *
@@ -151,7 +164,9 @@ abstract class input extends element {
         $this->typeCastValue();
         return $this->value;
     }
+    // }}}
 
+    // {{{ getValue()
     /**
      * @brief   Returns the current input elements' value.
      *
@@ -160,7 +175,9 @@ abstract class input extends element {
     public function getValue() {
         return $this->value;
     }
+    // }}}
 
+    // {{{ setDefaultValue()
     /**
      * @brief   set the initial input element value
      *
@@ -175,7 +192,9 @@ abstract class input extends element {
     public function setDefaultValue($newDefaultValue) {
         $this->defaultValue = $newDefaultValue;
     }
+    // }}}
 
+    // {{{ typeCastValue()
     /**
      * @brief converts element value
      *
@@ -185,7 +204,9 @@ abstract class input extends element {
      * @return void
      **/
     protected function typeCastValue() {}
+    // }}}
 
+    // {{{ setAutofocus()
     /**
      * @brief   Sets the HTML autofocus-attribute of the current input element.
      *
@@ -195,7 +216,9 @@ abstract class input extends element {
     public function setAutofocus($autofocus = true) {
         $this->autofocus = (bool) $autofocus;
     }
+    // }}}
 
+    // {{{ setRequired()
     /**
      * @brief   Sets the HTML required-attribute of the current input element.
      *
@@ -205,7 +228,9 @@ abstract class input extends element {
     public function setRequired($required = true) {
         $this->required = (bool) $required;
     }
+    // }}}
 
+    // {{{ htmlClasses()
     /**
      * @brief   Returns string of the elements' HTML-classes, separated by spaces.
      *
@@ -225,7 +250,9 @@ abstract class input extends element {
 
         return $classes;
     }
+    // }}}
 
+    // {{{ htmlMarker()
     /**
      * @brief   Returns elements' required-indicator.
      *
@@ -237,7 +264,9 @@ abstract class input extends element {
     protected function htmlMarker() {
         return ($this->required) ? " <em>" . $this->htmlEscape($this->marker) . "</em>" : "";
     }
+    // }}}
 
+    // {{{ htmlInputAttributes()
     /**
      * @brief   Returns string of HTML attributes for input element.
      *
@@ -251,7 +280,9 @@ abstract class input extends element {
 
         return $attributes;
     }
+    // }}}
 
+    // {{{ htmlWrapperAttributes()
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
@@ -268,7 +299,9 @@ abstract class input extends element {
 
         return $attributes;
     }
+    // }}}
 
+    // {{{ htmlValue()
     /**
      * @brief   Returns HTML-rendered element value
      *
@@ -277,7 +310,9 @@ abstract class input extends element {
     protected function htmlValue() {
         return ($this->value === null) ? $this->htmlEscape($this->defaultValue) : $this->value;
     }
+    // }}}
 
+    // {{{ htmlErrorMessage()
     /**
      * @brief   Returns HTML-rendered error message
      *
@@ -295,4 +330,5 @@ abstract class input extends element {
 
         return $errorMessage;
     }
+    // }}}
 }

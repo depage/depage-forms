@@ -6,11 +6,14 @@ use depage\htmlform\elements\boolean;
  * Tests for boolean input element rendering.
  **/
 class booleanToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form     = new nameTestForm();
         $this->boolean  = new boolean('booleanName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testSimple()
     /**
      * Element with default setup
      **/
@@ -24,7 +27,9 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->boolean->__toString());
     }
+    // }}}
 
+    // {{{ testChecked()
     /**
      * Checked element
      **/
@@ -39,7 +44,9 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setValue(true);
         $this->assertEquals($expected, $this->boolean->__toString());
     }
+    // }}}
 
+    // {{{ testRequired()
     /**
      * Rendered element with set required attribute
      **/
@@ -54,7 +61,9 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setRequired();
         $this->assertEquals($expected, $this->boolean->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlEscaping()
     /**
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
@@ -76,4 +85,5 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
         $boolean = new boolean('booleanName', $parameters, $this->form);
         $this->assertEquals($expected, $boolean->__toString());
     }
+    // }}}
 }

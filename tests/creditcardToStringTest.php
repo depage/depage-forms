@@ -6,6 +6,7 @@ use depage\htmlform\elements\creditcard;
  * Tests for creditcard element rendering.
  **/
 class creditcardToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ testSimple()
     /**
      * Element with default setup
      **/
@@ -55,4 +56,5 @@ class creditcardToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $creditcard->__toString());
     }
+    // }}}
 }

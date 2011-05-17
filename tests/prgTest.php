@@ -2,6 +2,7 @@
 
 use depage\htmlform\htmlform;
 
+// {{{ htmlformTestClass
 /**
  * Custom htmlform class with overidden redirect method for easier testing
  **/
@@ -12,11 +13,13 @@ class htmlformTestClass extends htmlform {
         $this->testRedirect = $url;
     }
 }
+// }}}
 
 /**
 * Testing Post/Redirect/Get-relevant behavior
 **/
 class prgTest extends PHPUnit_Framework_TestCase {
+    // {{{ testRedirect()
     /**
      * Testing the test...
      **/
@@ -26,7 +29,9 @@ class prgTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('http://www.depage.net', $this->form->testRedirect);
     }
+    // }}}
 
+    // {{{ testProcessOnPost()
     /**
      * Testing htmlform::updateInputValue() and htmlform::process()
      * in case of submitted form
@@ -52,7 +57,9 @@ class prgTest extends PHPUnit_Framework_TestCase {
         // should redirect to success address
         $this->assertEquals('http://www.depagecms.net', $form->testRedirect);
     }
+    // }}}
 
+    // {{{ testProcessOnGet()
     /**
      * Testing htmlform::updateInputValue() and htmlform::process()
      * on GET-request with previously submitted data in session
@@ -68,7 +75,9 @@ class prgTest extends PHPUnit_Framework_TestCase {
         // tests value from session
         $this->assertEquals('stored', $storedTextElement->getValue());
     }
+    // }}}
 
+    // {{{ testProcessSteps()
     /**
      * Test process() method for forms with steps. Setting an invalid step 
      * number forces call of getFirstInvalidStep(). 
@@ -95,7 +104,9 @@ class prgTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('/?step=1', $form->testRedirect);
     }
+    // }}}
 
+    // {{{ testStepsFreeFieldset()
     /**
      * Tests getFirstInvalidStep() for fieldset outside steps. Setting an
      * invalid step number forces call of getFirstInvalidStep(). When all steps
@@ -122,4 +133,5 @@ class prgTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('/?step=1', $form->testRedirect);
     }
+    // }}}
 }

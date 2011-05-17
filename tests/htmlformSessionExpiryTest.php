@@ -10,6 +10,7 @@ function time() {
 }
 
 class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase {
+    // {{{ testSetTimestamp()
     /**
      * see if the timestamp is written to session
      **/
@@ -17,7 +18,9 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase {
         $form = new htmlform('formName', array('ttl' => 60));
         $this->assertEquals(42, $_SESSION['formName-data']['timestamp']);
     }
-    
+    // }}}
+
+    // {{{ testUpdateTimestamp()
     /**
      * In an active session only the timestamp should be updated. The form data
      * remains untouched.
@@ -30,7 +33,9 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('test', $_SESSION['formName-data']['test']);
         $this->assertEquals(42, $_SESSION['formName-data']['timestamp']);
     }
+    // }}}
 
+    // {{{ testClearSession()
     /**
      * If the session timestamp is outdated, form data should be cleared.
      **/
@@ -42,4 +47,5 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($_SESSION['formName-data']['test']);
         $this->assertEquals(42, $_SESSION['formName-data']['timestamp']);
     }
+    // }}}
 }

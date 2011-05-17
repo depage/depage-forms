@@ -2,6 +2,7 @@
 
 use depage\htmlform\abstracts\input;
 
+// {{{ inputTestClass
 /**
  * Input is abstract, so we need this test class to instantiate it.
  **/
@@ -25,23 +26,29 @@ class inputTestClass extends input {
         return $this->autofocus;
     }
 }
+// }}}
 
 /**
  * General tests for the input class.
  **/
 class inputTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->input    = new inputTestClass('inputName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testInputInvalid()
     /**
      * Default value is null -> invalid
      **/
     public function testInputInvalid() {
         $this->assertFalse($this->input->validate());
     }
+    // }}}
 
+    // {{{ testInputValid()
     /**
      * After setting value -> valid
      **/
@@ -49,14 +56,18 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->input->setValue('testValue');
         $this->assertTrue($this->input->validate());
     }
+    // }}}
 
+    // {{{ testGetName()
     /**
      * Testing getName method
      **/
     public function testGetName() {
         $this->assertEquals('inputName', $this->input->getName());
     }
+    // }}}
 
+    // {{{ testHtmlClasses()
     /**
      * Tests getting rendered HTML classes.
      **/
@@ -75,7 +86,9 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $input->validate();
         $this->assertEquals('input-inputtestclass required error', $input->htmlClasses());
     }
+    // }}}
 
+    // {{{ testHtmlErrorMessage()
     /**
      * Tests getting rendered HTML error message.
      **/
@@ -89,7 +102,9 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->input->setValue('');
         $this->assertEquals($this->input->htmlErrorMessage(), ' <span class="errorMessage">Please enter valid data!</span>');
     }
+    // }}}
 
+    // {{{ testSetAutofocus()
     /**
      * Tests setAutofocus method
      **/
@@ -107,5 +122,5 @@ class inputTest extends PHPUnit_Framework_TestCase {
         $this->input->setAutofocus(true);
         $this->assertTrue($this->input->getAutofocus());
     }
+    // }}}
 }
-?>

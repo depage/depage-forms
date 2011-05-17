@@ -11,5 +11,4 @@ namespace depage\htmlform\elements;
  *
  * @todo    dummy - no validator implemented yet
  **/
-class week extends text {
-}
+class week extends text {}

@@ -12,11 +12,14 @@ namespace depage\htmlform\validators;
  * Basic validator. Contaіns validator factory.
  **/
  class validator {
+    // {{{ variables
     /**
      * @brief log object
      **/
     protected $log;
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   validator constructor
      *
@@ -28,7 +31,9 @@ namespace depage\htmlform\validators;
     public function __construct($log = null) {
         $this->log = $log;
     }
+    // }}}
 
+    // {{{ factory()
     /**
      * @brief   valdiator object factory
      *
@@ -55,7 +60,9 @@ namespace depage\htmlform\validators;
             }
         }
     }
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief   default validator.
      *
@@ -68,7 +75,9 @@ namespace depage\htmlform\validators;
     public function validate($value, $parameters = array()) {
         return true;
     }
+    // }}}
 
+    // {{{ log()
     /**
      * @brief   error logging method
      *
@@ -83,7 +92,9 @@ namespace depage\htmlform\validators;
             error_log($argument);
         }
     }
+    // }}}
 
+    // {{{ getPatternAttribute()
     /**
      * @brief   returns validators' regular expression as HTML5 pattern attribute
      *
@@ -94,4 +105,5 @@ namespace depage\htmlform\validators;
             return ' pattern="' . htmlspecialchars(substr($this->regEx, 1,-1), ENT_QUOTES) . '"';
         }
     }
+    // }}}
 }

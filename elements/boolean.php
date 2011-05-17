@@ -12,6 +12,7 @@ use depage\htmlform\abstracts;
  * @brief HTML single checkbox input type.
  **/
 class boolean extends abstracts\input {
+    // {{{ setDefaults()
     /**
      * @brief collects initial values across subclasses.
      **/
@@ -20,7 +21,9 @@ class boolean extends abstracts\input {
         $this->defaults['defaultValue'] = false;
         $this->defaults['errorMessage'] = 'Please check this box if you want to proceed!';
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -43,7 +46,9 @@ class boolean extends abstracts\input {
             $errorMessage .
         "</p>\n";
     }
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief validates boolean input element value
      *
@@ -65,7 +70,9 @@ class boolean extends abstracts\input {
 
         return $this->valid;
     }
+    // }}}
 
+    // {{{ setValue()
     /**
      * @brief   set the boolean element value
      *
@@ -86,4 +93,5 @@ class boolean extends abstracts\input {
 
         return $this->value;
     }
+    // }}}
 }

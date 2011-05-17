@@ -11,6 +11,7 @@
  * It features validation and takes care of duplicate form submissions.
  **/
 
+// {{{ namespace
 /**
  * @namespace depage
  * @brief depage cms
@@ -33,7 +34,9 @@
 namespace depage\htmlform;
 
 use depage\htmlform\elements;
+// }}}
 
+// {{{ autoloader
 /**
  * @brief PHP autoloader
  *
@@ -49,6 +52,7 @@ function autoload($class) {
 }
 
 spl_autoload_register(__NAMESPACE__ . '\autoload');
+// }}}
 
 /**
  * @brief main interface to users
@@ -58,36 +62,37 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * handlers.
  **/
 class htmlform extends abstracts\container {
+    // {{{ variables
     /**
-     * @brief HTML form method attribute.
+     * @brief HTML form method attribute
      * */
     protected $method;
     /**
-     * @brief HTML form action attribute.
+     * @brief HTML form action attribute
      **/
     protected $submitURL;
     /**
-     * @brief Specifies where the user is redirected to, once the form-data is valid.
+     * @brief Specifies where the user is redirected to, once the form-data is valid
      **/
     protected $successURL;
     /**
-     * @brief Contains the submit button label of the form.
+     * @brief Contains the submit button label of the form
      **/
     protected $label;
     /**
-     * @brief Contains the name of the array in the PHP session, holding the form-data.
+     * @brief Contains the name of the array in the PHP session, holding the form-data
      **/
     protected $sessionSlotName;
     /**
-     * @brief PHP session handle.
+     * @brief PHP session handle
      **/
     protected $sessionSlot;
     /**
-     * @brief Contains current step number.
+     * @brief Contains current step number
      **/
     private $currentStepId;
     /**
-     * @brief Contains array of step object references.
+     * @brief Contains array of step object references
      **/
     private $steps = array();
     /**
@@ -95,10 +100,12 @@ class htmlform extends abstracts\container {
      **/
     protected $ttl;
     /**
-     * @brief Form validation result/status.
+     * @brief Form validation result/status
      **/
     public $valid;
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   htmlform class constructor
      *
@@ -129,7 +136,9 @@ class htmlform extends abstracts\container {
         $this->addHidden('formName', array('defaultValue' => $this->name));
         $this->addChildElements();
     }
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   Collects initial values across subclasses.
      *
@@ -145,7 +154,9 @@ class htmlform extends abstracts\container {
         $this->defaults['validator']    = null;
         $this->defaults['ttl']          = null;
     }
+    // }}}
 
+    // {{{ sessionExpiry()
     /**
      * @brief   Deletes session when it expires.
      *
@@ -169,7 +180,9 @@ class htmlform extends abstracts\container {
             $this->sessionSlot['timestamp'] = $timestamp;
         }
     }
+    // }}}
 
+    // {{{ addElement()
     /** 
      * @brief   Adds input or fieldset elements to htmlform.
      *
@@ -191,7 +204,9 @@ class htmlform extends abstracts\container {
 
         return $newElement;
     }
+    // }}}
 
+    // {{{ updateInputValue()
     /**
      * @brief   Updates the value of an associated input element
      *
@@ -217,7 +232,9 @@ class htmlform extends abstracts\container {
             $this->getElement($name)->setValue($this->sessionSlot[$name]);
         }
     }
+    // }}}
 
+    // {{{ inCurrentStep()
     /**
      * @brief   Checks if the element named $name is in the current step.
      *
@@ -227,7 +244,9 @@ class htmlform extends abstracts\container {
     private function inCurrentStep($name) {
         return in_array($this->getElement($name), $this->getCurrentElements());
     }
+    // }}}
 
+    // {{{ setCurrentStep()
     /**
      * @brief   Validates step number of GET request.
      *
@@ -246,7 +265,9 @@ class htmlform extends abstracts\container {
             $this->currentStepId = $this->getFirstInvalidStep();
         }
     }
+    // }}}
 
+    // {{{ getCurrenElements()
     /**
      * @brief   Returns an array of input elements contained in the current step.
      *
@@ -269,7 +290,9 @@ class htmlform extends abstracts\container {
         }
         return $currentElements;
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders form to HTML.
      *
@@ -299,7 +322,9 @@ class htmlform extends abstracts\container {
             "<p id=\"{$this->name}-submit\"><input type=\"submit\" value=\"{$label}\"></p>" . "\n" .
         "</form>";
     }
+    // }}}
 
+    // {{{ process()
     /**
      * @brief   Calls form validation and handles redirects.
      *
@@ -325,7 +350,9 @@ class htmlform extends abstracts\container {
             }
         }
     }
+    // }}}
 
+    // {{{ getFirstInvalidStep()
     /**
      * @brief   Returns first step that didn't pass validation.
      *
@@ -353,7 +380,9 @@ class htmlform extends abstracts\container {
             return 0;
         }
     }
+    // }}}
 
+    // {{{ redirect()
     /**
      * @brief Redirects Browser to a different URL.
      *
@@ -363,7 +392,9 @@ class htmlform extends abstracts\container {
         header('Location: ' . $url);
         die( "Tried to redirect you to " . $url);
     }
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief   Validates the forms subelements.
      *
@@ -389,7 +420,9 @@ class htmlform extends abstracts\container {
 
         return $this->valid;
     }
+    // }}}
 
+    // {{{ isEmpty()
     /**
      * @brief   Returns wether form has been submitted before or not.
      *
@@ -398,7 +431,9 @@ class htmlform extends abstracts\container {
     public function isEmpty() {
         return !isset($this->sessionSlot['formName']);
     }
+    // }}}
 
+    // {{{ populate()
     /**
      * @brief   Fills subelement values.
      *
@@ -416,7 +451,9 @@ class htmlform extends abstracts\container {
             }
         }
     }
+    // }}}
 
+    // {{{ getValues()
     /**
      * @brief   Gets form-data from current PHP session.
      *
@@ -425,7 +462,9 @@ class htmlform extends abstracts\container {
     public function getValues() {
         return (isset($this->sessionSlot)) ? $this->sessionSlot : null;
     }
+    // }}}
 
+    // {{{ checkElementName()
     /**
      * @brief   Checks for duplicate subelement names.
      *
@@ -442,7 +481,9 @@ class htmlform extends abstracts\container {
             }
         }
     }
+    // }}}
 
+    // {{{ clearSession()
     /**
      * @brief   Deletes the current forms' PHP session data.
      *
@@ -452,7 +493,9 @@ class htmlform extends abstracts\container {
         unset($_SESSION[$this->sessionSlotName]);
         unset($this->sessionSlot);
     }
+    // }}}
 
+    // {{{ onValidate()
     /**
      * @brief   Validation hook
      *
@@ -463,4 +506,5 @@ class htmlform extends abstracts\container {
      * @see     validate()
      **/
     protected function onValidate() {}
+    // }}}
 }

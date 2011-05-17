@@ -6,18 +6,23 @@ use depage\htmlform\elements\single;
  * General tests for the multiple input element.
  **/
 class singleTest extends PHPUnit_Framework_TestCase {
+    // {{{
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->single   = new single('singleName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testConstruct()
     /**
      * Constructor test, getName()
      **/
     public function testConstruct() {
         $this->assertEquals('singleName', $this->single->getName());
     }
+    // }}}
 
+    // {{{ testSingleSetValue()
     /**
      * Tests setValue method with various values. (typecasting)
      **/
@@ -29,7 +34,9 @@ class singleTest extends PHPUnit_Framework_TestCase {
         $this->assertInternalType('string', $this->single->getValue());
         $this->assertEquals('42', $this->single->getValue());
     }
+    // }}}
 
+    // {{{ testSingleNotRequiredEmpty()
     /**
      * Not Required, empty -> valid
      **/
@@ -37,7 +44,9 @@ class singleTest extends PHPUnit_Framework_TestCase {
         $this->single->setValue('');
         $this->assertTrue($this->single->validate());
     }
+    // }}}
 
+    // {{{ testSingleValidNotRequiredNotEmpty()
     /**
      * Not empty, not required -> valid
      **/
@@ -45,7 +54,9 @@ class singleTest extends PHPUnit_Framework_TestCase {
         $this->single->setValue('valueString');
         $this->assertTrue($this->single->validate());
     }
+    // }}}
 
+    // {{{ testSingleRequiredEmpty()
     /**
      * Required, empty -> invalid
      **/
@@ -54,4 +65,5 @@ class singleTest extends PHPUnit_Framework_TestCase {
         $this->single->setValue('');
         $this->assertFalse($this->single->validate());
     }
+    // }}}
 }

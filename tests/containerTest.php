@@ -3,6 +3,7 @@
 use depage\htmlform\abstracts\container;
 use depage\htmlform\exceptions;
 
+// {{{ containerTestClass
 /**
  * Container is abstract, so we need this test class to instantiate it.
  **/
@@ -12,7 +13,9 @@ class containerTestClass extends container {
         $this->elements[] = $element;
     }
 }
+// }}}
 
+// {{{ testElement
 /**
  * needed for testSetRequired()
  **/
@@ -28,23 +31,29 @@ class testElement {
         return 'testElementName';
     }
 }
+// }}}
 
 /**
  * General tests for the container class.
  **/
 class containerTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     protected function setUp() {
         $this->form         = new nameTestForm;
         $this->container    = new containerTestClass('containerName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testConstruct()
     /**
      * Constructor test.
      **/
     public function testConstruct() {
         $this->assertEquals('containerName', $this->container->getName());
     }
+    // }}}
 
+    // {{{ testGetElements()
     /**
      * Tests method to get subelements of container.
      **/
@@ -64,7 +73,9 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($fieldset, $elements[1]);
         $this->assertEquals($text2, $elements[2]);
     }
+    // }}}
 
+    // {{{ test_checkElementType()
     /**
      * Exception on unknown element type.
      **/
@@ -76,7 +87,9 @@ class containerTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected unknownElementTypeException.');
     }
+    // }}}
 
+    // {{{ testAddHtml()
     /**
      * Tests addHtml method.
      **/
@@ -84,7 +97,9 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $html = $this->container->addHtml('htmlString');
         $this->assertEquals('htmlString', $html->__toString());
     }
+    // }}}
 
+    // {{{ testSetRequired()
     /**
      * Tests setting multiple subelements required attribute
      **/
@@ -105,7 +120,9 @@ class containerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($element1->required);
         $this->assertFalse($element2->required);
     }
+    // }}}
 
+    // {{{ testGetElement()
     /**
      * Get sub-element by name.
      **/
@@ -118,4 +135,5 @@ class containerTest extends PHPUnit_Framework_TestCase {
         // method returns false if element not found
         $this->assertFalse($this->container->getElement('bogusInputName'));
     }
+    // }}}
 }

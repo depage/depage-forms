@@ -7,11 +7,14 @@ use depage\htmlform\elements\fieldset;
  * General tests for the fieldset element.
  **/
 class fieldsetTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form = new nameTestForm('formName');
         $this->fieldset = new fieldset('fieldsetName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testAddFieldset()
     /**
      * Tests __call method and adding container subelements
      **/
@@ -22,7 +25,9 @@ class fieldsetTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($elements[0], $fieldset2);
     }
+    // }}}
 
+    // {{{ testAddText()
     /**
      * Tests __call method and adding input subelements
      **/
@@ -32,4 +37,5 @@ class fieldsetTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($text, $elements[0]);
     }
+    // }}}
 }

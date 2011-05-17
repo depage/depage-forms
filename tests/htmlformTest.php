@@ -7,6 +7,7 @@ use depage\htmlform\exceptions;
  * General tests for the htmlform class.
  **/
 class htmlformTest extends PHPUnit_Framework_TestCase {
+    // {{{ testDuplicateElementNameException()
     /**
      * Throw exception when subelements have the same name.
      **/
@@ -21,7 +22,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected duplicateElementNameException.');
     }
+    // }}}
 
+    // {{{ testEmptyFormBeforePostValidation()
     /**
      * Unsubmitted forms have to be invalid, so we don't redirect to success
      * page right away.
@@ -32,7 +35,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->form->process();
         $this->assertFalse($this->form->validate());
     }
+    // }}}
 
+    // {{{ testPopulate()
     /**
      * "Populating" the forms subelements with values.
      **/
@@ -67,7 +72,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedText1, $text1->__toString());
         $this->assertEquals($expectedText2, $text2->__toString());
     }
+    // }}}
 
+    // {{{ testAddStep()
     /**
      * Adding step element.
      **/
@@ -78,7 +85,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('stepName', $step->getName());
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\step', $step);
     }
+    // }}}
 
+    // {{{ testGetCurrentElementsInStep()
     /**
      * Since getCurrentElements() is private we need to go through
      * inCurrentStep() and updateInputValue() in order to test it.
@@ -100,7 +109,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals('text0Value', $text0->getValue());
     }
+    // }}}
 
+    // {{{ testGetCurrentElementsNotInStep()
     /**
      * Since getCurrentElements() is private we need to go through
      * inCurrentStep() and updateInputValue() in order to test it.
@@ -122,7 +133,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertNull($text0->getValue());
     }
+    // }}}
 
+    // {{{ testIsEmpty()
     /**
      * Tests if form has already been submitted
      **/
@@ -133,7 +146,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $_SESSION['formName-data']['formName'] = 'formName';
         $this->assertFalse($form->isEmpty());
     }
+    // }}}
 
+    // {{{ testValidationResultWithoutValidate()
     /**
      * There's no need to rebuild the entire form with all its elements on the
      * success page in order to check the validation result. The form object
@@ -151,7 +166,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
         $form3 = new htmlform('form3Name');
         $this->assertFalse($form3->valid);
     }
+    // }}}
 
+    // {{{ testCustomValidator()
     /**
      * Forms can accept a custom validator function as a parameter. It's called
      * when the rest of the form is successfully validated and an array of form
@@ -170,7 +187,6 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue($form->valid);
 
-
         //custom validator function (invalid)
         $validator2 = function () { return false; };
 
@@ -183,7 +199,9 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertFalse($form2->valid);
     }
+    // }}}
 
+    // {{{ testClearSession()
     /**
      * See if deleting the forms session slot works.
      **/
@@ -195,5 +213,5 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
 
         $this->assertNull($form->getValues());
     }
+    // }}}
 }
-?>

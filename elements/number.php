@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief HTML number input type.
  **/
 class number extends text {
+    // {{{ variables
     /**
      * @brief Minimum range HTML attribute.
      **/
@@ -22,7 +23,9 @@ class number extends text {
      * @brief Step HTML attribute.
      **/
     protected $step;
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
      *
@@ -37,7 +40,9 @@ class number extends text {
         $this->defaults['step']         = null;
         $this->defaults['errorMessage'] = 'Please enter a valid number!';
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -64,7 +69,9 @@ class number extends text {
             $errorMessage .
         "</p>\n";
     }
+    // }}}
 
+    // {{{ htmlMin()
     /**
      * @brief   Renders HTML min attribute.
      *
@@ -73,7 +80,9 @@ class number extends text {
     protected function htmlMin() {
         return ($this->min === null) ? "" : " min=\"" . $this->htmlEscape($this->min) . "\"";
     }
+    // }}}
 
+    // {{{ htmlMax()
     /**
      * @brief   Renders HTML max attribute.
      *
@@ -82,7 +91,9 @@ class number extends text {
     protected function htmlMax() {
         return ($this->max === null) ? "" : " max=\"" . $this->htmlEscape($this->max) . "\"";
     }
+    // }}}
 
+    // {{{ htmlStep()
     /**
      * @brief   Renders HTML step attribute.
      *
@@ -91,7 +102,9 @@ class number extends text {
     protected function htmlStep() {
         return ($this->step === null) ? "" : " step=\"" . $this->htmlEscape($this->step) . "\"";
     }
+    // }}}
 
+    // {{{ validatorCall()
     /**
      * @brief   custom validator call
      *
@@ -106,7 +119,9 @@ class number extends text {
         );
         return $this->validator->validate($this->value, $parameters);
     }
+    // }}}
 
+    // {{{ typeCastValue()
     /**
      * @brief   Converts value to element specific type.
      *
@@ -115,4 +130,5 @@ class number extends text {
     protected function typeCastValue() {
         $this->value = (float) $this->value;
     }
+    // }}}
 }

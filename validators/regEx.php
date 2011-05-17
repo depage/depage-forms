@@ -9,11 +9,14 @@ namespace depage\htmlform\validators;
  * @brief customizable validator for input elements
  **/
 class regEx extends validator {
+    // {{{ variables
     /**
      * @brief regular expression
      **/
     protected $regEx = "//";
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief   validates value with regular expression
      *
@@ -31,7 +34,9 @@ class regEx extends validator {
 
         return $match;
     }
+    // }}}
 
+    // {{{ setRegEx()
     /**
      * @brief   sets the validators regular expression
      *
@@ -41,4 +46,5 @@ class regEx extends validator {
     public function setRegEx($regEx) {
         $this->regEx = $regEx;
     }
+    // }}}
 }

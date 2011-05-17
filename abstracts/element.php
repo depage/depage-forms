@@ -15,6 +15,7 @@ use depage\htmlform\exceptions;
  * container and input elements.
  **/
 abstract class element {
+    // {{{ variables
     /**
      * @brief Element name.
      **/
@@ -31,7 +32,9 @@ abstract class element {
      * @brief Log object reference
      **/
     protected $log;
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   element class constructor
      *
@@ -52,7 +55,9 @@ abstract class element {
             $this->$parameter = isset($parameters[strtolower($parameter)]) ? $parameters[strtolower($parameter)] : $default;
         }
     }
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   Collects initial values across subclasses.
      *
@@ -61,7 +66,9 @@ abstract class element {
     protected function setDefaults() {
         $this->defaults['log'] = null;
     }
+    // }}}
 
+    // {{{ __call()
     /**
      * @brief   HTML escaping
      *
@@ -83,7 +90,9 @@ abstract class element {
             trigger_error("Call to undefined method $function", E_USER_ERROR);
         }
     }
+    // }}}
 
+    // {{{ getName()
     /**
      * @brief   Returns the element name.
      *
@@ -92,7 +101,9 @@ abstract class element {
     public function getName() {
         return $this->name;
     }
+    // }}}
 
+    // {{{ checkParameters()
     /**
      * @brief   checks element parameters
      *
@@ -106,7 +117,9 @@ abstract class element {
             throw new exceptions\elementParametersNoArrayException('Element "' . $this->getName() . '": parameters must be of type array.');
         }
     }
+    // }}}
 
+    // {{{ checkName()
     /**
      * @brief   checks for valid element name
      *
@@ -125,7 +138,9 @@ abstract class element {
             throw new exceptions\invalidElementNameException('"' . $name . '" is not a valid element name.');
         }
     }
+    // }}}
 
+    // {{{ log()
     /**
      * @brief error & warning logger
      *
@@ -143,7 +158,9 @@ abstract class element {
             error_log($argument);
         }
     }
+    // }}}
 
+    // {{{ htmlEscape()
     /**
      * @brief   Escapes HTML in strings and arrays of strings
      *
@@ -169,4 +186,5 @@ abstract class element {
         }
         return $htmlOptions;
     }
+    // }}}
 }

@@ -6,18 +6,23 @@ use depage\htmlform\elements\boolean;
  * General tests for the boolean input element.
  **/
 class booleanTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form     = new nameTestForm();
         $this->boolean  = new boolean('booleanName', array(), $this->form);
     }
+    // }}} 
 
+    // {{{ testConstruct()
     /**
      * Constructor test, getName()
      **/
     public function testConstruct() {
         $this->assertEquals('booleanName', $this->boolean->getName());
     }
+    // }}}
 
+    // {{{ testBooleanSetValue()
     /**
      * Tests setValue method with various values. (typecasting)
      **/
@@ -39,7 +44,9 @@ class booleanTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setValue(1);
         $this->assertFalse($this->boolean->getValue());
     }
+    // }}}
 
+    // {{{ testNotRequiredFalse()
     /**
      * Should be valid when false but not required.
      **/
@@ -47,7 +54,9 @@ class booleanTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setValue(false);
         $this->assertTrue($this->boolean->validate());
     }
+    // }}}
 
+    // {{{ testRequiredFalse()
     /**
      * Element is invalid if false and required.
      **/
@@ -56,7 +65,9 @@ class booleanTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setValue(false);
         $this->assertFalse($this->boolean->validate());
     }
+    // }}}
 
+    // {{{ testNotRequiredTrue()
     /**
      * Element is valid if true and not required.
      **/
@@ -64,7 +75,9 @@ class booleanTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setValue(true);
         $this->assertTrue($this->boolean->validate());
     }
+    // }}}
 
+    // {{{ testRequiredTrue()
     /**
      * Element is valid if true and required.
      **/
@@ -73,4 +86,5 @@ class booleanTest extends PHPUnit_Framework_TestCase {
         $this->boolean->setRequired();
         $this->assertTrue($this->boolean->validate());
     }
+    // }}}
 }

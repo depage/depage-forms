@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief HTML tel input type.
  **/
 class tel extends text {
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
      *
@@ -20,4 +21,5 @@ class tel extends text {
 
         $this->defaults['errorMessage'] = 'Please enter a valid telephone number!';
     }
+    // }}}
 }

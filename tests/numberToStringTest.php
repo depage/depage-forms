@@ -6,11 +6,14 @@ use depage\htmlform\elements\number;
  * Tests for boolean input element rendering.
  **/
 class numberToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->number   = new number('numberName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testSimple()
     /**
      * Element with default setup
      **/
@@ -24,7 +27,9 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->number->__toString());
     }
+    // }}}
 
+    // {{{ testValue()
     /**
      * Tests rendering with value set.
      **/
@@ -39,7 +44,9 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $this->number->setValue(7331);
         $this->assertEquals($expected, $this->number->__toString());
     }
+    // }}}
 
+    // {{{ testRequired()
     /**
      * Rendered element with set required attribute
      **/
@@ -54,7 +61,9 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $this->number->setRequired();
         $this->assertEquals($expected, $this->number->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlEscaping()
     /**
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
@@ -76,4 +85,5 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $number = new number('numberName', $parameters, $this->form);
         $this->assertEquals($expected, $number->__toString());
     }
+    // }}}
 }

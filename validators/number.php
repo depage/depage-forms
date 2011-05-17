@@ -10,6 +10,7 @@ namespace depage\htmlform\validators;
  * @brief default validator for number input elements
  **/
 class number extends validator {
+    // {{{ validate()
     /**
      * @brief   number validation
      *
@@ -25,4 +26,5 @@ class number extends validator {
             && (($value >= $min) || ($min === null))
             && (($value <= $max) || ($max === null));
     }
+    // }}}
 }

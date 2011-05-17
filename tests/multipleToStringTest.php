@@ -6,11 +6,14 @@ use depage\htmlform\elements\multiple;
  * Tests for multiple input element rendering.
  **/
 class multipleToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form = new nameTestForm;
         $this->multiple = new multiple('elementName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testCheckbox()
     /**
      * Element with default setup and checkbox skin.
      **/
@@ -22,7 +25,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelect()
     /**
      * Element with default setup and select skin.
      **/
@@ -38,7 +43,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testCheckboxRequired()
     /**
      * Rendered checkbox with 'required' attribute set.
      **/
@@ -51,7 +58,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $this->multiple->setRequired();
         $this->assertEquals($expected, $this->multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelectRequired()
     /**
      * Rendered select input with 'required' attribute set.
      **/
@@ -68,7 +77,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple->setRequired();
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testCheckboxList()
     /**
      * Rendered checkbox with option list
      **/
@@ -103,7 +114,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelectList()
     /**
      * Rendered select input with option list
      **/
@@ -126,7 +139,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testCheckboxAssociativeList()
     /**
      * Rendered checkbox input with option list. List Parameters are parsed as
      * associative array.
@@ -166,7 +181,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelectAssociativeList()
     /**
      * Rendered select input with option list. List Parameters are parsed as
      * associative array.
@@ -194,7 +211,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelectOptgroups()
     /**
      * Rendered select input with optgroups. List parameters are parsed in
      * two-dimensional array.
@@ -232,7 +251,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testCheckboxHtmlEscaping()
     /**
      * Rendered checkbox; tests html escaping of attributes that can be set by instantiation parameters.
      **/
@@ -252,7 +273,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelectHtmlEscaping()
     /**
      * Rendered select input; tests html escaping of attributes that can be set by instantiation parameters.
      **/
@@ -275,7 +298,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlCheckboxEscapedList()
     /**
      * Rendered checkbox; tests html escaping of option list.
      **/
@@ -310,7 +335,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlSelectEscapedList()
     /**
      * Rendered select input; tests html escaping of option list.
      **/
@@ -333,7 +360,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testCheckboxEscapedAssociativeList()
     /**
      * Rendered checkbox; tests html escaping of associative option list.
      **/
@@ -373,7 +402,9 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
+    // }}}
 
+    // {{{ testSelectEscapedAssociativeList()
     /**
      * Rendered select input; tests html escaping of associative option list.
      **/
@@ -401,5 +432,5 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $multiple = new multiple('elementName', $parameters, $this->form);
         $this->assertEquals($expected, $multiple->__toString());
     }
-
+    // }}}
 }

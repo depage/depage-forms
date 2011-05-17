@@ -6,7 +6,8 @@ use depage\htmlform\htmlform;
  * Tests rendering the form.
  **/
 class htmlformToStringTest extends PHPUnit_Framework_TestCase {
-     /**
+    // {{{ testSimple()
+    /**
      * Form with default setup
      **/
     public function testSimple() {
@@ -20,7 +21,9 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
         $form = new htmlform('formName');
         $this->assertEquals($expected, $form->__toString());
     }
+    // }}}
 
+    // {{{ testStep()
     /**
      * Form with 2 steps, only step1 should be rendered.
      **/
@@ -47,4 +50,5 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $form->__toString());
     }
+    // }}}
 }

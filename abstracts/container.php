@@ -16,6 +16,7 @@ use depage\htmlform\exceptions;
  * ie. htmlform, fieldset and step
  **/
 abstract class container extends element {
+    // {{{ variables
     /**
      * @brief References to input elements and fieldsets.
      **/
@@ -28,7 +29,9 @@ abstract class container extends element {
      * @brief Parent form object reference
      **/
     protected $form;
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   container class constructor
      *
@@ -42,7 +45,9 @@ abstract class container extends element {
 
         parent::__construct($name, $parameters, $form);
     }
+    // }}}
 
+    // {{{ __call()
     /**
      * @brief   HTML escaping and add subelements
      *
@@ -70,7 +75,9 @@ abstract class container extends element {
             return parent::__call($function, $arguments);
         }
     }
+    // }}}
 
+    // {{{ addElement()
     /**
      * @brief Generates sub-elements.
      *
@@ -100,7 +107,9 @@ abstract class container extends element {
         }
         return $newElement;
     }
+    // }}}
 
+    // {{{ addChildElements()
     /**
      * @brief   Sub-element generator hook
      *
@@ -111,7 +120,9 @@ abstract class container extends element {
      * @see     addElement()
      **/
     public function addChildElements() {}
+    // }}}
 
+    // {{{ addHtml()
     /**
      * @brief   Adds a new custom HTML element to the container.
      *
@@ -127,7 +138,9 @@ abstract class container extends element {
 
         return $htmlElement;
     }
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief Validates container and its contents.
      *
@@ -148,7 +161,9 @@ abstract class container extends element {
         }
         return $this->valid;
     }
+    // }}}
 
+    // {{{ setRequired()
     /**
      * @brief   Sets required-attribute
      *
@@ -164,7 +179,9 @@ abstract class container extends element {
             $element->setRequired($required);
         }
     }
+    // }}}
 
+    // {{{ _checkElementType()
     /**
      * @brief   Checks element class availability
      *
@@ -178,7 +195,9 @@ abstract class container extends element {
             throw new exceptions\unknownElementTypeException();
         }
     }
+    // }}}
 
+    // {{{ getElements()
     /**
      * @brief Returns containers subelements.
      *
@@ -202,7 +221,9 @@ abstract class container extends element {
         }
         return $allElements;
     }
+    // }}}
 
+    // {{{ getElement()
     /**
      * @brief   Gets subelement by name.
      *
@@ -220,4 +241,5 @@ abstract class container extends element {
         }
         return false;
     }
+    // }}}
 }

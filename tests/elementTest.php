@@ -3,6 +3,7 @@
 use depage\htmlform\abstracts\element;
 use depage\htmlform\exceptions;
 
+// {{{ elementTestClass
 /**
  * Element is abstract, so we need this test class to instantiate it.
  **/
@@ -21,21 +22,27 @@ class elementTestClass extends element {
         parent::log($argument, $type);
     }
 }
+// }}}
 
+// {{{ undefinedMethodException
 /**
  * Replacement exception for undefinedMethod Error
  **/
 class undefinedMethodException extends exception {}
+// }}}
 
 /**
  * General tests for the element class.
  **/
 class elementTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     protected function setUp() {
         $this->form = new nameTestForm;
         $this->element = new elementTestClass('elementName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testSetParameters()
     /**
      * Parameters can be set case insensitively but attributes are case
      * sensitive.
@@ -54,7 +61,9 @@ class elementTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('3', $element->TESTValue3);
         $this->assertNull($element->testvalue3);
     }
+    // }}}
 
+    // {{{ testEmptyElementNameException()
     /**
      * Throw an exception on empty element name.
      **/
@@ -66,7 +75,9 @@ class elementTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected invalidElementNameException.');
     }
+    // }}}
 
+    // {{{ testElementNameNoStringException()
     /**
      * Throw an exception if name type isn't string.
      **/
@@ -78,7 +89,9 @@ class elementTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected invalidElementNameException.');
     }
+    // }}}
 
+    // {{{ testInvalidElementNameException()
     /**
      * Throw an exception if name contains invalid characters.
      **/
@@ -90,7 +103,9 @@ class elementTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected invalidElementNameException.');
     }
+    // }}}
 
+    // {{{ testElementParametersNoArrayException()
     /**
      * Element parameters need to be of type array.
      **/
@@ -103,7 +118,9 @@ class elementTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected elementParametersNoArrayException.');
     }
+    // }}}
 
+    // {{{ testLog()
     /**
      * Tests parsing a log object reference to the element. And calling it's log
      * method.
@@ -123,15 +140,19 @@ class elementTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $log->error);
     }
+    // }}}
 
+    // {{{ undefinedMethodHandler()
     /**
      * required for testUndefinedMethodError
      **/
     public function undefinedMethodHandler($errno) {
-            if ($errno = 256) throw new undefinedMethodException;
-            return;
-        }
+        if ($errno = 256) throw new undefinedMethodException;
+        return;
+    }
+    // }}}
 
+    // {{{ testUndefinedMethodError()
     /**
      * If element::__call can't match a custom method, it triggers an
      * undefinedMethodError. We test this with our error handler by throwing
@@ -148,4 +169,5 @@ class elementTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Expected undefinedMethodException');
     }
+    // }}}
 }

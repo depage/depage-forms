@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief Default creditcard fieldset.
  **/
 class creditcard extends fieldset {
+    // {{{ setDefaults()
     /**
      * @brief collects initial values across subclasses.
      **/
@@ -26,7 +27,9 @@ class creditcard extends fieldset {
             "mastercard",
         );
     }
+    // }}}
 
+    // {{{ addChildElements()
     /**
      * @brief   adds creditcard-inputs to fieldset
      *
@@ -74,7 +77,9 @@ class creditcard extends fieldset {
             'required' => true,
         ));
     }
+    // }}}
 
+    // {{{ validate()
     /**
      * @brief   Validate the creditcard data
      *
@@ -86,4 +91,5 @@ class creditcard extends fieldset {
     public function validate() {
         return parent::validate();
     }
+    // }}}
 }

@@ -6,12 +6,15 @@ use depage\htmlform\elements\textarea;
  * Tests for boolean input element rendering.
  **/
 class textareaToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->textarea = new textarea('textareaName', array(), $this->form);
     }
+    // }}}
 
-     /**
+    // {{{ testSimple()
+    /**
      * Element with default setup
      **/
     public function testSimple() {
@@ -24,7 +27,9 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->textarea->__toString());
     }
+    // }}}
 
+    // {{{ testValue()
     /**
      * Tests rendering with value set.
      **/
@@ -39,7 +44,9 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
         $this->textarea->setValue('testValue');
         $this->assertEquals($expected, $this->textarea->__toString());
     }
+    // }}}
 
+    // {{{ testRequired()
     /**
      * Rendered element with set required attribute
      **/
@@ -54,7 +61,9 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
         $this->textarea->setRequired();
         $this->assertEquals($expected, $this->textarea->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlEscaping()
     /**
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
@@ -75,4 +84,5 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
         $textarea = new textarea('textareaName', $parameters, $this->form);
         $this->assertEquals($expected, $textarea->__toString());
     }
+    // }}}
 }

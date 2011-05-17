@@ -12,11 +12,14 @@ use depage\htmlform\abstracts;
  * @brief The fieldset class holds HTML-fieldset specific attributes and methods.
  **/
 class fieldset extends abstracts\container {
+    // {{{ variables
     /**
      * @brief parent HTML form.
      **/
     protected $form;
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief collects initial values across subclasses.
      **/
@@ -25,7 +28,9 @@ class fieldset extends abstracts\container {
 
         $this->defaults['label'] = $this->name;
     }
+    // }}}
 
+    // {{{ addElement()
     /**
      * @brief Generates sub-elements.
      *
@@ -51,7 +56,9 @@ class fieldset extends abstracts\container {
 
         return $newElement;
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders the fieldset to HTML code.
      *
@@ -72,4 +79,5 @@ class fieldset extends abstracts\container {
             "<legend>{$label}</legend>{$renderedElements}" .
         "</fieldset>\n";
     }
+    // }}}
 }

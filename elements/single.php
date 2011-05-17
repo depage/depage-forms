@@ -12,11 +12,14 @@ use depage\htmlform\abstracts;
  * @brief HTML-single-choice input type i.e. radio and select.
  **/
 class single extends abstracts\input {
+    // {{{ variables
     /** 
      * @brief Contains list of selectable options.
      **/
     protected $list = array();
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   single class constructor
      *
@@ -30,7 +33,9 @@ class single extends abstracts\input {
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : array();
     }
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
      *
@@ -43,7 +48,9 @@ class single extends abstracts\input {
         $this->defaults['defaultValue'] = '';
         $this->defaults['skin']         = 'radio';
     }
+    // }}}
 
+    // {{{ htmlList()
     /**
      * @brief   Renders HTML - option list part of select/radio single element
      *
@@ -87,7 +94,9 @@ class single extends abstracts\input {
         }
         return $list;
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -123,7 +132,9 @@ class single extends abstracts\input {
             "</p>\n";
         }
     }
+    // }}}
 
+    // {{{ typeCastValue()
     /**
      * @brief   Converts value to element specific type.
      *
@@ -132,4 +143,5 @@ class single extends abstracts\input {
     protected function typeCastValue() {
         $this->value = (string) $this->value;
     }
+    // }}}
 }

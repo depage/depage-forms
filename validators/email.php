@@ -10,6 +10,7 @@ namespace depage\htmlform\validators;
  * @brief default validator for email input elements
  **/
 class email extends validator {
+    // {{{ validate()
     /**
      * @brief   email validation
      *
@@ -20,4 +21,5 @@ class email extends validator {
     public function validate($email, $parameters = array()) {
         return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
     }
+    // }}}
 }

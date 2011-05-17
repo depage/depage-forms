@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief HTML hidden input type.
  **/
 class hidden extends text {
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -22,4 +23,5 @@ class hidden extends text {
 
         return "<input name=\"{$this->name}\" id=\"{$formName}-{$this->name}\" type=\"{$this->type}\" class=\"{$classes}\" value=\"{$value}\">\n";
     }
+    // }}}
 }

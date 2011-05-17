@@ -6,11 +6,14 @@ use depage\htmlform\elements\single;
  * Tests for multiple input element rendering.
  **/
 class singleToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form     = new nameTestForm;
         $this->single   = new single('singleName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testRadio()
     /**
      * Element with default setup and radio skin.
      **/
@@ -24,7 +27,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->single->__toString());
     }
+    // }}}
 
+    // {{{ testSelect()
     /**
      * Element with default setup and "select" skin.
      **/
@@ -40,7 +45,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testRadioRequired()
     /**
      * Rendered radio input with 'required' attribute set.
      **/
@@ -55,7 +62,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $this->single->setRequired();
         $this->assertEquals($expected, $this->single->__toString());
     }
+    // }}}
 
+    // {{{ testSelectRequired()
     /**
      * Rendered "select" input with 'required' attribute set.
      **/
@@ -72,7 +81,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single->setRequired();
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testRadioList()
     /**
      * Rendered radio input with option list
      **/
@@ -109,7 +120,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testSelectList()
     /**
      * Rendered "select" input with option list
      **/
@@ -132,7 +145,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testRadioAssociativeList()
     /**
      * Rendered radio input with option list. List Parameters are parsed as
      * associative array.
@@ -174,7 +189,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testSelectAssociativeList()
     /**
      * Rendered "select" input with option list. List Parameters are parsed as
      * associative array.
@@ -202,7 +219,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testSelectOptgroups()
     /**
      * Rendered select input with optgroups. List parameters are parsed in
      * two-dimensional array.
@@ -240,7 +259,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testRadioHtmlEscaping()
     /**
      * Rendered radio input; tests html escaping of attributes that can be set by instantiation parameters.
      **/
@@ -262,7 +283,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testSelectHtmlEscaping()
     /**
      * Rendered "select" input; tests html escaping of attributes that can be set by instantiation parameters.
      **/
@@ -285,7 +308,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlRadioEscapedList()
     /**
      * Rendered radio input; tests html escaping of option list.
      **/
@@ -322,7 +347,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlSelectEscapedList()
     /**
      * Rendered select input; tests html escaping of option list.
      **/
@@ -345,7 +372,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testRadioEscapedAssociativeList()
     /**
      * Rendered radio input; tests html escaping of associative option list.
      **/
@@ -387,7 +416,9 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
+    // }}}
 
+    // {{{ testSelectEscapedAssociativeList()
     /**
      * Rendered "select" input; tests html escaping of associative option list.
      **/
@@ -415,5 +446,5 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
-
+    // }}}
 }

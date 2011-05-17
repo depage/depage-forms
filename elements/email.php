@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief HTML email input type.
  **/
 class email extends text {
+    // {{{ setDefaults()
     /**
      * @brief collects initial values across subclasses.
      **/
@@ -17,4 +18,5 @@ class email extends text {
         parent::setDefaults();
         $this->defaults['errorMessage'] = 'Please enter a valid e-mail address!';
     }
+    // }}}
 }

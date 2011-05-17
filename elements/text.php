@@ -12,13 +12,16 @@ use depage\htmlform\abstracts;
  * @brief HTML text input type.
  **/
 class text extends abstracts\input {
+    // {{{ variables
     /**
      * @brief HTML placeholder attribute
      **/
-     protected $placeholder;
+    protected $placeholder;
+    // }}}
 
-     /**
-     * @brief   multiple class constructor
+    // {{{ __construct()
+    /**
+     * @brief   text class constructor
      *
      * @param   $name       (string)    element name
      * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
@@ -30,7 +33,9 @@ class text extends abstracts\input {
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : false;
     }
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
      *
@@ -43,7 +48,9 @@ class text extends abstracts\input {
         $this->defaults['defaultValue'] = '';
         $this->defaults['placeholder']  = false;
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -67,7 +74,9 @@ class text extends abstracts\input {
             $errorMessage .
         "</p>\n";
     }
+    // }}}
 
+    // {{{ htmlList()
     /**
      * @brief   Renders HTML datalist
      *
@@ -96,7 +105,9 @@ class text extends abstracts\input {
         }
         return $htmlList;
     }
+    // }}}
 
+    // {{{ htmlInputAttributes()
     /**
      * @brief renders text element specific HTML attributes
      *
@@ -112,7 +123,9 @@ class text extends abstracts\input {
 
         return $attributes;
     }
+    // }}}
 
+    // {{{ typeCastValue()
     /**
      * @brief   Converts value to element specific type.
      *
@@ -121,4 +134,5 @@ class text extends abstracts\input {
     protected function typeCastValue() {
         $this->value = (string) $this->value;
     }
+    // }}}
 }

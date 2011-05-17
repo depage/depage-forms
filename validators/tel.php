@@ -9,6 +9,7 @@ namespace depage\htmlform\validators;
  * @brief default validator for tel input elements
  **/
 class tel extends regEx {
+    // {{{ __construct()
     /**
      * @brief   tel valdiator class constructor
      *
@@ -22,7 +23,9 @@ class tel extends regEx {
 
         $this->regEx = '/^[0-9\(\)\+\-\. ]*$/';
     }
+    // }}}
 
+    // {{{ getPatternAttribute()
     /**
      * @brief   returns HTML5 pattern attribute
      *
@@ -34,4 +37,5 @@ class tel extends regEx {
     public function getPatternAttribute() {
         return '';
     }
+    // }}}
 }

@@ -5,7 +5,7 @@ session_start();
 // using the autoloader from the main class
 require_once('../htmlform.php');
 
-
+// {{{ logTestClass
 /**
  * Dummy test class (for element & validator tests)
  **/
@@ -22,7 +22,9 @@ class logTestClass {
         );
     }
 }
+// }}}
 
+// {{{ nameTestForm
 /**
  * Dummy form class
  **/
@@ -34,4 +36,5 @@ class nameTestForm {
     public function checkElementName() {}
     public function updateInputValue() {}
 }
+// }}}
 ?>

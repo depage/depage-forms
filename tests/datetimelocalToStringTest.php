@@ -6,11 +6,14 @@ use depage\htmlform\elements\datetimelocal;
  * Tests for datetime-local input element rendering.
  **/
 class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp
     public function setUp() {
         $this->form = new nameTestForm;
         $this->datetimelocal = new datetimelocal('datetimelocalName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testSimple()
     /**
      * Element with default setup
      **/
@@ -24,7 +27,9 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
+    // }}}
 
+    // {{{ testValue()
     /**
      * Tests rendering with value set.
      **/
@@ -39,7 +44,9 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
         $this->datetimelocal->setValue(7331);
         $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
+    // }}}
 
+    // {{{ testRequired()
     /**
      * Rendered element with set required attribute
      **/
@@ -54,7 +61,9 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
         $this->datetimelocal->setRequired();
         $this->assertEquals($expected, $this->datetimelocal->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlEscaping()
     /**
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
@@ -76,4 +85,5 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
         $datetimelocal = new datetimelocal('datetimelocalName', $parameters, $this->form);
         $this->assertEquals($expected, $datetimelocal->__toString());
     }
+    // }}}
 }

@@ -12,11 +12,14 @@ use depage\htmlform\abstracts;
  * @brief HTML-multiple-choice input type i.e. checkbox and select.
  **/
 class multiple extends abstracts\input {
+    // {{{ variables
     /** 
      * @brief Contains list of selectable options.
      **/
     protected $list = array();
+    // }}}
 
+    // {{{ __construct()
     /**
      * @brief   multiple class constructor
      *
@@ -30,7 +33,9 @@ class multiple extends abstracts\input {
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : array();
     }
+    // }}}
 
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
      *
@@ -43,7 +48,9 @@ class multiple extends abstracts\input {
         $this->defaults['defaultValue'] = array();
         $this->defaults['skin']         = 'checkbox';
     }
+    // }}}
 
+    // {{{ htmlList()
     /**
      * @brief   HTML option list rendering
      *
@@ -91,7 +98,9 @@ class multiple extends abstracts\input {
         }
         return $list;
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -128,7 +137,9 @@ class multiple extends abstracts\input {
             "</p>\n";
         }
     }
+    // }}}
 
+    // {{{ htmlInputAttributes()
     /**
      * @brief   Returns string of HTML attributes for input element.
      *
@@ -146,7 +157,9 @@ class multiple extends abstracts\input {
 
         return $attributes;
     }
+    // }}}
 
+    // {{{ typeCastValue()
     /**
      * @brief   Converts value to element specific type.
      *
@@ -159,4 +172,5 @@ class multiple extends abstracts\input {
             $this->value = (array) $this->value;
         }
     }
+    // }}}
 }

@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief HTML url input type
  **/
 class url extends text {
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
      *
@@ -20,4 +21,5 @@ class url extends text {
 
         $this->defaults['errorMessage'] = 'Please enter a valid URL!';
     }
+    // }}}
 }

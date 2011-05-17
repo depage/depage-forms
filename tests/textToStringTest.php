@@ -6,11 +6,14 @@ use depage\htmlform\elements\text;
  * Tests for multiple input element rendering.
  **/
 class textToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form = new nameTestForm;
         $this->text = new text('textName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testSimple()
     /**
      * Element with default setup and checkbox skin.
      **/
@@ -24,7 +27,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->text->__toString());
     }
+    // }}}
 
+    // {{{ testValue()
     /**
      * Element with default setup and select skin.
      **/
@@ -39,7 +44,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $this->text->setValue('testValue');
         $this->assertEquals($expected, $this->text->__toString());
     }
+    // }}}
 
+    // {{{ testRequired()
     /**
      * Rendered element with 'required' attribute set.
      **/
@@ -54,7 +61,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $this->text->setRequired();
         $this->assertEquals($expected, $this->text->__toString());
     }
+    // }}}
 
+    // {{{ testList()
     /**
      * Rendered element with option list
      **/
@@ -77,7 +86,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
+    // }}}
 
+    // {{{ testAssociativeList()
     /**
      * Rendered element with option list. List Parameters are parsed as
      * associative array.
@@ -105,7 +116,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlEscaping()
     /**
      * Rendered element; tests html escaping of attributes that can be set by instantiation parameters.
      **/
@@ -127,7 +140,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
+    // }}}
 
+    // {{{ testHtmlEscapedList()
     /**
      * Rendered element; tests html escaping of option list.
      **/
@@ -150,7 +165,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
+    // }}}
 
+    // {{{ testEscapedAssociativeList()
     /**
      * Rendered element; tests html escaping of associative option list.
      **/
@@ -178,4 +195,5 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
+    // }}}
 }

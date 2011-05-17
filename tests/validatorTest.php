@@ -3,6 +3,7 @@
 use depage\htmlform\validators\validator;
 use depage\htmlform\validators\regEx;
 
+// {{{ validatorTestClass
 /**
  * Dummy validator class
  **/
@@ -12,7 +13,9 @@ class validatorTestClass extends validator {
         parent::log ($argument, $type);
     }
 }
+// }}}
 
+// {{{ regExTestClass
 /**
  * Dummy regEx validator class
  **/
@@ -26,12 +29,13 @@ class regExTestClass extends regEx {
         parent::log ($argument, $type);
     }
 }
-
+// }}}
 
 /**
  * General tests for the validator class.
  **/
 class validatorTest extends \PHPUnit_Framework_TestCase {
+    // {{{ testText()
     /**
      * Text validator always returns true
      **/
@@ -39,7 +43,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $textValidator = validator::factory('text');
         $this->assertTrue($textValidator->validate('anyString'));
     }
+    // }}}
 
+    // {{{ testEmail()
     /**
      * Email validator test
      **/
@@ -48,7 +54,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($emailValidator->validate('anyString'));
         $this->assertTrue($emailValidator->validate('test@depage.net'));
     }
+    // }}}
 
+    // {{{ testUrl()
     /**
      * Url validator test
      **/
@@ -57,7 +65,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('http://www.depage.net'));
     }
+    // }}}
 
+    // {{{ testTel()
     /**
      * Tel validator test
      **/
@@ -66,7 +76,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('+(123)-32 2.3'));
     }
+    // }}}
 
+    // {{{ testCustomRegEx()
     /**
      * Creating a custom validator by parsing a regular expression
      **/
@@ -75,7 +87,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($customValidator->validate('1234'));
         $this->assertTrue($customValidator->validate('letters'));
     }
+    // }}}
 
+    // {{{ testNumber()
     /**
      * Number validator test; using limits set in parameter array
      **/
@@ -86,7 +100,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($numberValidator->validate(5,           array('min' => 0,       'max' => 10)));
         $this->assertTrue($numberValidator->validate(5,           array('min' => null,    'max' => null)));
     }
+    // }}}
 
+    // {{{ testGetPatternAttribute()
     /**
      * Getting HTML5 pattern attribute for various validator types
      **/
@@ -105,6 +121,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertInternalType('string', $telValidator->getPatternAttribute());
         $this->assertEquals('', $anyValidator->getPatternAttribute());
     }
+    // }}}
+
+    // {{{ testLog()
     /**
      * Testing the internal log method
      **/
@@ -121,7 +140,9 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $log->error);
     }
+    // }}}
 
+    // {{{ testPregError()
     /**
      * Testing error logging on preg_match error.
      * Example error from http://php.net/manual/en/function.preg-last-error.php
@@ -140,5 +161,5 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $log->error);
     }
-
+    // }}}
 }

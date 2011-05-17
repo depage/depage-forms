@@ -7,11 +7,14 @@ use depage\htmlform\elements\fieldset;
  * Tests for fieldset container element rendering.
  **/
 class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
+    // {{{ setUp()
     public function setUp() {
         $this->form = new nameTestForm('formName');
         $this->fieldset = new fieldset('fieldsetName', array(), $this->form);
     }
+    // }}}
 
+    // {{{ testSimple()
     /**
      * Element with default setup
      **/
@@ -21,7 +24,9 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
                     '</fieldset>' . "\n";
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
+    // }}}
 
+    // {{{ testAddFieldset()
     /**
      * With fieldset subelement.
      **/
@@ -36,7 +41,9 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
+    // }}}
 
+    // {{{ testAddText()
     /**
      * With text subelement
      **/
@@ -54,4 +61,5 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
         $this->fieldset->addText('textName');
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
+    // }}}
 }

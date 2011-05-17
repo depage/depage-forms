@@ -10,6 +10,7 @@ namespace depage\htmlform\elements;
  * @brief HTML textarea element.
  **/
 class textarea extends text {
+    // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
      *
@@ -21,7 +22,9 @@ class textarea extends text {
         $this->defaults['rows'] = null;
         $this->defaults['cols'] = null;
     }
+    // }}}
 
+    // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
@@ -45,7 +48,9 @@ class textarea extends text {
             $errorMessage .
         "</p>\n";
     }
+    // }}}
 
+    // {{{ htmlRows()
     /**
      * @brief   Renders HTML rows attribute
      *
@@ -54,7 +59,9 @@ class textarea extends text {
     protected function htmlRows() {
         return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
     }
+    // }}}
 
+    // {{{ htmlCols()
     /**
      * @brief   Renders HTML cols attribute
      *
@@ -63,4 +70,5 @@ class textarea extends text {
     protected function htmlCols() {
         return ($this->cols === null) ? "" : " cols=\"" . $this->htmlEscape($this->cols) . "\"";
     }
+    // }}}
 }
