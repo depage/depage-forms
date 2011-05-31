@@ -79,7 +79,7 @@ $form->process();
 
 if ($form->validate()) {
     /**
-     * For demonstration purposes dump the data array
+     * Success, do something useful with the data and clear the session.
      **/
     echo('<pre>');
     var_dump($form->getValues());
@@ -90,6 +90,8 @@ if ($form->validate()) {
      **/
     $data       = $form->getValues();
     $username   = $data['userName'];
+
+    $form->clearSession();
 } else {
     echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     echo ($form);

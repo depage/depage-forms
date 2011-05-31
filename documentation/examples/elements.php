@@ -173,9 +173,14 @@ $form->addHtml('Custom <b>HTML</b> element');
 $form->process();
 
 if ($form->validate()) {
+    /**
+     * Success, do something useful with the data and clear the session.
+     **/
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');
+
+    $form->clearSession();
 } else {
     echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     echo ($form);

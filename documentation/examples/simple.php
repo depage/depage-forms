@@ -1,6 +1,6 @@
 <?php
 /**
- * Simple depage-forms example
+ * Simple form example
  *
  * Contains text and email input elements and demonstrates form processing and
  * validation. In this simple case none of the elements are set required, so an
@@ -43,11 +43,14 @@ $form->process();
  **/
 if ($form->validate()) {
     /**
+     * Success, do something useful with the data and clear the session.
      * The getValues method returns an array of the form element values.
      **/
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');
+
+    $form->clearSession();
 } else {
     echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     /**

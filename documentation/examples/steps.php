@@ -53,9 +53,14 @@ $form->process();
  * not valid (or if it hasn't been submitted yet) display the current step.
  **/
 if ($form->validate()) {
+    /**
+     * Success, do something useful with the data and clear the session.
+     **/
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');
+
+    $form->clearSession();
 } else {
     echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     /**
