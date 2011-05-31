@@ -43,15 +43,15 @@ $form->addMultiple('multipleCheckbox', array(
     'list' => array(
         'option one'    => 'label one',
         'option two'    => 'label two',
-        'option three'  => 'label three'
-    )
+        'option three'  => 'label three',
+    ),
 ));
 
 /**
  * Multiple input element with select skin
  *
  * When the skin option is set to 'select', the multiple input element is a HTML
- * select element where more than one option can be selected. Returns array of 
+ * select element where more than one option can be selected. Returns array of
  * option strings.
  **/
 $form->addMultiple('multipleSelect', array(
@@ -60,8 +60,8 @@ $form->addMultiple('multipleSelect', array(
     'list' => array(
         'option one'    => 'label one',
         'option two'    => 'label two',
-        'option three'  => 'label three'
-    )
+        'option three'  => 'label three',
+    ),
 ));
 
 /**
@@ -73,7 +73,7 @@ $form->addMultiple('multipleSelect', array(
 $form->addNumber('Number', array(
     'min'   => 0,
     'max'   => 10,
-    'step'  => 2
+    'step'  => 2,
 ));
 
 /**
@@ -105,8 +105,8 @@ $form->addSingle('singleRadio', array(
     'list' => array(
         'option one'    => 'label one',
         'option two'    => 'label two',
-        'option three'  => 'label three'
-    )
+        'option three'  => 'label three',
+    ),
 ));
 
 /**
@@ -122,8 +122,8 @@ $form->addSingle('SingleSelect', array(
     'list' => array(
         'option one'    => 'label one',
         'option two'    => 'label two',
-        'option three'  => 'label three'
-    )
+        'option three'  => 'label three',
+    ),
 ));
 
 /**

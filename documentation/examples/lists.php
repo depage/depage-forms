@@ -28,7 +28,7 @@ $form->addMultiple('multipleCheckbox', array(
     'list' => array(
         'option one'    => 'label one',
         'option two'    => 'label two',
-        'option three'  => 'label three'
+        'option three'  => 'label three',
     ),
 ));
 
@@ -45,8 +45,8 @@ $form->addMultiple('multipleSelect', array(
     'list' => array(
         'label one',
         'label two',
-        'label three'
-    )
+        'label three',
+    ),
 ));
 
 /**
@@ -63,13 +63,13 @@ $form->addSingle('optgroupSingle', array(
         'group one' => array(
             'option one'    => 'label one',
             'option two'    => 'label two',
-            'option three'  => 'label three'
+            'option three'  => 'label three',
         ),
         'group two' => array(
             'option four'   => 'label four',
-            'option five'   => 'label five'
-        )
-    )
+            'option five'   => 'label five',
+        ),
+    ),
 ));
 
 /**
@@ -84,7 +84,7 @@ $form->addText('datalistText', array(
     'list' => array(
         'option one',
         'option two',
-        'option three'
+        'option three',
     ),
 ));
 

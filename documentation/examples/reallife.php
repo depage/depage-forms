@@ -50,8 +50,8 @@ $dataFieldset->addSingle('language', array(
         'en' => 'English',
         'es' => 'Spanish',
         'fr' => 'French',
-        'de' => 'German'
-    )
+        'de' => 'German',
+    ),
 ));
 
 /**
