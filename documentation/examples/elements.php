@@ -173,7 +173,9 @@ $form->addHtml('Custom <b>HTML</b> element');
 $form->process();
 
 if ($form->validate()) {
+    echo('<pre>');
     var_dump($form->getValues());
+    echo('</pre>');
 } else {
     echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     echo ($form);

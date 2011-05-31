@@ -81,7 +81,9 @@ if ($form->validate()) {
     /**
      * For demonstration purposes dump the data array
      **/
+    echo('<pre>');
     var_dump($form->getValues());
+    echo('</pre>');
 
     /**
      * Generally, one would acceѕs the form data like this...

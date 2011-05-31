@@ -45,7 +45,9 @@ if ($form->validate()) {
     /**
      * The getValues method returns an array of the form element values.
      **/
+    echo('<pre>');
     var_dump($form->getValues());
+    echo('</pre>');
 } else {
     echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     /**
