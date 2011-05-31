@@ -59,7 +59,7 @@ class elementTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('1', $element->testValue1);
         $this->assertEquals('2', $element->TestValue2);
         $this->assertEquals('3', $element->TESTValue3);
-        $this->assertNull($element->testvalue3);
+        $this->assertFalse(isset($element->testvalue3));
     }
     // }}}
 

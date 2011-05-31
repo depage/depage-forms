@@ -44,7 +44,7 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase {
         $_SESSION['formName-data']['timestamp'] = 1;
         $form = new htmlform('formName', array('ttl' => 30));
 
-        $this->assertNull($_SESSION['formName-data']['test']);
+        $this->assertFalse(isset($_SESSION['formName-data']['test']));
         $this->assertEquals(42, $_SESSION['formName-data']['timestamp']);
     }
     // }}}
