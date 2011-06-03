@@ -138,7 +138,7 @@ abstract class input extends element {
      *
      * @return  (bool) empty-check result
      **/
-    protected function isEmpty() {
+    public function isEmpty() {
         return (
             empty($this->value)
             && ((string) $this->value !== '0') 

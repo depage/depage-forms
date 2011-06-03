@@ -1,10 +1,10 @@
 <?php
 /**
- * Simple form example
+ * Form expiry example
  *
- * Contains text and email input elements and demonstrates form processing and
- * validation. In this simple case none of the elements are set required, so an
- * empty form would also be valid.
+ * One can lower the lifetime of the forms session by setting the 'ttl' value.
+ * Setting this higher than the PHP session length (default around 30min) has
+ * no effect.
  **/
 
 /**
@@ -13,16 +13,14 @@
 require_once('../../htmlform.php');
 
 /**
- * Create the example form 'simpleForm'
+ * Create the example form 'timeoutForm', set the session expiry to 3 seconds.
+ * (this is mainly to demonstrate the feature, 3 seconds will probably irritate
+ * users)
  **/
-$form = new depage\htmlform\htmlform('simpleForm');
+$form = new depage\htmlform\htmlform('timeoutForm', array('ttl' => 3));
 
 /**
- * Add the various input elements to the form by calling the '"add" + element
- * type' method.
- * The first parameter is the name of the element; it's a unique
- * identifier and therefore required. The optional second parameter is an array
- * of element settings.
+ * Add input elements
  **/
 $form->addText('username', array('label' => 'User name'));
 $form->addEmail('email', array('label' => 'Email address'));

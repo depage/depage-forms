@@ -3,7 +3,8 @@
  * Form subclass example
  *
  * It's also possible to override the htmlform class and add elements in the
- * constructor.
+ * constructor. This way we can build reusable form classes or add custom rules
+ * to the form validation.
  **/
 
 /**
@@ -21,8 +22,23 @@ class htmlformSubclass extends depage\htmlform\htmlform {
         /**
          * Attach elements
          **/
-        $form->addText('username', array('label' => 'User name'));
-        $form->addEmail('email', array('label' => 'Email address'));
+        $this->addText('username', array('label' => 'User name'));
+        $this->addEmail('email', array('label' => 'Email address'));
+    }
+
+    /**
+     * Say, we want the email address field to be required if the user has
+     * entered a user name. This can be done by overriding the onValidate()
+     * method with a custom rule.
+     **/
+    public function onValidate() {
+        /**
+         * If the 'username' field is not empty, set the 'email' field
+         * required.
+         **/
+        if (!$this->getElement('username')->isEmpty()) {
+            $this->getElement('email')->setRequired();
+        }
     }
 }
 
