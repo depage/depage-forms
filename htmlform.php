@@ -508,3 +508,82 @@ class htmlform extends abstracts\container {
     protected function onValidate() {}
     // }}}
 }
+
+/**
+ * @example elements.php
+ * @brief   Various element examples
+ *
+ * Demonstrates the use of all element types that are fully implemented.
+ * Includes examples of element specific options.
+ **/
+
+/**
+ * @example lists.php
+ * @brief   Option list examples
+ *
+ * Multiple, single and text input elements have option lists. Here are some
+ * more detailed examples.
+ **/
+
+/**
+ * @example populate.php
+ * @brief   Populate form example
+ *
+ * The htmlform->populate method provides a comfortable way to fill in
+ * default values before displaying the form. It's more convenient than setting
+ * the 'defaultValue' parameter for each input element individually.
+ **/
+
+/**
+ * @example reallife.php
+ * @brief   (almost) real life depage-forms example
+ *
+ * Contains a common personal information form. Some elements are set required
+ * and the username has a minimum length.
+ **/
+
+/**
+ * @example redirect.php
+ * @brief   Redirect to success page example
+ *
+ * Once the form is validated, it can also be redirected to another URL. This
+ * can be done by setting the 'successURL' parameter in the form.
+ **/
+
+/**
+ * @example session-timeout.php
+ * @brief   Form expiry example
+ *
+ * One can lower the lifetime of the forms session by setting the 'ttl' value.
+ * Setting this higher than the PHP session length (default around 30min) has
+ * no effect.
+ **/
+
+/**
+ * @example simple.php
+ * @brief   Simple form example
+ *
+ * Contains text and email input elements and demonstrates form processing and
+ * validation. In this simple case none of the elements are set required, so an
+ * empty form would also be valid.
+ **/
+
+/**
+ * @example steps.php
+ * @brief   Steps example
+ *
+ * This demonstrates dividing the form into separate pages using step
+ * container elements. As usual the form itself can only be valid when all
+ * its input elements are valid.
+ * It is also possible to attach input elements directly to the form (outside
+ * any step container). These elements are visible on every step.
+ **/
+
+/**
+ * @example subclass.php
+ * @brief   Form subclass example
+ *
+ * It's also possible to override the htmlform class and add elements in the
+ * constructor. This way we can build reusable form classes or add custom rules
+ * to the form validation.
+ **/

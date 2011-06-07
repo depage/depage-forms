@@ -665,7 +665,8 @@ EXCLUDE_SYMLINKS       = NO
 
 EXCLUDE_PATTERNS       = */tests/* \
                          */.git/* \
-                         */depage-docu/*
+                         */depage-docu/* \
+                         */examples/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names 
 # (namespaces, classes, functions, etc.) that should be excluded from the 
@@ -679,7 +680,7 @@ EXCLUDE_SYMBOLS        =
 # directories that contain example code fragments that are included (see 
 # the \include command).
 
-EXAMPLE_PATH           = 
+EXAMPLE_PATH           = examples/
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the 
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 

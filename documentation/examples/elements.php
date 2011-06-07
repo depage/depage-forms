@@ -1,43 +1,36 @@
 <?php
-/**
- * Various element examples
- *
- * Demonstrates the use of all element types that are fully implemented.
- * Includes examples of element specific options.
- **/
-
-/**
+/*
  * Load the library...
- **/
+ */
 require_once('../../htmlform.php');
 
-/**
+/*
  * Create the example form 'showcaseElements'
- **/
+ */
 $form = new depage\htmlform\htmlform('showcaseElements');
 
-/**
+/*
  * Boolean input element
  *
  * Single checkbox element, usually used for 'accept terms and conditions' type
  * checkboxes (when set required). When set required, it has to be checked in
  * order to pass validation. Returns boolean value.
- **/
+ */
 $form->addBoolean('Boolean');
 
-/**
+/*
  * Email input element
  *
  * Text input element with email validator. Returns string value.
- **/
+ */
 $form->addEmail('Email');
 
-/**
+/*
  * Multiple input element with checkbox skin
  *
  * By default, the multiple input element is a HTML checkbox where more than
  * one option can be selected. Returns array of option strings.
- **/
+ */
 $form->addMultiple('multipleCheckbox', array(
     'label' => 'Multiple-checkbox',
     'list' => array(
@@ -47,13 +40,13 @@ $form->addMultiple('multipleCheckbox', array(
     ),
 ));
 
-/**
+/*
  * Multiple input element with select skin
  *
  * When the skin option is set to 'select', the multiple input element is a HTML
  * select element where more than one option can be selected. Returns array of
  * option strings.
- **/
+ */
 $form->addMultiple('multipleSelect', array(
     'label' => 'Multiple-select',
     'skin' => 'select',
@@ -64,42 +57,42 @@ $form->addMultiple('multipleSelect', array(
     ),
 ));
 
-/**
+/*
  * Number input element
  *
  * By default, min, max, step values aren't set (Depend on browser, step is
  * usually 1). Returns float value.
- **/
+ */
 $form->addNumber('Number', array(
     'min'   => 0,
     'max'   => 10,
     'step'  => 2,
 ));
 
-/**
+/*
  * Password input element
  *
  * Text input element that displays only asterisks or bullets (depends on the 
  * browser). Returns string value.
- **/
+ */
 $form->addPassword('Password');
 
-/**
+/*
  * Range input element
  *
  * Same as number input element but with a slider interface.
- **/
+ */
 $form->addRange('Range', array(
     'min'   => 0,
     'max'   => 10,
 ));
 
-/**
+/*
  * Single input element with radio skin
  *
  * By default the single element is a HTML radio element (only one option can
  * be slected). Returns string value of selected option.
- **/
+ */
 $form->addSingle('singleRadio', array(
     'label' => 'Single-radio',
     'list' => array(
@@ -109,13 +102,13 @@ $form->addSingle('singleRadio', array(
     ),
 ));
 
-/**
+/*
  * Single input element with select skin
  *
  * When the skin option is set to 'select' the single input element is a HTML
  * select element (only one option can be selected). Returns string value of
  * selected option.
- **/
+ */
 $form->addSingle('SingleSelect', array(
     'label' => 'Single-select',
     'skin' => 'select',
@@ -126,56 +119,56 @@ $form->addSingle('SingleSelect', array(
     ),
 ));
 
-/**
+/*
  * Tel input element
  *
  * Text input element with telephone number validator. Returns string value.
- **/
+ */
 $form->addTel('Tel');
 
-/**
+/*
  * Text input element
  *
  * Standard HTML text element. Returns string value.
- **/
+ */
 $form->addText('Text');
 
-/**
+/*
  * Textarea input element
  *
  * Standart HTML textarea element. Returns string value.
- **/
+ */
 $form->addTextarea('Textarea');
 
-/**
+/*
  * URL input element
  *
  * Text input element with URL validator. Returns string value.
- **/
+ */
 $form->addUrl('URL');
 
-/**
+/*
  * Fieldset container element
  *
  * Fieldsets can be used to create subgroups of elements. In this example it
  * contains a single text element.
- **/
+ */
 $fieldset = $form->addFieldset('Fieldset');
 $fieldset->addText('Text2');
 
-/**
+/*
  * HTML element
  *
  * Adds HTML code.
- **/
+ */
 $form->addHtml('Custom <b>HTML</b> element');
 
 $form->process();
 
 if ($form->validate()) {
-    /**
+    /*
      * Success, do something useful with the data and clear the session.
-     **/
+     */
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');
