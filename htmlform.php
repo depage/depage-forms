@@ -7,8 +7,78 @@
 /**
  * @mainpage
  *
- * htmlform is a PHP library that assists programmers in creating HTML forms.
- * It features validation and takes care of duplicate form submissions.
+ * depage-forms is PHP library for HTML form generation with focus on usability.
+ * It is part of depage-cms, but it also works as a standalone tool. By abstracting
+ * HTML, browser flaws (duplicate form submissions) and form validation, it
+ * provides a comfortable way to obtain reliable data.
+ *
+ * @subpage features
+ *
+ * @subpage prerequesites
+ *
+ * @subpage license
+ *
+ * @subpage usage
+ *
+ * @subpage developer
+ **/
+
+/**
+ * @page features Features
+ *
+ *      - avert form resubmission
+ *      - validation
+ *          - available for standard input elements
+ *          - customizable with regular expressions
+ *      - dividing forms into ѕeparate parts
+ *      - almost complete HTML5 form functionality
+ *          - attributes        : placeholder, autofocus, textbox datalists, title,
+ *                                pattern
+ *          - input elements    : boolean (checkbox), email, hidden,
+ *                                multiple (checkbox, select list), number, password,
+ *                                range, search, single (radio, select list), tel, text,
+ *                                textarea, url
+ *      - neat return values with appropriate data types
+ *      - easy language localisation
+ *      - session timeout
+ *      - simple creditcard validation (by values)
+ **/
+
+/**
+ * @page prerequesites Prerequesites
+ *      - PHP 5.3
+ *      - PHPUnit 3.5 (included unit tests)
+ *      - Doxygen 1.7.2 (to generate documentation)
+ **/
+
+/**
+ * @page license License
+ *      GPL2 http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ *      MIT  http://www.opensource.org/licenses/mit-license.php
+ **/
+
+/**
+ * @page usage Usage
+ *
+ * @link simple.php simple.php @endlink
+ **/
+
+/**
+ * @page developer Developer guide
+ *
+ * @section style Coding style
+ *
+ * Generally, follow Zend coding style
+ * camel case
+ * 4 spaces indents
+ * omit php closing tag
+ *
+ * @section Tests
+ *
+ * To run the tests:
+ *
+ * <pre>$ make tests</pre>
  **/
 
 // {{{ namespace

@@ -2,7 +2,7 @@ depage-forms
 ============
 
 depage-forms is PHP library for HTML form generation with focus on usability.
-It is part of depage-cms, but it also works as a standalone tool. By abstracting
+It is part of [depage-cms] (http://www.depagecms.net/), but it also works as a standalone tool. By abstracting
 HTML, browser flaws (duplicate form submissions) and form validation, it
 provides a comfortable way to obtain reliable data.
 
