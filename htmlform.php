@@ -7,10 +7,9 @@
 /**
  * @mainpage
  *
- * depage-forms is PHP library for HTML form generation with focus on usability.
- * It is part of depage-cms, but it also works as a standalone tool. By abstracting
- * HTML, browser flaws (duplicate form submissions) and form validation, it
- * provides a comfortable way to obtain reliable data.
+ * @intro
+ * @htmlinclude main.html
+ * @endintro
  *
  * @subpage features
  *
@@ -130,6 +129,37 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * The class htmlform is the main tool of the htmlform library. It generates
  * input elements and container elements. It also contains the PHP session
  * handlers.
+ *
+ * When you use <em>depage-forms</em> this is probably the only class you will 
+ * instantiate directly.
+ *
+ * In general:
+ *
+ * @code
+ * <?php 
+ *     $form = new depage\htmlform\htmlform('simpleForm');
+ *
+ *     // add form fields
+ *     $form->addText('username', array('label' => 'User name', 'required' => true));
+ *     $form->addEmail('email', array('label' => 'Email address'));
+ *
+ *     // process form
+ *     $form->process();
+ *     
+ *     if ($form->validate()) {
+ *         // do something with your valid data
+ *         var_dump($form->getValues());
+ *     } else {
+ *         // Form was empty or data was not valid:
+ *         // Display the form.
+ *         echo ($form);
+ *     }
+ * ?>
+ * @endcode
+ *
+ * See example at
+ *     - @link simple.php @endlink - a simple form
+ *     - @link simple.php @endlink
  **/
 class htmlform extends abstracts\container {
     // {{{ variables
@@ -585,6 +615,8 @@ class htmlform extends abstracts\container {
  *
  * Demonstrates the use of all element types that are fully implemented.
  * Includes examples of element specific options.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/elements.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -593,6 +625,8 @@ class htmlform extends abstracts\container {
  *
  * Multiple, single and text input elements have option lists. Here are some
  * more detailed examples.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/lists.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -602,6 +636,8 @@ class htmlform extends abstracts\container {
  * The htmlform->populate method provides a comfortable way to fill in
  * default values before displaying the form. It's more convenient than setting
  * the 'defaultValue' parameter for each input element individually.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/populate.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -610,6 +646,8 @@ class htmlform extends abstracts\container {
  *
  * Contains a common personal information form. Some elements are set required
  * and the username has a minimum length.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/reallife.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -618,6 +656,10 @@ class htmlform extends abstracts\container {
  *
  * Once the form is validated, it can also be redirected to another URL. This
  * can be done by setting the 'successURL' parameter in the form.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/redirect.php"></iframe>@endhtmlonly
+ *
+ * @include redirect-success.php
  **/
 
 /**
@@ -627,6 +669,8 @@ class htmlform extends abstracts\container {
  * One can lower the lifetime of the forms session by setting the 'ttl' value.
  * Setting this higher than the PHP session length (default around 30min) has
  * no effect.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/session-timeout.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -636,6 +680,8 @@ class htmlform extends abstracts\container {
  * Contains text and email input elements and demonstrates form processing and
  * validation. In this simple case none of the elements are set required, so an
  * empty form would also be valid.
+ *
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/simple.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -647,6 +693,8 @@ class htmlform extends abstracts\container {
  * its input elements are valid.
  * It is also possible to attach input elements directly to the form (outside
  * any step container). These elements are visible on every step.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/steps.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -656,4 +704,6 @@ class htmlform extends abstracts\container {
  * It's also possible to override the htmlform class and add elements in the
  * constructor. This way we can build reusable form classes or add custom rules
  * to the form validation.
+ * 
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/subclass.php"></iframe>@endhtmlonly
  **/

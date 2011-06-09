@@ -16,7 +16,7 @@ $form = new depage\htmlform\htmlform('simpleForm');
  * identifier and therefore required. The optional second parameter is an array
  * of element settings.
  */
-$form->addText('username', array('label' => 'User name'));
+$form->addText('username', array('label' => 'User name', 'required' => true));
 $form->addEmail('email', array('label' => 'Email address'));
 
 /*
@@ -38,6 +38,7 @@ if ($form->validate()) {
      * Success, do something useful with the data and clear the session.
      * The getValues method returns an array of the form element values.
      */
+    echo('<a href="">back</a>');
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');

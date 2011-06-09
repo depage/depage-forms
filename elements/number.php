@@ -8,6 +8,8 @@ namespace depage\htmlform\elements;
 
 /**
  * @brief HTML number input type.
+ *
+ * @todo find a workaround for localization of decimal separator
  **/
 class number extends text {
     // {{{ variables

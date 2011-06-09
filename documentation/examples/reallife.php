@@ -74,6 +74,7 @@ if ($form->validate()) {
     /*
      * Success, do something useful with the data and clear the session.
      */
+    echo('<a href="">back</a>');
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');

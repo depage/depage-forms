@@ -19,6 +19,7 @@ $form = new depage\htmlform\htmlform('originForm');
 /*
  * Do something useful with the data and clear the session.
  */
+echo('<a href="">redirect.php</a>');
 echo('<pre>');
 var_dump($form->getValues());
 echo('</pre>');
