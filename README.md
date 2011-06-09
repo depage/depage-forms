@@ -9,14 +9,14 @@ provides a comfortable way to obtain reliable data.
 Features
 --------
 
-- avert form resubmission
 - validation
     - available for standard input elements
     - customizable with regular expressions
-- dividing forms into ѕeparate parts
-- almost complete HTML5 form functionality
+- HTML5 form features
     - attributes : placeholder, autofocus, textbox datalists, title, pattern
     - input elements : boolean (checkbox), email, hidden, multiple (checkbox, select list), number, password, range, search, single (radio, select list), tel, text, textarea, url
+- averts form resubmission
+- divide forms into ѕeparate parts
 - neat return values with appropriate data types
 - easy language localisation
 - session timeout
