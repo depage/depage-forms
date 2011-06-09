@@ -7,7 +7,7 @@ require_once('../../htmlform.php');
 /*
  * Create the example form 'originForm' with different success page url.
  */
-$form = new depage\htmlform\htmlform('originForm', array('successURL' => 'success.php'));
+$form = new depage\htmlform\htmlform('originForm', array('successURL' => 'redirect-success.php'));
 
 /*
  * Create input elements
@@ -27,5 +27,5 @@ $form->process();
 
 /*
  * Display the form.
- /
+ */
 echo ($form);
