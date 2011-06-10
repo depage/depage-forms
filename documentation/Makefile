@@ -1,5 +1,6 @@
 DOCREPO = git@github.com:jonasjonas/depage-docu.git
 RM = rm -rf
+BACKCOLOR = backcolor_brightblue
 
 doc: depage-docu
 	cd ./depage-docu/ ; git pull origin master
@@ -8,6 +9,7 @@ doc: depage-docu
 	rm examples/main.html
 	cp -r depage-docu/www/lib html/
 	sed -i".bak" "s/\<body/\<body class=\\\"home\\\"/" html/index.html 
+	sed -i".bak" "s/div id=\\\"backcolor_\\\"/div id=\\\"${BACKCOLOR}\\\"/" html/*.html 
 	rm html/*.bak
 
 depage-docu:
