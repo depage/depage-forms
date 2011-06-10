@@ -1,5 +1,5 @@
-depage-forms / php-html5-forms with ease and comfort
-=====================================================
+depage-forms / html5-forms in php with ease and comfort
+=======================================================
 
 depage-forms is PHP library for HTML form generation with focus on usability.
 It is part of the upcoming version of /depage-cms/, but it also works as a 

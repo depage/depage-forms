@@ -11,50 +11,9 @@
  * @htmlinclude main.html
  * @endintro
  *
- * @subpage features
- *
- * @subpage prerequesites
- *
- * @subpage license
- *
  * @subpage usage
  *
  * @subpage developer
- **/
-
-/**
- * @page features Features
- *
- *      - avert form resubmission
- *      - validation
- *          - available for standard input elements
- *          - customizable with regular expressions
- *      - dividing forms into ѕeparate parts
- *      - almost complete HTML5 form functionality
- *          - attributes        : placeholder, autofocus, textbox datalists, title,
- *                                pattern
- *          - input elements    : boolean (checkbox), email, hidden,
- *                                multiple (checkbox, select list), number, password,
- *                                range, search, single (radio, select list), tel, text,
- *                                textarea, url
- *      - neat return values with appropriate data types
- *      - easy language localisation
- *      - session timeout
- *      - simple creditcard validation (by values)
- **/
-
-/**
- * @page prerequesites Prerequesites
- *      - PHP 5.3
- *      - PHPUnit 3.5 (included unit tests)
- *      - Doxygen 1.7.2 (to generate documentation)
- **/
-
-/**
- * @page license License
- *      GPL2 http://www.gnu.org/licenses/gpl-2.0.html
- *
- *      MIT  http://www.opensource.org/licenses/mit-license.php
  **/
 
 /**
