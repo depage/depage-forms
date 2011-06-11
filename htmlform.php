@@ -8,18 +8,31 @@
  * @mainpage
  *
  * @intro
- * @htmlinclude main.html
+ * @image html icon_depage-forms.png
+ * @htmlinclude main-intro.html
  * @endintro
  *
- * @subpage usage
+ * @section Usage
+ *
+ * depage-forms will mainly be used through the @link depage::htmlform::htmlform 
+ * htmlform-class@endlink. It is the main interface through which you can add 
+ * inputs, fieldsets and steps.
+ *
+ * A list of available input you can find on in @link depage::htmlform::elements 
+ * elements@endlink
+ *
+ * @link simple.php simple.php @endlink
+ *
+ * @endsection 
  *
  * @subpage developer
+ *
+ * @htmlinclude main-extended.html
  **/
 
 /**
  * @page usage Usage
  *
- * @link simple.php simple.php @endlink
  **/
 
 /**
@@ -118,7 +131,6 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  *
  * See example at
  *     - @link simple.php @endlink - a simple form
- *     - @link simple.php @endlink
  **/
 class htmlform extends abstracts\container {
     // {{{ variables
