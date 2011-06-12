@@ -8,6 +8,36 @@ namespace depage\htmlform\elements;
 
 /**
  * @brief Default creditcard fieldset.
+ *
+ * Class to get a user creditcard information. It generates a fieldset
+ * that consists of
+ *
+ *     - a creditcard-type (like 'Visa', 'MasterCard' or 'American Express')
+ *     - a field for the creditcard-number
+ *     - a field for the expiry-date
+ *     - a field for the card-owner
+ *
+ * At the moment this input only checks the formatting of the numbers but not if 
+ * it is a valid creditcard.
+ * 
+ * @section usage
+ *
+ * @code
+ * <?php 
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add a creditcard fieldset
+ *     $form->addCreditcard('creditcard', array(
+ *         'label' => 'Credit Card',
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *     
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class creditcard extends fieldset {
     // {{{ setDefaults()

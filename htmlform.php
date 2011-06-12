@@ -18,8 +18,8 @@
  * htmlform-class@endlink. It is the main interface through which you can add 
  * inputs, fieldsets and steps.
  *
- * A list of available input you can find on in @link depage::htmlform::elements 
- * elements@endlink
+ * You can find a list of available input-class in @link depage::htmlform::elements 
+ * elements@endlink.
  *
  * @link simple.php simple.php @endlink
  *
@@ -64,13 +64,18 @@
  * @brief Abstract element classes
  *
  * @namespace depage::htmlform::elements
- * @brief Subelement types
+ * @brief Classes for HTML input-elements
+ *
+ * All Classes in this namespace are HTML input-elements that can be added to
+ * instances of the @link depage::htmlform::htmlform htmlform-class@endlink, 
+ * but also to also to @link depage::htmlform::elements::fieldset fieldsets@endlink
+ * and @link depage::htmlform::elements::step steps@endlink:
  *
  * @namespace depage::htmlform::exceptions
  * @brief Htmlform exceptions
  *
  * @namespace depage::htmlform::validators
- * @brief Validators for subelements
+ * @brief Validators for HTML input-elements
  **/
 namespace depage\htmlform;
 
@@ -129,7 +134,10 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * ?>
  * @endcode
  *
- * See example at
+ * You can find a list of available input-class in @link depage::htmlform::elements 
+ * elements@endlink.
+ *
+ * See examples at
  *     - @link simple.php @endlink - a simple form
  **/
 class htmlform extends abstracts\container {
