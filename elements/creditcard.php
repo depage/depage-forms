@@ -17,6 +17,7 @@ class creditcard extends fieldset {
     protected function setDefaults() {
         parent::setDefaults();
 
+        $this->defaults['required']             = false;
         $this->defaults['labelNumber']          = "Creditcard Number";
         $this->defaults['labelCheck']           = "CVV/CVC";
         $this->defaults['labelExpirationDate']  = "Expiration Date MM/YY";
@@ -59,22 +60,22 @@ class creditcard extends fieldset {
         ));
         $this->addText($this->name . "_card_number", array(
             'label' => $this->labelNumber,
-            'required' => true,
+            'required' => $this->required,
             'validator' => "/^(?:\d[ -]*?){13,16}$/",
         ));
         $this->addText($this->name . "_card_numbercheck", array(
             'label' => $this->labelCheck,
-            'required' => true,
+            'required' => $this->required,
             'validator' => "/^\d{3,4}$/",
         ));
         $this->addText($this->name . "_card_expirydate", array(
             'label' => $this->labelExpirationDate,
-            'required' => true,
+            'required' => $this->required,
             'validator' => "/^\d{2}\/\d{2}$/",
         ));
         $this->addText($this->name . "_card_owner", array(
             'label' => $this->labelOwner,
-            'required' => true,
+            'required' => $this->required,
         ));
     }
     // }}}
