@@ -2,6 +2,9 @@
 /**
  * @file input.php
  * @brief abstract input element class
+ *
+ * @author Frank Hellenkamp <jonas@depage.net>
+ * @author Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 namespace depage\htmlform\abstracts;

@@ -2,6 +2,9 @@
 /**
  * @file    htmlform.php
  * @brief   htmlform class and autoloader
+ *
+ * @author  Frank Hellenkamp <jonas@depage.net>
+ * @author  Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 /**
