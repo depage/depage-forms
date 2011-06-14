@@ -12,7 +12,26 @@ namespace depage\htmlform\elements;
 use depage\htmlform\exceptions;
 
 /**
- * @brief Can be used to add custom HTML between rendered HTML elements.
+ * @brief Can be used to insert custom HTML between rendered HTML elements.
+ *
+ * Class for custom HTML code sections.
+ *
+ * @section usage
+ *
+ * @code
+ * <?php
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add HTML
+ *     $form->addHtml('<div id="myimage"></div>');
+ *
+ *     // process form
+ *     $form->process();
+ *
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class html {
     // {{{ variables

@@ -11,6 +11,27 @@ namespace depage\htmlform\elements;
 
 /**
  * @brief HTML hidden input type.
+ *
+ * Class for the HTML input-type "hidden".
+ *
+ * @section usage
+ *
+ * @code
+ * <?php
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add a hidden field
+ *     $form->addHidden('nonce', array(
+ *         'defaultValue' => 'XD5fkk',
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class hidden extends text {
     // {{{ __toString()

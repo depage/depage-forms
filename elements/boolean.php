@@ -21,7 +21,7 @@ use depage\htmlform\abstracts;
  * @section usage
  *
  * @code
- * <?php 
+ * <?php
  *     $form = new depage\htmlform\htmlform('myform');
  *
  *     // add a boolean field
@@ -37,7 +37,7 @@ use depage\htmlform\abstracts;
  *
  *     // process form
  *     $form->process();
- *     
+ *
  *     // Display the form.
  *     echo ($form);
  * ?>

@@ -13,7 +13,40 @@ use depage\htmlform\abstracts;
 
 /**
  * @brief The fieldset class holds HTML-fieldset specific attributes and methods.
+ *
+ * Class for the HTML fieldset element. Can be used to group other elments
+ * together.
+ *
+ * @section usage
+ *
+ * @code
+ * <?php
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add a fieldset container
+ *     $myfieldset = $form->addFieldset('myfieldset', array(
+ *         'label' => 'Name',
+ *     ));
+ *
+ *     // add a text field
+ *     $myfieldset->addText('firstName', array(
+ *         'label' => 'First name',
+ *     ));
+ *
+ *     // add another text field
+ *     $myfieldset->addText('lastName', array(
+ *         'label' => 'Last name',
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
+
 class fieldset extends abstracts\container {
     // {{{ variables
     /**
