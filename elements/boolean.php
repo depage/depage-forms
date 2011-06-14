@@ -2,6 +2,9 @@
 /**
  * @file    boolean.php
  * @brief   boolean input element
+ *
+ * @author Frank Hellenkamp <jonas@depage.net>
+ * @author Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 namespace depage\htmlform\elements;
@@ -10,6 +13,35 @@ use depage\htmlform\abstracts;
 
 /**
  * @brief HTML single checkbox input type.
+ *
+ * Class for a single "checkbox". If the boolean input is required it has to 
+ * be clicked to sumbit the form succesfully. It may e.g. be used for specific 
+ * terms a user has to accept to register.
+ * 
+ * @section usage
+ *
+ * @code
+ * <?php 
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add a boolean field
+ *     $form->addBoolean('newsletter', array(
+ *         'label' => 'I want to receive news by mail',
+ *     ));
+ *
+ *     // add a required boolean field
+ *     $form->addBoolean('acceptTerms', array(
+ *         'label' => 'I accept the following terms',
+ *         'required' => true,
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *     
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class boolean extends abstracts\input {
     // {{{ setDefaults()

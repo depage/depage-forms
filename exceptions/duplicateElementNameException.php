@@ -2,6 +2,9 @@
 /**
  * @file    duplicateElementNameException.php
  * @brief   duplicate element name exception class
+ *
+ * @author Frank Hellenkamp <jonas@depage.net>
+ * @author Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 namespace depage\htmlform\exceptions;

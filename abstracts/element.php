@@ -2,6 +2,9 @@
 /**
  * @file    element.php
  * @brief   element class
+ *
+ * @author Frank Hellenkamp <jonas@depage.net>
+ * @author Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 namespace depage\htmlform\abstracts;

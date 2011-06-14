@@ -2,12 +2,45 @@
 /**
  * @file    creditcard.php
  * @brief   creditcard fieldset element
+ *
+ * @author Frank Hellenkamp <jonas@depage.net>
+ * @author Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 namespace depage\htmlform\elements;
 
 /**
  * @brief Default creditcard fieldset.
+ *
+ * Class to get a user creditcard information. It generates a fieldset
+ * that consists of
+ *
+ *     - a creditcard-type (like 'Visa', 'MasterCard' or 'American Express')
+ *     - a field for the creditcard-number
+ *     - a field for the expiry-date
+ *     - a field for the card-owner
+ *
+ * At the moment this input only checks the formatting of the numbers but not if 
+ * it is a valid creditcard.
+ * 
+ * @section usage
+ *
+ * @code
+ * <?php 
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add a creditcard fieldset
+ *     $form->addCreditcard('creditcard', array(
+ *         'label' => 'Credit Card',
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *     
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class creditcard extends fieldset {
     // {{{ setDefaults()
@@ -17,6 +50,7 @@ class creditcard extends fieldset {
     protected function setDefaults() {
         parent::setDefaults();
 
+        $this->defaults['required']             = false;
         $this->defaults['labelNumber']          = "Creditcard Number";
         $this->defaults['labelCheck']           = "CVV/CVC";
         $this->defaults['labelExpirationDate']  = "Expiration Date MM/YY";
@@ -59,22 +93,22 @@ class creditcard extends fieldset {
         ));
         $this->addText($this->name . "_card_number", array(
             'label' => $this->labelNumber,
-            'required' => true,
+            'required' => $this->required,
             'validator' => "/^(?:\d[ -]*?){13,16}$/",
         ));
         $this->addText($this->name . "_card_numbercheck", array(
             'label' => $this->labelCheck,
-            'required' => true,
+            'required' => $this->required,
             'validator' => "/^\d{3,4}$/",
         ));
         $this->addText($this->name . "_card_expirydate", array(
             'label' => $this->labelExpirationDate,
-            'required' => true,
+            'required' => $this->required,
             'validator' => "/^\d{2}\/\d{2}$/",
         ));
         $this->addText($this->name . "_card_owner", array(
             'label' => $this->labelOwner,
-            'required' => true,
+            'required' => $this->required,
         ));
     }
     // }}}

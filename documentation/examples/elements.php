@@ -157,6 +157,19 @@ $fieldset = $form->addFieldset('Fieldset');
 $fieldset->addText('Text2');
 
 /*
+ * Creditcard input
+ *
+ * return values as string named with the name of the input as prefix, e.g.:
+ *
+ *     - {prefix}_card_type
+ *     - {prefix}_card_number
+ *     - {prefix}_card_numbercheck
+ *     - {prefix}_card_expirydate
+ *     - {prefix}_card_owner
+ */
+$form->addCreditcard('creditcard');
+
+/*
  * HTML element
  *
  * Adds HTML code.

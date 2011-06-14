@@ -2,65 +2,40 @@
 /**
  * @file    htmlform.php
  * @brief   htmlform class and autoloader
+ *
+ * @author  Frank Hellenkamp <jonas@depage.net>
+ * @author  Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 /**
  * @mainpage
  *
  * @intro
- * @htmlinclude main.html
+ * @image html icon_depage-forms.png
+ * @htmlinclude main-intro.html
  * @endintro
  *
- * @subpage features
+ * @section Usage
  *
- * @subpage prerequesites
+ * depage-forms will mainly be used through the @link depage::htmlform::htmlform 
+ * htmlform-class@endlink. It is the main interface through which you can add 
+ * inputs, fieldsets and steps.
  *
- * @subpage license
+ * You can find a list of available input-class in @link depage::htmlform::elements 
+ * elements@endlink.
  *
- * @subpage usage
+ * @link simple.php simple.php @endlink
+ *
+ * @endsection 
  *
  * @subpage developer
- **/
-
-/**
- * @page features Features
  *
- *      - validation
- *          - available for standard input elements
- *          - customizable with regular expressions
- *      - HTML5 form features
- *          - attributes        : placeholder, autofocus, textbox datalists, title,
- *                                pattern
- *          - input elements    : boolean (checkbox), email, hidden,
- *                                multiple (checkbox, select list), number, password,
- *                                range, search, single (radio, select list), tel, text,
- *                                textarea, url
- *      - averts form resubmission
- *      - divide forms into ѕeparate parts
- *      - neat return values with appropriate data types
- *      - easy language localisation
- *      - session timeout
- *      - simple creditcard validation (by values)
- **/
-
-/**
- * @page prerequesites Prerequesites
- *      - PHP 5.3
- *      - PHPUnit 3.5 (included unit tests)
- *      - Doxygen 1.7.2 (to generate documentation)
- **/
-
-/**
- * @page license License
- *      GPL2 http://www.gnu.org/licenses/gpl-2.0.html
- *
- *      MIT  http://www.opensource.org/licenses/mit-license.php
+ * @htmlinclude main-extended.html
  **/
 
 /**
  * @page usage Usage
  *
- * @link simple.php simple.php @endlink
  **/
 
 /**
@@ -92,13 +67,18 @@
  * @brief Abstract element classes
  *
  * @namespace depage::htmlform::elements
- * @brief Subelement types
+ * @brief Classes for HTML input-elements
+ *
+ * All Classes in this namespace are HTML input-elements that can be added to
+ * instances of the @link depage::htmlform::htmlform htmlform-class@endlink, 
+ * but also to also to @link depage::htmlform::elements::fieldset fieldsets@endlink
+ * and @link depage::htmlform::elements::step steps@endlink:
  *
  * @namespace depage::htmlform::exceptions
  * @brief Htmlform exceptions
  *
  * @namespace depage::htmlform::validators
- * @brief Validators for subelements
+ * @brief Validators for HTML input-elements
  **/
 namespace depage\htmlform;
 
@@ -157,9 +137,11 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * ?>
  * @endcode
  *
- * See example at
+ * You can find a list of available input-class in @link depage::htmlform::elements 
+ * elements@endlink.
+ *
+ * See examples at
  *     - @link simple.php @endlink - a simple form
- *     - @link simple.php @endlink
  **/
 class htmlform extends abstracts\container {
     // {{{ variables

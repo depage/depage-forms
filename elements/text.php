@@ -2,6 +2,9 @@
 /**
  * @file    text.php
  * @brief   text input element
+ *
+ * @author Frank Hellenkamp <jonas@depage.net>
+ * @author Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
 namespace depage\htmlform\elements;
