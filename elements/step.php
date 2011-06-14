@@ -11,6 +11,8 @@ namespace depage\htmlform\elements;
 
 /**
  * @brief Steps break up forms into separate consecutive parts
+ *
+ * @link steps.php Example form @endlink
  **/
 class step extends fieldset {
     // {{{ __toString()
