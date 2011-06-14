@@ -56,7 +56,13 @@
  *
  * To run the tests:
  *
- * <pre>$ make tests</pre>
+ * <pre>$ make test</pre>
+ *
+ * @section Documentation
+ *
+ * To generate documentation:
+ *
+ * <pre>$ make doc</pre>
  **/
 
 // {{{ namespace
@@ -86,7 +92,6 @@
  **/
 namespace depage\htmlform;
 
-use depage\htmlform\elements;
 // }}}
 
 // {{{ autoloader
