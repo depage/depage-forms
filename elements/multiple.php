@@ -13,6 +13,44 @@ use depage\htmlform\abstracts;
 
 /**
  * @brief HTML-multiple-choice input type i.e. checkbox and select.
+ *
+ * Class for multiple-choice type HTML elements. Has the same return value,
+ * regardless of skin type (checkbox or select).
+ *
+ * @section usage
+ *
+ * @code
+ * <?php
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add multiple-element (checkbox is the default skin)
+ *     $form->addMultiple('listOne', array(
+ *         'label' => 'Spoken languages',
+ *         'list' => array(
+ *             'en' => 'English',
+ *             'es' => 'Spanish',
+ *             'fr' => 'French',
+ *         ),
+ *     ));
+ *
+ *     // add a multiple-element with select-skin
+ *     $form->addMultiple('listTwo', array(
+ *         'label' => 'Spoken languages',
+ *         'skin' => 'select',
+ *         'list' => array(
+ *             'en' => 'English',
+ *             'es' => 'Spanish',
+ *             'fr' => 'French',
+ *         ),
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class multiple extends abstracts\input {
     // {{{ variables

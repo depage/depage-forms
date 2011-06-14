@@ -13,6 +13,44 @@ use depage\htmlform\abstracts;
 
 /** 
  * @brief HTML-single-choice input type i.e. radio and select.
+ *
+ * Class for radio-like HTML elements. Has the same return value, regardless
+ * of skin type (radio or select).
+ *
+ * @section usage
+ *
+ * @code
+ * <?php
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add single-element (radio is the default skin)
+ *     $form->addSingle('listOne', array(
+ *         'label' => 'Language',
+ *         'list' => array(
+ *             'en' => 'English',
+ *             'es' => 'Spanish',
+ *             'fr' => 'French',
+ *         ),
+ *     ));
+ *
+ *     // add a single-element with select-skin
+ *     $form->addSingle('listTwo', array(
+ *         'label' => 'Language',
+ *         'skin' => 'select',
+ *         'list' => array(
+ *             'en' => 'English',
+ *             'es' => 'Spanish',
+ *             'fr' => 'French',
+ *         ),
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class single extends abstracts\input {
     // {{{ variables

@@ -14,8 +14,8 @@ use depage\htmlform\abstracts;
 /**
  * @brief HTML single checkbox input type.
  *
- * Class for a single "checkbox". If the boolean input is required it has to 
- * be clicked to sumbit the form succesfully. It may e.g. be used for specific 
+ * Class for a single "checkbox". If the boolean input is required it has to
+ * be clicked to sumbit the form succesfully. It may e.g. be used for specific
  * terms a user has to accept to register.
  * 
  * @section usage
