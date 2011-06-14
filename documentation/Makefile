@@ -11,10 +11,10 @@ doc: depage-docu examples/main-*.html
 	rm html/*.bak
 
 examples/main-*.html:
-	split -p 'Prerequisites' ../README.md
-	./depage-docu/www/md2html.php xaa examples/main-intro.html
-	./depage-docu/www/md2html.php xab examples/main-extended.html
-	rm xaa xab
+	csplit ../README.md '/Prerequisites/'
+	./depage-docu/www/md2html.php xx00 examples/main-intro.html
+	./depage-docu/www/md2html.php xx01 examples/main-extended.html
+	rm xx00 xx01
 
 depage-docu:
 	git clone -q ${DOCREPO}
