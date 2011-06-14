@@ -12,7 +12,34 @@ namespace depage\htmlform\elements;
 /**
  * @brief HTML number input type.
  *
- * @todo find a workaround for localization of decimal separator
+ * Class for HTML5 input type "number".
+ *
+ * @section usage
+ *
+ * @code
+ * <?php
+ *     $form = new depage\htmlform\htmlform('myform');
+ *
+ *     // add a number field
+ *     $form->addNumber('any', array(
+ *         'label' => 'Any number',
+ *     ));
+ *
+ *     // add a number field with restrictions
+ *     $form->addNumber('even', array(
+ *         'label' => 'Even number between 0 and 10, inclusive',
+ *         'min'   => 0,
+ *         'max'   => 10,
+ *         'step'  => 2,
+ *     ));
+ *
+ *     // process form
+ *     $form->process();
+ *
+ *     // Display the form.
+ *     echo ($form);
+ * ?>
+ * @endcode
  **/
 class number extends text {
     // {{{ variables
@@ -133,7 +160,42 @@ class number extends text {
      * @return  void
      **/
     protected function typeCastValue() {
-        $this->value = (float) $this->value;
+        $ptString = $this->value;
+
+        $pString = str_replace(" ", "", $ptString);
+
+        if (substr_count($pString, ",") > 1) {$pString = str_replace(",", "", $pString);}
+        if (substr_count($pString, ".") > 1) {$pString = str_replace(".", "", $pString);}
+
+        $pregResult = array();
+
+        $commaset = strpos($pString,',');
+        if ($commaset === false) {$commaset = -1;}
+
+        $pointset = strpos($pString,'.');
+        if ($pointset === false) {$pointset = -1;}
+
+        $pregResultA = array();
+        $pregResultB = array();
+
+        if ($pointset < $commaset) {
+            preg_match('#(([-]?[0-9]+(\.[0-9])?)+(,[0-9]+)?)#', $pString, $pregResultA);
+        }
+        preg_match('#(([-]?[0-9]+(,[0-9])?)+(\.[0-9]+)?)#', $pString, $pregResultB);
+        if ((isset($pregResultA[0]) && (!isset($pregResultB[0])
+                        || strstr($preResultA[0],$pregResultB[0]) == 0
+                        || !$pointset))) {
+            $numberString = $pregResultA[0];
+            $numberString = str_replace('.','',$numberString);
+            $numberString = str_replace(',','.',$numberString);
+        }
+        elseif (isset($pregResultB[0]) && (!isset($pregResultA[0])
+                    || strstr($pregResultB[0],$preResultA[0]) == 0
+                    || !$commaset)) {
+            $numberString = $pregResultB[0];
+            $numberString = str_replace(',','',$numberString);
+        }
+        $this->value = (float) $numberString;
     }
     // }}}
 }
