@@ -68,7 +68,7 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $expected = '<p id="formName-elementName" class="input-multiple required" data-errorMessage="Please enter valid data!">' .
             '<label>' .
                 '<span class="label">elementName <em>*</em></span>' .
-                '<select multiple name="elementName[]"></select>' .
+                '<select multiple name="elementName[]" required></select>' .
             '</label>' .
         '</p>' . "\n";
 
@@ -283,7 +283,7 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase {
         $expected = '<p id="formName-elementName" class="input-multiple required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
-                '<select multiple name="elementName[]"></select>' .
+                '<select multiple name="elementName[]" required></select>' .
             '</label>' .
         '</p>' . "\n";
 
