@@ -95,7 +95,7 @@ abstract class container extends element {
      * @see     addChildElements()
      **/
     protected function addElement($type, $name, $parameters) {
-        $this->_checkElementType($type);
+        $this->checkElementType($type);
         $this->checkParameters($parameters);
 
         $parameters['log'] = $this->log;
@@ -184,7 +184,7 @@ abstract class container extends element {
     }
     // }}}
 
-    // {{{ _checkElementType()
+    // {{{ checkElementType()
     /**
      * @brief   Checks element class availability
      *
@@ -193,7 +193,7 @@ abstract class container extends element {
      * @param   $type (string) element type
      * @return  void
      **/
-    private function _checkElementType($type) {
+    private function checkElementType($type) {
         if (!class_exists($type)) {
             throw new exceptions\unknownElementTypeException();
         }
