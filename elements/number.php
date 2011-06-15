@@ -157,6 +157,8 @@ class number extends text {
     /**
      * @brief   Converts value to element specific type.
      *
+     * Based on (parseFloat) http://www.php.net/manual/en/function.floatval.php#84793
+     *
      * @return  void
      **/
     protected function typeCastValue() {
