@@ -31,14 +31,12 @@ Prerequisites
 For more information
 --------------------
 
-You can fork us at:
-http://github.com/jonasjonas/depage-forms/
-
-You find the documentation at:
-http://docs.depage.net/depage-forms/
-
-For more information about depage-cms go to:
-http://www.depagecms.net/
+- You can fork us at:
+  http://github.com/jonasjonas/depage-forms/
+- You find the documentation at:
+  http://docs.depage.net/depage-forms/
+- For more information about depage-cms go to:
+  http://www.depagecms.net/
 
 License (dual)
 --------------
