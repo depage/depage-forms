@@ -10,7 +10,7 @@ doc: depage-docu examples/main-*.html
 	sed -i".bak" "s/div id=\\\"backcolor_\\\"/div id=\\\"${BACKCOLOR}\\\"/" html/*.html
 	rm html/*.bak
 
-examples/main-*.html:
+examples/main-*.html: ../README.md
 	csplit ../README.md '/Prerequisites/'
 	./depage-docu/www/md2html.php xx00 examples/main-intro.html
 	./depage-docu/www/md2html.php xx01 examples/main-extended.html
