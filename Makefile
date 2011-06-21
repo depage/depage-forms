@@ -9,7 +9,7 @@ test:
 	cd tests; $(MAKE) $(MFLAGS)
 
 release: doc
-	tar cfz depage-forms.tar.gz abstracts documentation elements exceptions validators htmlform.php
+	tar cfz depage-forms.tar.gz abstracts documentation elements exceptions validators lib htmlform.php
 	md5sum depage-forms.tar.gz > depage-forms.tar.gz.md5
 	sha512sum depage-forms.tar.gz > depage-forms.tar.gz.sha2
 
