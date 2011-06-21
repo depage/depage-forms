@@ -11,7 +11,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
      * Form with default setup
      **/
     public function testSimple() {
-        $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/">' . "\n" .
+        $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/" data-jsValidation="blur">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
             '<p id="formName-submit">' .
                 '<input type="submit" value="submit">' .
@@ -28,7 +28,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
      * Form with 2 steps, only step1 should be rendered.
      **/
     public function testStep() {
-        $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/">' . "\n" .
+        $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/" data-jsValidation="blur">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
             '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data!">' .
                 '<label>' .

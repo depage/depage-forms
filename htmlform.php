@@ -244,6 +244,7 @@ class htmlform extends abstracts\container {
         $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
         $this->defaults['validator']    = null;
         $this->defaults['ttl']          = null;
+        $this->defaults['jsValidation'] = 'blur';
     }
     // }}}
 
@@ -397,6 +398,7 @@ class htmlform extends abstracts\container {
         $label              = $this->htmlLabel();
         $method             = $this->htmlMethod();
         $submitURL          = $this->htmlSubmitURL();
+        $jsValidation       = $this->htmlJsValidation();
 
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -408,7 +410,7 @@ class htmlform extends abstracts\container {
             }
         }
 
-        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form\" method=\"{$method}\" action=\"{$submitURL}\">" . "\n" .
+        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form\" method=\"{$method}\" action=\"{$submitURL}\" data-jsValidation=\"{$jsValidation}\">" . "\n" .
             $renderedElements .
             "<p id=\"{$this->name}-submit\"><input type=\"submit\" value=\"{$label}\"></p>" . "\n" .
         "</form>";
