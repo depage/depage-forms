@@ -324,7 +324,7 @@ abstract class input extends element {
             && $this->value !== null
             && $this->errorMessage !== ""
         ) {
-            $errorMessage = " <span class=\"errorMessage\">" . $this->htmlEscape($this->errorMessage) . "</span>";
+            $errorMessage = "<span class=\"errorMessage\">" . $this->htmlEscape($this->errorMessage) . "</span>";
         } else {
             $errorMessage = "";
         }
