@@ -14,7 +14,7 @@ examples/main-*.html: ../README.md
 	csplit ../README.md '/Prerequisites/'
 	./depage-docu/www/md2html.php xx00 examples/main-intro.html
 	./depage-docu/www/md2html.php xx01 examples/main-extended.html
-	rm xx00 xx01
+	${RM} xx00 xx01
 
 depage-docu:
 	git clone -q ${DOCREPO}

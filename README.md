@@ -12,7 +12,7 @@ Features
 
 - validation
     - server side
-    - client side (jQuery Tools) http://flowplayer.org/tools/
+    - client side [(jQuery Tools)](http://flowplayer.org/tools/ "jQuery Tools")
     - available for standard input elements
     - customizable with regular expressions
 - HTML5 form features
@@ -35,14 +35,14 @@ For more information
 --------------------
 
 - You can fork us at:
-  http://github.com/jonasjonas/depage-forms/
+  <http://github.com/jonasjonas/depage-forms/>
 - You find the documentation at:
-  http://docs.depage.net/depage-forms/
+  <http://docs.depage.net/depage-forms/>
 - For more information about depage-cms go to:
-  http://www.depagecms.net/
+  <http://www.depagecms.net/>
 
 License (dual)
 --------------
 
-- GPL2: http://www.gnu.org/licenses/gpl-2.0.html
-- MIT: http://www.opensource.org/licenses/mit-license.php
+- GPL2: <http://www.gnu.org/licenses/gpl-2.0.html>
+- MIT: <http://www.opensource.org/licenses/mit-license.php>
