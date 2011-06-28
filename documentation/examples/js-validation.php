@@ -18,6 +18,13 @@ $form->addEmail('email', array('label' => 'Email address'));
 $form->addBoolean('accept', array('label' => 'Accept terms and conditions.', 'required' => true));
 
 /*
+ * The validator pattern has to match the complete string (HTML5 spec). Here
+ * are some examples:
+ */
+$form->addText('singleLetter', array('label' => 'Single letter', 'required' => true, 'validator' => '/[a-zA-Z]/'));
+$form->addText('letters', array('label' =>'One ore more letters', 'required' => true, 'validator' => '/[a-zA-Z]+/'));
+
+/*
  * The process method is essential to the functionality of the form. It serves
  * various purposes:
  *  - it validates submitted data if there is any
