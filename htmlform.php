@@ -18,11 +18,11 @@
  *
  * @section Usage
  *
- * depage-forms will mainly be used through the @link depage::htmlform::htmlform 
- * htmlform-class@endlink. It is the main interface through which you can add 
+ * depage-forms will mainly be used through the @link depage::htmlform::htmlform
+ * htmlform-class@endlink. It is the main interface through which you can add
  * inputs, fieldsets and steps.
  *
- * You can find a list of available input-class in @link depage::htmlform::elements 
+ * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.
  *
  * @endsection 
@@ -40,6 +40,31 @@
 /**
  * @page developer Developer guide
  *
+ * The idea behind this project is to combine comfortable form-generation and
+ * modern browser functionality with maximum client coverage.
+ *
+ * Comfort
+ * - We abstract browser specifics from HTML-forms to provide a clean interface
+ *   to web developers. All configuration is located in one place.
+ *
+ * Coverage
+ * - To reach as many users as possible we have included several fallbacks for
+ *   old browsers. Depage-forms mimics validation-behavior of modern browsers
+ *   with JavaScript (client-side) or PHP (server-side).
+ *
+ * HTML5
+ * - We follow the HTML5 spec where it's sensible. The only clash so far is
+ *   @link depage::htmlform::elements::multiple::htmlInputAttributes checkbox
+ *   validation @endlink .
+ * - We aim to provide as much HTML5 functionality as possible.
+ *
+ * Customization
+ * - Input-elements can be easily modified by overriding the included
+ * element-classes.
+ * - New element-classes are automatically integrated by the autoloader. (They
+ * can be instantiated with @link depage::htmlform::abstracts::container::__call
+ * add @endlink (runtime generated))
+ *
  * @section prerequisites Developer Prerequisites
  *
  * - PHP 5.3
@@ -50,9 +75,19 @@
  *
  * Generally, follow Zend coding standard
  *
+ * @section Deployment
+ *
+ * To generate a gzipped release of the library (includes examples):
+ *
+ * <pre>$ make release</pre>
+ *
+ * To generate a gzipped release with the essentials for working environments:
+ *
+ * <pre>$ make min</pre>
+ *
  * @section Tests
  *
- * To run the tests:
+ * To run the unit tests:
  *
  * <pre>$ make test</pre>
  *
