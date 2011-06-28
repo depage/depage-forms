@@ -57,7 +57,7 @@ if ($form->validate()) {
     echo (
         '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>' .
         '<script src="../../lib/js/jquery.tools.min.js"></script>' .
-        '<script src="../../lib/js/effect.js"></script>'
+        '<script src="../../lib/js/effect.min.js"></script>'
     );
     /*
      * Display the form.
