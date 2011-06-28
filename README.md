@@ -46,4 +46,3 @@ License (dual)
 
 - GPL2: http://www.gnu.org/licenses/gpl-2.0.html
 - MIT: http://www.opensource.org/licenses/mit-license.php
-
