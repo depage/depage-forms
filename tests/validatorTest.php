@@ -85,7 +85,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     public function testCustomRegEx() {
         $customValidator = validator::factory('/[a-zA-Z]/');
         $this->assertFalse($customValidator->validate('1234'));
-        $this->assertTrue($customValidator->validate('letters'));
+        $this->assertFalse($customValidator->validate('letters'));
+        $this->assertTrue($customValidator->validate('l'));
     }
     // }}}
 

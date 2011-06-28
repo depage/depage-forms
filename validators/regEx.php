@@ -25,14 +25,21 @@ class regEx extends validator {
      * @return              (bool)      validation result
      **/
     public function validate($value, $parameters = array()) {
-        $match = (bool) preg_match($this->regEx, $value);
+        $match = (bool) preg_match($this->regEx, $value, $matchedSubstring);
+
+        /**
+         * To make the pattern-matching HTML5 compliant the regular expression
+         * has to match the entire string. Since there is no preg_match flag
+         * for that, we compare the value with the matched substring.
+         **/
+        $completeMatch = $match && ($value === $matchedSubstring[0]);
 
         if (preg_last_error() !== PREG_NO_ERROR) {
             /** @todo set error type **/
             $this->log("Regular expression warning: error code " . preg_last_error());
         }
 
-        return $match;
+        return $completeMatch;
     }
     // }}}
 
