@@ -94,6 +94,5 @@ if ($form->validate()) {
 
     $form->clearSession();
 } else {
-    echo ('<link type="text/css" rel="stylesheet" href="test.css">');
     echo ($form);
 }
