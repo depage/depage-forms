@@ -48,10 +48,7 @@
  *
  * @section style Coding style
  *
- * Generally, follow Zend coding style
- * camel case
- * 4 spaces indents
- * omit php closing tag
+ * Generally, follow Zend coding standard
  *
  * @section Tests
  *
