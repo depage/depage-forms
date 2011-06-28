@@ -7,6 +7,7 @@
  * @author  Sebastian Reinhold <sebastian@bitbernd.de>
  **/
 
+// {{{ documentation
 /**
  * @mainpage
  *
@@ -64,6 +65,7 @@
  *
  * <pre>$ make doc</pre>
  **/
+// }}}
 
 // {{{ namespace
 /**
@@ -602,6 +604,7 @@ class htmlform extends abstracts\container {
     // }}}
 }
 
+// {{{ example page links
 /**
  * @example elements.php
  * @brief   Various element examples
@@ -610,6 +613,15 @@ class htmlform extends abstracts\container {
  * Includes examples of element specific options.
  * 
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/elements.php"></iframe>@endhtmlonly
+ **/
+
+/**
+ * @example js-validation.php
+ * @brief   Client-side JavaScript validation
+ *
+ * Demonstrates client-side validation. Fields are validated when they lose focus.
+ *
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/js-validation.php"></iframe>@endhtmlonly
  **/
 
 /**
@@ -700,3 +712,4 @@ class htmlform extends abstracts\container {
  * 
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/subclass.php"></iframe>@endhtmlonly
  **/
+// }}}
