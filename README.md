@@ -11,6 +11,8 @@ Features
 --------
 
 - validation
+    - server side
+    - client side (jQuery Tools) http://flowplayer.org/tools/
     - available for standard input elements
     - customizable with regular expressions
 - HTML5 form features
@@ -27,6 +29,7 @@ Prerequisites
 -------------
 
 - PHP 5.3
+- jQuery 1.3.2 (optional, for client side validation)
 
 For more information
 --------------------
