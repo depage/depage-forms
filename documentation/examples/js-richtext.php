@@ -13,7 +13,10 @@ $form = new depage\htmlform\htmlform('jsRichtext');
  * Add the various input elements to the form by calling the '"add" + element
  * type' method.
  */
-$form->addRichtext('html', array('label' => 'Richtext'));
+$form->addRichtext('html', array(
+    'label' => 'Richtext',
+    'stylesheet' => '../../lib/css/depage-richtext.css',
+));
 
 /*
  * The process method is essential to the functionality of the form. It serves
