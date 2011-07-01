@@ -29,7 +29,7 @@ Prerequisites
 -------------
 
 - PHP 5.3
-- jQuery 1.3.2 (optional, for client side validation)
+- jQuery 1.3.2 (optional, for client side validation and richtext field)
 
 For more information
 --------------------
