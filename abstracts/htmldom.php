@@ -7,7 +7,7 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief Tags that are allowed inside of html
      **/
-    public $allowedTags = array(
+    protected $allowedTags = array(
         "p",
         "h1",
         "h2",

@@ -49,6 +49,7 @@ class richtext extends textarea {
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
         $this->defaults['allowedTags'] = array(
+            // block elements
             "p",
             "h1",
             "h2",
@@ -56,6 +57,7 @@ class richtext extends textarea {
             "ol",
             "li",
 
+            // inline elements
             "a",
             "b",
             "strong",
@@ -128,8 +130,9 @@ class richtext extends textarea {
      **/
     protected function parseHtml($html) {
         $htmlDOM = new \depage\htmlform\abstracts\htmldom();
+
         $htmlDOM->loadHTML($html);
-        $htmlDOM->cleanHTML();
+        $htmlDOM->cleanHTML($this->allowedTags);
 
         return $htmlDOM;
     }
