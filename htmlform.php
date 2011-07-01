@@ -745,3 +745,5 @@ class htmlform extends abstracts\container {
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/subclass.php"></iframe>@endhtmlonly
  **/
 // }}}
+
+/* vim:set ft=php fenc=UTF-8 sw=4 sts=4 fdm=marker et : */
