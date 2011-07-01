@@ -48,6 +48,20 @@ class richtext extends textarea {
         $this->defaults['cols'] = null;
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
+        $this->defaults['allowedTags'] = array(
+            "p",
+            "h1",
+            "h2",
+            "ul",
+            "ol",
+            "li",
+
+            "a",
+            "b",
+            "strong",
+            "i",
+            "em",
+        );
     }
     // }}}
     // {{{ htmlWrapperAttributes()
@@ -62,6 +76,7 @@ class richtext extends textarea {
         $options = array();
         $options['autogrow'] = $this->autogrow;
         $options['stylesheet'] = $this->stylesheet;
+        $options['allowedTags'] = $this->allowedTags;
 
         $attributes .= " data-richtext-options=\"" . $this->htmlEscape(json_encode($options)) . "\"";
 
