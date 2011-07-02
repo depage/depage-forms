@@ -189,5 +189,6 @@ if ($form->validate()) {
 
     $form->clearSession();
 } else {
-    echo ($form);
+    echo('<link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">');
+    echo($form);
 }

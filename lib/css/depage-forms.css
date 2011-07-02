@@ -1,0 +1,131 @@
+.depage-form {
+    width: 30em;
+}
+.depage-form .label {
+    display: block;
+    float: left;
+    width: 30%;
+    height: 1em;
+    min-height: 1em;
+    height: auto !important;
+    padding-bottom: 0.3em;
+    padding-right: 0.3em;
+}
+.depage-form p {
+    clear: left;
+}
+.depage-form p,
+.depage-form .label {
+    position: relative;
+    line-height: 1.2em;
+}
+.depage-form input,
+.depage-form select,
+.depage-form textarea {
+    width: 68%;
+}
+.depage-form .input-boolean input,
+.depage-form .input-single input,
+.depage-form .input-multiple input,
+.depage-form .submit input {
+    width: auto;
+}
+
+.depage-form input {
+    border: 1px solid #000000;
+    padding: 0.2em;
+}
+.depage-form input:required,
+.depage-form input:invalid {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+.depage-form .error input {
+    border: 1px solid #ff0000;
+}
+.depage-form .error label {
+    color: #ff0000;
+}
+.depage-form .errorMessage {
+    display: block;
+    position: absolute;
+    top: 0.2em;
+    right: 3%;
+    max-width: 50%;
+    font-size: 0.9em;
+    text-align: right;
+}
+
+.depage-form fieldset {
+    border: none;
+    border-top: 1px solid;
+    padding: 0;
+    position: relative;
+    background: #eeeeee;
+}
+.depage-form fieldset legend {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.2em;
+    font-weight: bold;
+    background: #dddddd;
+    margin-bottom: 1em;
+}
+
+
+.depage-form .depageEditor {
+    clear: left;
+    position: relative;
+}
+.depage-form ul.depageEditorToolbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 25px;
+}
+.depage-form ul.depageEditorToolbar li {
+}
+.depage-form ul.depageEditorToolbar li a {
+    display: block;
+    width: 25px;
+    height: 25px;
+    text-indent: -10000px;
+    background-image: url(../richtext-toolbar.png);
+    background-repeat: none;
+    background-position: 25px 0;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold {
+    background-position: 0 0;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold:hover, 
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold.on {
+    background-position: -25px 0;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic {
+    background-position: 0 -25px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic.on {
+    background-position: -25px -25px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink {
+    background-position: 0 -50px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
+    background-position: -25px -50px;
+}
+.depage-form .input-richtext textarea,
+.depage-form .input-richtext iframe {
+    width: 100%;
+    border: 1px solid;
+    min-height: 10em;
+    margin-left: 25px;
+}

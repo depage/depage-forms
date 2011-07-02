@@ -55,6 +55,7 @@ echo (
     '<script src="../../lib/js/depage-richtext.js"></script>' .
     '<script src="../../lib/js/effect.js"></script>'
 );
+echo('<link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">');
 /*
  * Display the form.
  */
