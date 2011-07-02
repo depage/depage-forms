@@ -82,7 +82,12 @@ class htmldom extends \DOMDocument implements \Serializable {
         $xpath = new \DOMXPath($tmpDOM);
         $nodelist = $xpath->query("//body/*");
 
-        $this->loadXML("<body></body>");
+        $this->resolveExternals = true;
+        $this->loadXML('<?xml version="1.0" encoding="utf-8"?>
+            <!DOCTYPE html [ 
+                <!ENTITY nbsp "&#160;">
+            ]>
+            <body></body>');
         if ($tmpDOM->encoding != '') {
             $this->encoding = $tmpDOM->encoding;
         }
