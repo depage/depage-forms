@@ -48,6 +48,22 @@ class richtext extends textarea {
         $this->defaults['cols'] = null;
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
+        $this->defaults['allowedTags'] = array(
+            // block elements
+            "p",
+            "h1",
+            "h2",
+            "ul",
+            "ol",
+            "li",
+
+            // inline elements
+            "a",
+            "b",
+            "strong",
+            "i",
+            "em",
+        );
     }
     // }}}
     // {{{ htmlWrapperAttributes()
@@ -62,10 +78,63 @@ class richtext extends textarea {
         $options = array();
         $options['autogrow'] = $this->autogrow;
         $options['stylesheet'] = $this->stylesheet;
+        $options['allowedTags'] = $this->allowedTags;
 
         $attributes .= " data-richtext-options=\"" . $this->htmlEscape(json_encode($options)) . "\"";
 
         return $attributes;
+    }
+    // }}}
+    // {{{ htmlValue()
+    /**
+     * @brief   Returns HTML-rendered element value
+     *
+     * @return  (mixed) element value
+     **/
+    protected function htmlValue() {
+        if ($this->value === null) {
+            $htmlDOM = $this->parseHtml($this->defaultValue);
+        } else {
+            $htmlDOM = $this->value;
+        }
+
+        $html = "";
+
+        // add content of every node in body
+        foreach ($htmlDOM->documentElement->childNodes as $node) {
+            $html .= $htmlDOM->saveXML($node);
+        }
+
+        return $this->htmlEscape($html);
+    }
+    // }}}
+    // {{{ typeCastValue()
+    /**
+     * @brief   Converts value into htmlDOM
+     *
+     * @return  void
+     **/
+    protected function typeCastValue() {
+        if (is_string($this->value)) {
+            $this->value = $this->parseHtml($this->value);
+        }
+    }
+    // }}}
+    // {{{ parseHtml()
+    /**
+     * @brief   Parses html-string into htmlDOM
+     *
+     * @param   (string) $html html string to parse
+     *
+     * @return  (\depage\htmlform\abstracts\SerDOMDocument) htmlDOM
+     **/
+    protected function parseHtml($html) {
+        $htmlDOM = new \depage\htmlform\abstracts\htmldom();
+
+        $htmlDOM->loadHTML($html);
+        $htmlDOM->cleanHTML($this->allowedTags);
+
+        return $htmlDOM;
     }
     // }}}
 }
