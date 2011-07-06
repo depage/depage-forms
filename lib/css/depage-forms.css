@@ -1,6 +1,10 @@
+/* {{{ depage-form base */
 .depage-form {
     width: 30em;
 }
+/* }}} */
+
+/* {{{ input and label sizes */
 .depage-form .label {
     display: block;
     float: left;
@@ -22,7 +26,7 @@
 .depage-form input,
 .depage-form select,
 .depage-form textarea {
-    width: 68%;
+    width: 66%;
 }
 .depage-form .input-boolean input,
 .depage-form .input-single input,
@@ -30,7 +34,8 @@
 .depage-form .submit input {
     width: auto;
 }
-
+/* }}} */
+/* {{{ input states */
 .depage-form input {
     border: 1px solid #000000;
     padding: 0.2em;
@@ -56,7 +61,8 @@
     font-size: 0.9em;
     text-align: right;
 }
-
+/* }}} */
+/* {{{ fieldsets */
 .depage-form fieldset {
     border: none;
     border-top: 1px solid;
@@ -75,8 +81,9 @@
     background: #dddddd;
     margin-bottom: 1em;
 }
+/* }}} */
 
-
+/* {{{ richtext */
 .depage-form .depageEditor {
     clear: left;
     position: relative;
@@ -86,12 +93,14 @@
     position: absolute;
     left: -25px;
     top: 0;
+    line-height: auto;
     list-style: none;
     padding: 0;
     margin: 0;
     width: 25px;
 }
 .depage-form ul.depageEditorToolbar li {
+    padding: 0;
 }
 .depage-form ul.depageEditorToolbar li a {
     display: block;
@@ -150,3 +159,6 @@
     border: 1px solid;
     min-height: 10em;
 }
+/* }}} */
+
+/* vim:set ft=css sw=4 sts=4 fdm=marker : */
