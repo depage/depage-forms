@@ -39,7 +39,8 @@ if ($form->validate()) {
      */
     echo('<a href="">back</a>');
     echo('<pre>');
-    var_dump($form->getValues());
+    $values = $form->getValues();
+    var_dump($values['html']->saveXML());
     echo('</pre>');
 
     $form->clearSession();

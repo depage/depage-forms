@@ -8,14 +8,13 @@ html {
 body {
     font-family: "Arial", "Helvetica Neue", "Helvetica", Sans-Serif;
     padding: 0.5em;
-    padding-left: 1.5em;
+    padding-left: 1.1em;
     font-size: 1em;
     line-height: 1.2em;
 }
 p,
 ul,
 ol {
-    font-size: 0.9em;
     margin-bottom: 0.6em;
 }
 h1,

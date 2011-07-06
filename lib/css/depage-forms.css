@@ -80,10 +80,11 @@
 .depage-form .depageEditor {
     clear: left;
     position: relative;
+    margin-left: 25px;
 }
 .depage-form ul.depageEditorToolbar {
     position: absolute;
-    left: 0;
+    left: -25px;
     top: 0;
     list-style: none;
     padding: 0;
@@ -122,10 +123,30 @@
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
     background-position: -25px -50px;
 }
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList {
+    background-position: 0 -75px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on {
+    background-position: -25px -75px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList {
+    background-position: 0 -100px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on {
+    background-position: -25px -100px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML {
+    background-position: 0 -125px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML.on {
+    background-position: -25px -125px;
+}
 .depage-form .input-richtext textarea,
 .depage-form .input-richtext iframe {
     width: 100%;
     border: 1px solid;
     min-height: 10em;
-    margin-left: 25px;
 }
