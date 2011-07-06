@@ -176,6 +176,19 @@ class htmldom extends \DOMDocument implements \Serializable {
         // }}}
     }
     // }}}
+    // {{{ getBodyNodes()
+    /**
+     * @brief   gets a nodelist with all nodes inside the body
+     *
+     * @return  (nodelist) nodes from body
+     **/
+    public function getBodyNodes() {
+        $xpath = new \DOMXPath($this);
+        $nodelist = $xpath->query("//body/*");
+
+        return $nodelist;
+    }
+    // }}}
 }
 
 /* vim:set ft=php fenc=UTF-8 sw=4 sts=4 fdm=marker et : */
