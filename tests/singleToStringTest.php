@@ -19,10 +19,8 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
     public function testRadio() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
-            '<label>' .
-                '<span class="label">singleName</span>' .
-                '<span></span>' .
-            '</label>' .
+            '<span class="label">singleName</span>' .
+            '<span></span>' .
         '</p>' . "\n";
 
         $this->assertEquals($expected, $this->single->__toString());
@@ -53,10 +51,8 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
     public function testRadioRequired() {
         $expected = '<p id="formName-singleName" class="input-single required" data-errorMessage="Please enter valid data!">' .
-            '<label>' .
-                '<span class="label">singleName <em>*</em></span>' .
-                '<span></span>' .
-            '</label>' .
+            '<span class="label">singleName <em>*</em></span>' .
+            '<span></span>' .
         '</p>' . "\n";
 
         $this->single->setRequired();
@@ -89,29 +85,27 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
     public function testRadioList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
-            '<label>' .
-                '<span class="label">singleName</span>' .
+            '<span class="label">singleName</span>' .
+            '<span>' .
                 '<span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="0">' .
-                            '<span>item1</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="1">' .
-                            '<span>item2</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="2">' .
-                            '<span>item3</span>' .
-                        '</label>' .
-                    '</span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="0">' .
+                        '<span>item1</span>' .
+                    '</label>' .
                 '</span>' .
-            '</label>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="1">' .
+                        '<span>item2</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="2">' .
+                        '<span>item3</span>' .
+                    '</label>' .
+                '</span>' .
+            '</span>' .
         '</p>' . "\n";
 
         $parameters = array(
@@ -154,29 +148,27 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
     public function testRadioAssociativeList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
-            '<label>' .
-                '<span class="label">singleName</span>' .
+            '<span class="label">singleName</span>' .
+            '<span>' .
                 '<span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="key1">' .
-                            '<span>item1</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="key2">' .
-                            '<span>item2</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="key3">' .
-                            '<span>item3</span>' .
-                        '</label>' .
-                    '</span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="key1">' .
+                        '<span>item1</span>' .
+                    '</label>' .
                 '</span>' .
-            '</label>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="key2">' .
+                        '<span>item2</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="key3">' .
+                        '<span>item3</span>' .
+                    '</label>' .
+                '</span>' .
+            '</span>' .
         '</p>' . "\n";
 
         $parameters = array(
@@ -267,10 +259,8 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
     public function testRadioHtmlEscaping() {
         $expected = '<p id="formName-singleName" class="input-single required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
-            '<label>' .
-                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
-                '<span></span>' .
-            '</label>' .
+            '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+            '<span></span>' .
         '</p>' . "\n";
 
         $parameters = array(
@@ -316,29 +306,27 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
     public function testHtmlRadioEscapedList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
-            '<label>' .
-                '<span class="label">singleName</span>' .
+            '<span class="label">singleName</span>' .
+            '<span>' .
                 '<span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="0">' .
-                            '<span>it&quot;&gt;em1</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="1">' .
-                            '<span>it&quot;&gt;em2</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="2">' .
-                            '<span>it&quot;&gt;em3</span>' .
-                        '</label>' .
-                    '</span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="0">' .
+                        '<span>it&quot;&gt;em1</span>' .
+                    '</label>' .
                 '</span>' .
-            '</label>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="1">' .
+                        '<span>it&quot;&gt;em2</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="2">' .
+                        '<span>it&quot;&gt;em3</span>' .
+                    '</label>' .
+                '</span>' .
+            '</span>' .
         '</p>' . "\n";
 
         $parameters = array(
@@ -380,29 +368,27 @@ class singleToStringTest extends PHPUnit_Framework_TestCase {
      **/
      public function testRadioEscapedAssociativeList() {
         $expected = '<p id="formName-singleName" class="input-single" data-errorMessage="Please enter valid data!">' .
-            '<label>' .
-                '<span class="label">singleName</span>' .
+            '<span class="label">singleName</span>' .
+            '<span>' .
                 '<span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="ke&quot;&gt;y1">' .
-                            '<span>it&quot;&gt;em1</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="ke&quot;&gt;y2">' .
-                            '<span>it&quot;&gt;em2</span>' .
-                        '</label>' .
-                    '</span>' .
-                    '<span>' .
-                        '<label>' .
-                            '<input type="radio" name="singleName" value="ke&quot;&gt;y3">' .
-                            '<span>it&quot;&gt;em3</span>' .
-                        '</label>' .
-                    '</span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="ke&quot;&gt;y1">' .
+                        '<span>it&quot;&gt;em1</span>' .
+                    '</label>' .
                 '</span>' .
-            '</label>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="ke&quot;&gt;y2">' .
+                        '<span>it&quot;&gt;em2</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label>' .
+                        '<input type="radio" name="singleName" value="ke&quot;&gt;y3">' .
+                        '<span>it&quot;&gt;em3</span>' .
+                    '</label>' .
+                '</span>' .
+            '</span>' .
         '</p>'. "\n";
 
         $parameters = array(
