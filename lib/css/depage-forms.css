@@ -1,6 +1,6 @@
 /* {{{ depage-form base */
 .depage-form {
-    width: 30em;
+    max-width: 30em;
 }
 /* }}} */
 
@@ -64,13 +64,16 @@
 /* }}} */
 /* {{{ fieldsets */
 .depage-form fieldset {
+    /*
     border: none;
     border-top: 1px solid;
     padding: 0;
     position: relative;
     background: #eeeeee;
+    */
 }
 .depage-form fieldset legend {
+    /*
     display: block;
     position: absolute;
     top: 0;
@@ -80,6 +83,7 @@
     font-weight: bold;
     background: #dddddd;
     margin-bottom: 1em;
+    */
 }
 /* }}} */
 

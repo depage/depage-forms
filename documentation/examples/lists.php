@@ -42,6 +42,25 @@ $form->addMultiple('multipleSelect', array(
     ),
 ));
 
+$form->addSingle('singleCheckbox', array(
+    'required' => true,
+    'label' => 'Single-radiobutton',
+    'list' => array(
+        'option one'    => 'label one',
+        'option two'    => 'label two',
+        'option three'  => 'label three',
+    ),
+));
+$form->addSingle('singleSelect', array(
+    'label' => 'Single-select',
+    'skin' => 'select',
+    'list' => array(
+        'label one',
+        'label two',
+        'label three',
+    ),
+));
+
 /*
  * Optgroups
  *
@@ -94,5 +113,6 @@ if ($form->validate()) {
 
     $form->clearSession();
 } else {
+    echo('<link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">');
     echo ($form);
 }

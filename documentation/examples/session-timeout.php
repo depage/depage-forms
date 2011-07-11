@@ -46,5 +46,6 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
+    echo('<link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">');
     echo ($form);
 }
