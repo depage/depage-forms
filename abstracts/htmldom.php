@@ -1,7 +1,21 @@
 <?php
+/**
+ * @file    htmldom.php
+ * @brief   DOM-class for html-content
+ *
+ * copyright (c) 2011 Frank Hellenkamp [jonas@depagecms.net]
+ *
+ * @author    Frank Hellenkamp [jonas@depagecms.net]
+ */
 
 namespace depage\htmlform\abstracts;
 
+/**
+ * @brief DOMDocument for html-content
+ *
+ * Serializable subclass for DOMDocument with helper methods especially
+ * for html-content, and for cleaning up unwanted tags from html.
+ */
 class htmldom extends \DOMDocument implements \Serializable {
     // {{{ variables
     /**
@@ -26,9 +40,10 @@ class htmldom extends \DOMDocument implements \Serializable {
 
     // {{{ constructor()
     /**
-     * @brief   
+     * @brief   htmldom class constructor
      *
-     * @param   (DOMDocument) htmlDOM
+     * @param   $version (string)
+     * @param   $encoding (string) 
      *
      * @return  (\depage\htmlform\abstracts\htmldoc) htmlDOM
      **/
@@ -38,11 +53,9 @@ class htmldom extends \DOMDocument implements \Serializable {
     // }}}
     // {{{ serialize()
     /**
-     * @brief   
+     * @brief   serializes htmldom into string
      *
-     * @param   (DOMDocument) htmlDOM
-     *
-     * @return  (\depage\htmlform\abstracts\SerDOMDocument) htmlDOM
+     * @return  (string) xml-content saved by saveXML()
      **/
     public function serialize(){
         $s = $this->saveXML();
@@ -51,11 +64,11 @@ class htmldom extends \DOMDocument implements \Serializable {
     // }}}
     // {{{ unserialize()
     /**
-     * @brief   
+     * @brief   unserializes htmldom-objects
      *
-     * @param   (DOMDocument) htmlDOM
+     * @param   $xml (string)
      *
-     * @return  (\depage\htmlform\abstracts\SerDOMDocument) htmlDOM
+     * @return  (void)
      **/
     public function unserialize($serialized) {
         $this->loadXML($serialized);
@@ -63,11 +76,14 @@ class htmldom extends \DOMDocument implements \Serializable {
     // }}}
     // {{{ loadHTML()
     /**
-     * @brief   
+     * @brief   loads html from a htmls string
      *
-     * @param   (DOMDocument) htmlDOM
+     * Loads html into the htmldom. Invalid content is allowed. 
+     * Only nodes inside of the body will be added to the dom.
      *
-     * @return  (\depage\htmlform\abstracts\SerDOMDocument) htmlDOM
+     * @param   $html (string) html to parse
+     *
+     * @return  (boolean) true on success, false on error
      **/
     public function loadHTML($html) {
         $tmpDOM = new \DOMDocument();
@@ -107,10 +123,10 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief   cleans up a htmlDOM 
      *
-     * cleans up a htmlDOM and removed all tags and attributes 
-     * that are not allowed
+     * cleans up a htmlDOM and removes all tags and attributes 
+     * that are not allowed.
      *
-     * @param   (array) $allowedTags array of tags that are alowed inside of html
+     * @param   $allowedTags (array) array of tags that are alowed inside of html
      *
      * @return  (void)
      **/
