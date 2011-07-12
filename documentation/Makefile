@@ -1,4 +1,4 @@
-DOCREPO = git://github.com/jonasjonas/depage-docu.git
+DOCREPO = git://github.com/depage/depage-docu.git
 RM = rm -rf
 BACKCOLOR = backcolor_brightblue
 
