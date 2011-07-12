@@ -165,10 +165,8 @@ class single extends abstracts\input {
             // render HTML radio button list
 
             return "<p {$wrapperAttributes}>" .
-                "<label>" .
-                    "<span class=\"label\">{$label}{$marker}</span>" .
-                    "<span>{$list}</span>" .
-                "</label>" .
+                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span>{$list}</span>" .
                 $errorMessage .
             "</p>\n";
         }

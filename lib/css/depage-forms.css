@@ -1,6 +1,10 @@
+/* {{{ depage-form base */
 .depage-form {
-    width: 30em;
+    max-width: 30em;
 }
+/* }}} */
+
+/* {{{ input and label sizes */
 .depage-form .label {
     display: block;
     float: left;
@@ -22,7 +26,7 @@
 .depage-form input,
 .depage-form select,
 .depage-form textarea {
-    width: 68%;
+    width: 66%;
 }
 .depage-form .input-boolean input,
 .depage-form .input-single input,
@@ -30,7 +34,8 @@
 .depage-form .submit input {
     width: auto;
 }
-
+/* }}} */
+/* {{{ input states */
 .depage-form input {
     border: 1px solid #000000;
     padding: 0.2em;
@@ -56,15 +61,19 @@
     font-size: 0.9em;
     text-align: right;
 }
-
+/* }}} */
+/* {{{ fieldsets */
 .depage-form fieldset {
+    /*
     border: none;
     border-top: 1px solid;
     padding: 0;
     position: relative;
     background: #eeeeee;
+    */
 }
 .depage-form fieldset legend {
+    /*
     display: block;
     position: absolute;
     top: 0;
@@ -74,23 +83,28 @@
     font-weight: bold;
     background: #dddddd;
     margin-bottom: 1em;
+    */
 }
+/* }}} */
 
-
+/* {{{ richtext */
 .depage-form .depageEditor {
     clear: left;
     position: relative;
+    margin-left: 25px;
 }
 .depage-form ul.depageEditorToolbar {
     position: absolute;
-    left: 0;
+    left: -25px;
     top: 0;
+    line-height: auto;
     list-style: none;
     padding: 0;
     margin: 0;
     width: 25px;
 }
 .depage-form ul.depageEditorToolbar li {
+    padding: 0;
 }
 .depage-form ul.depageEditorToolbar li a {
     display: block;
@@ -122,10 +136,33 @@
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
     background-position: -25px -50px;
 }
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList {
+    background-position: 0 -75px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on {
+    background-position: -25px -75px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList {
+    background-position: 0 -100px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on {
+    background-position: -25px -100px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML {
+    background-position: 0 -125px;
+}
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML:hover,
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML.on {
+    background-position: -25px -125px;
+}
 .depage-form .input-richtext textarea,
 .depage-form .input-richtext iframe {
     width: 100%;
     border: 1px solid;
     min-height: 10em;
-    margin-left: 25px;
 }
+/* }}} */
+
+/* vim:set ft=css sw=4 sts=4 fdm=marker : */

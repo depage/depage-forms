@@ -1,4 +1,5 @@
 <?php
+    header("Content-type: text/html; charset=UTF-8");
 /*
  * Load the library...
  */
@@ -16,6 +17,23 @@ $form = new depage\htmlform\htmlform('jsRichtext');
 $form->addRichtext('html', array(
     'label' => 'Richtext',
     'stylesheet' => '../../lib/css/depage-richtext.css',
+    'defaultValue' => "
+        <h1>headline h1</h2>
+        <p>test</p>
+        <p><b>bold</b></p>
+        <p><i>italic</i></p>
+        <p><i><b>bold/italic</b></i></p>
+        <p><a href=\"http://www.google.com\">link</a></p>
+        <h2>headline h2</h2>
+        <ul>
+            <li>unordered list</li>
+            <li>text</li>
+        </ul>
+        <ol>
+            <li>ordered list</li>
+            <li>text</li>
+        </ol>
+    ",
 ));
 
 /*
@@ -39,7 +57,8 @@ if ($form->validate()) {
      */
     echo('<a href="">back</a>');
     echo('<pre>');
-    var_dump($form->getValues());
+    $values = $form->getValues();
+    var_dump($values['html']->saveXML());
     echo('</pre>');
 
     $form->clearSession();

@@ -43,6 +43,37 @@ $form->addMultiple('multipleSelect', array(
 ));
 
 /*
+ * Single input element with radio-skin, set required
+ *
+ * Single is basically the same as multiple. Instead of checkboxes
+ * you'll get radiobuttons, so you can only select on item.
+ */
+$form->addSingle('singleCheckbox', array(
+    'required' => true,
+    'label' => 'Single-radiobutton',
+    'list' => array(
+        'option one'    => 'label one',
+        'option two'    => 'label two',
+        'option three'  => 'label three',
+    ),
+));
+
+/*
+ * Single with select skin
+ *
+ * The single-element rendered as a select-list instead of radion-buttons
+ */
+$form->addSingle('singleSelect', array(
+    'label' => 'Single-select',
+    'skin' => 'select',
+    'list' => array(
+        'label one',
+        'label two',
+        'label three',
+    ),
+));
+
+/*
  * Optgroups
  *
  * 'select'-skin elements support optgroups. To use them simply add another
@@ -94,5 +125,6 @@ if ($form->validate()) {
 
     $form->clearSession();
 } else {
+    echo('<link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">');
     echo ($form);
 }

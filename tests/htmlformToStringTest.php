@@ -13,7 +13,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
     public function testSimple() {
         $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/" data-jsValidation="blur">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
-            '<p id="formName-submit">' .
+            '<p id="formName-submit" class="submit">' .
                 '<input type="submit" value="submit">' .
             '</p>' . "\n" .
         '</form>';
@@ -36,7 +36,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
                     '<input name="text1" type="text" value="">' .
                 '</label>' .
             '</p>' . "\n" .
-            '<p id="formName-submit">' .
+            '<p id="formName-submit" class="submit">' .
                 '<input type="submit" value="submit">' .
             '</p>' . "\n" .
         '</form>';

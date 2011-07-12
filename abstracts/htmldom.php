@@ -9,6 +9,7 @@ class htmldom extends \DOMDocument implements \Serializable {
      **/
     protected $allowedTags = array(
         "p",
+        "br",
         "h1",
         "h2",
         "ul",
@@ -144,7 +145,7 @@ class htmldom extends \DOMDocument implements \Serializable {
         }
         // }}}
         // {{{ add &nbsp; to empty paragraphs to keep them
-        $nodelist = $xpath->query("//*[. = '']");
+        $nodelist = $xpath->query("//p[. = '']");
 
         foreach ($nodelist as $node) {
             $node->appendChild($this->createEntityReference("nbsp"));

@@ -1,3 +1,4 @@
+/* {{{ base */
 * {
     padding: 0;
     margin: 0;
@@ -6,16 +7,21 @@ html {
     font-size: 12pt;
 }
 body {
-    font-family: "Arial", "Helvetica Neue", "Helvetica", Sans-Serif;
-    font-size: 62.5%;
+    font-family : Tahoma, Verdana, Arial, Geneva, sans-serif;
     padding: 0.5em;
-    padding-left: 1.5em;
+    padding-left: 1.1em;
+    font-size: 0.8em;
+    line-height: 1.3em;
 }
+a {
+    color: #882200;
+    text-decoration: underline;
+}
+/* }}} */
+/* {{{ block elements */
 p,
 ul,
 ol {
-    font-size: 1.4em;
-    line-height: 1.2em;
     margin-bottom: 0.6em;
 }
 h1,
@@ -26,7 +32,7 @@ h2 {
     border-left-style: solid;
 }
 h1 {
-    font-size: 2em;
+    font-size: 1.2em;
     border-left-color: #ff9900;
     margin-left: -1em;
     padding-left: 0.5em;
@@ -38,7 +44,7 @@ h1::before {
     float: right;
 }
 h2 {
-    font-size: 1.5em;
+    font-size: 1em;
     border-left-color: #dddddd;
     margin-left: -1.15em;
     padding-left: 0.65em;
@@ -49,6 +55,8 @@ h2::before {
     font-size: 0.7em;
     float: right;
 }
+/* }}} */
+/* {{{ lists */
 ul::before {
     content: "Liste";
     color: #dddddd;
@@ -69,3 +77,6 @@ ul ul,
 ol ol {
     font-size: 1em;
 }
+/* }}} */
+
+/* vim:set ft=css sw=4 sts=4 fdm=marker : */

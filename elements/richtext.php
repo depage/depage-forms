@@ -51,6 +51,7 @@ class richtext extends textarea {
         $this->defaults['allowedTags'] = array(
             // block elements
             "p",
+            "br",
             "h1",
             "h2",
             "ul",
