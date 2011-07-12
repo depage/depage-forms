@@ -45,7 +45,7 @@ For more information
 --------------------
 
 - You can fork us at:
-  <http://github.com/jonasjonas/depage-forms/>
+  <http://github.com/depage/depage-forms/>
 - You find the documentation at:
   <http://docs.depage.net/depage-forms/>
 - For more information about depage-cms go to:
