@@ -13,8 +13,8 @@ namespace depage\htmlform\abstracts;
 /**
  * @brief DOMDocument for html-content
  *
- * Serializable subclass for DOMDocument with helper methods especially
- * for html-content, and for cleaning up unwanted tags from html.
+ * Serializable subclass of DOMDocument with helper methods especially
+ * for html-content, and for removing up unwanted tags from html.
  */
 class htmldom extends \DOMDocument implements \Serializable {
     // {{{ variables
@@ -45,7 +45,7 @@ class htmldom extends \DOMDocument implements \Serializable {
      * @param   $version (string)
      * @param   $encoding (string) 
      *
-     * @return  (\depage\htmlform\abstracts\htmldoc) htmlDOM
+     * @return  (depage::htmlform::abstracts::htmldom) htmlDOM
      **/
     public function __construct($version = null, $encoding = null) {
         parent::__construct($version, $encoding);
@@ -66,7 +66,7 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief   unserializes htmldom-objects
      *
-     * @param   $xml (string)
+     * @param   $serialized (string)
      *
      * @return  (void)
      **/

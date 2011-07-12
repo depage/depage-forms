@@ -125,9 +125,9 @@ class richtext extends textarea {
     /**
      * @brief   Parses html-string into htmlDOM
      *
-     * @param   (string) $html html string to parse
+     * @param   $html (string) html string to parse
      *
-     * @return  (\depage\htmlform\abstracts\SerDOMDocument) htmlDOM
+     * @return  (depage::htmlform::abstract::htmldom) htmlDOM
      **/
     protected function parseHtml($html) {
         $htmlDOM = new \depage\htmlform\abstracts\htmldom();
