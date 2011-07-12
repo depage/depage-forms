@@ -25,6 +25,7 @@ min: clean jsmin
 jsmin:
 	curl -f -X POST --data-urlencode js_code@lib/js/depage-richtext.js -o lib/js/depage-richtext.min.js http://marijnhaverbeke.nl/uglifyjs || true
 	curl -f -X POST --data-urlencode js_code@lib/js/effect.js -o lib/js/effect.min.js http://marijnhaverbeke.nl/uglifyjs || true
+	curl -f -X POST --data-urlencode js_code@lib/js/depage-richtext.js -o lib/js/depage-richtext.min.js http://marijnhaverbeke.nl/uglifyjs || true
 
 clean:
 	cd documentation; $(MAKE) $(MFLAGS) clean

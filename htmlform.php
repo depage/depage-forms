@@ -63,7 +63,7 @@
  * element-classes.
  * - New element-classes are automatically integrated by the autoloader. (They
  * can be instantiated with @link depage::htmlform::abstracts::container::__call
- * add @endlink (runtime generated))
+ * add @endlink (runtime generated methods))
  *
  * @section prerequisites Developer Prerequisites
  *
