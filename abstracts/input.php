@@ -91,7 +91,7 @@ abstract class input extends element {
         $this->defaults['label']        = $this->name;
         $this->defaults['required']     = false;
         $this->defaults['marker']       = '*';
-        $this->defaults['errorMessage'] = 'Please enter valid data!';
+        $this->defaults['errorMessage'] = 'Please enter valid data';
         $this->defaults['title']        = false;
     }
     // }}}

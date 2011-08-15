@@ -30,7 +30,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase {
     public function testStep() {
         $expected = '<form id="formName" name="formName" class="depage-form" method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
-            '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data!">' .
+            '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="label">text1</span>' .
                     '<input name="text1" type="text" value="">' .

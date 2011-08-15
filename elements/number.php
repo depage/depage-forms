@@ -70,7 +70,7 @@ class number extends text {
         $this->defaults['min']          = null;
         $this->defaults['max']          = null;
         $this->defaults['step']         = null;
-        $this->defaults['errorMessage'] = 'Please enter a valid number!';
+        $this->defaults['errorMessage'] = 'Please enter a valid number';
     }
     // }}}
 

@@ -43,7 +43,7 @@ class stepToStringTest extends PHPUnit_Framework_TestCase {
      * With text subelement
      **/
     public function testAddText() {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="label">textName</span>' .
                     '<input name="textName" type="text" value="">' .

@@ -18,7 +18,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Element with default setup and checkbox skin.
      **/
     public function testSimple() {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
                 '<input name="textName" type="text" value="">' .
@@ -34,7 +34,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Element with default setup and select skin.
      **/
     public function testValue() {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
                 '<input name="textName" type="text" value="testValue">' .
@@ -51,10 +51,10 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element with 'required' attribute set.
      **/
     public function testRequired() {
-        $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName <em>*</em></span>' .
-                '<input name="textName" type="text" required value="">' .
+                '<input name="textName" type="text" required="required" value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -68,7 +68,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element with option list
      **/
     public function testList() {
-        $expected ='<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected ='<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -94,7 +94,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * associative array.
      **/
     public function testAssociativeList() {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -126,7 +126,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
-                '<input name="textName" type="text" required value="">' .
+                '<input name="textName" type="text" required="required" value="">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -147,7 +147,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element; tests html escaping of option list.
      **/
     public function testHtmlEscapedList() {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -172,7 +172,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element; tests html escaping of associative option list.
      **/
      public function testEscapedAssociativeList() {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data!">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .

@@ -18,7 +18,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
      * Element with default setup
      **/
     public function testSimple() {
-        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number!">' .
+        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="label">numberName</span>' .
                 '<input name="numberName" type="number" value="0">' .
@@ -34,7 +34,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
      * Tests rendering with value set.
      **/
     public function testValue() {
-        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number!">' .
+        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="label">numberName</span>' .
                 '<input name="numberName" type="number" value="7331">' .
@@ -51,10 +51,10 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element with set required attribute
      **/
     public function testRequired() {
-        $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number!">' .
+        $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="label">numberName <em>*</em></span>' .
-                '<input name="numberName" type="number" required value="0">' .
+                '<input name="numberName" type="number" required="required" value="0">' .
             '</label>' .
         '</p>' . "\n";
 
@@ -71,7 +71,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase {
         $expected = '<p id="formName-numberName" class="input-number required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
-                '<input name="numberName" type="number" required value="0">' .
+                '<input name="numberName" type="number" required="required" value="0">' .
             '</label>' .
         '</p>' . "\n";
 

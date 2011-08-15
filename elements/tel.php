@@ -44,7 +44,7 @@ class tel extends text {
     protected function setDefaults() {
         parent::setDefaults();
 
-        $this->defaults['errorMessage'] = 'Please enter a valid telephone number!';
+        $this->defaults['errorMessage'] = 'Please enter a valid telephone number';
     }
     // }}}
 }
