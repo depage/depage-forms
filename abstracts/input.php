@@ -276,8 +276,8 @@ abstract class input extends element {
     protected function htmlInputAttributes() {
         $attributes = '';
 
-        if ($this->required)    $attributes .= " required";
-        if ($this->autofocus)   $attributes .= " autofocus";
+        if ($this->required)    $attributes .= ' required="required"';
+        if ($this->autofocus)   $attributes .= ' autofocus="autofocus"';
 
         return $attributes;
     }
