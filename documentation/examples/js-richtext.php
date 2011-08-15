@@ -68,14 +68,20 @@ if ($form->validate()) {
  * Load the necessary scripts. jQuery, jQuery Tools and the depage-forms
  * customization.
  */
-echo (
-    '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>' .
-    '<script src="../../lib/js/jquery.tools.min.js"></script>' .
-    '<script src="../../lib/js/depage-richtext.js"></script>' .
-    '<script src="../../lib/js/effect.js"></script>'
-);
-echo('<link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">');
-/*
- * Display the form.
- */
-echo ($form);
+?>
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="../../lib/js/jquery.tools.min.js"></script>
+    <script src="../../lib/js/depage-richtext.min.js"></script>
+    <script src="../../lib/js/effect.min.js"></script>
+</head>
+<body>
+<?php
+    /*
+     * Display the form.
+     */
+    echo ($form);
+?>
+</body>
