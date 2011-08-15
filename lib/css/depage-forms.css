@@ -27,12 +27,14 @@
 .depage-form p,
 .depage-form .label {
     position: relative;
-    line-height: 1.2em;
+    line-height: 1.8em;
 }
 .depage-form input,
 .depage-form select,
 .depage-form textarea {
     width: 66%;
+    font-family: inherit;
+    font-size: inherit;
 }
 .depage-form .input-boolean input,
 .depage-form .input-single input,
@@ -78,20 +80,20 @@
     color: #ff0000;
 }
 .depage-form .submit input {
-    background: #dddddd;
+    background: #cccccc;
 }
 .depage-form .submit.error input {
-    border: 1px solid #999999;
+    border: 1px solid #dddddd;
     color: #999999;
-    background: #eeeeee;
+    background: #dddddd;
 }
 .depage-form .errorMessage {
     display: block;
     position: absolute;
     top: 0.2em;
     right: 3%;
-    max-width: 50%;
-    font-size: 0.9em;
+    max-width: 70%;
+    font-size: 0.8em;
     text-align: right;
 }
 /* }}} */
