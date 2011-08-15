@@ -15,6 +15,12 @@
     padding-bottom: 0.3em;
     padding-right: 0.3em;
 }
+.depage-form .input-boolean .label {
+    display: inline;
+    float: none;
+    width: auto;
+    margin-left: 0.4em;
+}
 .depage-form p {
     clear: left;
 }
@@ -36,21 +42,48 @@
 }
 /* }}} */
 /* {{{ input states */
-.depage-form input {
-    border: 1px solid #000000;
+.depage-form input,
+.depage-form select {
+    border: 1px solid #999999;
     padding: 0.2em;
 }
+.depage-form input:focus,
+.depage-form select:focus {
+    border: 1px solid #000000;
+}
 .depage-form input:required,
-.depage-form input:invalid {
+.depage-form input:invalid,
+.depage-form select:required,
+.depage-form select:invalid {
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
 }
-.depage-form .error input {
+.depage-form .error input,
+.depage-form .error select {
     border: 1px solid #ff0000;
 }
-.depage-form .error label {
+.depage-form .input-boolean input,
+.depage-form .input-single input,
+.depage-form .input-multiple input,
+.depage-form .input-boolean input:focus,
+.depage-form .input-single input:focus,
+.depage-form .input-multiple input:focus,
+.depage-form .error.input-boolean input,
+.depage-form .error.input-single input,
+.depage-form .error.input-multiple input {
+    border: none;
+}
+.depage-form .error .label {
     color: #ff0000;
+}
+.depage-form .submit input {
+    background: #dddddd;
+}
+.depage-form .submit.error input {
+    border: 1px solid #999999;
+    color: #999999;
+    background: #eeeeee;
 }
 .depage-form .errorMessage {
     display: block;
