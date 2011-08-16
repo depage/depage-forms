@@ -394,6 +394,28 @@ class htmlform extends abstracts\container {
     }
     // }}}
 
+    // {{{ getSteps()
+    /**
+     * @brief   Returns an array of steps
+     *
+     * @return  (array) step objects
+     **/
+    public function getSteps() {
+        return $this->steps;
+    }
+    // }}}
+    
+    // {{{ getCurrentStepId()
+    /**
+     * @brief   Returns the current step id
+     *
+     * @return  (int) current step
+     **/
+    public function getCurrentStepId() {
+        return $this->currentStepId;
+    }
+    // }}}
+    
     // {{{ getCurrenElements()
     /**
      * @brief   Returns an array of input elements contained in the current step.
@@ -491,7 +513,7 @@ class htmlform extends abstracts\container {
      *
      * @return  $stepNumber (int) number of first invalid step
      **/
-    private function getFirstInvalidStep() {
+    public function getFirstInvalidStep() {
         if ( count($this->steps ) > 0) {
             foreach ( $this->steps as $stepNumber => $step ) {
                 if ( !$step->valid ) {

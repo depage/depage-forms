@@ -10,22 +10,27 @@ require_once('../../htmlform.php');
 $form = new depage\htmlform\htmlform('stepsExampleForm');
 
 /*
+ * add (optional) step navigation
+ */
+$form->addStepNav();
+
+/*
  * Create the first step.
  */
-$firstStep = $form->addStep('firstStep');
+$firstStep = $form->addStep('firstStep', array('label' => "1. First step"));
 
 /*
  * Attach the first text input element
  */
-$firstStep->addText('text1', array('label' => 'First step text field'));
+$firstStep->addText('text1', array('label' => 'First step text field', 'required' => true));
 
 /*
  * And so on...
  */
-$secondStep = $form->addStep('secondStep');
-$secondStep->addText('text2', array('label' => 'Second step text field'));
-$thirdStep = $form->addStep('thirdStep');
-$thirdStep->addText('text3', array('label' => 'Third step text field'));
+$secondStep = $form->addStep('secondStep', array('label' => "2. Second step"));
+$secondStep->addText('text2', array('label' => 'Second step text field', 'required' => true));
+$thirdStep = $form->addStep('thirdStep', array('label' => "3. Third step"));
+$thirdStep->addText('text3', array('label' => 'Third step text field', 'required' => true));
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -46,7 +51,7 @@ if ($form->validate()) {
     /*
      * Success, do something useful with the data and clear the session.
      */
-    echo('<a href="">back</a>');
+    echo('<a href="steps.php">back</a>');
     echo('<pre>');
     var_dump($form->getValues());
     echo('</pre>');

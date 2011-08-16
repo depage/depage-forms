@@ -15,6 +15,18 @@ namespace depage\htmlform\elements;
  * @link steps.php Example form @endlink
  **/
 class step extends fieldset {
+    // {{{ isValid()
+    /**
+     * @brief returns validation status of step
+     *
+     *
+     * @return $valid (boolean) validation status
+     **/
+    public function isValid() {
+         return $this->valid;
+    }
+    // }}}
+     
     // {{{ __toString()
     /**
      * @brief renders step container to HTML

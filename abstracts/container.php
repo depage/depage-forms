@@ -117,6 +117,10 @@ abstract class container extends element {
      * @brief   Sub-element generator hook
      *
      * Adds child elements just after container construction.
+     * Can be used for subclasses of the container class to add
+     * new elements to itself.
+     *
+     * (see @link depage::htmlform::elements::creditcard @endlink for an example implementation)
      *
      * @return  void
      *
@@ -136,6 +140,21 @@ abstract class container extends element {
      **/
     public function addHtml($html) {
         $htmlElement = new elements\html($html);
+
+        $this->elementsAndHtml[] = $htmlElement;
+
+        return $htmlElement;
+    }
+    // }}}
+    
+    // {{{ addStepNav()
+    /**
+     * @brief   Adds automatic step navigation to output
+     *
+     * @param   $parameter      (array) array of opional parameters
+     **/
+    public function addStepNav($parameter = array()) {
+        $htmlElement = new elements\stepnav($parameter, $this->form);
 
         $this->elementsAndHtml[] = $htmlElement;
 

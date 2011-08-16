@@ -8,7 +8,7 @@
 .depage-form .label {
     display: block;
     float: left;
-    width: 30%;
+    width: 33%;
     height: 1em;
     min-height: 1em;
     height: auto !important;
@@ -32,9 +32,9 @@
 .depage-form input,
 .depage-form select,
 .depage-form textarea {
-    width: 66%;
+    width: 63%;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 1em;
 }
 .depage-form .input-boolean input,
 .depage-form .input-single input,
@@ -119,6 +119,40 @@
     background: #dddddd;
     margin-bottom: 1em;
     */
+}
+/* }}} */
+/* {{{ stepnav */
+.depage-form ol.stepnav {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.depage-form ol.stepnav li {
+    display: table-cell;
+    list-style: none;
+    background: #eeeeee;
+    border-right: 0.3em solid #ffffff;
+}
+.depage-form ol.stepnav li {
+    *display: block; /* IE6/7 hack */
+    *float: left;
+}
+.depage-form ol.stepnav li a {
+    display: block;
+    height: 100%;
+    padding: 0.4em;
+    color: #000000;
+    text-decoration: none;
+}
+.depage-form ol.stepnav li.invalid a::after {
+    content: " !";
+    color: #ff0000;
+    font-weight: bold;
+}
+.depage-form ol.stepnav li.current-step {
+    background: #dddddd;
 }
 /* }}} */
 
