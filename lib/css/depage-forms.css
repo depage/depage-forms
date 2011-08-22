@@ -15,11 +15,15 @@
     padding-bottom: 0.3em;
     padding-right: 0.3em;
 }
+.depage-form .input-boolean input {
+    float: left;
+    margin-top: 0.5em;
+}
 .depage-form .input-boolean .label {
-    display: inline;
+    display: block;
     float: none;
     width: auto;
-    margin-left: 0.4em;
+    margin-left: 1.7em;
 }
 .depage-form p {
     clear: left;
@@ -41,6 +45,17 @@
 .depage-form .input-multiple input,
 .depage-form .submit input {
     width: auto;
+}
+.depage-form .input-single span label,
+.depage-form .input-multiple span label {
+    display: inline-block;
+    white-space: nowrap;
+}
+.depage-form .input-single span label span,
+.depage-form .input-multiple span label span {
+    padding-left: 0.5em;
+    padding-right: 1em;
+    font-size: 1.1em;
 }
 /* }}} */
 /* {{{ input states */
