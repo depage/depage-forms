@@ -1,0 +1,82 @@
+/* {{{ base */
+* {
+    padding: 0;
+    margin: 0;
+}
+html {
+    font-size: 12pt;
+}
+body {
+    font-family : Tahoma, Verdana, Arial, Geneva, sans-serif;
+    padding: 0.5em;
+    padding-left: 1.1em;
+    font-size: 0.8em;
+    line-height: 1.3em;
+}
+a {
+    color: #882200;
+    text-decoration: underline;
+}
+/* }}} */
+/* {{{ block elements */
+p,
+ul,
+ol {
+    margin-bottom: 0.6em;
+}
+h1,
+h2 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    border-left-width: 0.5em;
+    border-left-style: solid;
+}
+h1 {
+    font-size: 1.2em;
+    border-left-color: #ff9900;
+    margin-left: -1em;
+    padding-left: 0.5em;
+}
+h1::before {
+    content: "Headline h1";
+    color: #dddddd;
+    font-size: 0.7em;
+    float: right;
+}
+h2 {
+    font-size: 1em;
+    border-left-color: #dddddd;
+    margin-left: -1.15em;
+    padding-left: 0.65em;
+}
+h2::before {
+    content: "Headline h2";
+    color: #dddddd;
+    font-size: 0.7em;
+    float: right;
+}
+/* }}} */
+/* {{{ lists */
+ul::before {
+    content: "Liste";
+    color: #dddddd;
+    font-size: 0.7em;
+    float: right;
+}
+ol::before {
+    content: "Aufzählung";
+    color: #dddddd;
+    font-size: 0.7em;
+    float: right;
+}
+ul,
+ol {
+    margin-left: 1.5em;
+}
+ul ul,
+ol ol {
+    font-size: 1em;
+}
+/* }}} */
+
+/* vim:set ft=css sw=4 sts=4 fdm=marker : */
