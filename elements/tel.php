@@ -39,6 +39,10 @@ class tel extends text {
     /**
      * @brief   collects initial values across subclasses
      *
+     * The constructor loops through these and creates settable class
+     * attributes at runtime. It's a compact mechanism for initialising
+     * a lot of variables.
+     *
      * @return  void
      **/
     protected function setDefaults() {

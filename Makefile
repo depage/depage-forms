@@ -23,9 +23,10 @@ min: clean jsmin
 	sha512sum depage-forms.tar.gz > depage-forms.tar.gz.sha2
 
 jsmin:
-	curl -f -X POST --data-urlencode js_code@lib/js/depage-richtext.js -o lib/js/depage-richtext.min.js http://marijnhaverbeke.nl/uglifyjs || true
-	curl -f -X POST --data-urlencode js_code@lib/js/effect.js -o lib/js/effect.min.js http://marijnhaverbeke.nl/uglifyjs || true
-	curl -f -X POST --data-urlencode js_code@lib/js/depage-richtext.js -o lib/js/depage-richtext.min.js http://marijnhaverbeke.nl/uglifyjs || true
+	cd lib/js; $(MAKE) $(MFLAGS) jsmin
+
+jslint:
+	cd lib/js; $(MAKE) $(MFLAGS) jslint
 
 clean:
 	cd documentation; $(MAKE) $(MFLAGS) clean

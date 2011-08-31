@@ -267,6 +267,10 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Collects initial values across subclasses.
      *
+     * The constructor loops through these and creates settable class
+     * attributes at runtime. It's a compact mechanism for initialising
+     * a lot of variables.
+     *
      * @return  void
      **/
     protected function setDefaults() {
@@ -675,7 +679,9 @@ class htmlform extends abstracts\container {
  * @example js-validation.php
  * @brief   Client-side JavaScript validation
  *
- * Demonstrates client-side validation. Fields are validated when they lose focus.
+ * Demonstrates client-side validation. Fields are validated when they lose
+ * focus. The regular expression has to match the entire string (as in HTML5
+ * patterns). Contrary to PHP preg_match() "/[a-z]/" does not match "aaa".
  *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/js-validation.php"></iframe>@endhtmlonly
  **/

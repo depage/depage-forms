@@ -18,6 +18,7 @@ Features
 - HTML5 form features
     - attributes : placeholder, autofocus, textbox datalists, title, pattern
     - input elements : boolean (checkbox), email, hidden, multiple (checkbox, select list), number, password, range, search, single (radio, select list), tel, text, textarea, url
+- richtext element (wysiwyg HTML editor)
 - averts form resubmission
 - divide forms into ѕeparate parts
 - neat return values with appropriate data types
@@ -38,7 +39,7 @@ Download
 Introduction
 --------------------
 
-- You can get basic introduction at:
+- You can get a basic introduction at:
   [depage-forms: html5 forms made easy (part I)](http://www.depage.net/en/blog/2011/07/depage-forms-html5-form-in-php-made-easy-part-1.html)
 
 For more information

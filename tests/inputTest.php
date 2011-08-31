@@ -80,8 +80,15 @@ class inputTest extends PHPUnit_Framework_TestCase {
         // required
         $input->setRequired();
         $this->assertEquals('input-inputtestclass required', $input->htmlClasses());
+        $input->setRequired(false);
+
+        // disabled
+        $input->setDisabled();
+        $this->assertEquals('input-inputtestclass disabled', $input->htmlClasses());
+        $input->setDisabled(false);
 
         // required & error
+        $input->setRequired();
         $input->setValue('');
         $input->validate();
         $this->assertEquals('input-inputtestclass required error', $input->htmlClasses());
