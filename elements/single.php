@@ -118,7 +118,7 @@ class single extends abstracts\input {
                 if (is_array($option)) {
                     $list       .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
                 } else {
-                    $selected   = ((string) $index === $value) ? ' selected' : '';
+                    $selected   = ((string) $index === (string) $value) ? ' selected' : '';
                     $list       .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
                 }
             }
@@ -127,7 +127,7 @@ class single extends abstracts\input {
 
             foreach($options as $index => $option) {
                 // typecasted for non-associative arrays
-                $selected = ((string) $index === $value) ? " checked=\"yes\"" : '';
+                $selected = ((string) $index === (string) $value) ? " checked=\"yes\"" : '';
 
                 $list .= "<span>" .
                     "<label>" .
