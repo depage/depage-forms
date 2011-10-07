@@ -52,9 +52,21 @@ abstract class input extends element {
      **/
     protected $autofocus = false;
     /**
+     * @brief HTML autocapitalize attribute
+     **/
+    protected $autocapitalize;
+    /**
+     * @brief HTML autocorrect attribute
+     **/
+    protected $autocorrect;
+    /**
+     * @brief HTML autocomplete attribute
+     **/
+    protected $autocomplete;
+    /**
      * @brief HTML pattern attribute
      **/
-    protected $pattern = false;
+    protected $pattern;
     // }}}
 
     // {{{ __construct()
@@ -91,13 +103,16 @@ abstract class input extends element {
     protected function setDefaults() {
         parent::setDefaults();
 
-        $this->defaults['autofocus']    = false;
-        $this->defaults['label']        = $this->name;
-        $this->defaults['required']     = false;
-        $this->defaults['marker']       = '*';
-        $this->defaults['errorMessage'] = 'Please enter valid data';
-        $this->defaults['title']        = false;
-        $this->defaults['disabled']     = false;
+        $this->defaults['autocapitalize'] = null;
+        $this->defaults['autocomplete']   = null;
+        $this->defaults['autocorrect']    = null;
+        $this->defaults['autofocus']      = false;
+        $this->defaults['disabled']       = false;
+        $this->defaults['errorMessage']   = 'Please enter valid data';
+        $this->defaults['label']          = $this->name;
+        $this->defaults['marker']         = '*';
+        $this->defaults['required']       = false;
+        $this->defaults['title']          = false;
     }
     // }}}
 
@@ -299,6 +314,21 @@ abstract class input extends element {
         if ($this->required)    $attributes .= ' required="required"';
         if ($this->disabled)    $attributes .= ' disabled="disabled"';
         if ($this->autofocus)   $attributes .= ' autofocus="autofocus"';
+
+        $autoAttributes = array(
+            "autocapitalize",
+            "autocomplete",
+            "autocorrect",
+        );
+        foreach ($autoAttributes as $attr) {
+            if (!is_null($this->$attr)) {
+                if ($this->$attr) {
+                    $attributes .= " $attr=\"on\"";
+                } else {
+                    $attributes .= " $attr=\"off\"";
+                }
+            }
+        }
 
         return $attributes;
     }

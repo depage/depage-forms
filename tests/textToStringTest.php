@@ -62,6 +62,45 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->text->__toString());
     }
     // }}}
+    
+    // {{{ testAttributes()
+    /**
+     * Rendered element with 'auto*' attributes set.
+     **/
+    public function testAttributes() {
+        $autoAttributes = array(
+            "autocapitalize",
+            "autocomplete",
+            "autocorrect",
+        );
+
+        foreach ($autoAttributes as $attr) {
+            foreach (array(null, true, false) as $status) {
+                $this->form = new nameTestForm;
+                $this->text = new text('textName', array(
+                    $attr => $status,
+                ), $this->form);
+
+                if (is_null($status)) {
+                    $attribute = "";
+                } else if (!$status) {
+                    $attribute = " $attr=\"off\"";
+                } else if ($status) {
+                    $attribute = " $attr=\"on\"";
+                }
+                $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
+                    '<label>' .
+                        '<span class="label">textName <em>*</em></span>' .
+                        '<input name="textName" type="text" required="required"' . $attribute . ' value="">' .
+                    '</label>' .
+                '</p>' . "\n";
+
+                $this->text->setRequired();
+                $this->assertEquals($expected, $this->text->__toString());
+            }
+        }
+    }
+    // }}}
 
     // {{{ testList()
     /**
@@ -197,3 +236,4 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     }
     // }}}
 }
+/* vim:set ft=php fenc=UTF-8 sw=4 sts=4 fdm=marker et : */
