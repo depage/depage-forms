@@ -3,8 +3,6 @@
  * @file    htmldom.php
  * @brief   DOM-class for html-content
  *
- * copyright (c) 2011 Frank Hellenkamp [jonas@depagecms.net]
- *
  * @author    Frank Hellenkamp [jonas@depagecms.net]
  */
 
