@@ -81,7 +81,6 @@ class richtext extends textarea {
         $attributes = parent::htmlWrapperAttributes();
 
         $options = array();
-        $options['autogrow'] = $this->autogrow;
         $options['stylesheet'] = $this->stylesheet;
         $options['allowedTags'] = $this->allowedTags;
 

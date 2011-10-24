@@ -497,7 +497,11 @@ class htmlform extends abstracts\container {
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if ($this->validate()) {
-                $this->redirect($this->successURL);
+                if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+                    // do nothing, just save in session
+                } else {
+                    $this->redirect($this->successURL);
+                }
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
                 $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
