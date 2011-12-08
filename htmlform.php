@@ -460,7 +460,7 @@ class htmlform extends abstracts\container {
         $method             = $this->htmlMethod();
         $submitURL          = $this->htmlSubmitURL();
         $jsValidation       = $this->htmlJsValidation();
-        $jsAutosave         = $this->htmlJsAutosave();
+        $jsAutosave         = $this->jsAutosave === true ? "true" : $this->htmlJsAutosave();
 
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -497,11 +497,7 @@ class htmlform extends abstracts\container {
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if ($this->validate()) {
-                if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
-                    // do nothing, just save in session
-                } else {
-                    $this->redirect($this->successURL);
-                }
+                $this->redirect($this->successURL);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
                 $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
@@ -548,8 +544,12 @@ class htmlform extends abstracts\container {
      * @param $url (string) url to redirect to
      */
     public function redirect($url) {
-        header('Location: ' . $url);
-        die( "Tried to redirect you to " . $url);
+        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+            // don't redirect > it's from ajax
+        } else {
+            header('Location: ' . $url);
+            die( "Tried to redirect you to " . $url);
+        }
     }
     // }}}
 
@@ -573,6 +573,14 @@ class htmlform extends abstracts\container {
         if ($this->valid && is_callable($this->validator)) {
             $this->valid = call_user_func($this->validator, $this->getValues());
         }
+
+        // save data in session when autosaving but don't validate successfully
+        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") || (isset($this->sessionSlot['formIsAutosaved']) && $this->sessionSlot['formIsAutosaved'] === true)) {
+            $this->valid = false;
+        }
+        
+        // save wether form was autosaved the last time
+        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
 
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
