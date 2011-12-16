@@ -1,7 +1,5 @@
 .depage-form {
-  /* {{{ depage-form base */
   max-width: 40em;
-  /* }}} */
   /* {{{ input and label sizes */
   /* }}} */
   /* {{{ input states */
@@ -70,31 +68,30 @@
   border: 1px solid #999999;
   padding: 0.2em;
 }
-.depage-form input:focus,
+.depage-form input:focus, .depage-form input:focus,
+.depage-form select:focus,
 .depage-form select:focus {
   border: 1px solid #000000;
 }
-.depage-form input:required,
-.depage-form input:invalid,
+.depage-form input:required, .depage-form input:invalid,
 .depage-form select:required,
 .depage-form select:invalid {
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
 }
-.depage-form .error input,
-.depage-form .error select {
+.error .depage-form input, .error
+.depage-form select {
   border: 1px solid #ff0000;
 }
 .depage-form .input-boolean input,
+.depage-form .input-boolean input:focus, .depage-form .input-boolean.error input,
 .depage-form .input-single input,
-.depage-form .input-multiple input,
-.depage-form .input-boolean input:focus,
 .depage-form .input-single input:focus,
+.depage-form .input-single.error input,
+.depage-form .input-multiple input,
 .depage-form .input-multiple input:focus,
-.depage-form .error.input-boolean input,
-.depage-form .error.input-single input,
-.depage-form .error.input-multiple input {
+.depage-form .input-multiple.error input {
   border: none;
 }
 .depage-form .error .label {
@@ -152,11 +149,6 @@
   background: #eeeeee;
   border-right: 0.3em solid #ffffff;
 }
-.depage-form ol.stepnav li {
-  *display: block;
-  /* IE6/7 hack */
-  *float: left;
-}
 .depage-form ol.stepnav li a {
   display: block;
   height: 100%;
@@ -171,6 +163,11 @@
 }
 .depage-form ol.stepnav li.current-step {
   background: #dddddd;
+}
+.depage-form ol.stepnav li {
+  *display: block;
+  /* IE6/7 hack */
+  *float: left;
 }
 .depage-form .depageEditor {
   clear: left;
@@ -202,43 +199,37 @@
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonBold {
   background-position: 0 0;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold:hover,
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold.on {
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold:hover, .depage-form ul.depageEditorToolbar li a.depageEditorButtonBold.on {
   background-position: -25px 0;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic {
   background-position: 0 -25px;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic:hover,
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic.on {
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic:hover, .depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic.on {
   background-position: -25px -25px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink {
   background-position: 0 -50px;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink:hover,
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink:hover, .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
   background-position: -25px -50px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList {
   background-position: 0 -75px;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover,
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on {
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover, .depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on {
   background-position: -25px -75px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList {
   background-position: 0 -100px;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover,
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on {
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover, .depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on {
   background-position: -25px -100px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML {
   background-position: 0 -125px;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML:hover,
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML.on {
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML:hover, .depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML.on {
   background-position: -25px -125px;
 }
 .depage-form .input-richtext textarea,

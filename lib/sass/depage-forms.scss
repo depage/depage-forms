@@ -1,7 +1,5 @@
 .depage-form {
-    /* {{{ depage-form base */
     max-width: 40em;
-    /* }}} */
 
     /* {{{ input and label sizes */
     .label {
@@ -14,15 +12,17 @@
         padding-bottom: 0.3em;
         padding-right: 0.3em;
     }
-    .input-boolean input {
-        float: left;
-        margin-top: 0.5em;
-    }
-    .input-boolean .label {
-        display: block;
-        float: none;
-        width: auto;
-        margin-left: 1.7em;
+    .input-boolean {
+        input {
+            float: left;
+            margin-top: 0.5em;
+        }
+        .label {
+            display: block;
+            float: none;
+            width: auto;
+            margin-left: 1.7em;
+        }
     }
     p {
         clear: left;
@@ -39,22 +39,26 @@
         font-family: inherit;
         font-size: 1em;
     }
-    .input-boolean input,
-    .input-single input,
-    .input-multiple input,
-    .submit input {
-        width: auto;
+    .input-boolean,
+    .input-single,
+    .input-multiple,
+    .submit {
+        input {
+            width: auto;
+        }
     }
-    .input-single span label,
-    .input-multiple span label {
-        display: inline-block;
-        white-space: nowrap;
-    }
-    .input-single span label span,
-    .input-multiple span label span {
-        padding-left: 0.5em;
-        padding-right: 1em;
-        font-size: 1.1em;
+    .input-single,
+    .input-multiple {
+        span label {
+            display: inline-block;
+            white-space: nowrap;
+
+            span {
+                padding-left: 0.5em;
+                padding-right: 1em;
+                font-size: 1.1em;
+            }
+        }
     }
     /* }}} */
     /* {{{ input states */
@@ -62,33 +66,29 @@
     select {
         border: 1px solid #999999;
         padding: 0.2em;
+
+        &:focus,
+        &:focus {
+            border: 1px solid #000000;
+        }
+        &:required,
+        &:invalid {
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+        }
+        .error & {
+            border: 1px solid #ff0000;
+        }
     }
-    input:focus,
-    select:focus {
-        border: 1px solid #000000;
-    }
-    input:required,
-    input:invalid,
-    select:required,
-    select:invalid {
-        box-shadow: none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-    }
-    .error input,
-    .error select {
-        border: 1px solid #ff0000;
-    }
-    .input-boolean input,
-    .input-single input,
-    .input-multiple input,
-    .input-boolean input:focus,
-    .input-single input:focus,
-    .input-multiple input:focus,
-    .error.input-boolean input,
-    .error.input-single input,
-    .error.input-multiple input {
-        border: none;
+    .input-boolean,
+    .input-single,
+    .input-multiple, {
+        input,
+        input:focus,
+        &.error input {
+            border: none;
+        }
     }
     .error .label {
         color: #ff0000;
@@ -142,31 +142,33 @@
         width: 100%;
         padding: 0;
         margin: 0;
-    }
-    ol.stepnav li {
-        display: table-cell;
-        list-style: none;
-        background: #eeeeee;
-        border-right: 0.3em solid #ffffff;
-    }
-    ol.stepnav li {
-        *display: block; /* IE6/7 hack */
-        *float: left;
-    }
-    ol.stepnav li a {
-        display: block;
-        height: 100%;
-        padding: 0.4em;
-        color: #000000;
-        text-decoration: none;
-    }
-    ol.stepnav li.invalid a::after {
-        content: " !";
-        color: #ff0000;
-        font-weight: bold;
-    }
-    ol.stepnav li.current-step {
-        background: #dddddd;
+
+        li {
+            display: table-cell;
+            list-style: none;
+            background: #eeeeee;
+            border-right: 0.3em solid #ffffff;
+
+            a {
+                display: block;
+                height: 100%;
+                padding: 0.4em;
+                color: #000000;
+                text-decoration: none;
+            }
+            &.invalid a::after {
+                content: " !";
+                color: #ff0000;
+                font-weight: bold;
+            }
+            &.current-step {
+                background: #dddddd;
+            }
+        }
+        li {
+            *display: block; /* IE6/7 hack */
+            *float: left;
+        }
     }
     /* }}} */
 
@@ -185,66 +187,77 @@
         padding: 0;
         margin: 0;
         width: 25px;
+
+        li {
+            padding: 0;
+
+            a {
+                display: block;
+                width: 25px;
+                height: 25px;
+                text-indent: -10000px;
+                background-image: url(../richtext-toolbar.png);
+                background-repeat: none;
+                background-position: 25px 0;
+
+                &.depageEditorButtonBold {
+                    background-position: 0 0;
+
+                    &:hover, 
+                    &.on {
+                        background-position: -25px 0;
+                    }
+                }
+                &.depageEditorButtonItalic {
+                    background-position: 0 -25px;
+
+                    &:hover, 
+                    &.on {
+                        background-position: -25px -25px;
+                    }
+                }
+                &.depageEditorButtonHyperlink {
+                    background-position: 0 -50px;
+
+                    &:hover, 
+                    &.on {
+                        background-position: -25px -50px;
+                    }
+                }
+                &.depageEditorButtonOrderedList {
+                    background-position: 0 -75px;
+
+                    &:hover, 
+                    &.on {
+                        background-position: -25px -75px;
+                    }
+                }
+                &.depageEditorButtonUnorderedList {
+                    background-position: 0 -100px;
+
+                    &:hover, 
+                    &.on {
+                        background-position: -25px -100px;
+                    }
+                }
+                &.depageEditorButtonHTML {
+                    background-position: 0 -125px;
+
+                    &:hover, 
+                    &.on {
+                        background-position: -25px -125px;
+                    }
+                }
+            }
+        }
     }
-    ul.depageEditorToolbar li {
-        padding: 0;
-    }
-    ul.depageEditorToolbar li a {
-        display: block;
-        width: 25px;
-        height: 25px;
-        text-indent: -10000px;
-        background-image: url(../richtext-toolbar.png);
-        background-repeat: none;
-        background-position: 25px 0;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonBold {
-        background-position: 0 0;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonBold:hover, 
-    ul.depageEditorToolbar li a.depageEditorButtonBold.on {
-        background-position: -25px 0;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonItalic {
-        background-position: 0 -25px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonItalic:hover,
-    ul.depageEditorToolbar li a.depageEditorButtonItalic.on {
-        background-position: -25px -25px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonHyperlink {
-        background-position: 0 -50px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonHyperlink:hover,
-    ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
-        background-position: -25px -50px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonOrderedList {
-        background-position: 0 -75px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover,
-    ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on {
-        background-position: -25px -75px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonUnorderedList {
-        background-position: 0 -100px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover,
-    ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on {
-        background-position: -25px -100px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonHTML {
-        background-position: 0 -125px;
-    }
-    ul.depageEditorToolbar li a.depageEditorButtonHTML:hover,
-    ul.depageEditorToolbar li a.depageEditorButtonHTML.on {
-        background-position: -25px -125px;
-    }
-    .input-richtext textarea,
-    .input-richtext iframe {
-        width: 100%;
-        border: 1px solid;
-        min-height: 10em;
+    .input-richtext {
+        textarea,
+        iframe {
+            width: 100%;
+            border: 1px solid;
+            min-height: 10em;
+        }
     }
     /* }}} */
 }
