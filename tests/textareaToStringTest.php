@@ -18,7 +18,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
      * Element with default setup
      **/
     public function testSimple() {
-        $expected = '<p id="formName-textareaName" class="input-textarea" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea" data-errorMessage="Please enter valid data" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
                 '<span class="label">textareaName</span>' .
                 '<textarea name="textareaName"></textarea>' .
@@ -34,7 +34,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
      * Tests rendering with value set.
      **/
     public function testValue() {
-        $expected = '<p id="formName-textareaName" class="input-textarea" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea" data-errorMessage="Please enter valid data" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
                 '<span class="label">textareaName</span>' .
                 '<textarea name="textareaName">testValue</textarea>' .
@@ -51,7 +51,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element with set required attribute
      **/
     public function testRequired() {
-        $expected = '<p id="formName-textareaName" class="input-textarea required" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea required" data-errorMessage="Please enter valid data" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
                 '<span class="label">textareaName <em>*</em></span>' .
                 '<textarea name="textareaName" required="required"></textarea>' .
@@ -68,7 +68,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase {
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
     public function testHtmlEscaping() {
-        $expected = '<p id="formName-textareaName" class="input-textarea" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel</span>' .
                 '<textarea name="textareaName"></textarea>' .
