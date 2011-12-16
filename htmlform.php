@@ -362,8 +362,15 @@ class htmlform extends abstracts\container {
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
             && $this->inCurrentStep($name)
         ) {
-            $value = (isset($_POST[$name])) ? $_POST[$name] : null;
-            $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
+            if ($this->getElement($name) instanceof elements\file) {
+                // handle uploaded file
+                $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
+                $this->sessionSlot[$name] = $this->getElement($name)->handleUploadedFiles($oldValue);
+            } else {
+                // save value
+                $value = isset($_POST[$name]) ? $_POST[$name] : null;
+                $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
+            }
         }
         // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
@@ -683,6 +690,13 @@ class htmlform extends abstracts\container {
      * @return  void
      **/
     public function clearSession() {
+        // clean uploaded files
+        foreach($this->getElements(true) as $element) {
+            if ($element instanceof elements\file) {
+                $element->clearUploadedFiles();
+            }
+        }
+
         unset($_SESSION[$this->sessionSlotName]);
         unset($this->sessionSlot);
     }
