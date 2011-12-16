@@ -1,84 +1,90 @@
-/* {{{ depage-form base */
 .depage-form {
-    max-width: 40em;
+  /* {{{ depage-form base */
+  max-width: 40em;
+  /* }}} */
+  /* {{{ input and label sizes */
+  /* }}} */
+  /* {{{ input states */
+  /* }}} */
+  /* {{{ fieldsets */
+  /* }}} */
+  /* {{{ stepnav */
+  /* }}} */
+  /* {{{ richtext */
+  /* }}} */
 }
-/* }}} */
-
-/* {{{ input and label sizes */
 .depage-form .label {
-    display: block;
-    float: left;
-    width: 33%;
-    height: 1em;
-    min-height: 1em;
-    height: auto !important;
-    padding-bottom: 0.3em;
-    padding-right: 0.3em;
+  display: block;
+  float: left;
+  width: 33%;
+  height: 1em;
+  min-height: 1em;
+  height: auto !important;
+  padding-bottom: 0.3em;
+  padding-right: 0.3em;
 }
 .depage-form .input-boolean input {
-    float: left;
-    margin-top: 0.5em;
+  float: left;
+  margin-top: 0.5em;
 }
 .depage-form .input-boolean .label {
-    display: block;
-    float: none;
-    width: auto;
-    margin-left: 1.7em;
+  display: block;
+  float: none;
+  width: auto;
+  margin-left: 1.7em;
 }
 .depage-form p {
-    clear: left;
+  clear: left;
 }
 .depage-form p,
 .depage-form .label {
-    position: relative;
-    line-height: 1.8em;
+  position: relative;
+  line-height: 1.8em;
 }
 .depage-form input,
 .depage-form select,
 .depage-form textarea {
-    width: 63%;
-    font-family: inherit;
-    font-size: 1em;
+  width: 63%;
+  font-family: inherit;
+  font-size: 1em;
 }
 .depage-form .input-boolean input,
 .depage-form .input-single input,
 .depage-form .input-multiple input,
 .depage-form .submit input {
-    width: auto;
+  width: auto;
 }
 .depage-form .input-single span label,
 .depage-form .input-multiple span label {
-    display: inline-block;
-    white-space: nowrap;
+  display: inline-block;
+  white-space: nowrap;
 }
 .depage-form .input-single span label span,
 .depage-form .input-multiple span label span {
-    padding-left: 0.5em;
-    padding-right: 1em;
-    font-size: 1.1em;
+  padding-left: 0.5em;
+  padding-right: 1em;
+  font-size: 1.1em;
 }
-/* }}} */
-/* {{{ input states */
 .depage-form input,
 .depage-form select {
-    border: 1px solid #999999;
-    padding: 0.2em;
+  border: 1px solid #999999;
+  padding: 0.2em;
 }
 .depage-form input:focus,
 .depage-form select:focus {
-    border: 1px solid #000000;
+  border: 1px solid #000000;
 }
 .depage-form input:required,
 .depage-form input:invalid,
 .depage-form select:required,
 .depage-form select:invalid {
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }
 .depage-form .error input,
 .depage-form .error select {
-    border: 1px solid #ff0000;
+  border: 1px solid #ff0000;
 }
 .depage-form .input-boolean input,
 .depage-form .input-single input,
@@ -89,164 +95,157 @@
 .depage-form .error.input-boolean input,
 .depage-form .error.input-single input,
 .depage-form .error.input-multiple input {
-    border: none;
+  border: none;
 }
 .depage-form .error .label {
-    color: #ff0000;
+  color: #ff0000;
 }
 .depage-form .submit input {
-    background: #cccccc;
+  background: #cccccc;
 }
 .depage-form .submit.error input {
-    border: 1px solid #dddddd;
-    color: #999999;
-    background: #dddddd;
+  border: 1px solid #dddddd;
+  color: #999999;
+  background: #dddddd;
 }
 .depage-form .errorMessage {
-    display: block;
-    position: absolute;
-    top: 0.2em;
-    right: 3%;
-    max-width: 70%;
-    font-size: 0.8em;
-    text-align: right;
+  display: block;
+  position: absolute;
+  top: 0.2em;
+  right: 3%;
+  max-width: 70%;
+  font-size: 0.8em;
+  text-align: right;
 }
-/* }}} */
-/* {{{ fieldsets */
 .depage-form fieldset {
-    /*
-    border: none;
-    border-top: 1px solid;
-    padding: 0;
-    position: relative;
-    background: #eeeeee;
-    */
+  /*
+  border: none;
+  border-top: 1px solid;
+  padding: 0;
+  position: relative;
+  background: #eeeeee;
+  */
 }
 .depage-form fieldset legend {
-    /*
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 0.2em;
-    font-weight: bold;
-    background: #dddddd;
-    margin-bottom: 1em;
-    */
+  /*
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2em;
+  font-weight: bold;
+  background: #dddddd;
+  margin-bottom: 1em;
+  */
 }
-/* }}} */
-/* {{{ stepnav */
 .depage-form ol.stepnav {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 .depage-form ol.stepnav li {
-    display: table-cell;
-    list-style: none;
-    background: #eeeeee;
-    border-right: 0.3em solid #ffffff;
+  display: table-cell;
+  list-style: none;
+  background: #eeeeee;
+  border-right: 0.3em solid #ffffff;
 }
 .depage-form ol.stepnav li {
-    *display: block; /* IE6/7 hack */
-    *float: left;
+  *display: block;
+  /* IE6/7 hack */
+  *float: left;
 }
 .depage-form ol.stepnav li a {
-    display: block;
-    height: 100%;
-    padding: 0.4em;
-    color: #000000;
-    text-decoration: none;
+  display: block;
+  height: 100%;
+  padding: 0.4em;
+  color: #000000;
+  text-decoration: none;
 }
 .depage-form ol.stepnav li.invalid a::after {
-    content: " !";
-    color: #ff0000;
-    font-weight: bold;
+  content: " !";
+  color: #ff0000;
+  font-weight: bold;
 }
 .depage-form ol.stepnav li.current-step {
-    background: #dddddd;
+  background: #dddddd;
 }
-/* }}} */
-
-/* {{{ richtext */
 .depage-form .depageEditor {
-    clear: left;
-    position: relative;
-    margin-left: 25px;
+  clear: left;
+  position: relative;
+  margin-left: 25px;
 }
 .depage-form ul.depageEditorToolbar {
-    position: absolute;
-    left: -25px;
-    top: 0;
-    line-height: auto;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 25px;
+  position: absolute;
+  left: -25px;
+  top: 0;
+  line-height: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 25px;
 }
 .depage-form ul.depageEditorToolbar li {
-    padding: 0;
+  padding: 0;
 }
 .depage-form ul.depageEditorToolbar li a {
-    display: block;
-    width: 25px;
-    height: 25px;
-    text-indent: -10000px;
-    background-image: url(../richtext-toolbar.png);
-    background-repeat: none;
-    background-position: 25px 0;
+  display: block;
+  width: 25px;
+  height: 25px;
+  text-indent: -10000px;
+  background-image: url(../richtext-toolbar.png);
+  background-repeat: none;
+  background-position: 25px 0;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonBold {
-    background-position: 0 0;
+  background-position: 0 0;
 }
-.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold:hover, 
+.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold:hover,
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonBold.on {
-    background-position: -25px 0;
+  background-position: -25px 0;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic {
-    background-position: 0 -25px;
+  background-position: 0 -25px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic:hover,
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic.on {
-    background-position: -25px -25px;
+  background-position: -25px -25px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink {
-    background-position: 0 -50px;
+  background-position: 0 -50px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink:hover,
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on {
-    background-position: -25px -50px;
+  background-position: -25px -50px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList {
-    background-position: 0 -75px;
+  background-position: 0 -75px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover,
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on {
-    background-position: -25px -75px;
+  background-position: -25px -75px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList {
-    background-position: 0 -100px;
+  background-position: 0 -100px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover,
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on {
-    background-position: -25px -100px;
+  background-position: -25px -100px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML {
-    background-position: 0 -125px;
+  background-position: 0 -125px;
 }
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML:hover,
 .depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML.on {
-    background-position: -25px -125px;
+  background-position: -25px -125px;
 }
 .depage-form .input-richtext textarea,
 .depage-form .input-richtext iframe {
-    width: 100%;
-    border: 1px solid;
-    min-height: 10em;
+  width: 100%;
+  border: 1px solid;
+  min-height: 10em;
 }
-/* }}} */
 
 /* vim:set ft=css sw=4 sts=4 fdm=marker : */
