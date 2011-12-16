@@ -644,7 +644,16 @@ class htmlform extends abstracts\container {
      * @return  (array) form-data
      **/
     public function getValues() {
-        return (isset($this->sessionSlot)) ? $this->sessionSlot : null;
+        if (isset($this->sessionSlot)) {
+            // remove internal attributes from values
+            return array_diff_key($this->sessionSlot, array(
+                'formIsValid' => '', 
+                'formIsAutosaved' => '', 
+                'formName' => ''
+            ));
+        } else {
+            return null;
+        }
     }
     // }}}
 
