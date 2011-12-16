@@ -205,6 +205,10 @@ class htmlform extends abstracts\container {
      **/
     protected $label;
     /**
+     * @brief Contains the additional class value of the form
+     **/
+    protected $class;
+    /**
      * @brief Contains the name of the array in the PHP session, holding the form-data
      **/
     protected $sessionSlotName;
@@ -277,9 +281,12 @@ class htmlform extends abstracts\container {
         parent::setDefaults();
 
         $this->defaults['label']        = 'submit';
-        $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
+        $this->defaults['cancelLabel']  = null;
+        $this->defaults['class']        = '';
         $this->defaults['method']       = 'post';
+        $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
         $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
+        $this->defaults['cancelURL']    = $_SERVER['REQUEST_URI'];
         $this->defaults['validator']    = null;
         $this->defaults['ttl']          = null;
         $this->defaults['jsValidation'] = 'blur';
@@ -355,8 +362,15 @@ class htmlform extends abstracts\container {
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
             && $this->inCurrentStep($name)
         ) {
-            $value = (isset($_POST[$name])) ? $_POST[$name] : null;
-            $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
+            if ($this->getElement($name) instanceof elements\file) {
+                // handle uploaded file
+                $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
+                $this->sessionSlot[$name] = $this->getElement($name)->handleUploadedFiles($oldValue);
+            } else {
+                // save value
+                $value = isset($_POST[$name]) ? $_POST[$name] : null;
+                $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
+            }
         }
         // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
@@ -457,10 +471,12 @@ class htmlform extends abstracts\container {
     public function __toString() {
         $renderedElements   = '';
         $label              = $this->htmlLabel();
+        $cancellabel        = $this->htmlCancelLabel();
+        $class              = $this->htmlClass();
         $method             = $this->htmlMethod();
         $submitURL          = $this->htmlSubmitURL();
         $jsValidation       = $this->htmlJsValidation();
-        $jsAutosave         = $this->htmlJsAutosave();
+        $jsAutosave         = $this->jsAutosave === true ? "true" : $this->htmlJsAutosave();
 
         foreach($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -472,9 +488,14 @@ class htmlform extends abstracts\container {
             }
         }
 
-        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form\" method=\"{$method}\" action=\"{$submitURL}\" data-jsvalidation=\"{$jsValidation}\" data-jsautosave=\"{$jsAutosave}\">" . "\n" .
+        if (!is_null($this->cancelLabel)) {
+            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
+        }
+
+        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\" data-jsvalidation=\"{$jsValidation}\" data-jsautosave=\"{$jsAutosave}\" enctype=\"multipart/form-data\">" . "\n" .
             $renderedElements .
-            "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" value=\"{$label}\"></p>" . "\n" .
+            "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
+            $cancel . 
         "</form>";
     }
     // }}}
@@ -496,7 +517,10 @@ class htmlform extends abstracts\container {
 
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
-            if ($this->validate()) {
+            if (!is_null($this->cancelLabel) && $_POST['formSubmit'] === $this->cancelLabel) {
+                $this->clearSession();
+                $this->redirect($this->cancelURL);
+            } else if ($this->validate()) {
                 $this->redirect($this->successURL);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
@@ -544,8 +568,12 @@ class htmlform extends abstracts\container {
      * @param $url (string) url to redirect to
      */
     public function redirect($url) {
-        header('Location: ' . $url);
-        die( "Tried to redirect you to " . $url);
+        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+            // don't redirect > it's from ajax
+        } else {
+            header('Location: ' . $url);
+            die( "Tried to redirect you to " . $url);
+        }
     }
     // }}}
 
@@ -569,6 +597,14 @@ class htmlform extends abstracts\container {
         if ($this->valid && is_callable($this->validator)) {
             $this->valid = call_user_func($this->validator, $this->getValues());
         }
+
+        // save data in session when autosaving but don't validate successfully
+        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") || (isset($this->sessionSlot['formIsAutosaved']) && $this->sessionSlot['formIsAutosaved'] === true)) {
+            $this->valid = false;
+        }
+        
+        // save wether form was autosaved the last time
+        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
 
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
@@ -615,7 +651,16 @@ class htmlform extends abstracts\container {
      * @return  (array) form-data
      **/
     public function getValues() {
-        return (isset($this->sessionSlot)) ? $this->sessionSlot : null;
+        if (isset($this->sessionSlot)) {
+            // remove internal attributes from values
+            return array_diff_key($this->sessionSlot, array(
+                'formIsValid' => '', 
+                'formIsAutosaved' => '', 
+                'formName' => ''
+            ));
+        } else {
+            return null;
+        }
     }
     // }}}
 
@@ -645,6 +690,13 @@ class htmlform extends abstracts\container {
      * @return  void
      **/
     public function clearSession() {
+        // clean uploaded files
+        foreach($this->getElements(true) as $element) {
+            if ($element instanceof elements\file) {
+                $element->clearUploadedFiles();
+            }
+        }
+
         unset($_SESSION[$this->sessionSlotName]);
         unset($this->sessionSlot);
     }
@@ -776,4 +828,4 @@ class htmlform extends abstracts\container {
  **/
 // }}}
 
-/* vim:set ft=php fenc=UTF-8 sw=4 sts=4 fdm=marker et : */
+/* vim:set ft=php sw=4 sts=4 fdm=marker et : */

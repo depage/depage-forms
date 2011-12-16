@@ -47,6 +47,7 @@ class textarea extends text {
 
         $this->defaults['rows'] = null;
         $this->defaults['cols'] = null;
+        $this->defaults['autogrow'] = false;
     }
     // }}}
 
@@ -76,6 +77,23 @@ class textarea extends text {
     }
     // }}}
 
+    // {{{ htmlWrapperAttributes()
+    /**
+     * @brief   Returns string of HTML attributes for element wrapper paragraph.
+     *
+     * @return  $attributes (string) HTML attribute
+     **/
+    protected function htmlWrapperAttributes() {
+        $attributes = parent::htmlWrapperAttributes();
+
+        $options = array();
+        $options['autogrow'] = $this->autogrow;
+
+        $attributes .= " data-textarea-options=\"" . $this->htmlEscape(json_encode($options)) . "\"";
+
+        return $attributes;
+    }
+    // }}}
     // {{{ htmlRows()
     /**
      * @brief   Renders HTML rows attribute
@@ -86,7 +104,6 @@ class textarea extends text {
         return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
     }
     // }}}
-
     // {{{ htmlCols()
     /**
      * @brief   Renders HTML cols attribute
@@ -99,4 +116,4 @@ class textarea extends text {
     // }}}
 }
 
-/* vim:set ft=php fenc=UTF-8 sw=4 sts=4 fdm=marker et : */
+/* vim:set ft=php sw=4 sts=4 fdm=marker et : */
