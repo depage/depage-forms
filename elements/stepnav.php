@@ -52,7 +52,7 @@ class stepnav  {
 
             // add link to previously unsaved steps
             if ($stepNum <= $firstInvalidStep && $stepNum != $currentStepId) {
-                $link = "href=\"?step=$stepNum\"";
+                $link = "href=\"{$this->form->url['path']}?step=$stepNum\"";
             }
 
             // add valid-class to previous steps
