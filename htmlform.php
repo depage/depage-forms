@@ -596,8 +596,12 @@ class htmlform extends abstracts\container {
 
         parent::validate();
 
-        if ($this->valid && is_callable($this->validator)) {
-            $this->valid = call_user_func($this->validator, $this->getValues());
+        if ($this->valid && !is_null($this->validator)) {
+            if (is_callable($this->validator)) {
+                $this->valid = call_user_func($this->validator, $this, $this->getValues());
+            } else {
+                throw new exceptions\validatorNotCallable("The validator paramater must be callable");
+            }
         }
 
         // save data in session when autosaving but don't validate successfully
