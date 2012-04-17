@@ -26,7 +26,7 @@ abstract class element {
     /**
      * @brief Contains element validation status/result.
      **/
-    protected $valid;
+    public $valid;
     /**
      * @brief True if the element has been validated before.
      **/
