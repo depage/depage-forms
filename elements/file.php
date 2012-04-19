@@ -104,28 +104,28 @@ class file extends text {
         if (!is_array($files)) {
             $files = array();
         }
-        foreach ($_FILES[$this->name]["error"] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $upload_name = $_FILES[$this->name]["tmp_name"][$key];
-                $tmp_name = tempnam(null, "depage-form-upload-");
-                if (move_uploaded_file($upload_name, $tmp_name)) {
-                    if ($this->maxNum > 1) {
-                        $files[] = array(
-                            'name' => $_FILES[$this->name]["name"][$key],
-                            'tmp_name' => $tmp_name,
-                        );
-                    } else {
-                        $files[0] = array(
-                            'name' => $_FILES[$this->name]["name"][$key],
-                            'tmp_name' => $tmp_name,
-                        );
+        if (isset($_FILES[$this->name])){
+            foreach ($_FILES[$this->name]["error"] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $upload_name = $_FILES[$this->name]["tmp_name"][$key];
+                    $tmp_name = tempnam(null, "depage-form-upload-");
+                    if (move_uploaded_file($upload_name, $tmp_name)) {
+                        if ($this->maxNum > 1) {
+                            $files[] = array(
+                                'name' => $_FILES[$this->name]["name"][$key],
+                                'tmp_name' => $tmp_name,
+                            );
+                        } else {
+                            $files[0] = array(
+                                'name' => $_FILES[$this->name]["name"][$key],
+                                'tmp_name' => $tmp_name,
+                            );
+                        }
                     }
                 }
             }
         }
-
         $this->value = $files;
-
         return $files;
     }
     // }}}
