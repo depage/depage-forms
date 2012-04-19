@@ -93,7 +93,7 @@ namespace depage\htmlform\validators;
         }
     }
     // }}}
-
+    
     // {{{ getPatternAttribute()
     /**
      * @brief   returns validators' regular expression as HTML5 pattern attribute
@@ -104,6 +104,20 @@ namespace depage\htmlform\validators;
         if (isset($this->regEx)) {
             return ' pattern="' . htmlspecialchars(substr($this->regEx, 1,-1), ENT_QUOTES) . '"';
         }
+    }
+    // }}}
+    
+    // isValid() {{{
+    /**
+     * Returns a bool value indicating whether or not the input passes
+     * the given element's validation criteria.
+     *
+     * @return bool isValid
+     */
+    public static function isValid($input){
+        $el = \get_called_class();
+        $el = new $el();
+        return $el->validate($input);
     }
     // }}}
 }
