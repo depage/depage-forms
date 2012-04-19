@@ -593,28 +593,63 @@ class htmlform extends abstracts\container {
     public function validate() {
         // onValidate hook for custom required/validation rules
         $this->onValidate();
-
+        
         parent::validate();
-
+        
         if ($this->valid && is_callable($this->validator)) {
             $this->valid = call_user_func($this->validator, $this->getValues());
         }
-
-        // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") || (isset($this->sessionSlot['formIsAutosaved']) && $this->sessionSlot['formIsAutosaved'] === true)) {
-            $this->valid = false;
-        }
         
-        // save wether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
-
+        $this->validateAutosave();
+        
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
-
+        
         return $this->valid;
     }
     // }}}
-
+    
+    // validateAutosave() {{{
+    /**
+     * If the form is autosaving the validation property is defaulted to false.
+     * 
+     * This function returns the actual state of input validation.
+     * It can therefore be used to test autosave fields are correct without forcing
+     * the form save.
+     * 
+     * @return bool $part_valid - whether the autosave postback data is valid
+     */
+    public function validateAutosave(){
+        $part_valid = $this->valid;
+        
+        // save data in session when autosaving but don't validate successfully
+        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
+                || (isset($this->sessionSlot['formIsAutosaved'])
+                    && $this->sessionSlot['formIsAutosaved'] === true)) {
+            
+            if (!$this->valid){
+                // partial validation - check POST keys are valid
+                $part_valid = true;
+                foreach($_POST as $key=>&$value) {
+                    $el = $this->getElement($key);
+                    if (!empty($el) && !$el->validate()) {
+                        $part_valid = false;
+                        break;
+                    }
+                }
+            }
+            
+            // the form valid state is false when autosaving
+            $this->valid = false;
+        }
+        
+        // save whether form was autosaved the last time
+        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        
+        return $part_valid;
+    }
+    // }}}
+    
     // {{{ isEmpty()
     /**
      * @brief   Returns wether form has been submitted before or not.
