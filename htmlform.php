@@ -631,10 +631,12 @@ class htmlform extends abstracts\container {
                 // partial validation - check POST keys are valid
                 $part_valid = true;
                 foreach($_POST as $key=>&$value) {
-                    $el = $this->getElement($key);
-                    if (!empty($el) && !$el->validate()) {
-                        $part_valid = false;
-                        break;
+                    if ($_POST[$key] !== '') { // validate that content is correct
+                        $el = $this->getElement($key);
+                        if (!empty($el) && !$el->validate()) {
+                            $part_valid = false;
+                            break;
+                        }
                     }
                 }
             }
