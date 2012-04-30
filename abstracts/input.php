@@ -283,6 +283,9 @@ abstract class input extends element {
         if (($this->value !== null) && (!$this->validate())) {
             $classes .= ' error';
         }
+        if (isset($this->skin)) {
+            $classes .= ' skin-' . $this->htmlEscape($this->skin);
+        }
 
         return $classes;
     }
