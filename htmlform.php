@@ -516,10 +516,9 @@ class htmlform extends abstracts\container {
      **/
     public function process() {
         $this->setCurrentStep();
-
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
-            if (!is_null($this->cancelLabel) && $_POST['formSubmit'] === $this->cancelLabel) {
+            if (!is_null($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
             } else if ($this->validate()) {
