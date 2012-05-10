@@ -134,8 +134,10 @@ class file extends text {
      * @brief cleans uploaded files when session is cleared
      **/
     public function clearUploadedFiles() {
-        foreach ($this->value as $file) {
-            unlink($file['tmp_name']);
+        if(count($this->value)){
+            foreach ($this->value as $file) {
+                unlink($file['tmp_name']);
+            }
         }
     }
     // }}}
