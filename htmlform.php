@@ -517,7 +517,8 @@ class htmlform extends abstracts\container {
     public function process() {
         $this->setCurrentStep();
         // if there's post-data from this form
-        if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
+        if ( (isset($_POST['formName']) && ($_POST['formName'] === $this->name))
+                && (!isset($_POST['formName']) || (isset($_POST['formName']) && $_POST['formName'] != true )) ) {
             if (!is_null($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
@@ -569,7 +570,7 @@ class htmlform extends abstracts\container {
      * @param $url (string) url to redirect to
      */
     public function redirect($url) {
-        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] == true) {
             // don't redirect > it's from ajax
         } else {
             header('Location: ' . $url);
@@ -626,7 +627,7 @@ class htmlform extends abstracts\container {
         $part_valid = $this->valid;
         
         // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
+        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] == true)
                 || (isset($this->sessionSlot['formIsAutosaved'])
                     && $this->sessionSlot['formIsAutosaved'] === true)) {
             
@@ -649,7 +650,7 @@ class htmlform extends abstracts\container {
         }
         
         // save whether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] == true;
         
         return $part_valid;
     }
