@@ -517,8 +517,7 @@ class htmlform extends abstracts\container {
     public function process() {
         $this->setCurrentStep();
         // if there's post-data from this form
-        if ( (isset($_POST['formName']) && ($_POST['formName'] === $this->name))
-                && (!isset($_POST['formName']) || (isset($_POST['formName']) && $_POST['formName'] != true )) ) {
+        if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if (!is_null($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
@@ -570,11 +569,11 @@ class htmlform extends abstracts\container {
      * @param $url (string) url to redirect to
      */
     public function redirect($url) {
-        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] == true) {
+        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
             // don't redirect > it's from ajax
         } else {
             header('Location: ' . $url);
-            die( "Tried to redirect you to " . $url);
+            die( "Tried to redirect you to <a href=\"$url\">$url</a>");
         }
     }
     // }}}
@@ -594,7 +593,7 @@ class htmlform extends abstracts\container {
         // onValidate hook for custom required/validation rules
         $this->onValidate();
         
-        parent::validate();
+        $this->valid = $this->validateAutosave();
 
         if ($this->valid && !is_null($this->validator)) {
             if (is_callable($this->validator)) {
@@ -603,8 +602,6 @@ class htmlform extends abstracts\container {
                 throw new exceptions\validatorNotCallable("The validator paramater must be callable");
             }
         }
-        
-        $this->validateAutosave();
         
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
@@ -624,33 +621,19 @@ class htmlform extends abstracts\container {
      * @return bool $part_valid - whether the autosave postback data is valid
      */
     public function validateAutosave(){
+        parent::validate();
+
         $part_valid = $this->valid;
         
         // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] == true)
+        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
                 || (isset($this->sessionSlot['formIsAutosaved'])
                     && $this->sessionSlot['formIsAutosaved'] === true)) {
-            
-            if (!$this->valid){
-                // partial validation - check POST keys are valid
-                $part_valid = true;
-                foreach($_POST as $key=>&$value) {
-                    if ($_POST[$key] !== '') { // validate that content is correct
-                        $el = $this->getElement($key);
-                        if (!empty($el) && !$el->validate()) {
-                            $part_valid = false;
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            // the form valid state is false when autosaving
             $this->valid = false;
         }
         
         // save whether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] == true;
+        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
         
         return $part_valid;
     }
