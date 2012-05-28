@@ -108,7 +108,7 @@ abstract class input extends element {
         $this->defaults['autocorrect']    = null;
         $this->defaults['autofocus']      = false;
         $this->defaults['disabled']       = false;
-        $this->defaults['errorMessage']   = 'Please enter valid data';
+        $this->defaults['errorMessage']   = _('Please enter valid data');
         $this->defaults['label']          = $this->name;
         $this->defaults['marker']         = '*';
         $this->defaults['required']       = false;

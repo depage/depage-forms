@@ -57,7 +57,7 @@ class stepnav  {
 
             // add valid-class to previous steps
             if ($stepNum < $currentStepId) {
-                $class .= $step->isValid() ? " valid" : " invalid";
+                $class .= $step->validate() ? " valid" : " invalid";
             }
 
             if ($stepNum == $currentStepId) {

@@ -47,7 +47,7 @@ class url extends text {
     protected function setDefaults() {
         parent::setDefaults();
 
-        $this->defaults['errorMessage'] = 'Please enter a valid URL';
+        $this->defaults['errorMessage'] = _('Please enter a valid URL');
     }
     // }}}
 }
