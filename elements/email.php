@@ -47,7 +47,7 @@ class email extends text {
      **/
     protected function setDefaults() {
         parent::setDefaults();
-        $this->defaults['errorMessage'] = 'Please enter a valid e-mail address';
+        $this->defaults['errorMessage'] = _('Please enter a valid e-mail address');
     }
     // }}}
 }

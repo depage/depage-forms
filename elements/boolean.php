@@ -57,7 +57,7 @@ class boolean extends abstracts\input {
     protected function setDefaults() {
         parent::setDefaults();
         $this->defaults['defaultValue'] = false;
-        $this->defaults['errorMessage'] = 'Please check this box if you want to proceed';
+        $this->defaults['errorMessage'] = _('Please check this box if you want to proceed');
     }
     // }}}
 
