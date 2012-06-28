@@ -284,6 +284,7 @@ class htmlform extends abstracts\container {
         $this->defaults['cancelLabel']  = null;
         $this->defaults['class']        = '';
         $this->defaults['method']       = 'post';
+        // @todo adjust submit url for steps when used
         $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
         $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
         $this->defaults['cancelURL']    = $_SERVER['REQUEST_URI'];
