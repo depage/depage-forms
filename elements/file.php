@@ -15,6 +15,8 @@ namespace depage\htmlform\elements;
  * @todo    dummy - not implemented yet
  **/
 class file extends text {
+    protected $value = array();
+    
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
@@ -114,6 +116,7 @@ class file extends text {
                             'name' => $_FILES[$this->name]["name"][$key],
                             'tmp_name' => $tmp_name,
                         );
+                        
                     } else {
                         $files[0] = array(
                             'name' => $_FILES[$this->name]["name"][$key],
@@ -123,10 +126,15 @@ class file extends text {
                 }
             }
         }
-
-        $this->value = $files;
-
-        return $files;
+        
+        // add new files to beginning
+        foreach($files as &$file) {
+            array_unshift($this->value, $file);
+        }
+        // truncate files at max
+        $this->value = array_slice($this->value, 0, $this->maxNum); 
+        
+        return $this->value;
     }
     // }}}
     // {{{ cleanUploadedFiles()
