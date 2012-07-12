@@ -141,12 +141,8 @@ class file extends text {
             }
         }
         
-        // add new files to beginning
-        foreach($files as &$file) {
-            array_unshift($this->value, $file);
-        }
         // truncate files at max
-        $this->value = array_slice($this->value, 0, $this->maxNum); 
+        $this->value = array_slice($files, -$this->maxNum, $this->maxNum); 
         
         return $this->value;
     }
