@@ -141,7 +141,7 @@ abstract class element {
         if (
             !is_string($name)
             || trim($name) === ''
-            || preg_match('/[^a-zA-Z0-9_]/', $name)
+            || preg_match('/[^a-zA-Z0-9_\[\]]/', $name)
         )  {
             throw new exceptions\invalidElementNameException('"' . $name . '" is not a valid element name.');
         }
