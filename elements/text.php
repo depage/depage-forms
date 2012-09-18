@@ -75,6 +75,7 @@ class text extends abstracts\input {
         // textClass elements have values of type string
         $this->defaults['defaultValue'] = '';
         $this->defaults['placeholder']  = false;
+        $this->defaults['maxlength']  = false;
     }
     // }}}
 
@@ -144,6 +145,7 @@ class text extends abstracts\input {
     protected function htmlInputAttributes() {
         $attributes = parent::htmlInputAttributes();
 
+        if ($this->maxlength)   $attributes .= " maxlength=\"{$this->maxlength}\"";
         if ($this->placeholder) $attributes .= " placeholder=\"{$this->placeholder}\"";
         if ($this->list)        $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";
 
