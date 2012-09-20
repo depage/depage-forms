@@ -123,6 +123,7 @@ class file extends text {
                         }
                     }
                 } else {
+                    
                     $errorMsgs = array(
                         UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
                         UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.",
@@ -133,7 +134,8 @@ class file extends text {
                         UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop.",
                     );
                     $this->log("htmlform: " . $errorMsgs[$error]);
-                    $this->log($_FILES[$this->name]);
+                    // TODO can't send array here
+                    //$this->log($_FILES[$this->name]['name']);
                 }
             }
         }
