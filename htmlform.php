@@ -592,9 +592,9 @@ class htmlform extends abstracts\container {
      **/
     public function validate() {
         // onValidate hook for custom required/validation rules
-        $this->onValidate();
+        $this->valid = $this->onValidate();
         
-        $this->valid = $this->validateAutosave();
+        $this->valid = $this->valid && $this->validateAutosave();
 
         if ($this->valid && !is_null($this->validator)) {
             if (is_callable($this->validator)) {
@@ -739,7 +739,9 @@ class htmlform extends abstracts\container {
      *
      * @see     validate()
      **/
-    protected function onValidate() {}
+    protected function onValidate() {
+        return true;
+    }
     // }}}
 }
 
