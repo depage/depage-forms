@@ -296,11 +296,11 @@ class country extends single {
         );
         
         // return a subset
-        if (!empty($iso)){
+        if ($iso !== null){
             if (is_array($iso)) {
                 return array_intersect_key($countries, $iso);
             } else {
-                return $countries[$iso];
+                return isset($countries[$iso]) ? $countries[$iso] : '';
             }
         }
         
@@ -324,8 +324,8 @@ class country extends single {
             $this->defaults['defaultValue'] = $parameters['defaultValue'];
         }
         
-        if (isset($parameters['priority'])) {
-            $this->defaults['priority'] = $parameters['priority'];
+        if (isset($parameters['priorityCountries'])) {
+            $this->defaults['priorityCountries'] = $parameters['priorityCountries'];
         }
         
         $this->list = isset($parameters['countries'])
@@ -339,10 +339,12 @@ class country extends single {
         asort($this->list);
         
         // move priority countries to the top based on options and language
-        if (defined("DEPAGE_LANG") && isset($this->defaults['priority'][DEPAGE_LANG])) {
+        if (defined("DEPAGE_LANG") && isset($parameters['priorityCountries'][DEPAGE_LANG])) {
+            $priorityCountries = $parameters['priorityCountries'][DEPAGE_LANG];
             // make sure all keys are lower case to match countries
-            $this->defaults['priority'][DEPAGE_LANG] = array_change_key_case($this->defaults['priority'][DEPAGE_LANG], CASE_LOWER);
-            foreach($this->defaults['priority'][DEPAGE_LANG] as &$country_code){
+            $priorityCountries = array_change_key_case($priorityCountries, CASE_LOWER);
+            
+            foreach($priorityCountries as &$country_code){
                 if (isset($this->list[$country_code])){
                     $top = array($country_code => $this->list[$country_code]);
                     unset($this->list[$country_code]);
