@@ -159,6 +159,7 @@ class multiple extends abstracts\input {
         $list               = $this->htmlList();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         if ($this->skin === 'select') {
             // render HTML select
@@ -171,6 +172,7 @@ class multiple extends abstracts\input {
                     "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
+                $helpMessage .
             "</p>\n";
         } else {
             // render HTML checkbox
@@ -179,6 +181,7 @@ class multiple extends abstracts\input {
                 "<span class=\"label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
                 $errorMessage .
+                $helpMessage .
             "</p>\n";
         }
     }

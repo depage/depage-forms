@@ -153,6 +153,7 @@ class single extends abstracts\input {
         $list               = $this->htmlList();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         if ($this->skin === "select") {
             // render HTML select
@@ -164,6 +165,7 @@ class single extends abstracts\input {
                     "<select name=\"{$this->name}\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
+                $helpMessage .
             "</p>\n";
         } else {
             // render HTML radio button list
@@ -172,6 +174,7 @@ class single extends abstracts\input {
                 "<span class=\"label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
                 $errorMessage .
+                $helpMessage .
             "</p>\n";
         }
     }
