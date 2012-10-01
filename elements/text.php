@@ -93,6 +93,7 @@ class text extends abstracts\input {
         $list               = $this->htmlList();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
@@ -101,6 +102,7 @@ class text extends abstracts\input {
                 $list .
             "</label>" .
             $errorMessage .
+            $helpMessage .
         "</p>\n";
     }
     // }}}

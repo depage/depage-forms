@@ -56,6 +56,7 @@ class file extends text {
         $list               = $this->htmlList();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
@@ -65,6 +66,7 @@ class file extends text {
                 $list .
             "</label>" .
             $errorMessage .
+            $helpMessage .
         "</p>\n";
     }
     // }}}

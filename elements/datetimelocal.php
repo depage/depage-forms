@@ -29,6 +29,7 @@ class datetimelocal extends text {
         $value              = $this->htmlValue();
         $inputAttributes    = $this->htmlInputAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
@@ -36,6 +37,7 @@ class datetimelocal extends text {
                 "<input name=\"{$this->name}\" type=\"datetime-local\"{$inputAttributes} value=\"{$value}\">" .
             "</label>" .
             $errorMessage .
+            $helpMessage .
         "</p>\n";
     }
 }

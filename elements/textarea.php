@@ -66,6 +66,7 @@ class textarea extends text {
         $cols               = $this->htmlCols();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
@@ -73,6 +74,7 @@ class textarea extends text {
                 "<textarea name=\"{$this->name}\"{$inputAttributes}{$rows}{$cols}>{$value}</textarea>" .
             "</label>" .
             $errorMessage .
+            $helpMessage .
         "</p>\n";
     }
     // }}}

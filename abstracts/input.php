@@ -103,16 +103,18 @@ abstract class input extends element {
     protected function setDefaults() {
         parent::setDefaults();
 
-        $this->defaults['autocapitalize'] = null;
-        $this->defaults['autocomplete']   = null;
-        $this->defaults['autocorrect']    = null;
-        $this->defaults['autofocus']      = false;
-        $this->defaults['disabled']       = false;
-        $this->defaults['errorMessage']   = _('Please enter valid data');
-        $this->defaults['label']          = $this->name;
-        $this->defaults['marker']         = '*';
-        $this->defaults['required']       = false;
-        $this->defaults['title']          = false;
+        $this->defaults['autocapitalize']  = null;
+        $this->defaults['autocomplete']    = null;
+        $this->defaults['autocorrect']     = null;
+        $this->defaults['autofocus']       = false;
+        $this->defaults['disabled']        = false;
+        $this->defaults['errorMessage']    = _('Please enter valid data');
+        $this->defaults['label']           = $this->name;
+        $this->defaults['marker']          = '*';
+        $this->defaults['required']        = false;
+        $this->defaults['title']           = false;
+        $this->defaults['helpMessage']     = '';
+        $this->defaults['helpMessageHtml'] = '';
     }
     // }}}
 
@@ -384,6 +386,26 @@ abstract class input extends element {
         }
 
         return $errorMessage;
+    }
+    // }}}
+    
+    // {{{ htmlHelpMessage()
+    /**
+     * @brief   Returns HTML-rendered helpMessage
+     *
+     * @return  $helpMessage (string) HTML-rendered helpMessage span
+     **/
+    protected function htmlHelpMessage() {
+        $helpMessage = '';
+        if (isset($this->helpMessage) && !empty($this->helpMessage)) {
+            // escaped message
+            $helpMessage = "<span class=\"helpMessage\" style=\"display:none;\">" . $this->htmlEscape($this->helpMessage) . "</span>";
+        }
+        if (isset($this->helpMessageHtml) && !empty($this->helpMessageHtml)) {
+            // html message
+            $helpMessage = "<span class=\"helpMessage\" style=\"display:none;\">" . $this->helpMessageHtml. "</span>";
+        }
+        return $helpMessage;
     }
     // }}}
 }

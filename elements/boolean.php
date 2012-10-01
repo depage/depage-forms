@@ -73,6 +73,7 @@ class boolean extends abstracts\input {
         $marker             = $this->htmlMarker();
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
+        $helpMessage        = $this->htmlHelpMessage();
 
         $selected = ($this->htmlValue() === true) ? " checked=\"yes\"" : '';
 
@@ -82,6 +83,7 @@ class boolean extends abstracts\input {
                 "<span class=\"label\">{$label}{$marker}</span>" .
             "</label>" .
             $errorMessage .
+            $helpMessage . 
         "</p>\n";
     }
     // }}}

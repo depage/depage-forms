@@ -95,6 +95,7 @@ class number extends text {
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $errorMessage       = $this->htmlErrorMessage();
         $list               = $this->htmlList();
+        $helpMessage        = $this->htmlHelpMessage();
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
@@ -103,6 +104,7 @@ class number extends text {
                 $list .
             "</label>" .
             $errorMessage .
+            $helpMessage .
         "</p>\n";
     }
     // }}}
