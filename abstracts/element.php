@@ -163,7 +163,15 @@ abstract class element {
         if (is_callable(array($this->log, 'log'))) {
             $this->log->log($argument, $type);
         } else {
-            error_log($argument);
+            if (gettype($argument) != 'string') {
+                ob_start();
+                print_r($argument);
+                $message = ob_get_contents();
+                ob_end_clean();
+            } else {
+                $message = $argument;
+            }
+            error_log($message);
         }
     }
     // }}}
