@@ -722,6 +722,7 @@ class htmlform extends abstracts\container {
             if ($element instanceof elements\file) {
                 $element->clearUploadedFiles();
             }
+            $element->setValue(null);
         }
 
         unset($_SESSION[$this->sessionSlotName]);
