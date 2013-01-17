@@ -246,12 +246,14 @@ class htmlform extends abstracts\container {
     public function __construct($name, $parameters = array(), $form = null) {
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
+
         parent::__construct($name, $parameters, $this);
 
         $this->currentStepId = (isset($_GET['step'])) ? $_GET['step'] : 0;
 
         // check if there's an open session
         if (!session_id()) {
+            session_set_cookie_params($this->ttl, "/");
             session_start();
         }
         $this->sessionSlotName  = $this->name . '-data';
@@ -289,7 +291,7 @@ class htmlform extends abstracts\container {
         $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
         $this->defaults['cancelURL']    = $_SERVER['REQUEST_URI'];
         $this->defaults['validator']    = null;
-        $this->defaults['ttl']          = null;
+        $this->defaults['ttl']          = 30 * 60; // 30 minutes
         $this->defaults['jsValidation'] = 'blur';
         $this->defaults['jsAutosave']   = 'false';
     }
@@ -722,6 +724,7 @@ class htmlform extends abstracts\container {
             if ($element instanceof elements\file) {
                 $element->clearUploadedFiles();
             }
+            $element->clearValue();
         }
 
         unset($_SESSION[$this->sessionSlotName]);
