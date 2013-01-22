@@ -309,14 +309,14 @@ class htmlform extends abstracts\container {
             $timestamp = time();
 
             if (
-                isset($this->sessionSlot['timestamp'])
-                && ($timestamp - $this->sessionSlot['timestamp'] > $this->ttl)
+                isset($this->sessionSlot['formTimestamp'])
+                && ($timestamp - $this->sessionSlot['formTimestamp'] > $this->ttl)
             ) {
                 $this->clearSession();
                 $this->sessionSlot =& $_SESSION[$this->sessionSlotName];
             }
 
-            $this->sessionSlot['timestamp'] = $timestamp;
+            $this->sessionSlot['formTimestamp'] = $timestamp;
         }
     }
     // }}}
@@ -683,7 +683,8 @@ class htmlform extends abstracts\container {
             return array_diff_key($this->sessionSlot, array(
                 'formIsValid' => '', 
                 'formIsAutosaved' => '', 
-                'formName' => ''
+                'formName' => '',
+                'formTimestamp' => '',
             ));
         } else {
             return null;
