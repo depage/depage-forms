@@ -45,7 +45,12 @@ namespace depage\htmlform\validators;
      * @return              (object) validator object
      **/
     public static function factory($argument, $log = null) {
-        if (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
+        if (!is_string($argument) && is_callable($argument, false)) {
+            $closureValidator = new closure($log);
+            $closureValidator->setFunc($argument);
+
+            return $closureValidator;
+        } else if (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
             $regExValidator = new regEx($log);
             $regExValidator->setRegEx($argument);
 
