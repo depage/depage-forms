@@ -113,6 +113,7 @@ abstract class input extends element {
         $this->defaults['marker']          = '*';
         $this->defaults['required']        = false;
         $this->defaults['title']           = false;
+        $this->defaults['class']           = "";
         $this->defaults['helpMessage']     = '';
         $this->defaults['helpMessageHtml'] = '';
     }
@@ -287,6 +288,9 @@ abstract class input extends element {
         }
         if (isset($this->skin)) {
             $classes .= ' skin-' . $this->htmlEscape($this->skin);
+        }
+        if (isset($this->class)) {
+            $classes .= ' ' . $this->htmlEscape($this->class);
         }
 
         return $classes;
