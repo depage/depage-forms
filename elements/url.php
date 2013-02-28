@@ -48,6 +48,8 @@ class url extends text {
         parent::setDefaults();
 
         $this->defaults['errorMessage'] = _('Please enter a valid URL');
+
+        // @todo add option to test url by domain name (dns) or also with a request (for http/https urls)
     }
     // }}}
 }
