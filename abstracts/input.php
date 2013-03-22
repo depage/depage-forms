@@ -44,6 +44,10 @@ abstract class input extends element {
      **/
     protected $validator;
     /**
+     * @brief class for paragraph
+     **/
+    protected $class;
+    /**
      * @brief HTML classes attribute for rendering the input element.
      **/
     protected $classes;
@@ -113,7 +117,7 @@ abstract class input extends element {
         $this->defaults['marker']          = '*';
         $this->defaults['required']        = false;
         $this->defaults['title']           = false;
-        $this->defaults['class']           = "";
+        $this->defaults['class']           = '';
         $this->defaults['helpMessage']     = '';
         $this->defaults['helpMessageHtml'] = '';
     }
@@ -202,6 +206,17 @@ abstract class input extends element {
         return $this->value;
     }
     // }}}
+    
+    // {{{ clearValue()
+    /**
+     * @brief   resets the value to null
+     *
+     * @return  void
+     **/
+    public function clearValue() {
+        $this->value = null;
+    }
+    // }}}
 
     // {{{ setDefaultValue()
     /**
@@ -277,6 +292,9 @@ abstract class input extends element {
     protected function htmlClasses() {
         $classes = 'input-' . $this->htmlEscape($this->type);
 
+        if ($this->class) {
+            $classes .= ' ' . $this->htmlEscape($this->class);
+        }
         if ($this->required) {
             $classes .= ' required';
         }
