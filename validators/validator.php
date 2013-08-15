@@ -45,7 +45,7 @@ namespace depage\htmlform\validators;
      * @return              (object) validator object
      **/
     public static function factory($argument, $log = null) {
-        if (is_callable($argument)) {
+        if (!is_string($argument) && is_callable($argument, false)) {
             $closureValidator = new closure($log);
             $closureValidator->setFunc($argument);
 
