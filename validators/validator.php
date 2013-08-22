@@ -40,7 +40,7 @@ namespace depage\htmlform\validators;
      * Static validator object factory. Picks validator type depending on
      * $argument.
      *
-     * @param   $argument   (string) validator type or regular expression
+     * @param   $argument   (string) validator type or regular expression or closure
      * @param   $log        (object) error logging object
      * @return              (object) validator object
      **/
