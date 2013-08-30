@@ -289,7 +289,7 @@ abstract class input extends element {
         if (isset($this->skin)) {
             $classes .= ' skin-' . $this->htmlEscape($this->skin);
         }
-        if (isset($this->class)) {
+        if (!empty($this->class)) {
             $classes .= ' ' . $this->htmlEscape($this->class);
         }
 
