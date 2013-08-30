@@ -1,7 +1,7 @@
 <?php
 /**
- * @file    validators/regEx.php
- * @brief   regular expression validator
+ * @file    validators/closure.php
+ * @brief   closure validator
  **/
 namespace depage\htmlform\validators;
 
@@ -18,7 +18,7 @@ class closure extends validator {
 
     // {{{ validate()
     /**
-     * @brief   validates value with regular expression
+     * @brief   validates value with a callable function/closure
      *
      * @param   $value      (string)    value to be validated
      * @param   $parameters (array)     validation parameters
