@@ -118,7 +118,7 @@ class address extends fieldset {
         if(isset($this->defaults['defaultAddress1'])) {
             $this->addText($this->prefix . "line_1", array(
                 'label' => $this->labelAddress1,
-                'defaultValue' => $this->$this->defaults['defaultAddress1'],
+                'defaultValue' => $this->defaults['defaultAddress1'],
                 'required' => $this->required,
             ));
         }
