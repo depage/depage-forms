@@ -117,11 +117,7 @@ abstract class input extends element {
         $this->defaults['marker']          = '*';
         $this->defaults['required']        = false;
         $this->defaults['title']           = false;
-<<<<<<< HEAD
         $this->defaults['class']           = '';
-=======
-        $this->defaults['class']           = "";
->>>>>>> e07a7c49dbd214882f360e7059390cc1efa4ab04
         $this->defaults['helpMessage']     = '';
         $this->defaults['helpMessageHtml'] = '';
     }
