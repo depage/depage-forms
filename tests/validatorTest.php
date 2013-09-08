@@ -103,6 +103,20 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     }
     // }}}
 
+    // {{{ testClosure()
+    /**
+     * Creating a custom closure validator
+     **/
+    public function testClosure() {
+        $testClosure = function($value, $parameters) {
+            return $value == "is-true";
+        };
+        $customValidator = validator::factory($testClosure);
+        $this->assertFalse($customValidator->validate('1234'));
+        $this->assertTrue($customValidator->validate('is-true'));
+    }
+    // }}}
+
     // {{{ testGetPatternAttribute()
     /**
      * Getting HTML5 pattern attribute for various validator types

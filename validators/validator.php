@@ -40,12 +40,17 @@ namespace depage\htmlform\validators;
      * Static validator object factory. Picks validator type depending on
      * $argument.
      *
-     * @param   $argument   (string) validator type or regular expression
+     * @param   $argument   (string) validator type or regular expression or closure
      * @param   $log        (object) error logging object
      * @return              (object) validator object
      **/
     public static function factory($argument, $log = null) {
-        if (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
+        if (!is_string($argument) && is_callable($argument, false)) {
+            $closureValidator = new closure($log);
+            $closureValidator->setFunc($argument);
+
+            return $closureValidator;
+        } else if (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
             $regExValidator = new regEx($log);
             $regExValidator->setRegEx($argument);
 

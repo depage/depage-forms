@@ -46,7 +46,7 @@ class country extends single {
     protected $list = array();
     // }}}
     
-    // {{{ variables
+    // {{{ getCountries
     /**
      * @brief Gets the Default Countries list
      * 

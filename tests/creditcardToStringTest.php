@@ -18,7 +18,7 @@ class creditcardToStringTest extends PHPUnit_Framework_TestCase {
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName">' .
             '<legend>creditcardName</legend>' .
-            '<p id="formName-creditcardName_card_type" class="input-single" data-errorMessage="Please enter valid data">' .
+            '<p id="formName-creditcardName_card_type" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="label"></span>' .
                     '<select name="creditcardName_card_type">' .
@@ -70,7 +70,7 @@ class creditcardToStringTest extends PHPUnit_Framework_TestCase {
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName">' .
             '<legend>creditcardName</legend>' .
-            '<p id="formName-creditcardName_card_type" class="input-single" data-errorMessage="Please enter valid data">' .
+            '<p id="formName-creditcardName_card_type" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="label"></span>' .
                     '<select name="creditcardName_card_type">' .
