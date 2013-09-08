@@ -72,6 +72,7 @@ abstract class element {
      **/
     protected function setDefaults() {
         $this->defaults['log'] = null;
+        $this->defaults['class'] = null;
     }
     // }}}
 

@@ -117,7 +117,10 @@ class fieldset extends abstracts\container {
             $renderedElements .= $element;
         }
 
-        return "<fieldset id=\"{$formName}-{$this->name}\" name=\"{$this->name}\">" .
+        $htmlattributes="";
+        if (isset($this->class)) $htmlattributes="class=\"".$this->class."\"";
+
+        return "<fieldset id=\"{$formName}-{$this->name}\" name=\"{$this->name}\" {$htmlattributes}>" .
             "<legend>{$label}</legend>{$renderedElements}" .
         "</fieldset>\n";
     }
