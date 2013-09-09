@@ -101,6 +101,20 @@ abstract class element {
     }
     // }}}
 
+    // {{{ clearValue()
+    /**
+     * @brief   resets the value to null 
+     * 
+     * This needs to be refined in the subclasses which really provide an input.
+     * It is defined on this abstract class since clearSession calls it for every element in the form 
+     * even if there is no value.
+     *
+     * @return  void
+     **/
+    public function clearValue() {
+    }
+    // }}}
+
     // {{{ getName()
     /**
      * @brief   Returns the element name.
