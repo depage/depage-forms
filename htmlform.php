@@ -720,7 +720,6 @@ class htmlform extends abstracts\container {
      * @return  void
      **/
     public function clearSession() {
-        // clean uploaded files
         foreach($this->getElements(true) as $element) {
             $element->clearValue();
         }

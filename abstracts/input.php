@@ -171,8 +171,8 @@ abstract class input extends element {
     public function isEmpty() {
         return (
             empty($this->value)
-            && (!is_array($this->value) && (string) $this->value !== '0') 
-            && ($this->value !== false)
+            && $this->value !== '0'
+            && $this->value !== false
         );
     }
     // }}}
