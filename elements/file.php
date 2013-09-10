@@ -150,7 +150,21 @@ class file extends text {
         return $this->value;
     }
     // }}}
-    // {{{ cleanUploadedFiles()
+    
+    // {{{ clearValue()
+    /**
+     * @brief   resets the value to en empty array and cleans uploaded files
+     *
+     * @return  void
+     **/
+    public function clearValue() {
+        $this->clearUploadedFiles();
+
+        $this->value = array();
+    }
+    // }}}
+    
+    // {{{ clearUploadedFiles()
     /**
      * @brief cleans uploaded files when session is cleared
      **/
