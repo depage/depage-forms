@@ -292,9 +292,6 @@ abstract class input extends element {
     protected function htmlClasses() {
         $classes = 'input-' . $this->htmlEscape($this->type);
 
-        if ($this->class) {
-            $classes .= ' ' . $this->htmlEscape($this->class);
-        }
         if ($this->required) {
             $classes .= ' required';
         }
