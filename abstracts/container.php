@@ -264,6 +264,19 @@ abstract class container extends element {
         return false;
     }
     // }}}
+    
+    // {{{ clearValue()
+    /**
+     * @brief   Deletes values of all child elements
+     *
+     * @return  void
+     **/
+    public function clearValue() {
+        foreach($this->getElements(true) as $element) {
+            $element->clearValue();
+        }
+    }
+    // }}}
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

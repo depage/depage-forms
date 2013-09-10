@@ -38,4 +38,20 @@ class fieldsetTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($text, $elements[0]);
     }
     // }}}
+
+    // {{{ testClearValue()
+    /**
+     * Tests clearValue method
+     **/
+    public function testClearValue() {
+        $text       = $this->fieldset->addText('textName');
+
+        $text->setValue("test");
+        $this->assertEquals($text->getValue(), "test");
+
+        $this->fieldset->clearValue();
+        $this->assertNull($text->getValue());
+
+    }
+    // }}}
 }

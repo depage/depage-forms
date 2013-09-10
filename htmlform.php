@@ -720,9 +720,7 @@ class htmlform extends abstracts\container {
      * @return  void
      **/
     public function clearSession() {
-        foreach($this->getElements(true) as $element) {
-            $element->clearValue();
-        }
+        $this->clearValue();
 
         unset($_SESSION[$this->sessionSlotName]);
         unset($this->sessionSlot);
