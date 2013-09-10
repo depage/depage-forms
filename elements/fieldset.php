@@ -68,7 +68,9 @@ class fieldset extends abstracts\container {
     protected function setDefaults() {
         parent::setDefaults();
 
-        $this->defaults['label'] = $this->name;
+        $this->defaults['label']    = $this->name;
+        $this->defaults['disabled'] = false;
+        $this->defaults['required'] = false;
     }
     // }}}
 
@@ -100,6 +102,29 @@ class fieldset extends abstracts\container {
     }
     // }}}
 
+    // {{{ htmlClasses()
+    /**
+     * @brief   Returns string of the elements' HTML-classes, separated by spaces.
+     *
+     * @return  $classes (string) HTML-classes
+     **/
+    protected function htmlClasses() {
+        $classes = '';
+
+        if ($this->required) {
+            $classes .= ' required';
+        }
+        if ($this->disabled) {
+            $classes .= ' disabled';
+        }
+        if (!empty($this->class)) {
+            $classes .= ' ' . $this->htmlEscape($this->class);
+        }
+
+        return trim($classes);
+    }
+    // }}}
+   
     // {{{ __toString()
     /**
      * @brief   Renders the fieldset to HTML code.
@@ -112,15 +137,20 @@ class fieldset extends abstracts\container {
         $renderedElements   = '';
         $formName           = $this->form->getName();
         $label              = $this->htmlLabel();
+        $classes            = $this->htmlClasses();
+
+        $htmlAttributes     = "id=\"{$formName}-{$this->name}\"";
+        $htmlAttributes     .= " name=\"{$this->name}\"";
+
+        if (!empty($classes)) {
+            $htmlAttributes     .= " class=\"" . $classes . "\"";
+        }
 
         foreach($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
 
-        $htmlattributes="";
-        if (isset($this->class)) $htmlattributes="class=\"".$this->class."\"";
-
-        return "<fieldset id=\"{$formName}-{$this->name}\" name=\"{$this->name}\" {$htmlattributes}>" .
+        return "<fieldset {$htmlAttributes}>" .
             "<legend>{$label}</legend>{$renderedElements}" .
         "</fieldset>\n";
     }

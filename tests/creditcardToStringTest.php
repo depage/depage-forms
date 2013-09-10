@@ -68,7 +68,7 @@ class creditcardToStringTest extends PHPUnit_Framework_TestCase {
         $creditcard = new creditcard('creditcardName', array('required' => true), $form);
         $creditcard->addChildElements();
 
-        $expected = '<fieldset id="formName-creditcardName" name="creditcardName">' .
+        $expected = '<fieldset id="formName-creditcardName" name="creditcardName" class="required">' .
             '<legend>creditcardName</legend>' .
             '<p id="formName-creditcardName_card_type" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
                 '<label>' .
