@@ -202,7 +202,7 @@ abstract class element {
      **/
     protected function htmlEscape($options = array()) {
         if (is_string($options)) {
-            $htmlOptions = htmlspecialchars($options);
+            $htmlOptions = htmlspecialchars($options, ENT_QUOTES);
         } elseif (is_array($options)) {
             $htmlOptions = array();
 

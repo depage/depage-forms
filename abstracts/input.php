@@ -384,7 +384,7 @@ abstract class input extends element {
      * @return  (mixed) element value
      **/
     protected function htmlValue() {
-        return ($this->value === null) ? $this->htmlEscape($this->defaultValue) : $this->value;
+        return ($this->value === null) ? $this->htmlEscape($this->defaultValue) : $this->htmlEscape($this->value);
     }
     // }}}
 
