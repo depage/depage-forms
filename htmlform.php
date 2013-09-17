@@ -731,6 +731,28 @@ class htmlform extends abstracts\container {
     }
     // }}}
 
+        // {{{ getValuesWithLabel()
+    /**
+     * @brief   Gets form-data from current PHP session but also contain elemnt labels.
+     *
+     * @return  (array) form-data with labels
+     **/
+    public function getValuesWithLabel() {
+        //get values first
+        $values = $this->getValues();
+        $values_with_label =array();
+        if (isset($values)) {
+            foreach ($values as $element => $value) {
+                $elem = $this->getElement($element);
+                if ($elem) $values_with_label[$element] = array("value"=>$value, "label"=>$elem->getLabel()); 
+            }
+            return $values_with_label;
+        } else {
+            return null;
+        }
+    }
+    // }}}
+
     // {{{ checkElementName()
     /**
      * @brief   Checks for duplicate subelement names.
