@@ -371,7 +371,8 @@ class htmlform extends abstracts\container {
                 $this->sessionSlot[$name] = $this->getElement($name)->handleUploadedFiles($oldValue);
             } else {
                 // save value
-                $value = isset($_POST[$name]) ? $_POST[$name] : null;
+                $value = isset($_POST[$name]) ? htmlentities(strip_tags($_POST[$name]), ENT_QUOTES, "UTF-8") : null;
+
                 $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
             }
         }
