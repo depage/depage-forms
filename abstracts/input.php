@@ -206,6 +206,17 @@ abstract class input extends element {
         return $this->value;
     }
     // }}}
+
+    // {{{ getLabel()
+    /**
+     * @brief   Returns the current input elements' label.
+     *
+     * @return  $this->label HTML label
+     **/
+    public function getLabel() {
+        return $this->label;
+    }
+    // }}}
     
     // {{{ clearValue()
     /**

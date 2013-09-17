@@ -517,7 +517,7 @@ class htmlform extends abstracts\container {
      *
      * @see     validate()
      **/
-    public function process() {
+   public function process() {
         $this->setCurrentStep();
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
@@ -528,10 +528,45 @@ class htmlform extends abstracts\container {
                 $this->redirect($this->successURL);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
-                $urlStepParameter = ($firstInvalidStep == 0) ? '' : '?step=' . $firstInvalidStep;
+                $urlStepParameter = ($firstInvalidStep == 0) ? $this->buildUrlQuery('') : $this->buildUrlQuery('step=' . $firstInvalidStep);
                 $this->redirect($this->url['path'] . $urlStepParameter);
             }
         }
+    }
+    // }}}
+
+    // {{{ buildUrlQuery()
+    /**
+     * @brief   Adding step parameter to already existing query
+     *
+     * @return  new query
+     **/
+    public function buildUrlQuery($step_query = '') {
+        //if there is query
+        $query = ''; 
+        if (isset($this->url['query']) && $this->url['query']!="")  {
+            //decoding query string
+            $query = html_entity_decode($this->url['query']);
+            
+            //parsing the query into an array 
+            parse_str($query, $queryParts);
+   				
+            //remove any step argument
+            if (isset($queryParts["step"])) unset($queryParts["step"]);
+
+            //building again the query
+            $query = http_build_query($queryParts);
+            
+            //adding question mark
+            $query = "?".$query;
+            
+            //adding the extra query
+            $query .= isset($step_query)?'&'.$step_query:'';
+        } else {
+            $query = isset($step_query)?'?'.$step_query:'';
+        }
+		
+        return $query;
     }
     // }}}
 
@@ -688,6 +723,28 @@ class htmlform extends abstracts\container {
                 'formName' => '',
                 'formTimestamp' => '',
             ));
+        } else {
+            return null;
+        }
+    }
+    // }}}
+
+        // {{{ getValuesWithLabel()
+    /**
+     * @brief   Gets form-data from current PHP session but also contain elemnt labels.
+     *
+     * @return  (array) form-data with labels
+     **/
+    public function getValuesWithLabel() {
+        //get values first
+        $values = $this->getValues();
+        $values_with_label =array();
+        if (isset($values)) {
+            foreach ($values as $element => $value) {
+                $elem = $this->getElement($element);
+                if ($elem) $values_with_label[$element] = array("value"=>$value, "label"=>$elem->getLabel()); 
+            }
+            return $values_with_label;
         } else {
             return null;
         }
