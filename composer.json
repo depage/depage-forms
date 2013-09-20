@@ -1,7 +1,7 @@
 {
     "name": "depage/htmlform",
     "description": "depage-forms is PHP library for HTML form generation with focus on usability. By abstracting HTML, browser flaws (duplicate form submissions) and form validation, it provides a comfortable way to obtain reliable and validated data from users.",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "type": "library",
     "keywords": [
         "html",
@@ -22,7 +22,7 @@
         "issues": "https://github.com/depage/depage-forms/issues"
 
     },
-    "time": "2013-09-11",
+    "time": "2013-09-20",
     "license": [
         "MIT",
         "GPL-2.0"
