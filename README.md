@@ -25,12 +25,15 @@ Features
 - easy language localisation
 - session timeout
 - simple creditcard validation (by values)
+- unit tested
+
+[![Build Status](https://travis-ci.org/depage/depage-forms.png?branch=master)](https://travis-ci.org/depage/depage-forms)
 
 Prerequisites
 -------------
 
 - PHP 5.3
-- jQuery 1.3.2 (optional, for client side validation and richtext field)
+- jQuery >=1.4.3 (optional, for client side validation and richtext field)
 
 Download
 --------------------
@@ -57,3 +60,4 @@ License (dual)
 
 - GPL2: <http://www.gnu.org/licenses/gpl-2.0.html>
 - MIT: <http://www.opensource.org/licenses/mit-license.php>
+
