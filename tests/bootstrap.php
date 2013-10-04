@@ -3,7 +3,7 @@ $_SERVER['REQUEST_URI'] = 'http://www.depagecms.net/';
 session_start();
 
 // using the autoloader from the main class
-require_once('../htmlform.php');
+require_once(__DIR__ . '/../htmlform.php');
 
 // {{{ logTestClass
 /**
