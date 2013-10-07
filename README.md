@@ -7,6 +7,10 @@ but it also works as a standalone library. By abstracting HTML, browser flaws
 (duplicate form submissions) and form validation, it provides a comfortable 
 way to obtain reliable and validated data from users.
 
+[![Latest Stable Version](https://poser.pugx.org/depage/htmlform/v/stable.png)](https://packagist.org/packages/depage/htmlform)
+[![Build Status](https://travis-ci.org/depage/depage-forms.png?branch=master)](https://travis-ci.org/depage/depage-forms)
+
+
 Features
 --------
 
@@ -26,8 +30,6 @@ Features
 - session timeout
 - simple creditcard validation (by values)
 - unit tested
-
-[![Build Status](https://travis-ci.org/depage/depage-forms.png?branch=master)](https://travis-ci.org/depage/depage-forms)
 
 Prerequisites
 -------------
