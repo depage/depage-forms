@@ -68,7 +68,7 @@ class htmldom extends \DOMDocument implements \Serializable
     /**
      * @brief   unserializes htmldom-objects
      *
-     * @param   $serialized (string)
+     * @param   string  $serialized php-serialized xml string
      *
      * @return void
      **/
