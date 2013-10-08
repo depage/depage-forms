@@ -42,6 +42,9 @@ Introduction
 
 - You can get a basic introduction at:
   [depage-forms: html5 forms made easy (part I)](http://www.depage.net/en/blog/2011/07/depage-forms-html5-form-in-php-made-easy-part-1.html)
+- How to do Form Validation
+  [depage-forms: validation of html5 forms (part II)](http://www.depage.net/en/blog/2013/10/depage-forms-html5-form-validation-part-2.html)
+
 
 Download
 --------

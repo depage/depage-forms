@@ -10,8 +10,8 @@ require_once '../../htmlform.php';
 $form = new depage\htmlform\htmlform('closureValidator');
 
 /*
- * adds a closure validator:
- * attach a function to the input.
+ * Adds a closure validator:
+ * Attach a function that validates the input.
  * In this case you must enter "2" oder a string
  * containing "yes" to pass validation.
  */
