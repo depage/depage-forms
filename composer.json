@@ -12,6 +12,9 @@
     "require": {
         "php": " >= 5.3"
     },
+    "require-dev": {
+        "phpunit": "*",
+    },
     "autoload": {
         "psr-0": { "depage\\htmlform\\": "../../" }
     },
