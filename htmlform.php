@@ -25,8 +25,6 @@
  * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.
  *
- * @endsection
- *
  * @subpage developer
  *
  * @htmlinclude main-extended.html

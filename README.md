@@ -37,15 +37,31 @@ Prerequisites
 - PHP 5.3
 - jQuery >=1.4.3 (optional, for client side validation and richtext field)
 
-Download
---------------------
-- <http://www.depage.net/downloads/depage-forms-latest.zip>
-
 Introduction
---------------------
+------------
 
 - You can get a basic introduction at:
   [depage-forms: html5 forms made easy (part I)](http://www.depage.net/en/blog/2011/07/depage-forms-html5-form-in-php-made-easy-part-1.html)
+
+Download
+--------
+- <http://www.depage.net/downloads/depage-forms-latest.zip>
+
+Install Using Composer
+----------------------
+Get composer at <http://getcomposer.org> and then just add this to your composer.json.
+
+    {
+        "require": {
+            "depage/htmlform": "*"
+        }
+    }
+
+Now run
+
+    composer install
+
+to install the current version of depage-htmlform into your vendor dir.
 
 For more information
 --------------------
