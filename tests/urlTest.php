@@ -5,9 +5,11 @@ use depage\htmlform\elements\url;
 /**
  * General tests for the multiple input element.
  **/
-class urlTest extends PHPUnit_Framework_TestCase {
+class urlTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm;
         $this->url  = new url('urlName', array(), $this->form);
     }
@@ -17,7 +19,8 @@ class urlTest extends PHPUnit_Framework_TestCase {
     /**
      * Constructor test, getName()
      **/
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $this->assertEquals('urlName', $this->url->getName());
     }
     // }}}
@@ -26,7 +29,8 @@ class urlTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests setValue method with various values. (typecasting)
      **/
-    public function testSetValue() {
+    public function testSetValue()
+    {
         $this->url->setValue('valueString');
         $this->assertEquals('valueString', $this->url->getValue());
 
@@ -40,7 +44,8 @@ class urlTest extends PHPUnit_Framework_TestCase {
     /**
      * Not required, empty -> valid
      **/
-    public function testNotRequiredEmpty() {
+    public function testNotRequiredEmpty()
+    {
         $this->url->setValue('');
         $this->assertTrue($this->url->validate());
     }
@@ -50,7 +55,8 @@ class urlTest extends PHPUnit_Framework_TestCase {
     /**
      * Not required, not empty, valid value -> valid
      **/
-    public function testValidNotRequiredNotEmpty() {
+    public function testValidNotRequiredNotEmpty()
+    {
         $this->url->setValue('http://www.depage.com');
         $this->assertTrue($this->url->validate());
     }
@@ -60,7 +66,8 @@ class urlTest extends PHPUnit_Framework_TestCase {
     /**
      * Invalid value, not required -> invald
      **/
-    public function testInvalidNotRequired() {
+    public function testInvalidNotRequired()
+    {
         $this->url->setValue('valueString');
         $this->assertFalse($this->url->validate());
     }
@@ -70,7 +77,8 @@ class urlTest extends PHPUnit_Framework_TestCase {
     /**
      * Required, empty -> invalid
      **/
-    public function testRequiredEmpty() {
+    public function testRequiredEmpty()
+    {
         $this->url->setRequired();
         $this->url->setValue('');
         $this->assertFalse($this->url->validate());

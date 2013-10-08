@@ -24,14 +24,16 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class placeholderMultiple extends placeholder {
+class placeholdermultiple extends placeholder
+{
     // {{{ typeCastValue()
     /**
      * @brief   Casts to array.
      *
-     * @return  array empty array
+     * @return array empty array
      **/
-    public function typeCastValue() {
+    public function typeCastValue()
+    {
         return array();
     }
     // }}}

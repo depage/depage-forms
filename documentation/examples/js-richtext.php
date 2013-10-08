@@ -3,7 +3,7 @@
 /*
  * Load the library...
  */
-require_once('../../htmlform.php');
+require_once '../../htmlform.php';
 
 /*
  * Create the example form 'jsRichtext'

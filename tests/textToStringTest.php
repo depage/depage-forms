@@ -5,9 +5,11 @@ use depage\htmlform\elements\text;
 /**
  * Tests for multiple input element rendering.
  **/
-class textToStringTest extends PHPUnit_Framework_TestCase {
+class textToStringTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm;
         $this->text = new text('textName', array(), $this->form);
     }
@@ -17,7 +19,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Element with default setup and checkbox skin.
      **/
-    public function testSimple() {
+    public function testSimple()
+    {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
@@ -33,7 +36,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Element with default setup and select skin.
      **/
-    public function testValue() {
+    public function testValue()
+    {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
@@ -50,7 +54,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element with 'required' attribute set.
      **/
-    public function testRequired() {
+    public function testRequired()
+    {
         $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName <em>*</em></span>' .
@@ -62,12 +67,13 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->text->__toString());
     }
     // }}}
-    
+
     // {{{ testAttributes()
     /**
      * Rendered element with 'auto*' attributes set.
      **/
-    public function testAttributes() {
+    public function testAttributes()
+    {
         $autoAttributes = array(
             "autocapitalize",
             "autocomplete",
@@ -83,9 +89,9 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
 
                 if (is_null($status)) {
                     $attribute = "";
-                } else if (!$status) {
+                } elseif (!$status) {
                     $attribute = " $attr=\"off\"";
-                } else if ($status) {
+                } elseif ($status) {
                     $attribute = " $attr=\"on\"";
                 }
                 $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
@@ -106,7 +112,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element with option list
      **/
-    public function testList() {
+    public function testList()
+    {
         $expected ='<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
@@ -132,7 +139,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
      * Rendered element with option list. List Parameters are parsed as
      * associative array.
      **/
-    public function testAssociativeList() {
+    public function testAssociativeList()
+    {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
@@ -161,7 +169,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element; tests html escaping of attributes that can be set by instantiation parameters.
      **/
-    public function testHtmlEscaping() {
+    public function testHtmlEscaping()
+    {
         $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
@@ -186,7 +195,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element; tests html escaping of option list.
      **/
-    public function testHtmlEscapedList() {
+    public function testHtmlEscapedList()
+    {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .
@@ -211,7 +221,8 @@ class textToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element; tests html escaping of associative option list.
      **/
-     public function testEscapedAssociativeList() {
+     public function testEscapedAssociativeList()
+     {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">textName</span>' .

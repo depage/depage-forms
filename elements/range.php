@@ -37,7 +37,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class range extends number {
+class range extends number
+{
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

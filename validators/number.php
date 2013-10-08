@@ -9,16 +9,18 @@ namespace depage\htmlform\validators;
 /**
  * @brief default validator for number input elements
  **/
-class number extends validator {
+class number extends validator
+{
     // {{{ validate()
     /**
      * @brief   number validation
      *
-     * @param   int     $value      value to be validated
-     * @param   array   $parameters validation parameters
-     * @return  bool    validation result
+     * @param  int   $value      value to be validated
+     * @param  array $parameters validation parameters
+     * @return bool  validation result
      **/
-    public function validate($value, $parameters = array()) {
+    public function validate($value, $parameters = array())
+    {
         $min = isset($parameters['min']) ? $parameters['min'] : null;
         $max = isset($parameters['max']) ? $parameters['max'] : null;
 

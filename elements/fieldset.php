@@ -47,7 +47,8 @@ use depage\htmlform\abstracts;
  * @endcode
  **/
 
-class fieldset extends abstracts\container {
+class fieldset extends abstracts\container
+{
     // {{{ variables
     /**
      * @brief parent HTML form.
@@ -63,9 +64,10 @@ class fieldset extends abstracts\container {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['label']    = $this->name;
@@ -81,15 +83,16 @@ class fieldset extends abstracts\container {
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements
      *
-     * @param   string  $type       elememt type
-     * @param   string  $name       element name
-     * @param   array   $parameters element attributes: HTML attributes, validation parameters etc.
-     * @return  object  $newElement new element object
+     * @param  string $type       elememt type
+     * @param  string $name       element name
+     * @param  array  $parameters element attributes: HTML attributes, validation parameters etc.
+     * @return object $newElement new element object
      *
      * @see     __call()
      * @see     addChildElements()
      **/
-     public function addElement($type, $name, $parameters) {
+     public function addElement($type, $name, $parameters)
+     {
         $this->form->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters);
@@ -106,9 +109,10 @@ class fieldset extends abstracts\container {
     /**
      * @brief   Returns string of the elements' HTML-classes, separated by spaces.
      *
-     * @return  string  $classes HTML-classes
+     * @return string $classes HTML-classes
      **/
-    protected function htmlClasses() {
+    protected function htmlClasses()
+    {
         $classes = '';
 
         if ($this->required) {
@@ -124,16 +128,17 @@ class fieldset extends abstracts\container {
         return trim($classes);
     }
     // }}}
-   
+
     // {{{ __toString()
     /**
      * @brief   Renders the fieldset to HTML code.
      *
      * If the fieldset contains subelements it calls their rendering methods.
      *
-     * @return  string HTML-rendered fieldset
+     * @return string HTML-rendered fieldset
      **/
-     public function __toString() {
+     public function __toString()
+     {
         $renderedElements   = '';
         $formName           = $this->form->getName();
         $label              = $this->htmlLabel();
@@ -146,7 +151,7 @@ class fieldset extends abstracts\container {
             $htmlAttributes     .= " class=\"" . $classes . "\"";
         }
 
-        foreach($this->elementsAndHtml as $element) {
+        foreach ($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
 

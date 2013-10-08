@@ -6,9 +6,11 @@ use depage\htmlform\elements\step;
 /**
  * Tests for step container element rendering.
  **/
-class stepToStringTest extends PHPUnit_Framework_TestCase {
+class stepToStringTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm;
         $this->step = new step('stepName', array(), $this->form);
     }
@@ -18,7 +20,8 @@ class stepToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Element with default setup (empty)
      **/
-    public function testSimple() {
+    public function testSimple()
+    {
         $expected = '';
         $this->assertEquals($expected, $this->step->__toString());
     }
@@ -28,7 +31,8 @@ class stepToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * With fieldset subelement.
      **/
-    public function testAddFieldset() {
+    public function testAddFieldset()
+    {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
         '</fieldset>' . "\n";
@@ -42,7 +46,8 @@ class stepToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * With text subelement
      **/
-    public function testAddText() {
+    public function testAddText()
+    {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="label">textName</span>' .

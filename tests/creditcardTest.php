@@ -6,9 +6,11 @@ use depage\htmlform\elements\creditcard;
 /**
  * General tests for the creditcard element.
  **/
-class creditcardTest extends PHPUnit_Framework_TestCase {
+class creditcardTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm;
         $this->creditcard = new creditcard('creditcardName', array(), $this->form);
         $this->creditcard->addChildElements();
@@ -19,7 +21,8 @@ class creditcardTest extends PHPUnit_Framework_TestCase {
     /**
      * Constructor test, getName()
      **/
-    public function testGetName() {
+    public function testGetName()
+    {
         $this->assertEquals('creditcardName', $this->creditcard->getName());
     }
     // }}}
@@ -28,7 +31,8 @@ class creditcardTest extends PHPUnit_Framework_TestCase {
     /**
      * Creditcard is invalid in default status
      **/
-    public function testValidateInvalid() {
+    public function testValidateInvalid()
+    {
         $this->assertFalse($this->creditcard->validate());
     }
     // }}}
@@ -37,7 +41,8 @@ class creditcardTest extends PHPUnit_Framework_TestCase {
     /**
      * Valid subelements -> valid creditcard
      **/
-    public function testValidateValid() {
+    public function testValidateValid()
+    {
         $form       = new htmlform('formName');
         $creditcard = $form->addCreditcard('creditcardName');
 

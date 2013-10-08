@@ -12,5 +12,6 @@ namespace depage\htmlform\exceptions;
 /**
  * @brief parent for element specific exceptions
  **/
-class elementException extends \exception {
+class elementException extends \exception
+{
 }

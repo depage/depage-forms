@@ -6,9 +6,11 @@ use depage\htmlform\elements\fieldset;
 /**
  * Tests for fieldset container element rendering.
  **/
-class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
+class fieldsetToStringTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm('formName');
         $this->fieldset = new fieldset('fieldsetName', array(), $this->form);
     }
@@ -18,7 +20,8 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Element with default setup
      **/
-    public function testSimple() {
+    public function testSimple()
+    {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
                         '<legend>fieldsetName</legend>' .
                     '</fieldset>' . "\n";
@@ -30,7 +33,8 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * With fieldset subelement.
      **/
-    public function testAddFieldset() {
+    public function testAddFieldset()
+    {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
             '<fieldset id="formName-secondFieldsetName" name="secondFieldsetName">' .
@@ -47,7 +51,8 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * With text subelement
      **/
-    public function testAddText() {
+    public function testAddText()
+    {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend>fieldsetName</legend>' .
             '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .

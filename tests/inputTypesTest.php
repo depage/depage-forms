@@ -5,15 +5,18 @@ use depage\htmlform\htmlform;
 /**
  * Tests availability of input element types.
  **/
-class inputTypesTest extends PHPUnit_Framework_TestCase {
+class inputTypesTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->form = new htmlform('formNameString');
     }
     // }}}
 
     // {{{ testAddHidden()
-    public function testAddHidden() {
+    public function testAddHidden()
+    {
         $this->form->addHidden('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\hidden', $element);
@@ -21,7 +24,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddText()
-    public function testAddText() {
+    public function testAddText()
+    {
         $this->form->addText('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\text', $element);
@@ -29,7 +33,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddTextArea()
-    public function testAddTextArea() {
+    public function testAddTextArea()
+    {
         $this->form->addTextArea('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\textarea', $element);
@@ -37,7 +42,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddSearch()
-    public function testAddSearch() {
+    public function testAddSearch()
+    {
         $this->form->addSearch('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\search', $element);
@@ -45,7 +51,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddUrl()
-    public function testAddUrl() {
+    public function testAddUrl()
+    {
         $this->form->addUrl('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\url', $element);
@@ -53,7 +60,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddTel()
-    public function testAddTel() {
+    public function testAddTel()
+    {
         $this->form->addTel('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\tel', $element);
@@ -61,7 +69,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddPassword()
-    public function testAddPassword() {
+    public function testAddPassword()
+    {
         $this->form->addPassword('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\password', $element);
@@ -69,7 +78,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddDateTime()
-    public function testAddDateTime() {
+    public function testAddDateTime()
+    {
         $this->form->addDateTime('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\datetime', $element);
@@ -77,7 +87,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddDate()
-    public function testAddDate() {
+    public function testAddDate()
+    {
         $this->form->addDate('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\date', $element);
@@ -85,7 +96,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddMonth()
-    public function testAddMonth() {
+    public function testAddMonth()
+    {
         $this->form->addMonth('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\month', $element);
@@ -93,7 +105,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddWeek()
-    public function testAddWeek() {
+    public function testAddWeek()
+    {
         $this->form->addWeek('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\week', $element);
@@ -101,7 +114,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddTime()
-    public function testAddTime() {
+    public function testAddTime()
+    {
         $this->form->addTime('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\time', $element);
@@ -109,7 +123,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddDateTimeLocal()
-    public function testAddDateTimeLocal() {
+    public function testAddDateTimeLocal()
+    {
         $this->form->addDateTimeLocal('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\datetimelocal', $element);
@@ -117,7 +132,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddNumber()
-    public function testAddNumber() {
+    public function testAddNumber()
+    {
         $this->form->addNumber('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\number', $element);
@@ -125,7 +141,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddRange()
-    public function testAddRange() {
+    public function testAddRange()
+    {
         $this->form->addRange('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\range', $element);
@@ -133,7 +150,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddColor()
-    public function testAddColor() {
+    public function testAddColor()
+    {
         $this->form->addColor('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\color', $element);
@@ -141,7 +159,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddBoolean()
-    public function testAddBoolean() {
+    public function testAddBoolean()
+    {
         $this->form->addBoolean('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\boolean', $element);
@@ -149,7 +168,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddSingle()
-    public function testAddSingle() {
+    public function testAddSingle()
+    {
         $this->form->addSingle('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\single', $element);
@@ -157,7 +177,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddMultiple()
-    public function testAddMultiple() {
+    public function testAddMultiple()
+    {
         $this->form->addMultiple('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\multiple', $element);
@@ -165,7 +186,8 @@ class inputTypesTest extends PHPUnit_Framework_TestCase {
     // }}}
 
     // {{{ testAddFile()
-    public function testAddFile() {
+    public function testAddFile()
+    {
         $this->form->addFile('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\depage\\htmlform\\elements\\file', $element);

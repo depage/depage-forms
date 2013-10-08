@@ -16,11 +16,11 @@ namespace depage\htmlform\elements;
  *
  *     - a state
  *     - a country select
- *     
+ *
  * @section usage
  *
  * @code
- * <?php 
+ * <?php
  *     $form = new depage\htmlform\htmlform('myform');
  *
  *     // add a creditcard fieldset
@@ -30,59 +30,61 @@ namespace depage\htmlform\elements;
  *
  *     // process form
  *     $form->process();
- *     
+ *
  *     // Display the form.
  *     echo ($form);
  * ?>
  * @endcode
  **/
-class address extends fieldset {
+class address extends fieldset
+{
     // {{{ __construct()
     /**
      * @brief   multiple class constructor
      *
-     * @param   string  $name       element name
-     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
-     * @param   object  $form       parent form object
-     * @return  void
+     * @param  string $name       element name
+     * @param  array  $parameters element parameters, HTML attributes, validator specs etc.
+     * @param  object $form       parent form object
+     * @return void
      **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         parent::__construct($name, $parameters, $form);
-        
+
         if (isset($parameters['defaultAddress1'])) {
             $this->defaults['defaultAddress1'] = $parameters['defaultAddress1'];
         }
-        
+
         if (isset($parameters['defaultAddress2'])) {
             $this->defaults['defaultAddress2'] = $parameters['defaultAddress2'];
         }
-        
+
         if (isset($parameters['defaultCity'])) {
             $this->defaults['defaultCity'] = $parameters['defaultCity'];
         }
-        
+
         if (isset($parameters['defaultState'])) {
             $this->defaults['defaultState'] = $parameters['defaultState'];
         }
-        
+
         if (isset($parameters['defaultCountry'])) {
             $this->defaults['defaultCountry'] = $parameters['defaultCountry'];
         }
-        
+
         if (isset($parameters['defaultZip'])) {
             $this->defaults['defaultZip'] = $parameters['defaultZip'];
         }
-        
+
         $this->defaults['priorityCountries'] = isset($parameters['priorityCountries'])
             ? $parameters['priorityCountries']
             : array();
-        
+
         $this->prefix = isset($parameters['prefix'])
             ? rtrim($parameters['prefix'], '_') . '_'
             : '';
     }
     // }}}
-    
+
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
@@ -93,9 +95,10 @@ class address extends fieldset {
      *
      * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
-        
+
         $this->defaults['required']             = false;
         $this->defaults['labelAddress1']        = _("Address 1");
         $this->defaults['labelAddress2']        = _("Address 2");
@@ -105,33 +108,34 @@ class address extends fieldset {
         $this->defaults['labelCountry']         = _("Country");
     }
     // }}}
-    
+
     // {{{ addChildElements()
     /**
      * @brief   adds address-inputs to fieldset
      *
-     * @return  void
+     * @return void
      **/
-    public function addChildElements() {
+    public function addChildElements()
+    {
         parent::addChildElements();
-        
-        if(isset($this->defaults['defaultAddress1'])) {
+
+        if (isset($this->defaults['defaultAddress1'])) {
             $this->addText($this->prefix . "line_1", array(
                 'label' => $this->labelAddress1,
                 'defaultValue' => $this->defaults['defaultAddress1'],
                 'required' => $this->required,
             ));
         }
-        
-        if(isset($this->defaults['defaultAddress2'])) {
+
+        if (isset($this->defaults['defaultAddress2'])) {
             $this->addText($this->prefix . "line_2", array(
                 'label' => $this->labelAddress2,
                 'defaultValue' => $this->defaults['defaultAddress2'],
                 'required' => $this->required,
             ));
         }
-        
-        if(isset($this->defaults['defaultCountry'])) {
+
+        if (isset($this->defaults['defaultCountry'])) {
             $this->addCountry($this->prefix . "country", array(
                 'label' => $this->labelCountry,
                 'priorityCountries' => $this->defaults['priorityCountries'],
@@ -139,24 +143,24 @@ class address extends fieldset {
                 'required' => $this->required,
             ));
         }
-        
-        if(isset($this->defaults['defaultState'])) {
+
+        if (isset($this->defaults['defaultState'])) {
             $this->addState($this->prefix . "state", array(
                 'label' => $this->labelState,
                 'defaultValue' => $this->defaults['defaultState'],
                 'required' => $this->required,
             ));
         }
-        
-        if(isset($this->defaults['defaultCity'])) {
+
+        if (isset($this->defaults['defaultCity'])) {
             $this->addText($this->prefix . "city", array(
                 'label' => $this->labelCity,
                 'defaultValue' => $this->defaults['defaultCity'],
                 'required' => $this->required,
             ));
         }
-        
-        if(isset($this->defaults['defaultZip'])) {
+
+        if (isset($this->defaults['defaultZip'])) {
             $this->addText($this->prefix . "zip", array(
                 'label' => $this->labelZip,
                 'defaultValue' => $this->defaults['defaultZip'],
@@ -165,15 +169,16 @@ class address extends fieldset {
         }
     }
     // }}}
-    
+
     // {{{ validate()
     /**
      * @brief   Validate the address data
      *
-     * @return  bool validation result
+     * @return bool validation result
      **/
-    public function validate() {
-        if(parent::validate() && isset($this->defaultCountry) && isset($this->defaultState)) {
+    public function validate()
+    {
+        if (parent::validate() && isset($this->defaultCountry) && isset($this->defaultState)) {
             // check selected state matches the country
             $country_states = state::getStates();
             $country = $this->getElement("{$this->name}_country");
@@ -183,9 +188,10 @@ class address extends fieldset {
                 $state->errorMessage = _("State and Country do not match");
                 $state->valid = false;
             }
-            
+
             // TODO validate zip code
         }
+
         return $this->valid;
     }
     // }}}

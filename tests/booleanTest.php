@@ -5,19 +5,22 @@ use depage\htmlform\elements\boolean;
 /**
  * General tests for the boolean input element.
  **/
-class booleanTest extends PHPUnit_Framework_TestCase {
+class booleanTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form     = new nameTestForm();
         $this->boolean  = new boolean('booleanName', array(), $this->form);
     }
-    // }}} 
+    // }}}
 
     // {{{ testConstruct()
     /**
      * Constructor test, getName()
      **/
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $this->assertEquals('booleanName', $this->boolean->getName());
     }
     // }}}
@@ -26,7 +29,8 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests setValue method with various values. (typecasting)
      **/
-    public function testBooleanSetValue() {
+    public function testBooleanSetValue()
+    {
         $this->boolean->setValue(true);
         $this->assertTrue($this->boolean->getValue());
 
@@ -50,7 +54,8 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     /**
      * Should be valid when false but not required.
      **/
-    public function testNotRequiredFalse() {
+    public function testNotRequiredFalse()
+    {
         $this->boolean->setValue(false);
         $this->assertTrue($this->boolean->validate());
     }
@@ -60,7 +65,8 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     /**
      * Element is invalid if false and required.
      **/
-    public function testRequiredFalse() {
+    public function testRequiredFalse()
+    {
         $this->boolean->setRequired();
         $this->boolean->setValue(false);
         $this->assertFalse($this->boolean->validate());
@@ -71,7 +77,8 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     /**
      * Element is valid if true and not required.
      **/
-    public function testNotRequiredTrue() {
+    public function testNotRequiredTrue()
+    {
         $this->boolean->setValue(true);
         $this->assertTrue($this->boolean->validate());
     }
@@ -81,7 +88,8 @@ class booleanTest extends PHPUnit_Framework_TestCase {
     /**
      * Element is valid if true and required.
      **/
-    public function testRequiredTrue() {
+    public function testRequiredTrue()
+    {
         $this->boolean->setValue(true);
         $this->boolean->setRequired();
         $this->assertTrue($this->boolean->validate());

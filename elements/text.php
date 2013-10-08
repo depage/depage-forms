@@ -35,7 +35,8 @@ use depage\htmlform\abstracts;
  * ?>
  * @endcode
  **/
-class text extends abstracts\input {
+class text extends abstracts\input
+{
     // {{{ variables
     /**
      * @brief HTML placeholder attribute
@@ -47,12 +48,13 @@ class text extends abstracts\input {
     /**
      * @brief   text class constructor
      *
-     * @param   string  $name       element name
-     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
-     * @param   object  $form       parent form object
-     * @return  void
+     * @param  string $name       element name
+     * @param  array  $parameters element parameters, HTML attributes, validator specs etc.
+     * @param  object $form       parent form object
+     * @return void
      **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         parent::__construct($name, $parameters, $form);
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : false;
@@ -67,9 +69,10 @@ class text extends abstracts\input {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         // textClass elements have values of type string
@@ -83,9 +86,10 @@ class text extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML rendered element
+     * @return string HTML rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $value              = $this->htmlValue();
         $inputAttributes    = $this->htmlInputAttributes();
         $marker             = $this->htmlMarker();
@@ -111,10 +115,11 @@ class text extends abstracts\input {
     /**
      * @brief   Renders HTML datalist
      *
-     * @param   array   $options    datalist
-     * @return  string  $htmlList   rendered HTML datalist
+     * @param  array  $options datalist
+     * @return string $htmlList   rendered HTML datalist
      **/
-    protected function htmlList($options = null) {
+    protected function htmlList($options = null)
+    {
         if ($this->list && is_array($this->list)) {
             $formName   = $this->htmlFormName();
             $options    = $this->htmlEscape($this->list);
@@ -134,6 +139,7 @@ class text extends abstracts\input {
         } else {
             $htmlList = "";
         }
+
         return $htmlList;
     }
     // }}}
@@ -142,9 +148,10 @@ class text extends abstracts\input {
     /**
      * @brief renders text element specific HTML attributes
      *
-     * @return string   $attributes rendered HTML attributes
+     * @return string $attributes rendered HTML attributes
      **/
-    protected function htmlInputAttributes() {
+    protected function htmlInputAttributes()
+    {
         $attributes = parent::htmlInputAttributes();
 
         if ($this->maxlength)   $attributes .= " maxlength=\"{$this->maxlength}\"";
@@ -161,9 +168,10 @@ class text extends abstracts\input {
     /**
      * @brief   Converts value to element specific type.
      *
-     * @return  void
+     * @return void
      **/
-    protected function typeCastValue() {
+    protected function typeCastValue()
+    {
         $this->value = (string) $this->value;
     }
     // }}}

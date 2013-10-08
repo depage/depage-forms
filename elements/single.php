@@ -11,7 +11,7 @@ namespace depage\htmlform\elements;
 
 use depage\htmlform\abstracts;
 
-/** 
+/**
  * @brief HTML-single-choice input type i.e. radio and select.
  *
  * Class for radio-like HTML elements. Has the same return value, regardless
@@ -52,9 +52,10 @@ use depage\htmlform\abstracts;
  * ?>
  * @endcode
  **/
-class single extends abstracts\input {
+class single extends abstracts\input
+{
     // {{{ variables
-    /** 
+    /**
      * @brief Contains list of selectable options.
      **/
     protected $list = array();
@@ -64,12 +65,13 @@ class single extends abstracts\input {
     /**
      * @brief   single class constructor
      *
-     * @param   string  $name       element name
-     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
-     * @param   object  $form       parent form object
-     * @return  void
+     * @param  string $name       element name
+     * @param  array  $parameters element parameters, HTML attributes, validator specs etc.
+     * @param  object $form       parent form object
+     * @return void
      **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         parent::__construct($name, $parameters, $form);
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : array();
@@ -84,9 +86,10 @@ class single extends abstracts\input {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         // single-choice-elements have values of type string
@@ -102,11 +105,12 @@ class single extends abstracts\input {
      * Works recursively in case of select-optgroups. If no parameters are
      * parsed, it uses the list attribute of this element.
      *
-     * @param   array   $options    list elements and subgroups
-     * @param   string  $value      value to be marked as selected
-     * @return  string  $list       options-part of the HTML-select-element
+     * @param  array  $options list elements and subgroups
+     * @param  string $value   value to be marked as selected
+     * @return string $list       options-part of the HTML-select-element
      **/
-    protected function htmlList($options = null, $value = null) {
+    protected function htmlList($options = null, $value = null)
+    {
         if ($value == null)     $value      = $this->htmlValue();
         if ($options == null)   $options    = $this->list;
 
@@ -114,7 +118,7 @@ class single extends abstracts\input {
         $list       = '';
 
         if ($this->skin === "select") {
-            foreach($options as $index => $option) {
+            foreach ($options as $index => $option) {
                 if (is_array($option)) {
                     $list       .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
                 } else {
@@ -125,7 +129,7 @@ class single extends abstracts\input {
         } else {
             $inputAttributes = $this->htmlInputAttributes();
 
-            foreach($options as $index => $option) {
+            foreach ($options as $index => $option) {
                 // typecasted for non-associative arrays
                 $selected = ((string) $index === (string) $value) ? " checked=\"yes\"" : '';
 
@@ -137,6 +141,7 @@ class single extends abstracts\input {
                 "</span>";
             }
         }
+
         return $list;
     }
     // }}}
@@ -145,9 +150,10 @@ class single extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML rendered element
+     * @return string HTML rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $marker             = $this->htmlMarker();
         $label              = $this->htmlLabel();
         $list               = $this->htmlList();
@@ -169,7 +175,6 @@ class single extends abstracts\input {
             "</p>\n";
         } else {
             // render HTML radio button list
-
             return "<p {$wrapperAttributes}>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
@@ -184,9 +189,10 @@ class single extends abstracts\input {
     /**
      * @brief   Converts value to element specific type.
      *
-     * @return  void
+     * @return void
      **/
-    protected function typeCastValue() {
+    protected function typeCastValue()
+    {
         $this->value = (string) $this->value;
     }
     // }}}

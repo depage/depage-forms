@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * @todo    dummy - no validator implemented yet
  **/
-class month extends text {
+class month extends text
+{
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

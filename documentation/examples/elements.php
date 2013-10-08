@@ -2,7 +2,7 @@
 /*
  * Load the library...
  */
-require_once('../../htmlform.php');
+require_once '../../htmlform.php';
 
 /*
  * Create the example form 'showcaseElements'
@@ -72,7 +72,7 @@ $form->addNumber('Number', array(
 /*
  * Password input element
  *
- * Text input element that displays only asterisks or bullets (depends on the 
+ * Text input element that displays only asterisks or bullets (depends on the
  * browser). Returns string value.
  */
 $form->addPassword('Password');

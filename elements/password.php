@@ -9,7 +9,7 @@
 
 namespace depage\htmlform\elements;
 
-/** 
+/**
  * @brief HTML password input type.
  *
  * Class for the HTML input type "password". Entered characters are masked with
@@ -34,7 +34,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class password extends text {
+class password extends text
+{
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

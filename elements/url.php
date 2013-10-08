@@ -33,7 +33,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class url extends text {
+class url extends text
+{
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
@@ -42,9 +43,10 @@ class url extends text {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['errorMessage'] = _('Please enter a valid URL');

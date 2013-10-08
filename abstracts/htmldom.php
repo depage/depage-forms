@@ -14,7 +14,8 @@ namespace depage\htmlform\abstracts;
  * Serializable subclass of DOMDocument with helper methods especially
  * for html-content, and for removing up unwanted tags from html.
  */
-class htmldom extends \DOMDocument implements \Serializable {
+class htmldom extends \DOMDocument implements \Serializable
+{
     // {{{ variables
     /**
      * @brief Tags that are allowed inside of html
@@ -40,12 +41,13 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief   htmldom class constructor
      *
-     * @param   string  $version  xml-version
-     * @param   string  $encoding encoding of xml document
+     * @param string $version  xml-version
+     * @param string $encoding encoding of xml document
      *
-     * @return  depage::htmlform::abstracts::htmldom    htmlDOM
+     * @return depage::htmlform::abstracts::htmldom htmlDOM
      **/
-    public function __construct($version = null, $encoding = null) {
+    public function __construct($version = null, $encoding = null)
+    {
         parent::__construct($version, $encoding);
     }
     // }}}
@@ -53,10 +55,12 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief   serializes htmldom into string
      *
-     * @return  string  xml-content saved by saveXML()
+     * @return string xml-content saved by saveXML()
      **/
-    public function serialize(){
+    public function serialize()
+    {
         $s = $this->saveXML();
+
         return $s;
     }
     // }}}
@@ -66,9 +70,10 @@ class htmldom extends \DOMDocument implements \Serializable {
      *
      * @param   $serialized (string)
      *
-     * @return  void
+     * @return void
      **/
-    public function unserialize($serialized) {
+    public function unserialize($serialized)
+    {
         $this->loadXML($serialized);
     }
     // }}}
@@ -76,14 +81,15 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief   loads html from a htmls string
      *
-     * Loads html into the htmldom. Invalid content is allowed. 
+     * Loads html into the htmldom. Invalid content is allowed.
      * Only nodes inside of the body will be added to the dom.
      *
-     * @param   string  $html   html to parse
+     * @param string $html html to parse
      *
-     * @return  boolean true on success, false on error
+     * @return boolean true on success, false on error
      **/
-    public function loadHTML($html) {
+    public function loadHTML($html)
+    {
         $tmpDOM = new \DOMDocument();
 
         $encoding = mb_http_input();
@@ -99,7 +105,7 @@ class htmldom extends \DOMDocument implements \Serializable {
 
         $this->resolveExternals = true;
         $this->loadXML('<?xml version="1.0" encoding="utf-8"?>
-            <!DOCTYPE html [ 
+            <!DOCTYPE html [
                 <!ENTITY nbsp "&#160;">
             ]>
             <body></body>');
@@ -108,7 +114,7 @@ class htmldom extends \DOMDocument implements \Serializable {
         }
         $rootnode = $this->documentElement;
 
-        foreach($nodelist as $node) {
+        foreach ($nodelist as $node) {
             // copy all nodes inside the body tag to target document
             $newnode = $this->importNode($node, true);
             $rootnode->appendChild($newnode);
@@ -119,22 +125,23 @@ class htmldom extends \DOMDocument implements \Serializable {
     // }}}
     // {{{ cleanHTML()
     /**
-     * @brief   cleans up a htmlDOM 
+     * @brief   cleans up a htmlDOM
      *
-     * cleans up a htmlDOM and removes all tags and attributes 
+     * cleans up a htmlDOM and removes all tags and attributes
      * that are not allowed.
      *
-     * @param   array   $allowedTags    array of tags that are alowed inside of html
+     * @param array $allowedTags array of tags that are alowed inside of html
      *
-     * @return  void
+     * @return void
      **/
-    public function cleanHTML($allowedTags = null) {
+    public function cleanHTML($allowedTags = null)
+    {
         $xpath = new \DOMXPath($this);
 
         if (is_null($allowedTags)) {
             $allowedTags = $this->allowedTags;
         }
-        
+
         // {{{ remove all nodes with tagnames that are not allowed
         $nodelist = $xpath->query("//body//*");
 
@@ -152,7 +159,7 @@ class htmldom extends \DOMDocument implements \Serializable {
                         $node->parentNode->insertBefore($node->firstChild, $node);
                     }
                 }
-                
+
                 // delete empty node
                 $node->parentNode->removeChild($node);
             }
@@ -194,9 +201,10 @@ class htmldom extends \DOMDocument implements \Serializable {
     /**
      * @brief   gets a nodelist with all nodes inside the body
      *
-     * @return  nodelist    nodes from body
+     * @return nodelist nodes from body
      **/
-    public function getBodyNodes() {
+    public function getBodyNodes()
+    {
         $xpath = new \DOMXPath($this);
         $nodelist = $xpath->query("//body/*");
 

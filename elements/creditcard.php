@@ -20,13 +20,13 @@ namespace depage\htmlform\elements;
  *     - a field for the expiry-date
  *     - a field for the card-owner
  *
- * At the moment this input only checks the formatting of the numbers but not if 
+ * At the moment this input only checks the formatting of the numbers but not if
  * it is a valid creditcard.
- * 
+ *
  * @section usage
  *
  * @code
- * <?php 
+ * <?php
  *     $form = new depage\htmlform\htmlform('myform');
  *
  *     // add a creditcard fieldset
@@ -36,13 +36,14 @@ namespace depage\htmlform\elements;
  *
  *     // process form
  *     $form->process();
- *     
+ *
  *     // Display the form.
  *     echo ($form);
  * ?>
  * @endcode
  **/
-class creditcard extends fieldset {
+class creditcard extends fieldset
+{
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
@@ -53,7 +54,8 @@ class creditcard extends fieldset {
      *
      * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['required']             = false;
@@ -75,9 +77,10 @@ class creditcard extends fieldset {
      *
      * @todo    check regular expressions based on (?): http://www.regular-expressions.info/creditcard.html
      *
-     * @return  void
+     * @return void
      **/
-    public function addChildElements() {
+    public function addChildElements()
+    {
         parent::addChildElements();
 
         $cardnames = array(
@@ -126,9 +129,10 @@ class creditcard extends fieldset {
      * @todo    validate based on (?): http://www-sst.informatik.tu-cottbus.de/~db/doc/Java/GalileoComputing-JavaInsel/java-04.htm#t321
      * @todo    validate specific to cardtype
      *
-     * @return  bool validation result
+     * @return bool validation result
      **/
-    public function validate() {
+    public function validate()
+    {
         return parent::validate();
     }
     // }}}

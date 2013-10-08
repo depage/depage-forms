@@ -12,5 +12,6 @@ namespace depage\htmlform\exceptions;
 /**
  * @brief thrown when element name is empty or contains invalid characters
  **/
-class invalidElementNameException extends elementException {
+class invalidElementNameException extends elementException
+{
 }

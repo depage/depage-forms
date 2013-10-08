@@ -17,7 +17,8 @@ use depage\htmlform\validators;
  * The abstract class input containѕ the intersections of all implemented
  * HTML input element types. It handles validation and value manipulation.
  **/
-abstract class input extends element {
+abstract class input extends element
+{
     // {{{ variables
     /**
      * @brief Input element type - HTML input type attribute.
@@ -77,12 +78,13 @@ abstract class input extends element {
     /**
      * @brief   input class constructor
      *
-     * @param   string  $name       input element name
-     * @param   array   $parameters input element parameters, HTML attributes, validator specs etc.
-     * @param   object  $form       parent form object
-     * @return  void
+     * @param  string $name       input element name
+     * @param  array  $parameters input element parameters, HTML attributes, validator specs etc.
+     * @param  object $form       parent form object
+     * @return void
      **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         $this->type         = strtolower(str_replace('depage\\htmlform\\elements\\', '', get_class($this)));
         $this->formName     = $form->getName();
 
@@ -102,9 +104,10 @@ abstract class input extends element {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['autocapitalize']  = null;
@@ -130,9 +133,10 @@ abstract class input extends element {
      * Checks if the value the current input element holds is valid according
      * to it's validator object.
      *
-     * @return  bool    $this->valid validation result
+     * @return bool $this->valid validation result
      **/
-    public function validate() {
+    public function validate()
+    {
         if (!$this->validated) {
             $this->validated = true;
 
@@ -142,6 +146,7 @@ abstract class input extends element {
                 && (!$this->isEmpty() || !$this->required)
             );
         }
+
         return $this->valid;
     }
     // }}}
@@ -152,9 +157,10 @@ abstract class input extends element {
      *
      * Hook method for validator call. Validator arguments can be adjusted on override.
      *
-     * @return   bool validation result
+     * @return bool validation result
      **/
-    protected function validatorCall() {
+    protected function validatorCall()
+    {
         return $this->validator->validate($this->value);
     }
     // }}}
@@ -166,9 +172,10 @@ abstract class input extends element {
      * Checks wether the input element value is empty. Accepts '0' and false as
      * not empty.
      *
-     * @return  bool empty-check result
+     * @return bool empty-check result
      **/
-    public function isEmpty() {
+    public function isEmpty()
+    {
         return (
             empty($this->value)
             && $this->value !== '0'
@@ -184,14 +191,16 @@ abstract class input extends element {
      * Sets the current input elements value. Additionally performs typecasting
      * to element specific datatype.
      *
-     * @param   mixed   $newValue       new value
-     * @return  mixed   $this->value    typecasted new value
+     * @param  mixed $newValue new value
+     * @return mixed $this->value    typecasted new value
      *
      * @see     typeCastValue()
      **/
-    public function setValue($newValue) {
+    public function setValue($newValue)
+    {
         $this->value = $newValue;
         $this->typeCastValue();
+
         return $this->value;
     }
     // }}}
@@ -200,9 +209,10 @@ abstract class input extends element {
     /**
      * @brief   Returns the current input elements' value.
      *
-     * @return  mixed   $this->value input element value
+     * @return mixed $this->value input element value
      **/
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
     // }}}
@@ -213,18 +223,20 @@ abstract class input extends element {
      *
      * @return  $this->label HTML label
      **/
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
     // }}}
-    
+
     // {{{ clearValue()
     /**
      * @brief   resets the value to null
      *
-     * @return  void
+     * @return void
      **/
-    public function clearValue() {
+    public function clearValue()
+    {
         $this->value = null;
     }
     // }}}
@@ -236,12 +248,13 @@ abstract class input extends element {
      * Since the actual іnput value has to be null initially (for validation
      * purposes) the user can manually set the default value here.
      *
-     * @param   mixed   $newDefaultValue    new value
-     * @return  void
+     * @param  mixed $newDefaultValue new value
+     * @return void
      *
      * @see     htmlValue()
      **/
-    public function setDefaultValue($newDefaultValue) {
+    public function setDefaultValue($newDefaultValue)
+    {
         $this->defaultValue = $newDefaultValue;
     }
     // }}}
@@ -262,10 +275,11 @@ abstract class input extends element {
     /**
      * @brief   Sets the HTML autofocus-attribute of the current input element.
      *
-     * @param   $autofocus (bool) HTML autofocus-attribute
-     * @return  void
+     * @param       $autofocus (bool) HTML autofocus-attribute
+     * @return void
      **/
-    public function setAutofocus($autofocus = true) {
+    public function setAutofocus($autofocus = true)
+    {
         $this->autofocus = (bool) $autofocus;
     }
     // }}}
@@ -274,10 +288,11 @@ abstract class input extends element {
     /**
      * @brief   Sets the HTML required-attribute of the current input element.
      *
-     * @param   bool    $required   HTML required-attribute
-     * @return  void
+     * @param  bool $required HTML required-attribute
+     * @return void
      **/
-    public function setRequired($required = true) {
+    public function setRequired($required = true)
+    {
         $this->required = (bool) $required;
     }
     // }}}
@@ -286,10 +301,11 @@ abstract class input extends element {
     /**
      * @brief   Sets the HTML disabled-attribute of the current input element.
      *
-     * @param   bool    $dіsabled   HTML disabled-attribute
-     * @return  void
+     * @param  bool $dіsabled HTML disabled-attribute
+     * @return void
      **/
-    public function setDisabled($disabled = true) {
+    public function setDisabled($disabled = true)
+    {
         $this->disabled = (bool) $disabled;
     }
     // }}}
@@ -298,9 +314,10 @@ abstract class input extends element {
     /**
      * @brief   Returns string of the elements' HTML-classes, separated by spaces.
      *
-     * @return  string  $classes HTML-classes
+     * @return string $classes HTML-classes
      **/
-    protected function htmlClasses() {
+    protected function htmlClasses()
+    {
         $classes = 'input-' . $this->htmlEscape($this->type);
 
         if ($this->required) {
@@ -330,9 +347,10 @@ abstract class input extends element {
      * If the current input element is set required it returns the marker.
      * Otherwise an empty string.
      *
-     * @return  string  $this->marker marker or empty string
+     * @return string $this->marker marker or empty string
      **/
-    protected function htmlMarker() {
+    protected function htmlMarker()
+    {
         return ($this->required) ? " <em>" . $this->htmlEscape($this->marker) . "</em>" : "";
     }
     // }}}
@@ -341,9 +359,10 @@ abstract class input extends element {
     /**
      * @brief   Returns string of HTML attributes for input element.
      *
-     * @return  string  $attributes HTML attribute
+     * @return string $attributes HTML attribute
      **/
-    protected function htmlInputAttributes() {
+    protected function htmlInputAttributes()
+    {
         $attributes = '';
 
         if ($this->required)    $attributes .= ' required="required"';
@@ -373,9 +392,10 @@ abstract class input extends element {
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
-     * @return  string  $attributes HTML attribute
+     * @return string $attributes HTML attribute
      **/
-    protected function htmlWrapperAttributes() {
+    protected function htmlWrapperAttributes()
+    {
         $attributes = "id=\"{$this->formName}-{$this->name}\" ";
 
         $attributes .= "class=\"" . $this->htmlClasses() . "\"";
@@ -392,9 +412,10 @@ abstract class input extends element {
     /**
      * @brief   Returns HTML-rendered element value
      *
-     * @return  mixed element value
+     * @return mixed element value
      **/
-    protected function htmlValue() {
+    protected function htmlValue()
+    {
         return $this->htmlEscape($this->value === null ? $this->defaultValue : $this->value);
     }
     // }}}
@@ -403,9 +424,10 @@ abstract class input extends element {
     /**
      * @brief   Returns HTML-rendered error message
      *
-     * @return  string  $errorMessage HTML-rendered error message
+     * @return string $errorMessage HTML-rendered error message
      **/
-    protected function htmlErrorMessage() {
+    protected function htmlErrorMessage()
+    {
         if (!$this->valid
             && $this->value !== null
             && $this->errorMessage !== ""
@@ -418,14 +440,15 @@ abstract class input extends element {
         return $errorMessage;
     }
     // }}}
-    
+
     // {{{ htmlHelpMessage()
     /**
      * @brief   Returns HTML-rendered helpMessage
      *
-     * @return  string  $helpMessage HTML-rendered helpMessage span
+     * @return string $helpMessage HTML-rendered helpMessage span
      **/
-    protected function htmlHelpMessage() {
+    protected function htmlHelpMessage()
+    {
         $helpMessage = '';
         if (isset($this->helpMessage) && !empty($this->helpMessage)) {
             // escaped message
@@ -435,6 +458,7 @@ abstract class input extends element {
             // html message
             $helpMessage = "<span class=\"helpMessage\" style=\"display:none;\">" . $this->helpMessageHtml. "</span>";
         }
+
         return $helpMessage;
     }
     // }}}

@@ -14,5 +14,6 @@ namespace depage\htmlform\exceptions;
  *
  * Element names are also used for identification, so they have to be unique.
  **/
-class duplicateElementNameException extends elementException {
+class duplicateElementNameException extends elementException
+{
 }

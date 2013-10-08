@@ -7,9 +7,11 @@ use depage\htmlform\validators\regEx;
 /**
  * Dummy validator class
  **/
-class validatorTestClass extends validator {
+class validatorTestClass extends validator
+{
     // needed for testLog() ($this->log() is protected)
-    public function log($argument, $type = null) {
+    public function log($argument, $type = null)
+    {
         parent::log ($argument, $type);
     }
 }
@@ -19,13 +21,16 @@ class validatorTestClass extends validator {
 /**
  * Dummy regEx validator class
  **/
-class regExTestClass extends regEx {
-    public function __construct($regEx, $log) {
+class regExTestClass extends regEx
+{
+    public function __construct($regEx, $log)
+    {
         parent::__construct($log);
         $this->regEx = $regEx;
     }
     // needed for testLog() ($this->log() is protected)
-    public function log($argument, $type = null) {
+    public function log($argument, $type = null)
+    {
         parent::log ($argument, $type);
     }
 }
@@ -34,12 +39,14 @@ class regExTestClass extends regEx {
 /**
  * General tests for the validator class.
  **/
-class validatorTest extends \PHPUnit_Framework_TestCase {
+class validatorTest extends \PHPUnit_Framework_TestCase
+{
     // {{{ testText()
     /**
      * Text validator always returns true
      **/
-    public function testText() {
+    public function testText()
+    {
         $textValidator = validator::factory('text');
         $this->assertTrue($textValidator->validate('anyString'));
     }
@@ -49,7 +56,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Email validator test
      **/
-    public function testEmail() {
+    public function testEmail()
+    {
         $emailValidator = validator::factory('email');
         $this->assertFalse($emailValidator->validate('anyString'));
         $this->assertTrue($emailValidator->validate('test@depage.net'));
@@ -60,7 +68,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Url validator test
      **/
-    public function testUrl() {
+    public function testUrl()
+    {
         $urlValidator = validator::factory('url');
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('http://www.depage.net'));
@@ -71,7 +80,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Tel validator test
      **/
-    public function testTel() {
+    public function testTel()
+    {
         $urlValidator = validator::factory('tel');
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('+(123)-32 2.3'));
@@ -82,7 +92,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Creating a custom validator by parsing a regular expression
      **/
-    public function testCustomRegEx() {
+    public function testCustomRegEx()
+    {
         $customValidator = validator::factory('/[a-zA-Z]/');
         $this->assertFalse($customValidator->validate('1234'));
         $this->assertFalse($customValidator->validate('letters'));
@@ -94,7 +105,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Number validator test; using limits set in parameter array
      **/
-    public function testNumber() {
+    public function testNumber()
+    {
         $numberValidator = validator::factory('number');
         $this->assertFalse($numberValidator->validate('letters',   array('min' => null,    'max' => null)));
         $this->assertFalse($numberValidator->validate(-10,         array('min' => 0,       'max' => 10)));
@@ -107,7 +119,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Creating a custom closure validator
      **/
-    public function testClosure() {
+    public function testClosure()
+    {
         $testClosure = function($value, $parameters) {
             return $value == "is-true";
         };
@@ -121,7 +134,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Getting HTML5 pattern attribute for various validator types
      **/
-    public function testGetPatternAttribute() {
+    public function testGetPatternAttribute()
+    {
         // custom validator returns formatted regular expression
         $regExValidator = validator::factory('/[a-z]/');
         $this->assertEquals(' pattern="[a-z]"', $regExValidator->getPatternAttribute());
@@ -142,7 +156,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
     /**
      * Testing the internal log method
      **/
-    public function testLog() {
+    public function testLog()
+    {
         $log        = new logTestClass;
         $validator  = new validatorTestClass($log);
 
@@ -162,7 +177,8 @@ class validatorTest extends \PHPUnit_Framework_TestCase {
      * Testing error logging on preg_match error.
      * Example error from http://php.net/manual/en/function.preg-last-error.php
      **/
-    public function testPregError() {
+    public function testPregError()
+    {
         $log        = new logTestClass;
         $regEx      = '/(?:\D+|<\d+>)*[!?]/';
         $validator  = new regExTestClass($regEx, $log);

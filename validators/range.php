@@ -8,5 +8,6 @@ namespace depage\htmlform\validators;
 /**
  * @brief default validator for range input elements
  **/
-class range extends number {
+class range extends number
+{
 }

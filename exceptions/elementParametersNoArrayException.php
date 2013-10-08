@@ -12,5 +12,6 @@ namespace depage\htmlform\exceptions;
 /**
  * @brief thrown when element parameters aren't of type array on construction
  **/
-class elementParametersNoArrayException extends elementException {
+class elementParametersNoArrayException extends elementException
+{
 }

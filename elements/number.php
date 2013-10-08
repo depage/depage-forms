@@ -41,7 +41,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class number extends text {
+class number extends text
+{
     // {{{ variables
     /**
      * @brief Minimum range HTML attribute.
@@ -65,9 +66,10 @@ class number extends text {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['defaultValue'] = 0;
@@ -82,9 +84,10 @@ class number extends text {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML rendered element
+     * @return string HTML rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $value              = $this->htmlValue();
         $inputAttributes    = $this->htmlInputAttributes();
         $marker             = $this->htmlMarker();
@@ -113,9 +116,10 @@ class number extends text {
     /**
      * @brief   Renders HTML min attribute.
      *
-     * @return  string HTML min attribute
+     * @return string HTML min attribute
      **/
-    protected function htmlMin() {
+    protected function htmlMin()
+    {
         return ($this->min === null) ? "" : " min=\"" . $this->htmlEscape($this->min) . "\"";
     }
     // }}}
@@ -124,9 +128,10 @@ class number extends text {
     /**
      * @brief   Renders HTML max attribute.
      *
-     * @return  string HTML max attribute
+     * @return string HTML max attribute
      **/
-    protected function htmlMax() {
+    protected function htmlMax()
+    {
         return ($this->max === null) ? "" : " max=\"" . $this->htmlEscape($this->max) . "\"";
     }
     // }}}
@@ -135,9 +140,10 @@ class number extends text {
     /**
      * @brief   Renders HTML step attribute.
      *
-     * @return  string HTML step attribute
+     * @return string HTML step attribute
      **/
-    protected function htmlStep() {
+    protected function htmlStep()
+    {
         return ($this->step === null) ? "" : " step=\"" . $this->htmlEscape($this->step) . "\"";
     }
     // }}}
@@ -148,13 +154,15 @@ class number extends text {
      *
      * Number specific validator call (includes min and max values)
      *
-     * @return  bool validaton result
+     * @return bool validaton result
      **/
-    protected function validatorCall() {
+    protected function validatorCall()
+    {
         $parameters = array(
             'min' => $this->min,
             'max' => $this->max,
         );
+
         return $this->validator->validate($this->value, $parameters);
     }
     // }}}
@@ -165,9 +173,10 @@ class number extends text {
      *
      * Based on (parseFloat) http://www.php.net/manual/en/function.floatval.php#84793
      *
-     * @return  void
+     * @return void
      **/
-    protected function typeCastValue() {
+    protected function typeCastValue()
+    {
         $ptString = $this->value;
 
         $pString = str_replace(" ", "", $ptString);
@@ -196,8 +205,7 @@ class number extends text {
             $numberString = $pregResultA[0];
             $numberString = str_replace('.','',$numberString);
             $numberString = str_replace(',','.',$numberString);
-        }
-        elseif (isset($pregResultB[0]) && (!isset($pregResultA[0])
+        } elseif (isset($pregResultB[0]) && (!isset($pregResultA[0])
                     || strstr($pregResultB[0],$preResultA[0]) == 0
                     || !$commaset)) {
             $numberString = $pregResultB[0];

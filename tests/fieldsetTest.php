@@ -6,9 +6,11 @@ use depage\htmlform\elements\fieldset;
 /**
  * General tests for the fieldset element.
  **/
-class fieldsetTest extends PHPUnit_Framework_TestCase {
+class fieldsetTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm('formName');
         $this->fieldset = new fieldset('fieldsetName', array(), $this->form);
     }
@@ -18,7 +20,8 @@ class fieldsetTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests __call method and adding container subelements
      **/
-    public function testAddFieldset() {
+    public function testAddFieldset()
+    {
         $fieldset2  = $this->fieldset->addFieldset('secondFieldsetName');
         // include fieldsets true (getElements(true))
         $elements   = $this->fieldset->getElements(true);
@@ -31,7 +34,8 @@ class fieldsetTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests __call method and adding input subelements
      **/
-    public function testAddText() {
+    public function testAddText()
+    {
         $text       = $this->fieldset->addText('textName');
         $elements   = $this->fieldset->getElements();
 
@@ -43,7 +47,8 @@ class fieldsetTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests clearValue method
      **/
-    public function testClearValue() {
+    public function testClearValue()
+    {
         $text       = $this->fieldset->addText('textName');
 
         $text->setValue("test");

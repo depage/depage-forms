@@ -6,10 +6,12 @@ use depage\htmlform\htmlform;
 /**
  * Custom htmlform class with overidden redirect method for easier testing
  **/
-class htmlformTestClass extends htmlform {
+class htmlformTestClass extends htmlform
+{
     public $testRedirect;
 
-    public function redirect($url) {
+    public function redirect($url)
+    {
         $this->testRedirect = $url;
     }
 }
@@ -18,12 +20,14 @@ class htmlformTestClass extends htmlform {
 /**
 * Testing Post/Redirect/Get-relevant behavior
 **/
-class prgTest extends PHPUnit_Framework_TestCase {
+class prgTest extends PHPUnit_Framework_TestCase
+{
     // {{{ testRedirect()
     /**
      * Testing the test...
      **/
-    public function testRedirect() {
+    public function testRedirect()
+    {
         $this->form = new htmlformTestClass('formName');
         $this->form->redirect('http://www.depage.net');
 
@@ -36,7 +40,8 @@ class prgTest extends PHPUnit_Framework_TestCase {
      * Testing htmlform::updateInputValue() and htmlform::process()
      * in case of submitted form
      **/
-    public function testProcessOnPost() {
+    public function testProcessOnPost()
+    {
         // setting up the post-data (form-name and value for a text-element)
         $_POST['formName'] = 'formName';
         $_POST['postedText'] = 'submitted';
@@ -64,7 +69,8 @@ class prgTest extends PHPUnit_Framework_TestCase {
      * Testing htmlform::updateInputValue() and htmlform::process()
      * on GET-request with previously submitted data in session
      **/
-    public function testProcessOnGet() {
+    public function testProcessOnGet()
+    {
         // setting up session-data for text-element
         $_SESSION['formName-data']['storedText'] = 'stored';
 
@@ -79,12 +85,13 @@ class prgTest extends PHPUnit_Framework_TestCase {
 
     // {{{ testProcessSteps()
     /**
-     * Test process() method for forms with steps. Setting an invalid step 
-     * number forces call of getFirstInvalidStep(). 
+     * Test process() method for forms with steps. Setting an invalid step
+     * number forces call of getFirstInvalidStep().
      *
      * The first invalid step should be step1.
      **/
-    public function testProcessSteps() {
+    public function testProcessSteps()
+    {
         $_POST['formName'] = 'formName';
 
         $_GET['step'] = 'bogusStepId';
@@ -113,7 +120,8 @@ class prgTest extends PHPUnit_Framework_TestCase {
      * are valid and the free fieldset is invalid it should jump to the last
      * step.
      **/
-    public function testStepsFreeFieldset() {
+    public function testStepsFreeFieldset()
+    {
         $_POST['formName'] = 'formName';
 
         $_GET['step'] = 'bogusStepId';

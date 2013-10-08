@@ -12,7 +12,7 @@ namespace depage\htmlform\elements;
 /**
  * @brief HTML richtext element.
  *
- * adds a textarea-element with additional richtext-functionality 
+ * adds a textarea-element with additional richtext-functionality
  * added by javascript
  *
  * @section usage
@@ -34,7 +34,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class richtext extends textarea {
+class richtext extends textarea
+{
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
@@ -43,9 +44,10 @@ class richtext extends textarea {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['rows'] = null;
@@ -75,9 +77,10 @@ class richtext extends textarea {
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
-     * @return  string  $attributes HTML attribute
+     * @return string $attributes HTML attribute
      **/
-    protected function htmlWrapperAttributes() {
+    protected function htmlWrapperAttributes()
+    {
         $attributes = parent::htmlWrapperAttributes();
 
         $options = array();
@@ -93,9 +96,10 @@ class richtext extends textarea {
     /**
      * @brief   Returns HTML-rendered element value
      *
-     * @return  mixed   element value
+     * @return mixed element value
      **/
-    protected function htmlValue() {
+    protected function htmlValue()
+    {
         if ($this->value === null) {
             $htmlDOM = $this->parseHtml($this->defaultValue);
         } else {
@@ -116,9 +120,10 @@ class richtext extends textarea {
     /**
      * @brief   Converts value into htmlDOM
      *
-     * @return  void
+     * @return void
      **/
-    protected function typeCastValue() {
+    protected function typeCastValue()
+    {
         if (is_string($this->value)) {
             $this->value = $this->parseHtml($this->value);
         }
@@ -128,11 +133,12 @@ class richtext extends textarea {
     /**
      * @brief   Parses html-string into htmlDOM
      *
-     * @param   string  $html   html string to parse
+     * @param string $html html string to parse
      *
-     * @return  depage::htmlform::abstract::htmldom htmlDOM
+     * @return depage::htmlform::abstract::htmldom htmlDOM
      **/
-    protected function parseHtml($html) {
+    protected function parseHtml($html)
+    {
         $htmlDOM = new \depage\htmlform\abstracts\htmldom();
 
         $htmlDOM->loadHTML($html);

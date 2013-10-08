@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * @todo dummy - no validator implemented yet
  **/
-class datetime extends text {
+class datetime extends text
+{
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

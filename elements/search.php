@@ -12,7 +12,8 @@ namespace depage\htmlform\elements;
 /**
  * @brief HTML search input type.
  **/
-class search extends text {
+class search extends text
+{
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

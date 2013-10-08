@@ -5,9 +5,11 @@ use depage\htmlform\elements\datetimelocal;
 /**
  * Tests for datetime-local input element rendering.
  **/
-class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
+class datetimelocalToStringTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp
-    public function setUp() {
+    public function setUp()
+    {
         $this->form = new nameTestForm;
         $this->datetimelocal = new datetimelocal('datetimelocalName', array(), $this->form);
     }
@@ -17,7 +19,8 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Element with default setup
      **/
-    public function testSimple() {
+    public function testSimple()
+    {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">datetimelocalName</span>' .
@@ -33,7 +36,8 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests rendering with value set.
      **/
-    public function testValue() {
+    public function testValue()
+    {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">datetimelocalName</span>' .
@@ -50,7 +54,8 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element with set required attribute
      **/
-    public function testRequired() {
+    public function testRequired()
+    {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="label">datetimelocalName <em>*</em></span>' .
@@ -67,7 +72,8 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
-    public function testHtmlEscaping() {
+    public function testHtmlEscaping()
+    {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .

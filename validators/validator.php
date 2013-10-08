@@ -11,7 +11,8 @@ namespace depage\htmlform\validators;
  *
  * Basic validator. Contaіns validator factory.
  **/
- class validator {
+ class validator
+ {
     // {{{ variables
     /**
      * @brief log object
@@ -25,10 +26,11 @@ namespace depage\htmlform\validators;
      *
      * Attaches error logging object to validator.
      *
-     * @param   object  $log error logging object
-     * @return  void
+     * @param  object $log error logging object
+     * @return void
      **/
-    public function __construct($log = null) {
+    public function __construct($log = null)
+    {
         $this->log = $log;
     }
     // }}}
@@ -40,17 +42,18 @@ namespace depage\htmlform\validators;
      * Static validator object factory. Picks validator type depending on
      * $argument.
      *
-     * @param   string  $argument   validator type or regular expression or closure
-     * @param   object  $log        error logging object
-     * @return  object  validator object
+     * @param  string $argument validator type or regular expression or closure
+     * @param  object $log      error logging object
+     * @return object validator object
      **/
-    public static function factory($argument, $log = null) {
+    public static function factory($argument, $log = null)
+    {
         if (!is_string($argument) && is_callable($argument, false)) {
             $closureValidator = new closure($log);
             $closureValidator->setFunc($argument);
 
             return $closureValidator;
-        } else if (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
+        } elseif (($argument{0} === '/') && ($argument{strlen($argument)-1} ==='/')) {
             $regExValidator = new regEx($log);
             $regExValidator->setRegEx($argument);
 
@@ -73,11 +76,12 @@ namespace depage\htmlform\validators;
      *
      * Everything is valid. To be overriden in specific validator objects.
      *
-     * @param   mixed   $value      value to be validated
-     * @param   array   $parameters validation parameters
-     * @return  bool    validation result
+     * @param  mixed $value      value to be validated
+     * @param  array $parameters validation parameters
+     * @return bool  validation result
      **/
-    public function validate($value, $parameters = array()) {
+    public function validate($value, $parameters = array())
+    {
         return true;
     }
     // }}}
@@ -86,11 +90,12 @@ namespace depage\htmlform\validators;
     /**
      * @brief   error logging method
      *
-     * @param   string  $argument error message
-     * @param   string  $type     error type
-     * @return  void
+     * @param  string $argument error message
+     * @param  string $type     error type
+     * @return void
      **/
-    protected function log($argument, $type) {
+    protected function log($argument, $type)
+    {
         if (is_callable(array($this->log, 'log'))) {
             $this->log->log($argument, $type);
         } else {
@@ -98,20 +103,21 @@ namespace depage\htmlform\validators;
         }
     }
     // }}}
-    
+
     // {{{ getPatternAttribute()
     /**
      * @brief   returns validators' regular expression as HTML5 pattern attribute
      *
-     * @return  string HTML pattern attribute
+     * @return string HTML pattern attribute
      **/
-    public function getPatternAttribute() {
+    public function getPatternAttribute()
+    {
         if (isset($this->regEx)) {
             return ' pattern="' . htmlspecialchars(substr($this->regEx, 1,-1), ENT_QUOTES) . '"';
         }
     }
     // }}}
-    
+
     // isValid() {{{
     /**
      * Returns a bool value indicating whether or not the input passes
@@ -119,9 +125,11 @@ namespace depage\htmlform\validators;
      *
      * @return bool isValid
      */
-    public static function isValid($input){
+    public static function isValid($input)
+    {
         $el = \get_called_class();
         $el = new $el();
+
         return $el->validate($input);
     }
     // }}}

@@ -6,12 +6,14 @@ use depage\htmlform\exceptions;
 /**
  * General tests for the htmlform class.
  **/
-class htmlformTest extends PHPUnit_Framework_TestCase {
+class htmlformTest extends PHPUnit_Framework_TestCase
+{
     // {{{ testDuplicateElementNameException()
     /**
      * Throw exception when subelements have the same name.
      **/
-    public function testDuplicateElementNameException() {
+    public function testDuplicateElementNameException()
+    {
         $this->form = new htmlform('formName');
 
         $this->form->addFieldset('duplicate');
@@ -29,7 +31,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
      * Unsubmitted forms have to be invalid, so we don't redirect to success
      * page right away.
      **/
-    public function testEmptyFormBeforePostValidation() {
+    public function testEmptyFormBeforePostValidation()
+    {
         $_SESSION = array('formName-data' => array());
         $this->form = new htmlform('formName');
         $this->form->process();
@@ -41,7 +44,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     /**
      * "Populating" the forms subelements with values.
      **/
-    public function testPopulate() {
+    public function testPopulate()
+    {
         $form = new htmlform('formName');
         $text1 = $form->addText('text1Name');
         $text2 = $form->addText('text2Name');
@@ -78,7 +82,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     /**
      * Adding step element.
      **/
-    public function testAddStep() {
+    public function testAddStep()
+    {
         $form = new htmlform('formName');
         $step = $form->addStep('stepName');
 
@@ -95,7 +100,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
      * This test is set up so that the update call happens when we're in the
      * right step (1). Hence, the element value should change to 'text0Value'.
      **/
-    public function testGetCurrentElementsInStep() {
+    public function testGetCurrentElementsInStep()
+    {
         $_POST['formName']  = 'formName';
         $_POST['text0Name'] = 'text0Value';
         $_GET['step']       = '1';
@@ -119,7 +125,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
      * This test is set up so that the update call happens when we're not in
      * the current step, so the initial value shouldn't change.
      **/
-    public function testGetCurrentElementsNotInStep() {
+    public function testGetCurrentElementsNotInStep()
+    {
         $_POST['formName']  = 'formName';
         $_POST['text0Name'] = 'text0Value';
         $_GET['step']       = '0';
@@ -139,7 +146,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests if form has already been submitted
      **/
-    public function testIsEmpty() {
+    public function testIsEmpty()
+    {
         $form = new htmlform('formName');
         $this->assertTrue($form->isEmpty());
 
@@ -154,7 +162,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
      * success page in order to check the validation result. The form object
      * alone can check its validation result in the session data.
      **/
-    public function testValidationResultWithoutValidate() {
+    public function testValidationResultWithoutValidate()
+    {
         $form = new htmlform('formName');
         $this->assertNull($form->valid);
 
@@ -174,7 +183,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
      * when the rest of the form is successfully validated and an array of form
      * element values is parsed to it.
      **/
-    public function testCustomValidator() {
+    public function testCustomValidator()
+    {
         //custom validator function (valid)
         $validator = function () { return true; };
 
@@ -205,7 +215,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase {
     /**
      * See if deleting the forms session slot works.
      **/
-    public function testClearSession() {
+    public function testClearSession()
+    {
         $_SESSION['formName-data']['formName'] = 'formName';
         $form = new htmlform('formName');
 

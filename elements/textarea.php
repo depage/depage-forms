@@ -31,7 +31,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class textarea extends text {
+class textarea extends text
+{
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
@@ -40,9 +41,10 @@ class textarea extends text {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['rows'] = null;
@@ -55,9 +57,10 @@ class textarea extends text {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML rendered element
+     * @return string HTML rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $label              = $this->htmlLabel();
         $marker             = $this->htmlMarker();
         $inputAttributes    = $this->htmlInputAttributes();
@@ -83,9 +86,10 @@ class textarea extends text {
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
-     * @return  string  $attributes HTML attribute
+     * @return string $attributes HTML attribute
      **/
-    protected function htmlWrapperAttributes() {
+    protected function htmlWrapperAttributes()
+    {
         $attributes = parent::htmlWrapperAttributes();
 
         $options = array();
@@ -100,9 +104,10 @@ class textarea extends text {
     /**
      * @brief   Renders HTML rows attribute
      *
-     * @return  string HTML rows attribute
+     * @return string HTML rows attribute
      **/
-    protected function htmlRows() {
+    protected function htmlRows()
+    {
         return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
     }
     // }}}
@@ -110,9 +115,10 @@ class textarea extends text {
     /**
      * @brief   Renders HTML cols attribute
      *
-     * @return  string HTML cols attribute
+     * @return string HTML cols attribute
      **/
-    protected function htmlCols() {
+    protected function htmlCols()
+    {
         return ($this->cols === null) ? "" : " cols=\"" . $this->htmlEscape($this->cols) . "\"";
     }
     // }}}

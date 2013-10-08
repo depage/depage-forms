@@ -14,15 +14,17 @@ namespace depage\htmlform\elements;
  *
  * @todo    dummy - no validator implemented yet
  **/
-class datetimelocal extends text {
+class datetimelocal extends text
+{
     /**
      * @brief   Renders element to HTML.
      *
      * datetime-local needs its own rendering method because of the minus sign.
      *
-     * @return  string HTML-rendered element
+     * @return string HTML-rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $label              = $this->htmlLabel();
         $marker             = $this->htmlMarker();

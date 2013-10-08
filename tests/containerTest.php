@@ -7,9 +7,11 @@ use depage\htmlform\exceptions;
 /**
  * Container is abstract, so we need this test class to instantiate it.
  **/
-class containerTestClass extends container {
+class containerTestClass extends container
+{
     // needed for testSetRequired()
-    public function addTestElement($element) {
+    public function addTestElement($element)
+    {
         $this->elements[] = $element;
     }
 }
@@ -19,15 +21,18 @@ class containerTestClass extends container {
 /**
  * needed for testSetRequired()
  **/
-class testElement {
+class testElement
+{
     public $required = false;
 
-    public function setRequired($required) {
+    public function setRequired($required)
+    {
         $this->required = $required;
     }
 
     // required for getElement test
-    public function getName() {
+    public function getName()
+    {
         return 'testElementName';
     }
 }
@@ -36,9 +41,11 @@ class testElement {
 /**
  * General tests for the container class.
  **/
-class containerTest extends PHPUnit_Framework_TestCase {
+class containerTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->form         = new nameTestForm;
         $this->container    = new containerTestClass('containerName', array(), $this->form);
     }
@@ -48,7 +55,8 @@ class containerTest extends PHPUnit_Framework_TestCase {
     /**
      * Constructor test.
      **/
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $this->assertEquals('containerName', $this->container->getName());
     }
     // }}}
@@ -57,7 +65,8 @@ class containerTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests method to get subelements of container.
      **/
-    public function testGetElements() {
+    public function testGetElements()
+    {
         $text1      = $this->container->addText('text1');
         $fieldset   = $this->container->addFieldset('fieldset');
         $text2      = $this->container->addText('text2');
@@ -79,7 +88,8 @@ class containerTest extends PHPUnit_Framework_TestCase {
     /**
      * Exception on unknown element type.
      **/
-    public function testcheckElementType() {
+    public function testcheckElementType()
+    {
         try {
             $this->container->addElement('bogusType', 'elementName');
         } catch (exceptions\unknownElementTypeException $expected) {
@@ -93,7 +103,8 @@ class containerTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests addHtml method.
      **/
-    public function testAddHtml() {
+    public function testAddHtml()
+    {
         $html = $this->container->addHtml('htmlString');
         $this->assertEquals('htmlString', $html->__toString());
     }
@@ -103,7 +114,8 @@ class containerTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests setting multiple subelements required attribute
      **/
-    public function testSetRequired() {
+    public function testSetRequired()
+    {
         $element1 = new testElement;
         $element2 = new testElement;
 
@@ -126,7 +138,8 @@ class containerTest extends PHPUnit_Framework_TestCase {
     /**
      * Get sub-element by name.
      **/
-    public function testGetElement() {
+    public function testGetElement()
+    {
         $element = new testElement;
 
         $this->container->addTestElement($element);

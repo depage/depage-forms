@@ -6,23 +6,28 @@ use depage\htmlform\abstracts\input;
 /**
  * Input is abstract, so we need this test class to instantiate it.
  **/
-class inputTestClass extends input {
+class inputTestClass extends input
+{
     // parent is protected
-    public function htmlClasses() {
+    public function htmlClasses()
+    {
         return parent::htmlClasses();
     }
 
     // parent is protected
-    public function htmlErrorMessage() {
+    public function htmlErrorMessage()
+    {
         return parent::htmlErrorMessage();
     }
 
-    public function setValid($valid = true) {
+    public function setValid($valid = true)
+    {
         $this->valid = (bool) $valid;
     }
 
     // needed for testSetAutofocus
-    public function getAutofocus() {
+    public function getAutofocus()
+    {
         return $this->autofocus;
     }
 }
@@ -31,9 +36,11 @@ class inputTestClass extends input {
 /**
  * General tests for the input class.
  **/
-class inputTest extends PHPUnit_Framework_TestCase {
+class inputTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form     = new nameTestForm;
         $this->input    = new inputTestClass('inputName', array(), $this->form);
     }
@@ -43,7 +50,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
     /**
      * Default value is null -> invalid
      **/
-    public function testInputInvalid() {
+    public function testInputInvalid()
+    {
         $this->assertFalse($this->input->validate());
     }
     // }}}
@@ -52,7 +60,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
     /**
      * After setting value -> valid
      **/
-    public function testInputValid() {
+    public function testInputValid()
+    {
         $this->input->setValue('testValue');
         $this->assertTrue($this->input->validate());
     }
@@ -62,7 +71,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
     /**
      * Testing getName method
      **/
-    public function testGetName() {
+    public function testGetName()
+    {
         $this->assertEquals('inputName', $this->input->getName());
     }
     // }}}
@@ -71,7 +81,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests getting rendered HTML classes.
      **/
-    public function testHtmlClasses() {
+    public function testHtmlClasses()
+    {
         $input = new inputTestClass('inputName', array(), $this->form);
 
         // default
@@ -99,7 +110,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests getting rendered HTML error message.
      **/
-    public function testHtmlErrorMessage() {
+    public function testHtmlErrorMessage()
+    {
         // valid input element => epmty error message
         $this->assertEquals($this->input->htmlErrorMessage(), '');
 
@@ -115,7 +127,8 @@ class inputTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests setAutofocus method
      **/
-    public function testSetAutofocus() {
+    public function testSetAutofocus()
+    {
         // initially autofocus is set to false
         $this->assertFalse($this->input->getAutofocus());
 

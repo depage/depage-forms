@@ -14,9 +14,10 @@ namespace depage\htmlform\elements;
  *
  * @todo    dummy - not implemented yet
  **/
-class file extends text {
+class file extends text
+{
     protected $value = array();
-    
+
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
@@ -25,9 +26,10 @@ class file extends text {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         // textClass elements have values of type string
@@ -35,14 +37,15 @@ class file extends text {
         $this->defaults['maxSize'] = false;
     }
     // }}}
-    
+
     // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML rendered element
+     * @return string HTML rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->maxSize !== false) {
             $maxInput = "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"{$this->maxSize}\" />";
         } else {
@@ -61,7 +64,7 @@ class file extends text {
         return "<p {$wrapperAttributes}>" .
             "<label>" .
                 "<span class=\"label\">{$label}{$marker}</span>" .
-                $maxInput . 
+                $maxInput .
                 "<input name=\"{$this->name}[]\" type=\"{$this->type}\"{$inputAttributes}>" .
                 $list .
             "</label>" .
@@ -74,9 +77,10 @@ class file extends text {
     /**
      * @brief renders text element specific HTML attributes
      *
-     * @return string   $attributes rendered HTML attributes
+     * @return string $attributes rendered HTML attributes
      **/
-    protected function htmlInputAttributes() {
+    protected function htmlInputAttributes()
+    {
         $attributes = parent::htmlInputAttributes();
 
         if ($this->maxNum > 1) {
@@ -86,29 +90,31 @@ class file extends text {
         return $attributes;
     }
     // }}}
-    
+
     // {{{ typeCastValue()
     /**
      * @brief   Converts value to element specific type.
      *
-     * @return  void
+     * @return void
      **/
-    protected function typeCastValue() {
+    protected function typeCastValue()
+    {
         $this->value = (array) $this->value;
     }
     // }}}
-    
+
     // {{{ handleUploadedFiles()
     /**
      * @brief saves uploaded files
      *
-     * @return array    $files returns an array of all uploaded files
+     * @return array $files returns an array of all uploaded files
      **/
-    public function handleUploadedFiles($files = null) {
+    public function handleUploadedFiles($files = null)
+    {
         if (!is_array($files)) {
             $files = array();
         }
-        if (isset($_FILES[$this->name])){
+        if (isset($_FILES[$this->name])) {
             foreach ($_FILES[$this->name]["error"] as $key => $error) {
                 if ($error == UPLOAD_ERR_OK) {
                     $upload_name = $_FILES[$this->name]["tmp_name"][$key];
@@ -119,7 +125,7 @@ class file extends text {
                                 'name' => $_FILES[$this->name]["name"][$key],
                                 'tmp_name' => $tmp_name,
                             );
-                            
+
                         } else {
                             $files[0] = array(
                                 'name' => $_FILES[$this->name]["name"][$key],
@@ -143,33 +149,35 @@ class file extends text {
                 }
             }
         }
-        
+
         // truncate files at max
-        $this->value = array_slice($files, -$this->maxNum, $this->maxNum); 
-        
+        $this->value = array_slice($files, -$this->maxNum, $this->maxNum);
+
         return $this->value;
     }
     // }}}
-    
+
     // {{{ clearValue()
     /**
      * @brief   resets the value to en empty array and cleans uploaded files
      *
-     * @return  void
+     * @return void
      **/
-    public function clearValue() {
+    public function clearValue()
+    {
         $this->clearUploadedFiles();
 
         $this->value = array();
     }
     // }}}
-    
+
     // {{{ clearUploadedFiles()
     /**
      * @brief cleans uploaded files when session is cleared
      **/
-    public function clearUploadedFiles() {
-        if(count($this->value)){
+    public function clearUploadedFiles()
+    {
+        if (count($this->value)) {
             foreach ($this->value as $file) {
                 unlink($file['tmp_name']);
             }

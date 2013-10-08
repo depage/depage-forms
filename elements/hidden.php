@@ -33,14 +33,16 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class hidden extends text {
+class hidden extends text
+{
     // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML-rendered element
+     * @return string HTML-rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $formName   = $this->htmlFormName();
         $classes    = $this->htmlClasses();
         $value      = $this->htmlValue();

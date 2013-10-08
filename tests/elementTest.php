@@ -7,9 +7,11 @@ use depage\htmlform\exceptions;
 /**
  * Element is abstract, so we need this test class to instantiate it.
  **/
-class elementTestClass extends element {
+class elementTestClass extends element
+{
     // required for testSetParameters()
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['testValue1'] = null;
@@ -18,7 +20,8 @@ class elementTestClass extends element {
     }
 
     // needed for testLog() (element::log() is protected)
-    public function log($argument, $type = null) {
+    public function log($argument, $type = null)
+    {
         parent::log($argument, $type);
     }
 }
@@ -34,9 +37,11 @@ class undefinedMethodException extends exception {}
 /**
  * General tests for the element class.
  **/
-class elementTest extends PHPUnit_Framework_TestCase {
+class elementTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->form = new nameTestForm;
         $this->element = new elementTestClass('elementName', array(), $this->form);
     }
@@ -47,7 +52,8 @@ class elementTest extends PHPUnit_Framework_TestCase {
      * Parameters can be set case insensitively but attributes are case
      * sensitive.
      **/
-    public function testSetParameters() {
+    public function testSetParameters()
+    {
         $parameters = array(
             'testValue1' => '1',
             'testvalue2' => '2',
@@ -67,7 +73,8 @@ class elementTest extends PHPUnit_Framework_TestCase {
     /**
      * Throw an exception on empty element name.
      **/
-    public function testEmptyElementNameException() {
+    public function testEmptyElementNameException()
+    {
         try {
             new elementTestClass(' ', array(), null);
         } catch (exceptions\invalidElementNameException $expected) {
@@ -81,7 +88,8 @@ class elementTest extends PHPUnit_Framework_TestCase {
     /**
      * Throw an exception if name type isn't string.
      **/
-    public function testElementNameNoStringException() {
+    public function testElementNameNoStringException()
+    {
         try {
             new elementTestClass(42, array(), null);
         } catch (exceptions\invalidElementNameException $expected) {
@@ -95,7 +103,8 @@ class elementTest extends PHPUnit_Framework_TestCase {
     /**
      * Throw an exception if name contains invalid characters.
      **/
-    public function testInvalidElementNameException() {
+    public function testInvalidElementNameException()
+    {
         try {
             new elementTestClass('/', array(), null);
         } catch (exceptions\invalidElementNameException $expected) {
@@ -109,11 +118,11 @@ class elementTest extends PHPUnit_Framework_TestCase {
     /**
      * Element parameters need to be of type array.
      **/
-    public function testElementParametersNoArrayException() {
+    public function testElementParametersNoArrayException()
+    {
         try {
             $input = new inputTestClass('inputName', 'string', $this->form);
-        }
-        catch (exceptions\elementParametersNoArrayException $expected) {
+        } catch (exceptions\elementParametersNoArrayException $expected) {
             return;
         }
         $this->fail('Expected elementParametersNoArrayException.');
@@ -125,7 +134,8 @@ class elementTest extends PHPUnit_Framework_TestCase {
      * Tests parsing a log object reference to the element. And calling it's log
      * method.
      **/
-    public function testLog() {
+    public function testLog()
+    {
         $log        = new logTestClass;
 
         $parameters = array('log' => $log);
@@ -146,7 +156,8 @@ class elementTest extends PHPUnit_Framework_TestCase {
     /**
      * required for testUndefinedMethodError
      **/
-    public function undefinedMethodHandler($errno) {
+    public function undefinedMethodHandler($errno)
+    {
         if ($errno = 256) throw new undefinedMethodException;
         return;
     }
@@ -158,13 +169,15 @@ class elementTest extends PHPUnit_Framework_TestCase {
      * undefinedMethodError. We test this with our error handler by throwing
      * and catching an exception.
      **/
-    public function testUndefinedMethodError() {
+    public function testUndefinedMethodError()
+    {
         set_error_handler(array($this, 'undefinedMethodHandler'));
 
         try {
             $this->element->__call('undefined', 'argumentString');
         } catch (undefinedMethodException $expected) {
             restore_error_handler();
+
             return;
         }
         $this->fail('Expected undefinedMethodException');

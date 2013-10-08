@@ -12,5 +12,6 @@ namespace depage\htmlform\exceptions;
 /**
  * @brief parent for element specific exceptions
  **/
-class validatorNotCallable extends \exception {
+class validatorNotCallable extends \exception
+{
 }

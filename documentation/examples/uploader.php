@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../htmlform.php');
+require_once '../../htmlform.php';
 
 $form = new depage\htmlform\htmlform('uploader');
 $form->addHidden('APC_UPLOAD_PROGRESS', array('defaultValue' => 'xxx'));
@@ -31,7 +31,7 @@ if ($form->validate()) {
         <input name="APC_UPLOAD_PROGRESS" id="APC_UPLOAD_PROGRESS" type="hidden" class="input-hidden" value="xxx">
         <input id="file" name="file" type="file">
     </form>
-    
+
 </body>
 <?php
 }

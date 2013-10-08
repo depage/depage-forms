@@ -17,7 +17,8 @@ use depage\htmlform\exceptions;
  * The abstract element class contains the basic attributes and tools of
  * container and input elements.
  **/
-abstract class element {
+abstract class element
+{
     // {{{ variables
     /**
      * @brief Element name.
@@ -41,12 +42,13 @@ abstract class element {
     /**
      * @brief   element class constructor
      *
-     * @param   string  $name           element name
-     * @param   array   $parameters     element parameters, HTML attributes
-     * @param   object  $form           parent form object reference
-     * @return  void
+     * @param  string $name       element name
+     * @param  array  $parameters element parameters, HTML attributes
+     * @param  object $form       parent form object reference
+     * @return void
      **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         $this->checkName($name);
         $this->checkParameters($parameters);
 
@@ -68,9 +70,10 @@ abstract class element {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         $this->defaults['log'] = null;
         $this->defaults['class'] = null;
     }
@@ -83,13 +86,14 @@ abstract class element {
      * Returns respective HTML escaped attributes for element rendering. Has to
      * be called before printing user-entered data.
      *
-     * @param   string  $function   function name
-     * @param   array   $arguments  function arguments
-     * @return  mixed   HTML escaped value
+     * @param  string $function  function name
+     * @param  array  $arguments function arguments
+     * @return mixed  HTML escaped value
      *
      * @see     htmlEscape()
      **/
-    public function __call($function, $arguments) {
+    public function __call($function, $arguments)
+    {
         if (substr($function, 0, 4) === 'html') {
             $attribute = str_replace('html', '', $function);
             $attribute{0} = strtolower($attribute{0});
@@ -103,15 +107,16 @@ abstract class element {
 
     // {{{ clearValue()
     /**
-     * @brief   resets the value to null 
-     * 
+     * @brief   resets the value to null
+     *
      * This needs to be refined in the subclasses which really provide an input.
-     * It is defined on this abstract class since clearSession calls it for every element in the form 
+     * It is defined on this abstract class since clearSession calls it for every element in the form
      * even if there is no value.
      *
-     * @return  void
+     * @return void
      **/
-    public function clearValue() {
+    public function clearValue()
+    {
     }
     // }}}
 
@@ -119,9 +124,10 @@ abstract class element {
     /**
      * @brief   Returns the element name.
      *
-     * @return  string  $this->name element name
+     * @return string $this->name element name
      **/
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
     // }}}
@@ -132,10 +138,11 @@ abstract class element {
      *
      * Throws an exception if $parameters isn't of type array.
      *
-     * @param   array   $parameters     parameters for element constructor
-     * @return  void
+     * @param  array $parameters parameters for element constructor
+     * @return void
      **/
-    protected function checkParameters($parameters) {
+    protected function checkParameters($parameters)
+    {
         if ((isset($parameters)) && (!is_array($parameters))) {
             throw new exceptions\elementParametersNoArrayException('Element "' . $this->getName() . '": parameters must be of type array.');
         }
@@ -149,10 +156,11 @@ abstract class element {
      * Checks that element name is of type string, not empty and doesn't
      * contain invalid characters. Otherwise throws an exception.
      *
-     * @param   string  $name   element name
-     * @return  void
+     * @param  string $name element name
+     * @return void
      **/
-    private function checkName($name) {
+    private function checkName($name)
+    {
         if (
             !is_string($name)
             || trim($name) === ''
@@ -170,11 +178,12 @@ abstract class element {
      * If the element is constructed with a custom log object the logging
      * happens there, otherwise the PHP error_log function is used.
      *
-     * @param   string  $argument   message
-     * @param   string  $type       type of log message
-     * @return  void
+     * @param  string $argument message
+     * @param  string $type     type of log message
+     * @return void
      **/
-    protected function log($argument, $type = null) {
+    protected function log($argument, $type = null)
+    {
         if (is_callable(array($this->log, 'log'))) {
             $this->log->log($argument, $type);
         } else {
@@ -195,18 +204,19 @@ abstract class element {
     /**
      * @brief   Escapes HTML in strings and arrays of strings
      *
-     * @param   mixed   $options        value to be HTML-escaped
-     * @return  mixed   $htmlOptions    HTML escaped value
+     * @param  mixed $options value to be HTML-escaped
+     * @return mixed $htmlOptions    HTML escaped value
      *
      * @see     __call()
      **/
-    protected function htmlEscape($options = array()) {
+    protected function htmlEscape($options = array())
+    {
         if (is_string($options)) {
             $htmlOptions = htmlspecialchars($options, ENT_QUOTES);
         } elseif (is_array($options)) {
             $htmlOptions = array();
 
-            foreach($options as $index => $option) {
+            foreach ($options as $index => $option) {
                 if (is_string($index))  $index  = htmlspecialchars($index, ENT_QUOTES);
                 if (is_string($option)) $option = htmlspecialchars($option, ENT_QUOTES);
 
@@ -215,6 +225,7 @@ abstract class element {
         } else {
             $htmlOptions = $options;
         }
+
         return $htmlOptions;
     }
     // }}}

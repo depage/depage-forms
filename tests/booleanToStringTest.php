@@ -5,9 +5,11 @@ use depage\htmlform\elements\boolean;
 /**
  * Tests for boolean input element rendering.
  **/
-class booleanToStringTest extends PHPUnit_Framework_TestCase {
+class booleanToStringTest extends PHPUnit_Framework_TestCase
+{
     // {{{ setUp()
-    public function setUp() {
+    public function setUp()
+    {
         $this->form     = new nameTestForm();
         $this->boolean  = new boolean('booleanName', array(), $this->form);
     }
@@ -17,7 +19,8 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Element with default setup
      **/
-    public function testSimple() {
+    public function testSimple()
+    {
         $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" value="true">' .
@@ -33,7 +36,8 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Checked element
      **/
-    public function testChecked() {
+    public function testChecked()
+    {
         $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" value="true" checked="yes">' .
@@ -50,7 +54,8 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Rendered element with set required attribute
      **/
-    public function testRequired() {
+    public function testRequired()
+    {
         $expected = '<p id="formName-booleanName" class="input-boolean required" data-errorMessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" required="required" value="true">' .
@@ -67,7 +72,8 @@ class booleanToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests html escaping of attributes that can be set by instantiation parameters
      **/
-    public function testHtmlEscaping() {
+    public function testHtmlEscaping()
+    {
         $expected = '<p id="formName-booleanName" class="input-boolean required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" required="required" value="true">' .

@@ -5,12 +5,14 @@ use depage\htmlform\elements\creditcard;
 /**
  * Tests for creditcard element rendering.
  **/
-class creditcardToStringTest extends PHPUnit_Framework_TestCase {
+class creditcardToStringTest extends PHPUnit_Framework_TestCase
+{
     // {{{ testSimple()
     /**
      * Element with default setup
      **/
-    public function testSimple() {
+    public function testSimple()
+    {
         $form = new nameTestForm();
 
         $creditcard = new creditcard('creditcardName', array(), $form);
@@ -62,7 +64,8 @@ class creditcardToStringTest extends PHPUnit_Framework_TestCase {
     /**
      * Tests required creditcard container
      **/
-    public function testRequired() {
+    public function testRequired()
+    {
         $form = new nameTestForm();
 
         $creditcard = new creditcard('creditcardName', array('required' => true), $form);

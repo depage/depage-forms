@@ -8,8 +8,6 @@
 
 namespace depage\htmlform\elements;
 
-use depage\htmlform\abstracts;
-
 /**
  * @brief HTML-multiple-choice country input select .
  *
@@ -17,7 +15,7 @@ use depage\htmlform\abstracts;
  *
  * Option values are 2-digit alpha ISO country codes.
  * Country names are run through get text and sorted alphabetically.
- * 
+ *
  * An optional 'priority' parameter moves countries to the top of the select based on the DEPAGE_LANG locale:
  * e.g. 'de' => array('de','at'), 'en' => array('au','gb','ca','us')
  *
@@ -38,22 +36,23 @@ use depage\htmlform\abstracts;
  * ?>
  * @endcode
  **/
-class country extends single {
+class country extends single
+{
     // {{{ variables
     /**
     * @brief Contains list of ISO countries.
     **/
     protected $list = array();
     // }}}
-    
+
     // {{{ getCountries
     /**
      * @brief Gets the Default Countries list
-     * 
-     * @param array     $iso    list/subset of country iso codes to filter 
+     *
+     * @param array $iso list/subset of country iso codes to filter
      **/
-    public static function getCountries($iso = null) {
-        
+    public static function getCountries($iso = null)
+    {
         $countries = array(
             'ad' => _("Andorra"),
             'ae' => _("United Arab Emirates"),
@@ -294,20 +293,20 @@ class country extends single {
             'zr' => _("Zaire"),
             'zw' => _("Zimbabwe")
         );
-        
+
         // return a subset
-        if ($iso !== null){
+        if ($iso !== null) {
             if (is_array($iso)) {
                 return array_intersect_key($countries, $iso);
             } else {
                 return isset($countries[$iso]) ? $countries[$iso] : '';
             }
         }
-        
+
         return $countries;
     }
     // }}}
-    
+
     // {{{ __construct()
     /**
     * @brief   multiple class constructor
@@ -317,46 +316,47 @@ class country extends single {
     * @param   object   $form       parent form object
     * @return  void
     **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         parent::__construct($name, $parameters, $form);
-        
+
         if (isset($parameters['defaultValue'])) {
             $this->defaults['defaultValue'] = $parameters['defaultValue'];
         }
-        
+
         if (isset($parameters['priorityCountries'])) {
             $this->defaults['priorityCountries'] = $parameters['priorityCountries'];
         }
-        
+
         $this->list = isset($parameters['countries'])
             ? $parameters['countries']
             : self::getCountries();
-        
+
         // make sure all keys are lower case
         $this->list = array_change_key_case($this->list, CASE_LOWER);
-        
+
         // sort alphabetically
         asort($this->list);
-        
+
         // move priority countries to the top based on options and language
         if (defined("DEPAGE_LANG") && isset($parameters['priorityCountries'][DEPAGE_LANG])) {
             $priorityCountries = $parameters['priorityCountries'][DEPAGE_LANG];
             // make sure all keys are lower case to match countries
             $priorityCountries = array_change_key_case($priorityCountries, CASE_LOWER);
-            
-            foreach($priorityCountries as &$country_code){
-                if (isset($this->list[$country_code])){
+
+            foreach ($priorityCountries as &$country_code) {
+                if (isset($this->list[$country_code])) {
                     $top = array($country_code => $this->list[$country_code]);
                     unset($this->list[$country_code]);
                     $this->list = $top + $this->list;
-                } 
+                }
             }
         }
-        
+
         $this->list = array('' => _("Please Select")) + $this->list;
     }
     // }}}
-    
+
     // {{{ setDefaults()
     /**
     * @brief   collects initial values across subclasses.
@@ -367,9 +367,10 @@ class country extends single {
     *
     * @return  void
     **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
-        
+
         $this->defaults['skin'] = 'select';
     }
     // }}}

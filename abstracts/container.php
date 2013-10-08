@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @file container.php
  * @brief abstract container element class
@@ -18,7 +18,8 @@ use depage\htmlform\exceptions;
  * The abstract container class contains the base for container type elements.
  * ie. htmlform, fieldset and step
  **/
-abstract class container extends element {
+abstract class container extends element
+{
     // {{{ variables
     /**
      * @brief References to input elements and fieldsets.
@@ -38,12 +39,13 @@ abstract class container extends element {
     /**
      * @brief   container class constructor
      *
-     * @param   string  $name       container name
-     * @param   array   $parameters container parameters, HTML attributes
-     * @param   object  $form       parent form object
-     * @return  void
+     * @param  string $name       container name
+     * @param  array  $parameters container parameters, HTML attributes
+     * @param  object $form       parent form object
+     * @return void
      **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         $this->form = $form;
 
         parent::__construct($name, $parameters, $form);
@@ -60,14 +62,15 @@ abstract class container extends element {
      * -# (Methods beginnning with "html)" Returns the respective HTML escaped
      *    attributes for element rendering.
      *
-     * @param   string  $function   function name
-     * @param   array   $arguments  function arguments
-     * @return  object  element object or (mixed) HTML escaped value
+     * @param  string $function  function name
+     * @param  array  $arguments function arguments
+     * @return object element object or (mixed) HTML escaped value
      *
      * @see     addElement()
      * @see     htmlEscape()
      **/
-    public function __call($function, $arguments) {
+    public function __call($function, $arguments)
+    {
         if (substr($function, 0, 3) === 'add') {
             $type       = strtolower(str_replace('add', '\\depage\\htmlform\\elements\\', $function));
             $name       = isset($arguments[0])  ? $arguments[0] : '';
@@ -86,15 +89,16 @@ abstract class container extends element {
      *
      * Adds new child elements to $this->elements.
      *
-     * @param   string  $type           elememt type
-     * @param   string  $name           element name
-     * @param   array   $parameters     element attributes: HTML attributes, validation parameters etc.
-     * @return  object  $newElement     new element object
+     * @param  string $type       elememt type
+     * @param  string $name       element name
+     * @param  array  $parameters element attributes: HTML attributes, validation parameters etc.
+     * @return object $newElement     new element object
      *
      * @see     __call()
      * @see     addChildElements()
      **/
-    protected function addElement($type, $name, $parameters) {
+    protected function addElement($type, $name, $parameters)
+    {
         $this->checkElementType($type);
         $this->checkParameters($parameters);
 
@@ -108,6 +112,7 @@ abstract class container extends element {
         if ($newElement instanceof container) {
             $newElement->addChildElements();
         }
+
         return $newElement;
     }
     // }}}
@@ -122,7 +127,7 @@ abstract class container extends element {
      *
      * (see @link depage::htmlform::elements::creditcard @endlink for an example implementation)
      *
-     * @return  void
+     * @return void
      *
      * @see     addElement()
      **/
@@ -133,12 +138,13 @@ abstract class container extends element {
     /**
      * @brief   Adds a new custom HTML element to the container.
      *
-     * @param   string  $html           HTML code
-     * @return  object  $htmlElement    HTML element object
+     * @param  string $html HTML code
+     * @return object $htmlElement    HTML element object
      *
      * @see     depage::htmlform::elements::html
      **/
-    public function addHtml($html) {
+    public function addHtml($html)
+    {
         $htmlElement = new elements\html($html);
 
         $this->elementsAndHtml[] = $htmlElement;
@@ -146,14 +152,15 @@ abstract class container extends element {
         return $htmlElement;
     }
     // }}}
-    
+
     // {{{ addStepNav()
     /**
      * @brief   Adds automatic step navigation to output
      *
-     * @param   array   $parameter      array of opional parameters
+     * @param array $parameter array of opional parameters
      **/
-    public function addStepNav($parameter = array()) {
+    public function addStepNav($parameter = array())
+    {
         $htmlElement = new elements\stepnav($parameter, $this->form);
 
         $this->elementsAndHtml[] = $htmlElement;
@@ -169,18 +176,20 @@ abstract class container extends element {
      * Walks recursively through current containers' elements and checks if
      * they're valid. Saves the result to $this->valid.
      *
-     * @return bool     $this->valid validation result
+     * @return bool $this->valid validation result
      **/
-    public function validate() {
+    public function validate()
+    {
         if (!$this->validated) {
             $this->validated = true;
 
             $this->valid = true;
-            foreach($this->elements as $element) {
+            foreach ($this->elements as $element) {
                 $element->validate();
                 $this->valid = (($this->valid) && ($element->validate()));
             }
         }
+
         return $this->valid;
     }
     // }}}
@@ -191,10 +200,11 @@ abstract class container extends element {
      *
      * Sets current containers' elements' HTML-required attribute recursively.
      *
-     * @param   bool    $required HTML-required attribute
-     * @return  void
+     * @param  bool $required HTML-required attribute
+     * @return void
      **/
-    public function setRequired($required = true) {
+    public function setRequired($required = true)
+    {
         $required = (bool) $required;
 
         foreach ($this->elements as $element) {
@@ -209,10 +219,11 @@ abstract class container extends element {
      *
      * Checks if an element type class exists. Throws an exception if it doesn't.
      *
-     * @param   string  $type   element type
-     * @return  void
+     * @param  string $type element type
+     * @return void
      **/
-    private function checkElementType($type) {
+    private function checkElementType($type)
+    {
         if (!class_exists($type)) {
             throw new exceptions\unknownElementTypeException();
         }
@@ -226,12 +237,13 @@ abstract class container extends element {
      * Walks recursively through current containers' elements to compile a list
      * of subelements.
      *
-     * @param   bool    $includeFieldsets  include fieldset/step elements in result
-     * @return  array   $allElements       subelements
+     * @param  bool  $includeFieldsets include fieldset/step elements in result
+     * @return array $allElements       subelements
      **/
-    public function getElements($includeFieldsets = false) {
+    public function getElements($includeFieldsets = false)
+    {
         $allElements = array();
-        foreach($this->elements as $element) {
+        foreach ($this->elements as $element) {
             if ($element instanceof elements\fieldset) {
                 $allElements = array_merge($allElements, $element->getElements());
                 if ($includeFieldsets) {
@@ -241,6 +253,7 @@ abstract class container extends element {
                 $allElements[] = $element;
             }
         }
+
         return $allElements;
     }
     // }}}
@@ -252,27 +265,30 @@ abstract class container extends element {
      * Searches subelements by name and returns a single element object if
      * successful. Returns false if the element can't be found.
      *
-     * @param   string  $name       name of the input element we're looking for
-     * @return  object  $element    subelement or (bool) false if unsuccessful
+     * @param  string $name name of the input element we're looking for
+     * @return object $element    subelement or (bool) false if unsuccessful
      **/
-    public function getElement($name) {
-        foreach($this->getElements() as $element) {
+    public function getElement($name)
+    {
+        foreach ($this->getElements() as $element) {
             if ($name === $element->getName()) {
                 return $element;
             }
         }
+
         return false;
     }
     // }}}
-    
+
     // {{{ clearValue()
     /**
      * @brief   Deletes values of all child elements
      *
-     * @return  void
+     * @return void
      **/
-    public function clearValue() {
-        foreach($this->getElements(true) as $element) {
+    public function clearValue()
+    {
+        foreach ($this->getElements(true) as $element) {
             $element->clearValue();
         }
     }

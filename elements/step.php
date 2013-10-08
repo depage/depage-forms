@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * @link steps.php Example form @endlink
  **/
-class step extends fieldset {
+class step extends fieldset
+{
     // {{{ __toString()
     /**
      * @brief renders step container to HTML
@@ -22,13 +23,15 @@ class step extends fieldset {
      * If the step contains elements it calls their rendering methods.
      * (unlike fieldsets, steps themselves aren't rendered)
      *
-     * @return string   $renderedElement HTML rendered element
+     * @return string $renderedElement HTML rendered element
      **/
-     public function __toString() {
+     public function __toString()
+     {
         $renderedElements = '';
-        foreach($this->elementsAndHtml as $element) {
+        foreach ($this->elementsAndHtml as $element) {
             $renderedElements .= $element;
         }
+
         return $renderedElements;
     }
     // }}}

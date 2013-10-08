@@ -8,15 +8,13 @@
 
 namespace depage\htmlform\elements;
 
-use depage\htmlform\abstracts;
-
 /**
  * @brief HTML-multiple-choice States input select .
  *
  * Class for generic states select list.
  *
  * Option values are 4-digit alpha ISO state codes.
- * 
+ *
  * @section usage
  *
  * @code
@@ -34,22 +32,23 @@ use depage\htmlform\abstracts;
  * ?>
  * @endcode
  **/
-class state extends single {
+class state extends single
+{
     // {{{ variables
     /**
     * @brief Contains list of ISO countries.
     **/
     protected $list = array();
     // }}}
-    
+
     // {{{ variables
     /**
      * @brief Gets the Default States list
-     * 
-     * @param array     $iso    list/subset of state iso codes to filter 
+     *
+     * @param array $iso list/subset of state iso codes to filter
      **/
-    public static function getStates($iso = null) {
-        
+    public static function getStates($iso = null)
+    {
         $country_states = array(
             // http://en.wikipedia.org/wiki/ISO_3166-2:DE
             'de' => array(
@@ -131,23 +130,23 @@ class state extends single {
                 'us-vi' => _("Virgin Islands, U.S.)")
             ),
         );
-        
+
         // return a subset
-        if ($iso !== null){
+        if ($iso !== null) {
             // search for iso state codes
-            foreach($country_states as $country => &$states) {
-                if(isset($states[$iso])){
+            foreach ($country_states as $country => &$states) {
+                if (isset($states[$iso])) {
                     return $states[$iso];
                 }
             }
-            
+
             return '';
         }
-        
+
         return $country_states;
     }
     // }}}
-    
+
     // {{{ __construct()
     /**
     * @brief   multiple class constructor
@@ -157,27 +156,28 @@ class state extends single {
     * @param   object   $form       parent form object
     * @return  void
     **/
-    public function __construct($name, $parameters, $form) {
+    public function __construct($name, $parameters, $form)
+    {
         parent::__construct($name, $parameters, $form);
-        
+
         if (isset($parameters['defaultValue'])) {
             $this->defaults['defaultValue'] = $parameters['defaultValue'];
         }
-        
+
         $this->list = isset($parameters['states'])
             ? $parameters['states']
             : self::getStates();
-        
+
         // make sure all keys are lower case
         $this->list = array_change_key_case($this->list, CASE_LOWER);
-        
+
         // sort alphabetically
         asort($this->list);
-        
+
         $this->list = array('' => _("Please Select")) + $this->list;
     }
     // }}}
-    
+
     // {{{ setDefaults()
     /**
     * @brief   collects initial values across subclasses.
@@ -188,9 +188,10 @@ class state extends single {
     *
     * @return  void
     **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
-        
+
         $this->defaults['skin'] = 'select';
     }
     // }}}

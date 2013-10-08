@@ -31,14 +31,16 @@ use depage\htmlform\abstracts;
  * ?>
  * @endcode
  **/
-class placeholder extends abstracts\input {
+class placeholder extends abstracts\input
+{
     // {{{ __toString()
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string HTML-rendered element
+     * @return string HTML-rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         return "";
     }
     // }}}

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @file    htmlform.php
  * @brief   htmlform class and autoloader
@@ -25,7 +25,7 @@
  * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.
  *
- * @endsection 
+ * @endsection
  *
  * @subpage developer
  *
@@ -73,7 +73,7 @@
  *
  * @section style Coding style
  *
- * Generally, follow Zend coding standard
+ * Generally, follow PSR-0, PSR-1, PSR-2 coding standard (http://www.php-fig.org)
  *
  * @section Deployment
  *
@@ -114,7 +114,7 @@
  * @brief Classes for HTML input-elements
  *
  * All Classes in this namespace are HTML input-elements that can be added to
- * instances of the @link depage::htmlform::htmlform htmlform-class@endlink, 
+ * instances of the @link depage::htmlform::htmlform htmlform-class@endlink,
  * but also to also to @link depage::htmlform::elements::fieldset fieldsets@endlink
  * and @link depage::htmlform::elements::step steps@endlink:
  *
@@ -134,7 +134,8 @@ namespace depage\htmlform;
  *
  * Autoloads classes by namespace. (requires PHP >= 5.3)
  **/
-function autoload($class) {
+function autoload($class)
+{
     $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
     $file = __DIR__ . '/' .  $class . '.php';
 
@@ -153,13 +154,13 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * input elements and container elements. It also contains the PHP session
  * handlers.
  *
- * When you use <em>depage-forms</em> this is probably the only class you will 
+ * When you use <em>depage-forms</em> this is probably the only class you will
  * instantiate directly.
  *
  * In general:
  *
  * @code
- * <?php 
+ * <?php
  *     $form = new depage\htmlform\htmlform('simpleForm');
  *
  *     // add form fields
@@ -168,7 +169,7 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  *
  *     // process form
  *     $form->process();
- *     
+ *
  *     if ($form->validate()) {
  *         // do something with your valid data
  *         var_dump($form->getValues());
@@ -180,13 +181,14 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * ?>
  * @endcode
  *
- * You can find a list of available input-class in @link depage::htmlform::elements 
+ * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.
  *
  * See examples at
  *     - @link simple.php @endlink - a simple form
  **/
-class htmlform extends abstracts\container {
+class htmlform extends abstracts\container
+{
     // {{{ variables
     /**
      * @brief HTML form method attribute
@@ -238,12 +240,13 @@ class htmlform extends abstracts\container {
     /**
      * @brief   htmlform class constructor
      *
-     * @param   string  $name       form name
-     * @param   array   $parameters form parameters, HTML attributes
-     * @param   object  $form       parent form object reference (not used in this case)
-     * @return  void
+     * @param  string $name       form name
+     * @param  array  $parameters form parameters, HTML attributes
+     * @param  object $form       parent form object reference (not used in this case)
+     * @return void
      **/
-    public function __construct($name, $parameters = array(), $form = null) {
+    public function __construct($name, $parameters = array(), $form = null)
+    {
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
 
@@ -277,9 +280,10 @@ class htmlform extends abstracts\container {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['label']        = 'submit';
@@ -304,9 +308,10 @@ class htmlform extends abstracts\container {
      * checks if session lifetime exceeds ttl value and deletes it. Updates
      * timestamp.
      *
-     * @return  void
+     * @return void
      **/
-    private function sessionExpiry() {
+    private function sessionExpiry()
+    {
         if (isset($this->ttl) && is_numeric($this->ttl)) {
             $timestamp = time();
 
@@ -324,23 +329,24 @@ class htmlform extends abstracts\container {
     // }}}
 
     // {{{ addElement()
-    /** 
+    /**
      * @brief   Adds input or fieldset elements to htmlform.
      *
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements.
-     * 
-     * @param   string  $type       input type or fieldset
-     * @param   string  $name       name of the element
-     * @param   array   $parameters element attributes: HTML attributes, validation parameters etc.
-     * @return  object  $newElement element object
+     *
+     * @param  string $type       input type or fieldset
+     * @param  string $name       name of the element
+     * @param  array  $parameters element attributes: HTML attributes, validation parameters etc.
+     * @return object $newElement element object
      **/
-    protected function addElement($type, $name, $parameters) {
+    protected function addElement($type, $name, $parameters)
+    {
         $this->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if ($newElement instanceof elements\step)   { $this->steps[] = $newElement; }
+        if ($newElement instanceof elements\step) { $this->steps[] = $newElement; }
         if ($newElement instanceof abstracts\input) { $this->updateInputValue($name); }
 
         return $newElement;
@@ -352,14 +358,15 @@ class htmlform extends abstracts\container {
      * @brief   Updates the value of an associated input element
      *
      * Sets the input elements' value. If there is post-data - we'll use that
-     * to update the value of the input element and the session. If not - we 
+     * to update the value of the input element and the session. If not - we
      * take the value that's already in the session. If the value is neither in
      * the session nor in the post-data - nothing happens.
      *
-     * @param   string  $name name of the input element
-     * @return  void
+     * @param  string $name name of the input element
+     * @return void
      **/
-    public function updateInputValue($name) {
+    public function updateInputValue($name)
+    {
         // if it's a post, take the value from there and save it to the session
         if (
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
@@ -386,10 +393,11 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Checks if the element named $name is in the current step.
      *
-     * @param   string  $name   name of element
-     * @return  bool    says wether it's in the current step
+     * @param  string $name name of element
+     * @return bool   says wether it's in the current step
      **/
-    private function inCurrentStep($name) {
+    private function inCurrentStep($name)
+    {
         return in_array($this->getElement($name), $this->getCurrentElements());
     }
     // }}}
@@ -403,9 +411,10 @@ class htmlform extends abstracts\container {
      * the form is completely created, because the step elements have to be
      * counted)
      *
-     * @return  void
+     * @return void
      **/
-    private function setCurrentStep() {
+    private function setCurrentStep()
+    {
         if (!is_numeric($this->currentStepId)
             || ($this->currentStepId > count($this->steps) - 1)
             || ($this->currentStepId < 0)
@@ -419,34 +428,37 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Returns an array of steps
      *
-     * @return  array step objects
+     * @return array step objects
      **/
-    public function getSteps() {
+    public function getSteps()
+    {
         return $this->steps;
     }
     // }}}
-    
+
     // {{{ getCurrentStepId()
     /**
      * @brief   Returns the current step id
      *
-     * @return  int current step
+     * @return int current step
      **/
-    public function getCurrentStepId() {
+    public function getCurrentStepId()
+    {
         return $this->currentStepId;
     }
     // }}}
-    
+
     // {{{ getCurrenElements()
     /**
      * @brief   Returns an array of input elements contained in the current step.
      *
-     * @return  array element objects
+     * @return array element objects
      **/
-    private function getCurrentElements() {
+    private function getCurrentElements()
+    {
         $currentElements = array();
 
-        foreach($this->elements as $element) {
+        foreach ($this->elements as $element) {
             if ($element instanceof elements\fieldset) {
                 if (
                     !($element instanceof elements\step)
@@ -458,6 +470,7 @@ class htmlform extends abstracts\container {
                 $currentElements[] = $element;
             }
         }
+
         return $currentElements;
     }
     // }}}
@@ -469,9 +482,10 @@ class htmlform extends abstracts\container {
      * Renders the htmlform object to HTML code. If the form contains elements
      * it calls their rendering methods.
      *
-     * @return  string HTML code
+     * @return string HTML code
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $renderedElements   = '';
         $label              = $this->htmlLabel();
         $cancellabel        = $this->htmlCancelLabel();
@@ -481,7 +495,7 @@ class htmlform extends abstracts\container {
         $jsValidation       = $this->htmlJsValidation();
         $jsAutosave         = $this->jsAutosave === true ? "true" : $this->htmlJsAutosave();
 
-        foreach($this->elementsAndHtml as $element) {
+        foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
             if (
                 !($element instanceof elements\step)
@@ -500,7 +514,7 @@ class htmlform extends abstracts\container {
         return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\" data-jsvalidation=\"{$jsValidation}\" data-jsautosave=\"{$jsAutosave}\" enctype=\"multipart/form-data\">" . "\n" .
             $renderedElements .
             "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
-            $cancel . 
+            $cancel .
         "</form>";
     }
     // }}}
@@ -513,18 +527,19 @@ class htmlform extends abstracts\container {
      * on succesful validation otherwise redirects to first invalid step or
      * back to form.
      *
-     * @return  void
+     * @return void
      *
      * @see     validate()
      **/
-   public function process() {
+   public function process()
+   {
         $this->setCurrentStep();
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if (!is_null($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
-            } else if ($this->validate()) {
+            } elseif ($this->validate()) {
                 $this->redirect($this->successURL);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
@@ -539,33 +554,34 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Adding step parameter to already existing query
      *
-     * @return  new query
+     * @return new query
      **/
-    public function buildUrlQuery($step_query = '') {
+    public function buildUrlQuery($step_query = '')
+    {
         //if there is query
-        $query = ''; 
-        if (isset($this->url['query']) && $this->url['query']!="")  {
+        $query = '';
+        if (isset($this->url['query']) && $this->url['query']!="") {
             //decoding query string
             $query = html_entity_decode($this->url['query']);
-            
-            //parsing the query into an array 
+
+            //parsing the query into an array
             parse_str($query, $queryParts);
-   				
+
             //remove any step argument
             if (isset($queryParts["step"])) unset($queryParts["step"]);
 
             //building again the query
             $query = http_build_query($queryParts);
-            
+
             //adding question mark
             $query = "?".$query;
-            
+
             //adding the extra query
             $query .= isset($step_query)?'&'.$step_query:'';
         } else {
             $query = isset($step_query)?'?'.$step_query:'';
         }
-		
+
         return $query;
     }
     // }}}
@@ -578,12 +594,13 @@ class htmlform extends abstracts\container {
      * isn't valid (steps need to be submitted at least once to count as valid).
      * Form must have been validated before calling this method.
      *
-     * @return  int     $stepNumber number of first invalid step
+     * @return int $stepNumber number of first invalid step
      **/
-    public function getFirstInvalidStep() {
+    public function getFirstInvalidStep()
+    {
         if ( count($this->steps ) > 0) {
-            foreach ( $this->steps as $stepNumber => $step ) {
-                if ( !$step->valid ) {
+            foreach ($this->steps as $stepNumber => $step) {
+                if (!$step->valid) {
                     return $stepNumber;
                 }
             }
@@ -593,6 +610,7 @@ class htmlform extends abstracts\container {
              * don't want to jump back to the first step. Hence, this little
              * hack.
              **/
+
             return count($this->steps) - 1;
         } else {
             return 0;
@@ -604,9 +622,10 @@ class htmlform extends abstracts\container {
     /**
      * @brief Redirects Browser to a different URL.
      *
-     * @param string    $url url to redirect to
+     * @param string $url url to redirect to
      */
-    public function redirect($url) {
+    public function redirect($url)
+    {
         if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
             // don't redirect > it's from ajax
         } else {
@@ -623,14 +642,15 @@ class htmlform extends abstracts\container {
      * Form validation - validates form elements returns validation result and
      * writes it to session. Also calls custom validator if available.
      *
-     * @return  bool validation result
+     * @return bool validation result
      *
      * @see     process()
      **/
-    public function validate() {
+    public function validate()
+    {
         // onValidate hook for custom required/validation rules
         $this->valid = $this->onValidate();
-        
+
         $this->valid = $this->valid && $this->validateAutosave();
 
         if ($this->valid && !is_null($this->validator)) {
@@ -640,50 +660,52 @@ class htmlform extends abstracts\container {
                 throw new exceptions\validatorNotCallable("The validator paramater must be callable");
             }
         }
-        
+
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
-        
+
         return $this->valid;
     }
     // }}}
-    
+
     // validateAutosave() {{{
     /**
      * If the form is autosaving the validation property is defaulted to false.
-     * 
+     *
      * This function returns the actual state of input validation.
      * It can therefore be used to test autosave fields are correct without forcing
      * the form save.
-     * 
+     *
      * @return bool $partValid - whether the autosave postback data is valid
      */
-    public function validateAutosave() {
+    public function validateAutosave()
+    {
         parent::validate();
 
         $partValid = $this->valid;
-        
+
         // save data in session when autosaving but don't validate successfully
         if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
                 || (isset($this->sessionSlot['formIsAutosaved'])
                     && $this->sessionSlot['formIsAutosaved'] === true)) {
             $this->valid = false;
         }
-        
+
         // save whether form was autosaved the last time
         $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
-        
+
         return $partValid;
     }
     // }}}
-    
+
     // {{{ isEmpty()
     /**
      * @brief   Returns wether form has been submitted before or not.
      *
-     * @return  bool session status
+     * @return bool session status
      **/
-    public function isEmpty() {
+    public function isEmpty()
+    {
         return !isset($this->sessionSlot['formName']);
     }
     // }}}
@@ -695,11 +717,12 @@ class htmlform extends abstracts\container {
      * Allows to manually populate the forms' input elements with values by
      * parsing an array of name-value pairs.
      *
-     * @param   array   $data input element names (key) and values (value)
-     * @return  void
+     * @param  array $data input element names (key) and values (value)
+     * @return void
      **/
-    public function populate($data = array()) {
-        foreach($data as $name => $value) {
+    public function populate($data = array())
+    {
+        foreach ($data as $name => $value) {
             $element = $this->getElement($name);
             if ($element) {
                $element->setDefaultValue($value);
@@ -712,14 +735,15 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Gets form-data from current PHP session.
      *
-     * @return  array form-data
+     * @return array form-data
      **/
-    public function getValues() {
+    public function getValues()
+    {
         if (isset($this->sessionSlot)) {
             // remove internal attributes from values
             return array_diff_key($this->sessionSlot, array(
-                'formIsValid' => '', 
-                'formIsAutosaved' => '', 
+                'formIsValid' => '',
+                'formIsAutosaved' => '',
                 'formName' => '',
                 'formTimestamp' => '',
             ));
@@ -733,17 +757,19 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Gets form-data from current PHP session but also contain elemnt labels.
      *
-     * @return  array form-data with labels
+     * @return array form-data with labels
      **/
-    public function getValuesWithLabel() {
+    public function getValuesWithLabel()
+    {
         //get values first
         $values = $this->getValues();
         $values_with_label =array();
         if (isset($values)) {
             foreach ($values as $element => $value) {
                 $elem = $this->getElement($element);
-                if ($elem) $values_with_label[$element] = array("value"=>$value, "label"=>$elem->getLabel()); 
+                if ($elem) $values_with_label[$element] = array("value"=>$value, "label"=>$elem->getLabel());
             }
+
             return $values_with_label;
         } else {
             return null;
@@ -758,11 +784,12 @@ class htmlform extends abstracts\container {
      * Checks within the form if an input element or fieldset name is already
      * taken. If so, it throws an exception.
      *
-     * @param   string  $name name to check
-     * @return  void
+     * @param  string $name name to check
+     * @return void
      **/
-    public function checkElementName($name) {
-        foreach($this->getElements(true) as $element) {
+    public function checkElementName($name)
+    {
+        foreach ($this->getElements(true) as $element) {
             if ($element->getName() === $name) {
                 throw new exceptions\duplicateElementNameException("Element name \"{$name}\" already in use.");
             }
@@ -774,9 +801,10 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Deletes the current forms' PHP session data.
      *
-     * @return  void
+     * @return void
      **/
-    public function clearSession() {
+    public function clearSession()
+    {
         $this->clearValue();
 
         unset($_SESSION[$this->sessionSlotName]);
@@ -790,11 +818,12 @@ class htmlform extends abstracts\container {
      *
      * Can be overridden with custom validation rules, field-required rules etc.
      *
-     * @return  void
+     * @return void
      *
      * @see     validate()
      **/
-    protected function onValidate() {
+    protected function onValidate()
+    {
         return true;
     }
     // }}}
@@ -807,7 +836,7 @@ class htmlform extends abstracts\container {
  *
  * Demonstrates the use of all element types that are fully implemented.
  * Includes examples of element specific options.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/elements.php"></iframe>@endhtmlonly
  **/
 
@@ -828,7 +857,7 @@ class htmlform extends abstracts\container {
  *
  * Multiple, single and text input elements have option lists. Here are some
  * more detailed examples.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/lists.php"></iframe>@endhtmlonly
  **/
 
@@ -839,7 +868,7 @@ class htmlform extends abstracts\container {
  * The htmlform->populate method provides a comfortable way to fill in
  * default values before displaying the form. It's more convenient than setting
  * the 'defaultValue' parameter for each input element individually.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/populate.php"></iframe>@endhtmlonly
  **/
 
@@ -849,7 +878,7 @@ class htmlform extends abstracts\container {
  *
  * Contains a common personal information form. Some elements are set required
  * and the username has a minimum length.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/reallife.php"></iframe>@endhtmlonly
  **/
 
@@ -859,7 +888,7 @@ class htmlform extends abstracts\container {
  *
  * Once the form is validated, it can also be redirected to another URL. This
  * can be done by setting the 'successURL' parameter in the form.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/redirect.php"></iframe>@endhtmlonly
  *
  * @include redirect-success.php
@@ -872,7 +901,7 @@ class htmlform extends abstracts\container {
  * One can lower the lifetime of the forms session by setting the 'ttl' value.
  * Setting this higher than the PHP session length (default around 30min) has
  * no effect.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/session-timeout.php"></iframe>@endhtmlonly
  **/
 
@@ -896,7 +925,7 @@ class htmlform extends abstracts\container {
  * its input elements are valid.
  * It is also possible to attach input elements directly to the form (outside
  * any step container). These elements are visible on every step.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/steps.php"></iframe>@endhtmlonly
  **/
 
@@ -907,7 +936,7 @@ class htmlform extends abstracts\container {
  * It's also possible to override the htmlform class and add elements in the
  * constructor. This way we can build reusable form classes or add custom rules
  * to the form validation.
- * 
+ *
  * @htmlonly<iframe class="example" seamless="seamless" src="../examples/subclass.php"></iframe>@endhtmlonly
  **/
 // }}}

@@ -8,7 +8,8 @@ namespace depage\htmlform\validators;
 /**
  * @brief customizable validator for input elements
  **/
-class regEx extends validator {
+class regEx extends validator
+{
     // {{{ variables
     /**
      * @brief regular expression
@@ -20,11 +21,12 @@ class regEx extends validator {
     /**
      * @brief   validates value with regular expression
      *
-     * @param   string  $value      value to be validated
-     * @param   array   $parameters validation parameters
-     * @return  bool    validation result
+     * @param  string $value      value to be validated
+     * @param  array  $parameters validation parameters
+     * @return bool   validation result
      **/
-    public function validate($value, $parameters = array()) {
+    public function validate($value, $parameters = array())
+    {
         $match = (bool) preg_match($this->regEx, $value, $matchedSubstring);
 
         /**
@@ -47,10 +49,11 @@ class regEx extends validator {
     /**
      * @brief   sets the validators regular expression
      *
-     * @param   string  $regEx regular expression
-     * @return  void
+     * @param  string $regEx regular expression
+     * @return void
      **/
-    public function setRegEx($regEx) {
+    public function setRegEx($regEx)
+    {
         $this->regEx = $regEx;
     }
     // }}}

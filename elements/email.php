@@ -34,7 +34,8 @@ namespace depage\htmlform\elements;
  * ?>
  * @endcode
  **/
-class email extends text {
+class email extends text
+{
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
@@ -43,13 +44,14 @@ class email extends text {
      * attributes at runtime. It's a compact mechanism for initialising
      * a lot of variables.
      *
-     * @return  void
+     * @return void
      **/
-    protected function setDefaults() {
+    protected function setDefaults()
+    {
         parent::setDefaults();
 
         $this->defaults['errorMessage'] = _('Please enter a valid e-mail address');
-        
+
         // @todo add option to test mail domain name (dns)
     }
     // }}}

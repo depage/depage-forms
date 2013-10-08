@@ -9,13 +9,15 @@ require_once(__DIR__ . '/../htmlform.php');
 /**
  * Dummy test class (for element & validator tests)
  **/
-class logTestClass {
+class logTestClass
+{
     public $error = array(
         'argument'  => '',
         'type'      => '',
     );
 
-    public function log($argument, $type = null) {
+    public function log($argument, $type = null)
+    {
         $this->error = array(
             'argument'  => $argument,
             'type'      => $type,
@@ -28,8 +30,10 @@ class logTestClass {
 /**
  * Dummy form class
  **/
-class nameTestForm {
-    public function getName() {
+class nameTestForm
+{
+    public function getName()
+    {
         return 'formName';
     }
 
@@ -37,4 +41,3 @@ class nameTestForm {
     public function updateInputValue() {}
 }
 // }}}
-?>

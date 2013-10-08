@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @file    stepnav.php
  * @brief   Navigation element for steps
@@ -13,7 +13,8 @@ namespace depage\htmlform\elements;
  *
  * @section usage
  **/
-class stepnav  {
+class stepnav
+{
     // {{{ variables
     /**
      * @brief HTML code to be printed
@@ -25,11 +26,12 @@ class stepnav  {
     /**
      * @brief   stepnav class constructor
      *
-     * @param   array   $parameters input element parameters, HTML attributes, validator specs etc.
-     * @param   object  $form       parent form object
-     * @return  void
+     * @param  array  $parameters input element parameters, HTML attributes, validator specs etc.
+     * @param  object $form       parent form object
+     * @return void
      **/
-    public function __construct($parameters, $form) {
+    public function __construct($parameters, $form)
+    {
         $this->form = $form;
     }
     // }}}
@@ -38,9 +40,10 @@ class stepnav  {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  string  $htmlString HTML-rendered element
+     * @return string $htmlString HTML-rendered element
      **/
-    public function __toString() {
+    public function __toString()
+    {
         $currentStepId = $this->form->getCurrentStepId();
         $firstInvalidStep = $this->form->getFirstInvalidStep();
 
