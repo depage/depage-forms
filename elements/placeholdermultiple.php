@@ -15,14 +15,13 @@ namespace depage\htmlform\elements;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a hidden field
- *     $form->addPlaceholderMutliple('nonce');
- *
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a hidden field
+        $form->addPlaceholderMutliple('nonce');
+
+    ?> @endcode
  **/
 class placeholdermultiple extends placeholder
 {

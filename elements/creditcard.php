@@ -26,21 +26,20 @@ namespace depage\htmlform\elements;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a creditcard fieldset
- *     $form->addCreditcard('creditcard', array(
- *         'label' => 'Credit Card',
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a creditcard fieldset
+        $form->addCreditcard('creditcard', array(
+            'label' => 'Credit Card',
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class creditcard extends fieldset
 {

@@ -21,27 +21,26 @@ use depage\htmlform\abstracts;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a boolean field
- *     $form->addBoolean('newsletter', array(
- *         'label' => 'I want to receive news by mail',
- *     ));
- *
- *     // add a required boolean field
- *     $form->addBoolean('acceptTerms', array(
- *         'label' => 'I accept the following terms',
- *         'required' => true,
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a boolean field
+        $form->addBoolean('newsletter', array(
+            'label' => 'I want to receive news by mail',
+        ));
+
+        // add a required boolean field
+        $form->addBoolean('acceptTerms', array(
+            'label' => 'I accept the following terms',
+            'required' => true,
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class boolean extends abstracts\input
 {

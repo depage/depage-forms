@@ -17,19 +17,18 @@ use depage\htmlform\abstracts;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a hidden field
- *     $form->addPlaceholder('nonce');
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a hidden field
+        $form->addPlaceholder('nonce');
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class placeholder extends abstracts\input
 {

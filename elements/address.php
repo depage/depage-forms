@@ -14,26 +14,26 @@ namespace depage\htmlform\elements;
  * Class to get user address information. It generates a fieldset
  * that consists of
  *
- *     - a state
- *     - a country select
+ * - a state
+ * - a country select
  *
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a creditcard fieldset
- *     $form->addAddress('address', array(
- *         'label' => 'Address',
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a creditcard fieldset
+        $form->addAddress('address', array(
+            'label' => 'Address',
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?>
  * @endcode
  **/
 class address extends fieldset

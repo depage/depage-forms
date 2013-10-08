@@ -18,21 +18,20 @@ namespace depage\htmlform\elements;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a password field
- *     $form->addPassword('userPass', array(
- *         'label' => 'Password',
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a password field
+        $form->addPassword('userPass', array(
+            'label' => 'Password',
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class password extends text
 {

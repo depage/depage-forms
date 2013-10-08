@@ -22,19 +22,18 @@ namespace depage\htmlform\elements;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add country
- *     $form->addCountry('country');
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add country
+        $form->addCountry('country');
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class country extends single
 {

@@ -19,21 +19,20 @@ use depage\htmlform\abstracts;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a text field
- *     $form->addText('food', array(
- *         'label' => 'Favourite food',
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a text field
+        $form->addText('food', array(
+            'label' => 'Favourite food',
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class text extends abstracts\input
 {

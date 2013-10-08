@@ -17,21 +17,20 @@ namespace depage\htmlform\elements;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add an URL field
- *     $form->addUrl('homepage', array(
- *         'label' => 'Homepage URL',
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add an URL field
+        $form->addUrl('homepage', array(
+            'label' => 'Homepage URL',
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class url extends text
 {

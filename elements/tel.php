@@ -17,22 +17,21 @@ namespace depage\htmlform\elements;
  * @section usage
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('myform');
- *
- *     // add a required tel field
- *     $form->addTel('tel', array(
- *         'label' => 'Telephone number',
- *         'required' => true,
- *     ));
- *
- *     // process form
- *     $form->process();
- *
- *     // Display the form.
- *     echo ($form);
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('myform');
+
+        // add a required tel field
+        $form->addTel('tel', array(
+            'label' => 'Telephone number',
+            'required' => true,
+        ));
+
+        // process form
+        $form->process();
+
+        // Display the form.
+        echo ($form);
+    ?> @endcode
  **/
 class tel extends text
 {

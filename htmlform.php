@@ -160,26 +160,25 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * In general:
  *
  * @code
- * <?php
- *     $form = new depage\htmlform\htmlform('simpleForm');
- *
- *     // add form fields
- *     $form->addText('username', array('label' => 'User name', 'required' => true));
- *     $form->addEmail('email', array('label' => 'Email address'));
- *
- *     // process form
- *     $form->process();
- *
- *     if ($form->validate()) {
- *         // do something with your valid data
- *         var_dump($form->getValues());
- *     } else {
- *         // Form was empty or data was not valid:
- *         // Display the form.
- *         echo ($form);
- *     }
- * ?>
- * @endcode
+    <?php
+        $form = new depage\htmlform\htmlform('simpleForm');
+
+        // add form fields
+        $form->addText('username', array('label' => 'User name', 'required' => true));
+        $form->addEmail('email', array('label' => 'Email address'));
+
+        // process form
+        $form->process();
+
+        if ($form->validate()) {
+            // do something with your valid data
+            var_dump($form->getValues());
+        } else {
+            // Form was empty or data was not valid:
+            // Display the form.
+            echo ($form);
+        }
+    ?> @endcode
  *
  * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.
