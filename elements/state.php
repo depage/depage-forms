@@ -46,7 +46,7 @@ class state extends single {
     /**
      * @brief Gets the Default States list
      * 
-     * @param $iso - list of state iso codes to filter 
+     * @param array     $iso    list/subset of state iso codes to filter 
      **/
     public static function getStates($iso = null) {
         
@@ -152,9 +152,9 @@ class state extends single {
     /**
     * @brief   multiple class constructor
     *
-    * @param   $name       (string)    element name
-    * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
-    * @param   $form       (object)    parent form object
+    * @param   strin    $name       element name
+    * @param   array    $parameters element parameters, HTML attributes, validator specs etc.
+    * @param   object   $form       parent form object
     * @return  void
     **/
     public function __construct($name, $parameters, $form) {

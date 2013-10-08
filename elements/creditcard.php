@@ -126,7 +126,7 @@ class creditcard extends fieldset {
      * @todo    validate based on (?): http://www-sst.informatik.tu-cottbus.de/~db/doc/Java/GalileoComputing-JavaInsel/java-04.htm#t321
      * @todo    validate specific to cardtype
      *
-     * @return  (bool) validation result
+     * @return  bool validation result
      **/
     public function validate() {
         return parent::validate();

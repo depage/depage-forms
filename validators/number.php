@@ -14,9 +14,9 @@ class number extends validator {
     /**
      * @brief   number validation
      *
-     * @param   $value      (int)   value to be validated
-     * @param   $parameters (array) validation parameters
-     * @return              (bool)  validation result
+     * @param   int     $value      value to be validated
+     * @param   array   $parameters validation parameters
+     * @return  bool    validation result
      **/
     public function validate($value, $parameters = array()) {
         $min = isset($parameters['min']) ? $parameters['min'] : null;

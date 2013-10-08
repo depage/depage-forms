@@ -47,9 +47,9 @@ class text extends abstracts\input {
     /**
      * @brief   text class constructor
      *
-     * @param   $name       (string)    element name
-     * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
-     * @param   $form       (object)    parent form object
+     * @param   string  $name       element name
+     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -83,7 +83,7 @@ class text extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML rendered element
+     * @return  string HTML rendered element
      **/
     public function __toString() {
         $value              = $this->htmlValue();
@@ -111,8 +111,8 @@ class text extends abstracts\input {
     /**
      * @brief   Renders HTML datalist
      *
-     * @param   $options    (array)     datalist
-     * @return  $htmlList   (string)    rendered HTML datalist
+     * @param   array   $options    datalist
+     * @return  string  $htmlList   rendered HTML datalist
      **/
     protected function htmlList($options = null) {
         if ($this->list && is_array($this->list)) {
@@ -142,7 +142,7 @@ class text extends abstracts\input {
     /**
      * @brief renders text element specific HTML attributes
      *
-     * @return $attributes (string) rendered HTML attributes
+     * @return string   $attributes rendered HTML attributes
      **/
     protected function htmlInputAttributes() {
         $attributes = parent::htmlInputAttributes();

@@ -22,7 +22,7 @@ class step extends fieldset {
      * If the step contains elements it calls their rendering methods.
      * (unlike fieldsets, steps themselves aren't rendered)
      *
-     * @return $renderedElement (string) HTML rendered element
+     * @return string   $renderedElement HTML rendered element
      **/
      public function __toString() {
         $renderedElements = '';

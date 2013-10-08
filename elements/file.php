@@ -40,7 +40,7 @@ class file extends text {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML rendered element
+     * @return  string HTML rendered element
      **/
     public function __toString() {
         if ($this->maxSize !== false) {
@@ -74,7 +74,7 @@ class file extends text {
     /**
      * @brief renders text element specific HTML attributes
      *
-     * @return $attributes (string) rendered HTML attributes
+     * @return string   $attributes rendered HTML attributes
      **/
     protected function htmlInputAttributes() {
         $attributes = parent::htmlInputAttributes();
@@ -102,7 +102,7 @@ class file extends text {
     /**
      * @brief saves uploaded files
      *
-     * @return $files (array) returns an array of all uploaded files
+     * @return array    $files returns an array of all uploaded files
      **/
     public function handleUploadedFiles($files = null) {
         if (!is_array($files)) {

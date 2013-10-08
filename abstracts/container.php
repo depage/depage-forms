@@ -38,9 +38,9 @@ abstract class container extends element {
     /**
      * @brief   container class constructor
      *
-     * @param   $name           (string)    container name
-     * @param   $parameters     (array)     container parameters, HTML attributes
-     * @param   $form           (object)    parent form object
+     * @param   string  $name       container name
+     * @param   array   $parameters container parameters, HTML attributes
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -60,9 +60,9 @@ abstract class container extends element {
      * -# (Methods beginnning with "html)" Returns the respective HTML escaped
      *    attributes for element rendering.
      *
-     * @param   $function   (string)    function name
-     * @param   $arguments  (array)     function arguments
-     * @return              (object)    element object or (mixed) HTML escaped value
+     * @param   string  $function   function name
+     * @param   array   $arguments  function arguments
+     * @return  object  element object or (mixed) HTML escaped value
      *
      * @see     addElement()
      * @see     htmlEscape()
@@ -86,10 +86,10 @@ abstract class container extends element {
      *
      * Adds new child elements to $this->elements.
      *
-     * @param   $type       (string) elememt type
-     * @param   $name       (string) element name
-     * @param   $parameters (array)  element attributes: HTML attributes, validation parameters etc.
-     * @return  $newElement (object) new element object
+     * @param   string  $type           elememt type
+     * @param   string  $name           element name
+     * @param   array   $parameters     element attributes: HTML attributes, validation parameters etc.
+     * @return  object  $newElement     new element object
      *
      * @see     __call()
      * @see     addChildElements()
@@ -133,8 +133,8 @@ abstract class container extends element {
     /**
      * @brief   Adds a new custom HTML element to the container.
      *
-     * @param   $html           (string) HTML code
-     * @return  $htmlElement    (object) HTML element object
+     * @param   string  $html           HTML code
+     * @return  object  $htmlElement    HTML element object
      *
      * @see     depage::htmlform::elements::html
      **/
@@ -151,7 +151,7 @@ abstract class container extends element {
     /**
      * @brief   Adds automatic step navigation to output
      *
-     * @param   $parameter      (array) array of opional parameters
+     * @param   array   $parameter      array of opional parameters
      **/
     public function addStepNav($parameter = array()) {
         $htmlElement = new elements\stepnav($parameter, $this->form);
@@ -169,7 +169,7 @@ abstract class container extends element {
      * Walks recursively through current containers' elements and checks if
      * they're valid. Saves the result to $this->valid.
      *
-     * @return $this->valid (bool) validation result
+     * @return bool     $this->valid validation result
      **/
     public function validate() {
         if (!$this->validated) {
@@ -191,7 +191,7 @@ abstract class container extends element {
      *
      * Sets current containers' elements' HTML-required attribute recursively.
      *
-     * @param   $required (bool) HTML-required attribute
+     * @param   bool    $required HTML-required attribute
      * @return  void
      **/
     public function setRequired($required = true) {
@@ -209,7 +209,7 @@ abstract class container extends element {
      *
      * Checks if an element type class exists. Throws an exception if it doesn't.
      *
-     * @param   $type (string) element type
+     * @param   string  $type   element type
      * @return  void
      **/
     private function checkElementType($type) {
@@ -226,8 +226,8 @@ abstract class container extends element {
      * Walks recursively through current containers' elements to compile a list
      * of subelements.
      *
-     * @param   $includeFieldsets   (bool)  include fieldset/step elements in result
-     * @return  $allElements        (array) subelements
+     * @param   bool    $includeFieldsets  include fieldset/step elements in result
+     * @return  array   $allElements       subelements
      **/
     public function getElements($includeFieldsets = false) {
         $allElements = array();
@@ -252,8 +252,8 @@ abstract class container extends element {
      * Searches subelements by name and returns a single element object if
      * successful. Returns false if the element can't be found.
      *
-     * @param   $name       (string) name of the input element we're looking for
-     * @return  $element    (object) subelement or (bool) false if unsuccessful
+     * @param   string  $name       name of the input element we're looking for
+     * @return  object  $element    subelement or (bool) false if unsuccessful
      **/
     public function getElement($name) {
         foreach($this->getElements() as $element) {

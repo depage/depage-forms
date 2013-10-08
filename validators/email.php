@@ -14,9 +14,9 @@ class email extends validator {
     /**
      * @brief   email validation
      *
-     * @param   $email      (string)    email to be validated
-     * @param   $parameters (array)     validation parameters
-     * @return              (bool)      validation result
+     * @param   string  $email      email to be validated
+     * @param   array   $parameters validation parameters
+     * @return  bool    validation result
      **/
     public function validate($email, $parameters = array()) {
         return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);

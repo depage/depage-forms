@@ -55,7 +55,7 @@ class textarea extends text {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML rendered element
+     * @return  string HTML rendered element
      **/
     public function __toString() {
         $label              = $this->htmlLabel();
@@ -83,7 +83,7 @@ class textarea extends text {
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
-     * @return  $attributes (string) HTML attribute
+     * @return  string  $attributes HTML attribute
      **/
     protected function htmlWrapperAttributes() {
         $attributes = parent::htmlWrapperAttributes();
@@ -100,7 +100,7 @@ class textarea extends text {
     /**
      * @brief   Renders HTML rows attribute
      *
-     * @return  (string) HTML rows attribute
+     * @return  string HTML rows attribute
      **/
     protected function htmlRows() {
         return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
@@ -110,7 +110,7 @@ class textarea extends text {
     /**
      * @brief   Renders HTML cols attribute
      *
-     * @return  (string) HTML cols attribute
+     * @return  string HTML cols attribute
      **/
     protected function htmlCols() {
         return ($this->cols === null) ? "" : " cols=\"" . $this->htmlEscape($this->cols) . "\"";

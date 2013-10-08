@@ -64,9 +64,9 @@ class multiple extends abstracts\input {
     /**
      * @brief   multiple class constructor
      *
-     * @param   $name       (string)    element name
-     * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
-     * @param   $form       (object)    parent form object
+     * @param   string  $name       element name
+     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -103,9 +103,9 @@ class multiple extends abstracts\input {
      * recursively in case of select-optgroups. If no parameters are parsed, it
      * uses the list attribute of this element.
      *
-     * @param   $options    (array)     list elements and subgroups
-     * @param   $value      (array)     values to be marked as selected
-     * @return  $list       (string)    rendered options-part of the HTML-select-element
+     * @param   array   $options    list elements and subgroups
+     * @param   array   $value      values to be marked as selected
+     * @return  string  $list       rendered options-part of the HTML-select-element
      *
      * @see     __toString()
      **/
@@ -149,7 +149,7 @@ class multiple extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML rendered element
+     * @return  string HTML rendered element
      *
      * @see     htmlList()
      **/
@@ -194,7 +194,7 @@ class multiple extends abstracts\input {
      * (overrides parent to avoid awkward HTML5 checkbox validation (all
      * boxes need to be checked if required))
      *
-     * @return  $attributes (string) HTML attributes
+     * @return  string  $attributes HTML attributes
      **/
     protected function htmlInputAttributes() {
         $attributes = '';

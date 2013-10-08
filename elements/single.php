@@ -64,9 +64,9 @@ class single extends abstracts\input {
     /**
      * @brief   single class constructor
      *
-     * @param   $name       (string)    element name
-     * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
-     * @param   $form       (object)    parent form object
+     * @param   string  $name       element name
+     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -102,9 +102,9 @@ class single extends abstracts\input {
      * Works recursively in case of select-optgroups. If no parameters are
      * parsed, it uses the list attribute of this element.
      *
-     * @param   $options    (array)     list elements and subgroups
-     * @param   $value      (string)    value to be marked as selected
-     * @return  $list       (string)    options-part of the HTML-select-element
+     * @param   array   $options    list elements and subgroups
+     * @param   string  $value      value to be marked as selected
+     * @return  string  $list       options-part of the HTML-select-element
      **/
     protected function htmlList($options = null, $value = null) {
         if ($value == null)     $value      = $this->htmlValue();
@@ -145,7 +145,7 @@ class single extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML rendered element
+     * @return  string HTML rendered element
      **/
     public function __toString() {
         $marker             = $this->htmlMarker();

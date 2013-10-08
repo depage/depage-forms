@@ -77,9 +77,9 @@ abstract class input extends element {
     /**
      * @brief   input class constructor
      *
-     * @param   $name       (string)    input element name
-     * @param   $parameters (array)     input element parameters, HTML attributes, validator specs etc.
-     * @param   $form       (object)    parent form object
+     * @param   string  $name       input element name
+     * @param   array   $parameters input element parameters, HTML attributes, validator specs etc.
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -130,7 +130,7 @@ abstract class input extends element {
      * Checks if the value the current input element holds is valid according
      * to it's validator object.
      *
-     * @return  $this->valid (bool) validation result
+     * @return  bool    $this->valid validation result
      **/
     public function validate() {
         if (!$this->validated) {
@@ -152,7 +152,7 @@ abstract class input extends element {
      *
      * Hook method for validator call. Validator arguments can be adjusted on override.
      *
-     * @return   (bool) validation result
+     * @return   bool validation result
      **/
     protected function validatorCall() {
         return $this->validator->validate($this->value);
@@ -166,7 +166,7 @@ abstract class input extends element {
      * Checks wether the input element value is empty. Accepts '0' and false as
      * not empty.
      *
-     * @return  (bool) empty-check result
+     * @return  bool empty-check result
      **/
     public function isEmpty() {
         return (
@@ -184,8 +184,8 @@ abstract class input extends element {
      * Sets the current input elements value. Additionally performs typecasting
      * to element specific datatype.
      *
-     * @param   $newValue       (mixed) new value
-     * @return  $this->value    (mixed) typecasted new value
+     * @param   mixed   $newValue       new value
+     * @return  mixed   $this->value    typecasted new value
      *
      * @see     typeCastValue()
      **/
@@ -200,7 +200,7 @@ abstract class input extends element {
     /**
      * @brief   Returns the current input elements' value.
      *
-     * @return  $this->value (mixed) input element value
+     * @return  mixed   $this->value input element value
      **/
     public function getValue() {
         return $this->value;
@@ -236,7 +236,7 @@ abstract class input extends element {
      * Since the actual іnput value has to be null initially (for validation
      * purposes) the user can manually set the default value here.
      *
-     * @param   $newDefaultValue (mixed) new value
+     * @param   mixed   $newDefaultValue    new value
      * @return  void
      *
      * @see     htmlValue()
@@ -274,7 +274,7 @@ abstract class input extends element {
     /**
      * @brief   Sets the HTML required-attribute of the current input element.
      *
-     * @param   $required (bool) HTML required-attribute
+     * @param   bool    $required   HTML required-attribute
      * @return  void
      **/
     public function setRequired($required = true) {
@@ -286,7 +286,7 @@ abstract class input extends element {
     /**
      * @brief   Sets the HTML disabled-attribute of the current input element.
      *
-     * @param   $dіsabled (bool) HTML disabled-attribute
+     * @param   bool    $dіsabled   HTML disabled-attribute
      * @return  void
      **/
     public function setDisabled($disabled = true) {
@@ -298,7 +298,7 @@ abstract class input extends element {
     /**
      * @brief   Returns string of the elements' HTML-classes, separated by spaces.
      *
-     * @return  $classes (string) HTML-classes
+     * @return  string  $classes HTML-classes
      **/
     protected function htmlClasses() {
         $classes = 'input-' . $this->htmlEscape($this->type);
@@ -330,7 +330,7 @@ abstract class input extends element {
      * If the current input element is set required it returns the marker.
      * Otherwise an empty string.
      *
-     * @return  $this->marker (string) marker or empty string
+     * @return  string  $this->marker marker or empty string
      **/
     protected function htmlMarker() {
         return ($this->required) ? " <em>" . $this->htmlEscape($this->marker) . "</em>" : "";
@@ -341,7 +341,7 @@ abstract class input extends element {
     /**
      * @brief   Returns string of HTML attributes for input element.
      *
-     * @return  $attributes (string) HTML attribute
+     * @return  string  $attributes HTML attribute
      **/
     protected function htmlInputAttributes() {
         $attributes = '';
@@ -373,7 +373,7 @@ abstract class input extends element {
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
-     * @return  $attributes (string) HTML attribute
+     * @return  string  $attributes HTML attribute
      **/
     protected function htmlWrapperAttributes() {
         $attributes = "id=\"{$this->formName}-{$this->name}\" ";
@@ -392,7 +392,7 @@ abstract class input extends element {
     /**
      * @brief   Returns HTML-rendered element value
      *
-     * @return  (mixed) element value
+     * @return  mixed element value
      **/
     protected function htmlValue() {
         return $this->htmlEscape($this->value === null ? $this->defaultValue : $this->value);
@@ -403,7 +403,7 @@ abstract class input extends element {
     /**
      * @brief   Returns HTML-rendered error message
      *
-     * @return  $errorMessage (string) HTML-rendered error message
+     * @return  string  $errorMessage HTML-rendered error message
      **/
     protected function htmlErrorMessage() {
         if (!$this->valid
@@ -423,7 +423,7 @@ abstract class input extends element {
     /**
      * @brief   Returns HTML-rendered helpMessage
      *
-     * @return  $helpMessage (string) HTML-rendered helpMessage span
+     * @return  string  $helpMessage HTML-rendered helpMessage span
      **/
     protected function htmlHelpMessage() {
         $helpMessage = '';

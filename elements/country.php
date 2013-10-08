@@ -50,7 +50,7 @@ class country extends single {
     /**
      * @brief Gets the Default Countries list
      * 
-     * @param $iso - list of country iso codes to filter 
+     * @param array     $iso    list/subset of country iso codes to filter 
      **/
     public static function getCountries($iso = null) {
         
@@ -312,9 +312,9 @@ class country extends single {
     /**
     * @brief   multiple class constructor
     *
-    * @param   $name       (string)    element name
-    * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
-    * @param   $form       (object)    parent form object
+    * @param   string   $name       element name
+    * @param   array    $parameters element parameters, HTML attributes, validator specs etc.
+    * @param   object   $form       parent form object
     * @return  void
     **/
     public function __construct($name, $parameters, $form) {

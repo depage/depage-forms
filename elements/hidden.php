@@ -38,7 +38,7 @@ class hidden extends text {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML-rendered element
+     * @return  string HTML-rendered element
      **/
     public function __toString() {
         $formName   = $this->htmlFormName();

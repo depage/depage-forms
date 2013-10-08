@@ -15,7 +15,7 @@ class tel extends regEx {
      *
      * Sets regular expression for telephone number validation.
      *
-     * @param   $log    (object)    error logger
+     * @param   object  $log    error logger
      * @return  void
      **/
     public function __construct($log = null) {
@@ -32,7 +32,7 @@ class tel extends regEx {
      * Overrides parent to return empty string (tel input element doesn't
      * require pattern attribute for HTML5 validation).
      *
-     * @return  (string) empty attribute string
+     * @return  string empty attribute string
      **/
     public function getPatternAttribute() {
         return '';

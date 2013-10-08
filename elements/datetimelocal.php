@@ -20,7 +20,7 @@ class datetimelocal extends text {
      *
      * datetime-local needs its own rendering method because of the minus sign.
      *
-     * @return  (string) HTML-rendered element
+     * @return  string HTML-rendered element
      **/
     public function __toString() {
         $wrapperAttributes  = $this->htmlWrapperAttributes();

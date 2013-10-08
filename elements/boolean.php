@@ -65,7 +65,7 @@ class boolean extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML-rendered element
+     * @return  string HTML-rendered element
      **/
     public function __toString() {
         $inputAttributes    = $this->htmlInputAttributes();
@@ -96,7 +96,7 @@ class boolean extends abstracts\input {
      * element is valid according to it's validator object. In case of boolean
      * the value has to be true if field is required.
      * 
-     * @return $this->valid (bool) validation result
+     * @return bool     $this->valid validation result
      **/
     public function validate() {
         if (!$this->validated) {
@@ -119,8 +119,8 @@ class boolean extends abstracts\input {
      * Sets the current input elements' value. Converts it to boolean if
      * necessary.
      *
-     * @param   $newValue       (mixed) new element value
-     * @return  $this->value    (bool)  converted value
+     * @param   mixed   $newValue       new element value
+     * @return  bool    $this->value    converted value
      **/
     public function setValue($newValue) {
         if (is_bool($newValue)) {

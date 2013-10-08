@@ -238,9 +238,9 @@ class htmlform extends abstracts\container {
     /**
      * @brief   htmlform class constructor
      *
-     * @param   $name       (string)    form name
-     * @param   $parameters (array)     form parameters, HTML attributes
-     * @param   $form       (object)    parent form object reference (not used in this case)
+     * @param   string  $name       form name
+     * @param   array   $parameters form parameters, HTML attributes
+     * @param   object  $form       parent form object reference (not used in this case)
      * @return  void
      **/
     public function __construct($name, $parameters = array(), $form = null) {
@@ -330,10 +330,10 @@ class htmlform extends abstracts\container {
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements.
      * 
-     * @param   $type       (string)    input type or fieldset
-     * @param   $name       (string)    name of the element
-     * @param   $parameters (array)     element attributes: HTML attributes, validation parameters etc.
-     * @return  $newElement (object)    element object
+     * @param   string  $type       input type or fieldset
+     * @param   string  $name       name of the element
+     * @param   array   $parameters element attributes: HTML attributes, validation parameters etc.
+     * @return  object  $newElement element object
      **/
     protected function addElement($type, $name, $parameters) {
         $this->checkElementName($name);
@@ -356,7 +356,7 @@ class htmlform extends abstracts\container {
      * take the value that's already in the session. If the value is neither in
      * the session nor in the post-data - nothing happens.
      *
-     * @param   $name (string) name of the input element
+     * @param   string  $name name of the input element
      * @return  void
      **/
     public function updateInputValue($name) {
@@ -386,8 +386,8 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Checks if the element named $name is in the current step.
      *
-     * @param   $name   (string)    name of element
-     * @return          (bool)      says wether it's in the current step
+     * @param   string  $name   name of element
+     * @return  bool    says wether it's in the current step
      **/
     private function inCurrentStep($name) {
         return in_array($this->getElement($name), $this->getCurrentElements());
@@ -419,7 +419,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Returns an array of steps
      *
-     * @return  (array) step objects
+     * @return  array step objects
      **/
     public function getSteps() {
         return $this->steps;
@@ -430,7 +430,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Returns the current step id
      *
-     * @return  (int) current step
+     * @return  int current step
      **/
     public function getCurrentStepId() {
         return $this->currentStepId;
@@ -441,7 +441,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Returns an array of input elements contained in the current step.
      *
-     * @return  (array) element objects
+     * @return  array element objects
      **/
     private function getCurrentElements() {
         $currentElements = array();
@@ -469,7 +469,7 @@ class htmlform extends abstracts\container {
      * Renders the htmlform object to HTML code. If the form contains elements
      * it calls their rendering methods.
      *
-     * @return  (string) HTML code
+     * @return  string HTML code
      **/
     public function __toString() {
         $renderedElements   = '';
@@ -578,7 +578,7 @@ class htmlform extends abstracts\container {
      * isn't valid (steps need to be submitted at least once to count as valid).
      * Form must have been validated before calling this method.
      *
-     * @return  $stepNumber (int) number of first invalid step
+     * @return  int     $stepNumber number of first invalid step
      **/
     public function getFirstInvalidStep() {
         if ( count($this->steps ) > 0) {
@@ -604,7 +604,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief Redirects Browser to a different URL.
      *
-     * @param $url (string) url to redirect to
+     * @param string    $url url to redirect to
      */
     public function redirect($url) {
         if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
@@ -623,7 +623,7 @@ class htmlform extends abstracts\container {
      * Form validation - validates form elements returns validation result and
      * writes it to session. Also calls custom validator if available.
      *
-     * @return  (bool) validation result
+     * @return  bool validation result
      *
      * @see     process()
      **/
@@ -656,12 +656,12 @@ class htmlform extends abstracts\container {
      * It can therefore be used to test autosave fields are correct without forcing
      * the form save.
      * 
-     * @return bool $part_valid - whether the autosave postback data is valid
+     * @return bool $partValid - whether the autosave postback data is valid
      */
-    public function validateAutosave(){
+    public function validateAutosave() {
         parent::validate();
 
-        $part_valid = $this->valid;
+        $partValid = $this->valid;
         
         // save data in session when autosaving but don't validate successfully
         if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
@@ -673,7 +673,7 @@ class htmlform extends abstracts\container {
         // save whether form was autosaved the last time
         $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
         
-        return $part_valid;
+        return $partValid;
     }
     // }}}
     
@@ -681,7 +681,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Returns wether form has been submitted before or not.
      *
-     * @return  (bool) session status
+     * @return  bool session status
      **/
     public function isEmpty() {
         return !isset($this->sessionSlot['formName']);
@@ -695,7 +695,7 @@ class htmlform extends abstracts\container {
      * Allows to manually populate the forms' input elements with values by
      * parsing an array of name-value pairs.
      *
-     * @param   $data (array) input element names (key) and values (value)
+     * @param   array   $data input element names (key) and values (value)
      * @return  void
      **/
     public function populate($data = array()) {
@@ -712,7 +712,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Gets form-data from current PHP session.
      *
-     * @return  (array) form-data
+     * @return  array form-data
      **/
     public function getValues() {
         if (isset($this->sessionSlot)) {
@@ -733,7 +733,7 @@ class htmlform extends abstracts\container {
     /**
      * @brief   Gets form-data from current PHP session but also contain elemnt labels.
      *
-     * @return  (array) form-data with labels
+     * @return  array form-data with labels
      **/
     public function getValuesWithLabel() {
         //get values first
@@ -758,7 +758,7 @@ class htmlform extends abstracts\container {
      * Checks within the form if an input element or fieldset name is already
      * taken. If so, it throws an exception.
      *
-     * @param   $name name to check
+     * @param   string  $name name to check
      * @return  void
      **/
     public function checkElementName($name) {

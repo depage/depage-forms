@@ -14,9 +14,9 @@ class url extends validator {
     /**
      * @brief   url validator
      *
-     * @param   $url        (string)    url to be validated
-     * @param   $parameters (array)     validation parameters
-     * @return              (bool)      validation result
+     * @param   string  $url        url to be validated
+     * @param   array   $parameters validation parameters
+     * @return  bool    validation result
      **/
     public function validate($url, $parameters = array()) {
         return (bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED + FILTER_FLAG_HOST_REQUIRED);

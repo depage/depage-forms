@@ -36,7 +36,7 @@ class placeholder extends abstracts\input {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML-rendered element
+     * @return  string HTML-rendered element
      **/
     public function __toString() {
         return "";

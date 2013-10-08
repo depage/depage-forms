@@ -41,9 +41,9 @@ class address extends fieldset {
     /**
      * @brief   multiple class constructor
      *
-     * @param   $name       (string)    element name
-     * @param   $parameters (array)     element parameters, HTML attributes, validator specs etc.
-     * @param   $form       (object)    parent form object
+     * @param   string  $name       element name
+     * @param   array   $parameters element parameters, HTML attributes, validator specs etc.
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -170,7 +170,7 @@ class address extends fieldset {
     /**
      * @brief   Validate the address data
      *
-     * @return  (bool) validation result
+     * @return  bool validation result
      **/
     public function validate() {
         if(parent::validate() && isset($this->defaultCountry) && isset($this->defaultState)) {

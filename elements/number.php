@@ -82,7 +82,7 @@ class number extends text {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  (string) HTML rendered element
+     * @return  string HTML rendered element
      **/
     public function __toString() {
         $value              = $this->htmlValue();
@@ -113,7 +113,7 @@ class number extends text {
     /**
      * @brief   Renders HTML min attribute.
      *
-     * @return  (string) HTML min attribute
+     * @return  string HTML min attribute
      **/
     protected function htmlMin() {
         return ($this->min === null) ? "" : " min=\"" . $this->htmlEscape($this->min) . "\"";
@@ -124,7 +124,7 @@ class number extends text {
     /**
      * @brief   Renders HTML max attribute.
      *
-     * @return  (string) HTML max attribute
+     * @return  string HTML max attribute
      **/
     protected function htmlMax() {
         return ($this->max === null) ? "" : " max=\"" . $this->htmlEscape($this->max) . "\"";
@@ -135,7 +135,7 @@ class number extends text {
     /**
      * @brief   Renders HTML step attribute.
      *
-     * @return  (string) HTML step attribute
+     * @return  string HTML step attribute
      **/
     protected function htmlStep() {
         return ($this->step === null) ? "" : " step=\"" . $this->htmlEscape($this->step) . "\"";
@@ -148,7 +148,7 @@ class number extends text {
      *
      * Number specific validator call (includes min and max values)
      *
-     * @return  (bool) validaton result
+     * @return  bool validaton result
      **/
     protected function validatorCall() {
         $parameters = array(

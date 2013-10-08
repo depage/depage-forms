@@ -81,10 +81,10 @@ class fieldset extends abstracts\container {
      * Calls parent class to generate an input element or a fieldset and add
      * it to its list of elements
      *
-     * @param   $type       (string) elememt type
-     * @param   $name       (string) element name
-     * @param   $parameters (array)  element attributes: HTML attributes, validation parameters etc.
-     * @return  $newElement (object) new element object
+     * @param   string  $type       elememt type
+     * @param   string  $name       element name
+     * @param   array   $parameters element attributes: HTML attributes, validation parameters etc.
+     * @return  object  $newElement new element object
      *
      * @see     __call()
      * @see     addChildElements()
@@ -106,7 +106,7 @@ class fieldset extends abstracts\container {
     /**
      * @brief   Returns string of the elements' HTML-classes, separated by spaces.
      *
-     * @return  $classes (string) HTML-classes
+     * @return  string  $classes HTML-classes
      **/
     protected function htmlClasses() {
         $classes = '';
@@ -131,7 +131,7 @@ class fieldset extends abstracts\container {
      *
      * If the fieldset contains subelements it calls their rendering methods.
      *
-     * @return  (string) HTML-rendered fieldset
+     * @return  string HTML-rendered fieldset
      **/
      public function __toString() {
         $renderedElements   = '';

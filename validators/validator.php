@@ -25,7 +25,7 @@ namespace depage\htmlform\validators;
      *
      * Attaches error logging object to validator.
      *
-     * @param   $log (object) error logging object
+     * @param   object  $log error logging object
      * @return  void
      **/
     public function __construct($log = null) {
@@ -40,9 +40,9 @@ namespace depage\htmlform\validators;
      * Static validator object factory. Picks validator type depending on
      * $argument.
      *
-     * @param   $argument   (string) validator type or regular expression or closure
-     * @param   $log        (object) error logging object
-     * @return              (object) validator object
+     * @param   string  $argument   validator type or regular expression or closure
+     * @param   object  $log        error logging object
+     * @return  object  validator object
      **/
     public static function factory($argument, $log = null) {
         if (!is_string($argument) && is_callable($argument, false)) {
@@ -73,9 +73,9 @@ namespace depage\htmlform\validators;
      *
      * Everything is valid. To be overriden in specific validator objects.
      *
-     * @param   $value      (mixed) value to be validated
-     * @param   $parameters (array) validation parameters
-     * @return              (bool)  validation result
+     * @param   mixed   $value      value to be validated
+     * @param   array   $parameters validation parameters
+     * @return  bool    validation result
      **/
     public function validate($value, $parameters = array()) {
         return true;
@@ -86,8 +86,8 @@ namespace depage\htmlform\validators;
     /**
      * @brief   error logging method
      *
-     * @param   $argument (string) error message
-     * @param   $type     (string) error type
+     * @param   string  $argument error message
+     * @param   string  $type     error type
      * @return  void
      **/
     protected function log($argument, $type) {
@@ -103,7 +103,7 @@ namespace depage\htmlform\validators;
     /**
      * @brief   returns validators' regular expression as HTML5 pattern attribute
      *
-     * @return  (string) HTML pattern attribute
+     * @return  string HTML pattern attribute
      **/
     public function getPatternAttribute() {
         if (isset($this->regEx)) {

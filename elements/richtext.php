@@ -75,7 +75,7 @@ class richtext extends textarea {
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
      *
-     * @return  $attributes (string) HTML attribute
+     * @return  string  $attributes HTML attribute
      **/
     protected function htmlWrapperAttributes() {
         $attributes = parent::htmlWrapperAttributes();
@@ -93,7 +93,7 @@ class richtext extends textarea {
     /**
      * @brief   Returns HTML-rendered element value
      *
-     * @return  (mixed) element value
+     * @return  mixed   element value
      **/
     protected function htmlValue() {
         if ($this->value === null) {
@@ -128,9 +128,9 @@ class richtext extends textarea {
     /**
      * @brief   Parses html-string into htmlDOM
      *
-     * @param   $html (string) html string to parse
+     * @param   string  $html   html string to parse
      *
-     * @return  (depage::htmlform::abstract::htmldom) htmlDOM
+     * @return  depage::htmlform::abstract::htmldom htmlDOM
      **/
     protected function parseHtml($html) {
         $htmlDOM = new \depage\htmlform\abstracts\htmldom();

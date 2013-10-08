@@ -41,9 +41,9 @@ abstract class element {
     /**
      * @brief   element class constructor
      *
-     * @param   $name       (string)    element name
-     * @param   $parameters (array)     element parameters, HTML attributes
-     * @param   $form       (object)    parent form object reference
+     * @param   string  $name           element name
+     * @param   array   $parameters     element parameters, HTML attributes
+     * @param   object  $form           parent form object reference
      * @return  void
      **/
     public function __construct($name, $parameters, $form) {
@@ -83,9 +83,9 @@ abstract class element {
      * Returns respective HTML escaped attributes for element rendering. Has to
      * be called before printing user-entered data.
      *
-     * @param   $function   (string)    function name
-     * @param   $arguments  (array)     function arguments
-     * @return              (mixed)     HTML escaped value
+     * @param   string  $function   function name
+     * @param   array   $arguments  function arguments
+     * @return  mixed   HTML escaped value
      *
      * @see     htmlEscape()
      **/
@@ -119,7 +119,7 @@ abstract class element {
     /**
      * @brief   Returns the element name.
      *
-     * @return  $this->name (string) element name
+     * @return  string  $this->name element name
      **/
     public function getName() {
         return $this->name;
@@ -132,7 +132,7 @@ abstract class element {
      *
      * Throws an exception if $parameters isn't of type array.
      *
-     * @param   $parameters (array) parameters for element constructor
+     * @param   array   $parameters     parameters for element constructor
      * @return  void
      **/
     protected function checkParameters($parameters) {
@@ -149,7 +149,7 @@ abstract class element {
      * Checks that element name is of type string, not empty and doesn't
      * contain invalid characters. Otherwise throws an exception.
      *
-     * @param   $name (string) element name
+     * @param   string  $name   element name
      * @return  void
      **/
     private function checkName($name) {
@@ -170,8 +170,8 @@ abstract class element {
      * If the element is constructed with a custom log object the logging
      * happens there, otherwise the PHP error_log function is used.
      *
-     * @param   $argument (string) message
-     * @param   $type     (string) type of log message
+     * @param   string  $argument   message
+     * @param   string  $type       type of log message
      * @return  void
      **/
     protected function log($argument, $type = null) {
@@ -195,8 +195,8 @@ abstract class element {
     /**
      * @brief   Escapes HTML in strings and arrays of strings
      *
-     * @param   $options        (mixed) value to be HTML-escaped
-     * @return  $htmlOptions    (mixed) HTML escaped value
+     * @param   mixed   $options        value to be HTML-escaped
+     * @return  mixed   $htmlOptions    HTML escaped value
      *
      * @see     __call()
      **/

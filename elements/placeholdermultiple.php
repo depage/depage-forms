@@ -29,7 +29,7 @@ class placeholderMultiple extends placeholder {
     /**
      * @brief   Casts to array.
      *
-     * @return  (array)
+     * @return  array empty array
      **/
     public function typeCastValue() {
         return array();

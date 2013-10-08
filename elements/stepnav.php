@@ -25,8 +25,8 @@ class stepnav  {
     /**
      * @brief   stepnav class constructor
      *
-     * @param   $parameters (array)     input element parameters, HTML attributes, validator specs etc.
-     * @param   $form       (object)    parent form object
+     * @param   array   $parameters input element parameters, HTML attributes, validator specs etc.
+     * @param   object  $form       parent form object
      * @return  void
      **/
     public function __construct($parameters, $form) {
@@ -38,7 +38,7 @@ class stepnav  {
     /**
      * @brief   Renders element to HTML.
      *
-     * @return  $htmlString (string) HTML-rendered element
+     * @return  string  $htmlString HTML-rendered element
      **/
     public function __toString() {
         $currentStepId = $this->form->getCurrentStepId();
