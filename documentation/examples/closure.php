@@ -25,6 +25,7 @@ $form->addText('closure', array(
             return strpos($value, "yes") !== false;
         }
     },
+    'errorMessage' => "Your input must include 'yes' or be '2'",
 ));
 
 /*

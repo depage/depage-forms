@@ -927,6 +927,15 @@ class htmlform extends abstracts\container
  **/
 
 /**
+ * @example closure.php
+ * @brief   closure validation example
+ *
+ * It's also possible to validate a form element with a closure function
+ *
+ * @htmlonly<iframe class="example" seamless="seamless" src="../examples/closure.php"></iframe>@endhtmlonly
+ **/
+
+/**
  * @example subclass.php
  * @brief   Form subclass example
  *
