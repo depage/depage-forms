@@ -49,7 +49,7 @@ use depage\htmlform\abstracts;
 
         // Display the form.
         echo ($form);
-    ?> @endcode
+    @endcode
  **/
 class multiple extends abstracts\input
 {

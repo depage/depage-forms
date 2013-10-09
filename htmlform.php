@@ -42,6 +42,7 @@
  * modern browser functionality with maximum client coverage.
  *
  * Comfort
+ * -------
  * - We abstract browser specifics from HTML-forms to provide a clean interface
  *   to web developers. All configuration is located in one place.
  *
@@ -51,49 +52,51 @@
  *   with JavaScript (client-side) or PHP (server-side).
  *
  * HTML5
+ * -----
  * - We follow the HTML5 spec where it's sensible. The only clash so far is
  *   @link depage::htmlform::elements::multiple::htmlInputAttributes checkbox
  *   validation @endlink .
  * - We aim to provide as much HTML5 functionality as possible.
  *
  * Customization
+ * -------------
  * - Input-elements can be easily modified by overriding the included
  * element-classes.
  * - New element-classes are automatically integrated by the autoloader. (They
  * can be instantiated with @link depage::htmlform::abstracts::container::__call
  * add @endlink (runtime generated methods))
  *
- * @section prerequisites Developer Prerequisites
- *
+ * Developer Prerequisites
+ * -----------------------
  * - PHP 5.3
  * - PHPUnit 3.5 (to run included unit tests)
  * - Doxygen 1.7.2 (to generate documentation)
  *
- * @section style Coding style
- *
+ * Coding style
+ * ------------
  * Generally, follow PSR-0, PSR-1, PSR-2 coding standard (http://www.php-fig.org)
  *
- * @section Deployment
- *
+ * Deployment
+ * ----------
  * To generate a gzipped release of the library (includes examples):
  *
- * <pre>$ make release</pre>
+ *     $ make release
  *
  * To generate a gzipped release with the essentials for working environments:
  *
- * <pre>$ make min</pre>
+ *     $ make min
  *
- * @section Tests
- *
+ * Tests
+ * -----
  * To run the unit tests:
  *
- * <pre>$ make test</pre>
+ *     $ make test
  *
- * @section Documentation
- *
+ * Documentation
+ * -------------
  * To generate documentation:
  *
- * <pre>$ make doc</pre>
+ *     $ make doc
  **/
 // }}}
 
@@ -115,6 +118,31 @@
  * instances of the @link depage::htmlform::htmlform htmlform-class@endlink,
  * but also to also to @link depage::htmlform::elements::fieldset fieldsets@endlink
  * and @link depage::htmlform::elements::step steps@endlink:
+ *
+ * These are the most used elements that are added to the form with the add-method:
+ * 
+ * @link depage::htmlform::elements::text input[type=text] @endlink
+ *
+ *     $form->addText('input', array('label' => 'Normal Input'));
+ *
+ * @link depage::htmlform::elements::email input[type=email] @endlink
+ *
+ *     $form->addEmail('email', array('label' => 'Email Input'));
+ *
+ *
+ * @code
+    <?php
+        $form = new depage\htmlform\htmlform('simpleForm');
+
+        // some example inputs
+        // @link depage::elements::text @endlink
+        $form->addText('input', array('label' => 'Normal Input'));
+        $form->addEmail('email', array('label' => 'Email Input'));
+        $form->addEmail('url', array('label' => 'URL Input'));
+        $form->addPassword('password', array('label' => 'Password Input'));
+        $form->addDate('date', array('label' => 'Date Input'));
+        $form->addNumber('number', array('label' => 'Number Input'));
+    @endcode
  *
  * @namespace depage::htmlform::exceptions
  * @brief Htmlform exceptions
@@ -176,7 +204,7 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
             // Display the form.
             echo ($form);
         }
-    ?> @endcode
+    @endcode
  *
  * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.

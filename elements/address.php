@@ -33,8 +33,7 @@ namespace depage\htmlform\elements;
 
         // Display the form.
         echo ($form);
-    ?>
- * @endcode
+    @endcode
  **/
 class address extends fieldset
 {

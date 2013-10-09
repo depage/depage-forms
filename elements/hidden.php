@@ -30,7 +30,7 @@ namespace depage\htmlform\elements;
 
         // Display the form.
         echo ($form);
-    ?> @endcode
+    @endcode
  **/
 class hidden extends text
 {

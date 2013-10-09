@@ -32,7 +32,7 @@ use depage\htmlform\abstracts;
 
         // Display the form.
         echo ($form);
-    ?> @endcode
+    @endcode
  **/
 class text extends abstracts\input
 {

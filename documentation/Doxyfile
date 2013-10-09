@@ -1010,7 +1010,7 @@ VERBATIM_HEADERS       = YES
 # classes, structs, unions or interfaces.
 # The default value is: YES.
 
-ALPHABETICAL_INDEX     = YES
+ALPHABETICAL_INDEX     = NO
 
 # The COLS_IN_ALPHA_INDEX tag can be used to specify the number of columns in
 # which the alphabetical index list will be split.
@@ -2096,7 +2096,7 @@ DOT_NUM_THREADS        = 0
 # The default value is: Helvetica.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_FONTNAME           = 
+DOT_FONTNAME           =
 
 # The DOT_FONTSIZE tag can be used to set the size (in points) of the font of
 # dot graphs.

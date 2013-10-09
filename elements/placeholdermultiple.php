@@ -21,7 +21,7 @@ namespace depage\htmlform\elements;
         // add a hidden field
         $form->addPlaceholderMutliple('nonce');
 
-    ?> @endcode
+    @endcode
  **/
 class placeholdermultiple extends placeholder
 {

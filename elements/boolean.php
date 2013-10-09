@@ -40,7 +40,7 @@ use depage\htmlform\abstracts;
 
         // Display the form.
         echo ($form);
-    ?> @endcode
+    @endcode
  **/
 class boolean extends abstracts\input
 {

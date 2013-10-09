@@ -28,7 +28,7 @@ use depage\htmlform\abstracts;
 
         // Display the form.
         echo ($form);
-    ?> @endcode
+    @endcode
  **/
 class placeholder extends abstracts\input
 {
