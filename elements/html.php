@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * Class for custom HTML code sections.
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

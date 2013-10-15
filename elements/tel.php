@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * Class for the HTML5 input-type "tel".
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

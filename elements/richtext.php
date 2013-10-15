@@ -15,7 +15,8 @@ namespace depage\htmlform\elements;
  * adds a textarea-element with additional richtext-functionality
  * added by javascript
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

@@ -17,7 +17,8 @@ namespace depage\htmlform\elements;
  * - a state
  * - a country select
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

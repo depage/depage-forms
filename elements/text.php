@@ -16,7 +16,8 @@ use depage\htmlform\abstracts;
  *
  * Class for the HTML input-type "text".
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

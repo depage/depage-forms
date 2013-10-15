@@ -24,54 +24,178 @@ abstract class input extends element
      * @brief Input element type - HTML input type attribute.
      **/
     protected $type;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $label
+     *     Sets the label for the input
+     **/
     /**
      * @brief Input element - HTML label
      **/
     protected $label;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $marker
+     *     Sets marker character(s) that gets display on required fields.
+     **/
+    /**
+     * @brief Input element - HTML marker text that marks required fields
+     **/
+    protected $marker;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $required
+     *     Sets wether an input is required to hold a value to be valid
+     **/
     /**
      * @brief True if the input element is required to hold a value to be valid.
      **/
     protected $required;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $disabled
+     *     Enables/disables an input
+     **/
+    /**
+     * @brief wether a input element will be disabled
+     **/
+    protected $disabled;
+
     /**
      * @brief Name of the parent HTML form. Used to identify the element once it's rendered.
      **/
     protected $formName;
+
     /**
      * @brief Input elements's value.
      **/
     protected $value = null;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string|function $validator
+     *     Sets the validator for the input.
+     *     - When $validator starts and ends with "/" e.g. "/[a-z0-9]/" the 
+     *       validator will be a depage::htmlform::validators::regEx
+     *     - When it is a plain string it will be a the validator with the name 
+     *       $validator out of the namespace depage::htmlform::validators.
+     *     - If the $validator is callable then the validator will be a
+     *       depage::htmlform::validators::closure
+     **/
     /**
      * @brief Holds validator object reference.
      **/
     protected $validator;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $class
+     *     Class name or class names that gets added to wrapper paragraph.
+     **/
     /**
      * @brief class for paragraph
      **/
     protected $class;
+
     /**
      * @brief HTML classes attribute for rendering the input element.
      **/
     protected $classes;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $autofocus 
+     *     sets current input to get autofocus on a page. If you set the 
+     *     autofocus to more than one input - The first one gets the focus.
+     **/
     /**
      * @brief HTML autofocus attribute
      **/
     protected $autofocus = false;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $autocapitalize 
+     *     Enables/disables autocapitalizion (mostly on mobile devices)
+     **/
     /**
      * @brief HTML autocapitalize attribute
-     **/
+     */
     protected $autocapitalize;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $autocorrect
+     *      Enables/disables autocorrection
+     **/
     /**
      * @brief HTML autocorrect attribute
-     **/
+     */
+
     protected $autocorrect;
     /**
-     * @brief HTML autocomplete attribute
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $autocomplete
+     *     Used to enable/disable autocorrect
      **/
+    /**
+     * @brief HTML autocomplete attribute
+     */
     protected $autocomplete;
+
     /**
      * @brief HTML pattern attribute
      **/
     protected $pattern;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $errorMessage
+     *     Sets the message that will be displayed in case of invalid input
+     **/
+    /**
+     * @brief Message that gets displayed in case of invalid input
+     **/
+    protected $errorMessage;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $helpMessage
+     *     Optional help message that may be used for extra information e.g. tooltips.
+     *     These string will be html escaped.
+     **/
+    /**
+     * @brief Extra help message
+     **/
+    protected $helpMessage;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $helpMessageHtml
+     *     Optional help message that may be used for extra information e.g. tooltips.
+     *     These string won't be escaped as therefor has to be valid html.
+     **/
+    /**
+     * @brief Extra hep message in html format
+     **/
+    protected $helpMessageHtml;
     // }}}
 
     // {{{ __construct()
@@ -98,7 +222,7 @@ abstract class input extends element
 
     // {{{ setDefaults()
     /**
-     * @brief   Collects initial values across subclasses.
+     * @brief  Sets the default values for input elements
      *
      * The constructor loops through these and creates settable class
      * attributes at runtime. It's a compact mechanism for initialising
@@ -301,7 +425,7 @@ abstract class input extends element
     /**
      * @brief   Sets the HTML disabled-attribute of the current input element.
      *
-     * @param  bool $dіsabled HTML disabled-attribute
+     * @param  bool $disabled HTML disabled-attribute
      * @return void
      **/
     public function setDisabled($disabled = true)

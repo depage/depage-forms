@@ -14,7 +14,7 @@ class closure extends validator
     /**
      * @brief function to call
      **/
-    protected $func;
+    protected $validatorFunction;
     // }}}
 
     // {{{ validate()
@@ -27,7 +27,7 @@ class closure extends validator
      **/
     public function validate($value, $parameters = array())
     {
-        return call_user_func($this->func, $value, $parameters);
+        return call_user_func($this->validatorFunction, $value, $parameters);
     }
     // }}}
 
@@ -35,12 +35,12 @@ class closure extends validator
     /**
      * @brief   sets the validators validator function
      *
-     * @param  closure $func function
+     * @param  closure $validatorFunction function
      * @return void
      **/
-    public function setFunc($func)
+    public function setFunc($validatorFunction)
     {
-        $this->func = $func;
+        $this->validatorFunction = $validatorFunction;
     }
     // }}}
 }

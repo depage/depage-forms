@@ -17,7 +17,8 @@ use depage\htmlform\abstracts;
  * Class for the HTML fieldset element. Can be used to group other elments
  * together.
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

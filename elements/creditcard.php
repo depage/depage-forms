@@ -15,15 +15,16 @@ namespace depage\htmlform\elements;
  * Class to get a user creditcard information. It generates a fieldset
  * that consists of
  *
- *     - a creditcard-type (like 'Visa', 'MasterCard' or 'American Express')
- *     - a field for the creditcard-number
- *     - a field for the expiry-date
- *     - a field for the card-owner
+ * - a creditcard-type (like 'Visa', 'MasterCard' or 'American Express')
+ * - a field for the creditcard-number
+ * - a field for the expiry-date
+ * - a field for the card-owner
  *
- * At the moment this input only checks the formatting of the numbers but not if
+ * At the moment this input only checks the formatting of the numbers but not, if
  * it is a valid creditcard.
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

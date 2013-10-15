@@ -17,7 +17,11 @@ use depage\htmlform\abstracts;
  * Class for multiple-choice type HTML elements. Has the same return value,
  * regardless of skin type (checkbox or select).
  *
- * @section usage
+ * @see depage::htmlform::elements::single
+ * @see depage::htmlform::elements::boolean
+ *
+ * Usage
+ * -----
  *
  * @code
     <?php

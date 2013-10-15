@@ -14,7 +14,8 @@ use depage\htmlform\abstracts;
 /**
  * @brief Adds a placeholder for a form element
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

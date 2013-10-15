@@ -5,6 +5,10 @@
  *
  * @author  Frank Hellenkamp <jonas@depage.net>
  * @author  Sebastian Reinhold <sebastian@bitbernd.de>
+ *
+ * @copyright this is the copyright
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPL2
+ * @license http://www.spdx.org/licenses/MIT MIT License
  **/
 
 // {{{ documentation
@@ -16,7 +20,8 @@
  * @htmlinclude main-intro.html
  * @endintro
  *
- * @section Usage
+ * Usage
+ * -----
  *
  * depage-forms will mainly be used through the @link depage::htmlform::htmlform
  * htmlform-class@endlink. It is the main interface through which you can add
@@ -24,6 +29,9 @@
  *
  * You can find a list of available input-class in @link depage::htmlform::elements
  * elements@endlink.
+ *
+ * You can find a list of available parameters for inputs under @link 
+ * htmlformInputDefaults the input defaults@endlink.
  *
  * @subpage developer
  *
@@ -121,26 +129,26 @@
  *
  * These are the most used elements that are added to the form with the add-method:
  * 
- * @link depage::htmlform::elements::text input[type=text] @endlink
- *
- *     $form->addText('input', array('label' => 'Normal Input'));
- *
- * @link depage::htmlform::elements::email input[type=email] @endlink
- *
- *     $form->addEmail('email', array('label' => 'Email Input'));
- *
- *
  * @code
     <?php
         $form = new depage\htmlform\htmlform('simpleForm');
 
-        // some example inputs
-        // @link depage::elements::text @endlink
-        $form->addText('input', array('label' => 'Normal Input'));
+        // input[type=text]
+        $input = $form->addText('input', array('label' => 'Normal Input'));
+        
+        // input[type=email]
         $form->addEmail('email', array('label' => 'Email Input'));
+        
+        // input[type=url]
         $form->addEmail('url', array('label' => 'URL Input'));
+        
+        // input[type=password]
         $form->addPassword('password', array('label' => 'Password Input'));
+        
+        // input[type=date]
         $form->addDate('date', array('label' => 'Date Input'));
+        
+        // input[type=number]
         $form->addNumber('number', array('label' => 'Number Input'));
     @endcode
  *
@@ -853,6 +861,36 @@ class htmlform extends abstracts\container
     }
     // }}}
 }
+
+// {{{ group pages
+/**
+ * @defgroup htmlformInputDefaults List of default options for inputs
+ *
+ * These are general defaults for input elements that can be overridden on
+ * a per input basis:
+ *
+ * @code
+    <?php
+        $form = new depage\htmlform\htmlform('simpleForm');
+
+        $input = $form->addText('input', array(
+            'autocapitalize' => true,
+            'autocomplete' => true,
+            'autocorrect' => true,
+            'autofocus' => true,
+            'disabled' => false,
+            'errorMessage' => "There was a problem with your input",
+            'label' => "Normal Input",
+            'marker' => "*",
+            'required' => true,
+            'class' => "my-class",
+            'helpMessage' => "addition help message",
+            'helpMessageHtml' => "addition <b>help message</b>",
+        );
+        
+    @endcode
+ **/
+// }}}
 
 // {{{ example page links
 /**

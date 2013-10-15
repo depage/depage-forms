@@ -229,7 +229,10 @@ TAB_SIZE               = 8
 # newlines.
 
 ALIASES                = "intro=<div class=\"intro\">" \
-                         "endintro=</div>"
+                         "endintro=</div>" \
+                         "default=@param " \
+                         "license=@par License:\n" \
+                         "copyright=@par Copyright:\n"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"

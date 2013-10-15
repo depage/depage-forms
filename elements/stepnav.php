@@ -11,7 +11,8 @@ namespace depage\htmlform\elements;
 /**
  * @brief Can be used to insert a step navigation
  *
- * @section usage
+ * Usage
+ * -----
  **/
 class stepnav
 {

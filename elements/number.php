@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * Class for HTML5 input type "number".
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

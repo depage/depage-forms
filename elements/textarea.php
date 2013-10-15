@@ -12,7 +12,8 @@ namespace depage\htmlform\elements;
 /**
  * @brief HTML textarea element.
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

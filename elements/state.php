@@ -15,7 +15,8 @@ namespace depage\htmlform\elements;
  *
  * Option values are 4-digit alpha ISO state codes.
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

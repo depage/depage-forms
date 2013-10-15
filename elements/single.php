@@ -17,7 +17,8 @@ use depage\htmlform\abstracts;
  * Class for radio-like HTML elements. Has the same return value, regardless
  * of skin type (radio or select).
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

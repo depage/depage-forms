@@ -12,7 +12,8 @@ namespace depage\htmlform\elements;
 /**
  * @brief Placeholder for form multiple form values.
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

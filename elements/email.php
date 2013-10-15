@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * Class for the HTML5 input-type "email".
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

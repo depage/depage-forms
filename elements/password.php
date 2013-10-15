@@ -15,7 +15,8 @@ namespace depage\htmlform\elements;
  * Class for the HTML input type "password". Entered characters are masked with
  * asterisks or bullets (depends on browser).
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

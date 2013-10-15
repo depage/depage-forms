@@ -14,7 +14,8 @@ namespace depage\htmlform\elements;
  *
  * Class for the HTML input-type "hidden".
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

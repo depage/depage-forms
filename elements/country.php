@@ -19,7 +19,8 @@ namespace depage\htmlform\elements;
  * An optional 'priority' parameter moves countries to the top of the select based on the DEPAGE_LANG locale:
  * e.g. 'de' => array('de','at'), 'en' => array('au','gb','ca','us')
  *
- * @section usage
+ * Usage
+ * -----
  *
  * @code
     <?php

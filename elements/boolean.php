@@ -18,7 +18,10 @@ use depage\htmlform\abstracts;
  * be clicked to sumbit the form succesfully. It may e.g. be used for specific
  * terms a user has to accept to register.
  *
- * @section usage
+ * @see depage::htmlform::elements::multiple
+ *
+ * Usage
+ * -----
  *
  * @code
     <?php
