@@ -3,7 +3,7 @@ RM = rm -rf
 BACKCOLOR = backcolor_brightblue
 
 doc: depage-docu examples/main-*.html
-	#cd ./depage-docu/ ; git pull origin master || true
+	cd ./depage-docu/ ; git pull origin master || true
 	doxygen Doxyfile
 	cp -r depage-docu/www/lib html/
 	sed -i".bak" "s/<body class=\\\"\\\"/<body class=\\\"home\\\"/" html/index.html
