@@ -5,6 +5,9 @@ all: test doc
 doc:
 	cd documentation; $(MAKE) $(MFLAGS)
 
+docset:
+	cd documentation; $(MAKE) $(MFLAGS) docset
+
 test:
 	cd tests; $(MAKE) $(MFLAGS)
 
