@@ -214,6 +214,24 @@ class number extends text
         $this->value = (float) $numberString;
     }
     // }}}
+
+    // {{{ isEmpty()
+    /**
+     * @brief  custom empty check
+     *
+     * Number specific empty check (allows for zero int/float values)
+     *
+     * @return bool empty-check result
+     **/
+    public function isEmpty() {
+        return (
+            empty($this->value)
+            && $this->value !== 0
+            && $this->value !== .0
+        );
+    }
+    // }}}
+
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */
