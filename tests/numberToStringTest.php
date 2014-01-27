@@ -67,6 +67,31 @@ class numberToStringTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->number->__toString());
     }
     // }}}
+    
+    // {{{ testMinMax()
+    /**
+     * Rendered element with set required attribute
+     **/
+    public function testMinMax()
+    {
+        $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number">' .
+            '<label>' .
+                '<span class="label">numberName <em>*</em></span>' .
+                '<input name="numberName" type="number" max="150" min="0" step="2" required="required" value="0">' .
+            '</label>' .
+        '</p>' . "\n";
+
+        $number = new number('numberName', array(
+            "min" => 0,
+            "max" => 150,
+            "step" => 2,
+            "required" => true,
+        ), $this->form);
+
+        $this->assertEquals($expected, $number->__toString());
+    }
+    // }}}
+
 
     // {{{ testHtmlEscaping()
     /**

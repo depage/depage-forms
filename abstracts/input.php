@@ -324,6 +324,7 @@ abstract class input extends element
     {
         $this->value = $newValue;
         $this->typeCastValue();
+        $this->validated = false;
 
         return $this->value;
     }

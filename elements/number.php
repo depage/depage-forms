@@ -181,37 +181,33 @@ class number extends text
 
         $pString = str_replace(" ", "", $ptString);
 
-        if (substr_count($pString, ",") > 1) {$pString = str_replace(",", "", $pString);}
-        if (substr_count($pString, ".") > 1) {$pString = str_replace(".", "", $pString);}
-
-        $pregResult = array();
-
-        $commaset = strpos($pString,',');
-        if ($commaset === false) {$commaset = -1;}
-
-        $pointset = strpos($pString,'.');
-        if ($pointset === false) {$pointset = -1;}
-
-        $pregResultA = array();
-        $pregResultB = array();
-
-        if ($pointset < $commaset) {
-            preg_match('#(([-]?[0-9]+(\.[0-9])?)+(,[0-9]+)?)#', $pString, $pregResultA);
+        // assume if we have more than one mark it's a thousand mark -> remove them
+        if (substr_count($pString, ",") > 1) {
+            $pString = str_replace(",", "", $pString);
         }
-        preg_match('#(([-]?[0-9]+(,[0-9])?)+(\.[0-9]+)?)#', $pString, $pregResultB);
-        if ((isset($pregResultA[0]) && (!isset($pregResultB[0])
-                        || strstr($preResultA[0],$pregResultB[0]) == 0
-                        || !$pointset))) {
-            $numberString = $pregResultA[0];
-            $numberString = str_replace('.','',$numberString);
-            $numberString = str_replace(',','.',$numberString);
-        } elseif (isset($pregResultB[0]) && (!isset($pregResultA[0])
-                    || strstr($pregResultB[0],$preResultA[0]) == 0
-                    || !$commaset)) {
-            $numberString = $pregResultB[0];
-            $numberString = str_replace(',','',$numberString);
+        if (substr_count($pString, ".") > 1) {
+            $pString = str_replace(".", "", $pString);
         }
-        $this->value = (float) $numberString;
+
+        // assume last entry is decimal mark
+        $commaset = strrpos($pString, ',');
+        $pointset = strrpos($pString, '.');
+
+        // remove all remaining marks but the decimal mark
+        if ($commaset > $pointset) {
+            $pString = str_replace(".", "", $pString);
+        } else if ($commaset < $pointset) {
+            $pString = str_replace(",", "", $pString);
+        }
+
+        // normalize to dot
+        $pString = str_replace(",", ".", $pString);
+
+        if ($pString !== "" && preg_match("/^[-+]?\d*\.?\d*$/", $pString)) {
+            $this->value = (float) $pString;
+        } else {
+            $this->value = null;
+        }
     }
     // }}}
 
