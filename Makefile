@@ -15,9 +15,7 @@ release: clean jsmin
 	mkdir release
 	tar cfz release/depage-forms.tar.gz README.md abstracts documentation/examples elements exceptions validators lib/js/*.min.js lib/css lib/*.png htmlform.php composer.json
 	zip -r release/depage-forms.zip README.md abstracts documentation/examples elements exceptions validators lib/js/*.min.js lib/css lib/*.png htmlform.php composer.json
-	md5sum release/depage-forms.zip > release/depage-forms.zip.md5
 	shasum -a 512 release/depage-forms.zip > release/depage-forms.zip.sha2
-	md5sum release/depage-forms.tar.gz > release/depage-forms.tar.gz.md5
 	shasum -a 512 release/depage-forms.tar.gz > release/depage-forms.tar.gz.sha2
 
 min: clean jsmin
