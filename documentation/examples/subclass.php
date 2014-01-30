@@ -34,6 +34,8 @@ class htmlformSubclass extends depage\htmlform\htmlform
         if (!$this->getElement('username')->isEmpty()) {
             $this->getElement('email')->setRequired();
         }
+
+        return parent::onValidate();
     }
 }
 
