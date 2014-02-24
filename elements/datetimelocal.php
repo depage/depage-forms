@@ -35,7 +35,7 @@ class datetimelocal extends text
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
                 "<input name=\"{$this->name}\" type=\"datetime-local\"{$inputAttributes} value=\"{$value}\">" .
             "</label>" .
             $errorMessage .

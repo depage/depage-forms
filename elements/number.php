@@ -102,7 +102,7 @@ class number extends text
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
                 "<input name=\"{$this->name}\" type=\"{$this->type}\"{$max}{$min}{$step}{$inputAttributes} value=\"{$value}\">" .
                 $list .
             "</label>" .

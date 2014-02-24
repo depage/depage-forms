@@ -85,7 +85,7 @@ class boolean extends abstracts\input
         return "<p {$wrapperAttributes}>" .
             "<label>" .
                 "<input type=\"checkbox\" name=\"{$this->name}\"{$inputAttributes} value=\"true\"{$selected}>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
             "</label>" .
             $errorMessage .
             $helpMessage .

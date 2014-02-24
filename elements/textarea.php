@@ -73,7 +73,7 @@ class textarea extends text
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
                 "<textarea name=\"{$this->name}\"{$inputAttributes}{$rows}{$cols}>{$value}</textarea>" .
             "</label>" .
             $errorMessage .

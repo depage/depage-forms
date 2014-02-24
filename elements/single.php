@@ -167,7 +167,7 @@ class single extends abstracts\input
 
             return "<p {$wrapperAttributes}>" .
                 "<label>" .
-                    "<span class=\"label\">{$label}{$marker}</span>" .
+                    "<span class=\"depage-label\">{$label}{$marker}</span>" .
                     "<select name=\"{$this->name}\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
@@ -176,7 +176,7 @@ class single extends abstracts\input
         } else {
             // render HTML radio button list
             return "<p {$wrapperAttributes}>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
                 $errorMessage .
                 $helpMessage .
