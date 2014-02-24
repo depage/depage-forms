@@ -157,7 +157,7 @@ class multipleToStringTest extends PHPUnit_Framework_TestCase
     public function testCheckboxAssociativeList()
     {
         $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
-            '<span class="label">elementName</span>' .
+            '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
                     '<label>' .
