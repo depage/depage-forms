@@ -22,7 +22,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     public function testRadio()
     {
         $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
-            '<span class="label">singleName</span>' .
+            '<span class="depage-label">singleName</span>' .
             '<span></span>' .
         '</p>' . "\n";
 
@@ -38,7 +38,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName</span>' .
+                '<span class="depage-label">singleName</span>' .
                 '<select name="singleName"></select>' .
             '</label>' .
         '</p>' . "\n";
@@ -56,7 +56,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     public function testRadioRequired()
     {
         $expected = '<p id="formName-singleName" class="input-single required skin-radio" data-errorMessage="Please enter valid data">' .
-            '<span class="label">singleName <em>*</em></span>' .
+            '<span class="depage-label">singleName <em>*</em></span>' .
             '<span></span>' .
         '</p>' . "\n";
 
@@ -73,7 +73,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single required skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName <em>*</em></span>' .
+                '<span class="depage-label">singleName <em>*</em></span>' .
                 '<select name="singleName" required="required"></select>' .
             '</label>' .
         '</p>' . "\n";
@@ -92,7 +92,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     public function testRadioList()
     {
         $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
-            '<span class="label">singleName</span>' .
+            '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
                     '<label>' .
@@ -131,7 +131,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName</span>' .
+                '<span class="depage-label">singleName</span>' .
                 '<select name="singleName">' .
                     '<option value="0">item1</option>' .
                     '<option value="1">item2</option>' .
@@ -157,7 +157,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     public function testRadioAssociativeList()
     {
         $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
-            '<span class="label">singleName</span>' .
+            '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
                     '<label>' .
@@ -201,7 +201,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName</span>' .
+                '<span class="depage-label">singleName</span>' .
                 '<select name="singleName">' .
                     '<option value="key1">item1</option>' .
                     '<option value="key2">item2</option>' .
@@ -232,7 +232,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName</span>' .
+                '<span class="depage-label">singleName</span>' .
                 '<select name="singleName">' .
                     '<optgroup label="group1">' .
                         '<option value="key1">item1</option>' .
@@ -271,7 +271,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     public function testRadioHtmlEscaping()
     {
         $expected = '<p id="formName-singleName" class="input-single required skin-radio" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
-            '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+            '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
             '<span></span>' .
         '</p>' . "\n";
 
@@ -295,7 +295,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single required skin-select" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
-                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+                '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<select name="singleName" required="required"></select>' .
             '</label>' .
         '</p>' . "\n";
@@ -320,7 +320,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     public function testHtmlRadioEscapedList()
     {
         $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
-            '<span class="label">singleName</span>' .
+            '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
                     '<label>' .
@@ -359,7 +359,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName</span>' .
+                '<span class="depage-label">singleName</span>' .
                 '<select name="singleName">' .
                     '<option value="0">it&quot;&gt;em1</option>' .
                     '<option value="1">it&quot;&gt;em2</option>' .
@@ -384,7 +384,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
      public function testRadioEscapedAssociativeList()
      {
         $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
-            '<span class="label">singleName</span>' .
+            '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
                     '<label>' .
@@ -428,7 +428,7 @@ class singleToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-singleName" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">singleName</span>' .
+                '<span class="depage-label">singleName</span>' .
                 '<select name="singleName">' .
                     '<option value="ke&quot;&gt;y1">it&quot;&gt;em1</option>' .
                     '<option value="ke&quot;&gt;y2">it&quot;&gt;em2</option>' .

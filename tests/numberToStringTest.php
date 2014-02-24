@@ -23,7 +23,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number">' .
             '<label>' .
-                '<span class="label">numberName</span>' .
+                '<span class="depage-label">numberName</span>' .
                 '<input name="numberName" type="number" value="0">' .
             '</label>' .
         '</p>' . "\n";
@@ -40,7 +40,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number">' .
             '<label>' .
-                '<span class="label">numberName</span>' .
+                '<span class="depage-label">numberName</span>' .
                 '<input name="numberName" type="number" value="7331">' .
             '</label>' .
         '</p>' . "\n";
@@ -58,7 +58,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number">' .
             '<label>' .
-                '<span class="label">numberName <em>*</em></span>' .
+                '<span class="depage-label">numberName <em>*</em></span>' .
                 '<input name="numberName" type="number" required="required" value="0">' .
             '</label>' .
         '</p>' . "\n";
@@ -76,7 +76,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number">' .
             '<label>' .
-                '<span class="label">numberName <em>*</em></span>' .
+                '<span class="depage-label">numberName <em>*</em></span>' .
                 '<input name="numberName" type="number" max="150" min="0" step="2" required="required" value="0">' .
             '</label>' .
         '</p>' . "\n";
@@ -101,7 +101,7 @@ class numberToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-numberName" class="input-number required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
-                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+                '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="numberName" type="number" required="required" value="0">' .
             '</label>' .
         '</p>' . "\n";
