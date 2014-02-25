@@ -576,7 +576,7 @@ class htmlform extends abstracts\container
                 $this->redirect($this->successURL);
             } else {
                 $firstInvalidStep = $this->getFirstInvalidStep();
-                $urlStepParameter = ($firstInvalidStep == 0) ? $this->buildUrlQuery('') : $this->buildUrlQuery('step=' . $firstInvalidStep);
+                $urlStepParameter = ($firstInvalidStep == 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $firstInvalidStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
             }
         }
@@ -587,32 +587,33 @@ class htmlform extends abstracts\container
     /**
      * @brief   Adding step parameter to already existing query
      *
-     * @return new query
+     * @return  new query
      **/
-    public function buildUrlQuery($step_query = '')
-    {
-        //if there is query
+    public function buildUrlQuery($args = array()) {
         $query = '';
-        if (isset($this->url['query']) && $this->url['query']!="") {
+        $queryParts = array();
+
+        if (isset($this->url['query']) && $this->url['query'] != "") {
             //decoding query string
             $query = html_entity_decode($this->url['query']);
-
+            
             //parsing the query into an array
             parse_str($query, $queryParts);
-
-            //remove any step argument
-            if (isset($queryParts["step"])) unset($queryParts["step"]);
-
-            //building again the query
-            $query = http_build_query($queryParts);
-
-            //adding question mark
-            $query = "?".$query;
-
-            //adding the extra query
-            $query .= isset($step_query)?'&'.$step_query:'';
-        } else {
-            $query = isset($step_query)?'?'.$step_query:'';
+        }
+            
+        foreach ($args as $name => $value) {
+            if ($value != "") {
+                $queryParts[$name] = $value;
+            } elseif (isset($queryParts[$name])) {
+                unset($queryParts[$name]);
+            }
+        }
+        
+        // build the query again
+        $query = htmlspecialchars(http_build_query($queryParts));
+        
+        if ($query != "") {
+            $query = "?" . $query;
         }
 
         return $query;
