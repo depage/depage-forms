@@ -14,6 +14,6 @@ jsmin:
         http://closure-compiler.appspot.com/compile \
         > effect.min.js
 
-jslint:
-	curl -s -F js=@depage-richtext.js http://jslint.webvm.net/ | sed 's,^,'"depage-richtext.min.js "','
-	curl -s -F js=@effect.js http://jslint.webvm.net/ | sed 's,^,'"effect.min.js:"','
+jshint:
+	jshint depage-richtext.js
+	jshint effect.js 

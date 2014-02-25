@@ -11,7 +11,7 @@ docset:
 test:
 	cd tests; $(MAKE) $(MFLAGS)
 
-release: clean jsmin
+release: clean jshint min jsmin
 	mkdir release
 	tar cfz release/depage-forms.tar.gz README.md abstracts documentation/examples elements exceptions validators lib/js/*.min.js lib/css lib/*.png htmlform.php composer.json
 	zip -r release/depage-forms.zip README.md abstracts documentation/examples elements exceptions validators lib/js/*.min.js lib/css lib/*.png htmlform.php composer.json
@@ -20,14 +20,13 @@ release: clean jsmin
 
 min: clean jsmin
 	tar cfz depage-forms.tar.gz abstracts elements exceptions validators lib/js/*.min.js htmlform.php
-	md5sum depage-forms.tar.gz > depage-forms.tar.gz.md5
 	sha512sum depage-forms.tar.gz > depage-forms.tar.gz.sha2
 
 jsmin:
 	cd lib/js; $(MAKE) $(MFLAGS) jsmin
 
-jslint:
-	cd lib/js; $(MAKE) $(MFLAGS) jslint
+jshint:
+	cd lib/js; $(MAKE) $(MFLAGS) jshint
 
 clean:
 	cd documentation; $(MAKE) $(MFLAGS) clean
