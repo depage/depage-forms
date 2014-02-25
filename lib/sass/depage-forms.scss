@@ -2,7 +2,7 @@
     max-width: 40em;
 
     /* {{{ input and label sizes */
-    .label {
+    .depage-label {
         display: block;
         float: left;
         width: 33%;
@@ -17,7 +17,7 @@
             float: left;
             margin-top: 0.5em;
         }
-        .label {
+        .depage-label {
             display: block;
             float: none;
             width: auto;
@@ -28,7 +28,7 @@
         clear: left;
     }
     p,
-    .label {
+    .depage-label {
         position: relative;
         line-height: 1.8em;
     }
@@ -90,7 +90,7 @@
             border: none;
         }
     }
-    .error .label {
+    .error .depage-label {
         color: #ff0000;
     }
     .submit input {
