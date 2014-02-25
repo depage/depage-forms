@@ -23,7 +23,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName</span>' .
+                '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" value="">' .
             '</label>' .
         '</p>' . "\n";
@@ -40,7 +40,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName</span>' .
+                '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" value="testValue">' .
             '</label>' .
         '</p>' . "\n";
@@ -58,7 +58,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName <em>*</em></span>' .
+                '<span class="depage-label">textName <em>*</em></span>' .
                 '<input name="textName" type="text" required="required" value="">' .
             '</label>' .
         '</p>' . "\n";
@@ -96,7 +96,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
                 }
                 $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
                     '<label>' .
-                        '<span class="label">textName <em>*</em></span>' .
+                        '<span class="depage-label">textName <em>*</em></span>' .
                         '<input name="textName" type="text" required="required"' . $attribute . ' value="">' .
                     '</label>' .
                 '</p>' . "\n";
@@ -116,7 +116,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected ='<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName</span>' .
+                '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
                 '<datalist id="formName-textName-list">' .
                     '<option value="item1">' .
@@ -143,7 +143,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName</span>' .
+                '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
                 '<datalist id="formName-textName-list">' .
                     '<option value="key1" label="item1">' .
@@ -173,7 +173,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
-                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+                '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="textName" type="text" required="required" value="val&quot;&gt;ue&lt;&#039;">' .
             '</label>' .
         '</p>' . "\n";
@@ -199,7 +199,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName</span>' .
+                '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
                 '<datalist id="formName-textName-list">' .
                     '<option value="it&quot;&gt;em1">' .
@@ -225,7 +225,7 @@ class textToStringTest extends PHPUnit_Framework_TestCase
      {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">textName</span>' .
+                '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
                 '<datalist id="formName-textName-list">' .
                     '<option value="ke&quot;&gt;y1" label="it&quot;&gt;em1">' .

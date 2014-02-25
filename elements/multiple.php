@@ -177,7 +177,7 @@ class multiple extends abstracts\input
 
             return "<p {$wrapperAttributes}>" .
                 "<label>" .
-                    "<span class=\"label\">{$label}{$marker}</span>" .
+                    "<span class=\"depage-label\">{$label}{$marker}</span>" .
                     "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
                 "</label>" .
                 $errorMessage .
@@ -186,7 +186,7 @@ class multiple extends abstracts\input
         } else {
             // render HTML checkbox
             return "<p {$wrapperAttributes}>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
                 "<span>{$list}</span>" .
                 $errorMessage .
                 $helpMessage .
