@@ -10,7 +10,7 @@
   /* }}} */
   /* {{{ richtext */
   /* }}} */ }
-  .depage-form .label {
+  .depage-form .depage-label {
     display: block;
     float: left;
     width: 33%;
@@ -22,7 +22,7 @@
   .depage-form .input-boolean input {
     float: left;
     margin-top: 0.5em; }
-  .depage-form .input-boolean .label {
+  .depage-form .input-boolean .depage_label {
     display: block;
     float: none;
     width: auto;
@@ -30,7 +30,7 @@
   .depage-form p {
     clear: left; }
   .depage-form p,
-  .depage-form .label {
+  .depage-form .depage_label {
     position: relative;
     line-height: 1.8em; }
   .depage-form input,
@@ -83,7 +83,7 @@
   .depage-form .input-multiple input:focus,
   .depage-form .input-multiple.error input {
     border: none; }
-  .depage-form .error .label {
+  .depage-form .error .depage_label {
     color: #ff0000; }
   .depage-form .submit input {
     background: #cccccc; }

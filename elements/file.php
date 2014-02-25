@@ -63,7 +63,7 @@ class file extends text
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
-                "<span class=\"label\">{$label}{$marker}</span>" .
+                "<span class=\"depage-label\">{$label}{$marker}</span>" .
                 $maxInput .
                 "<input name=\"{$this->name}[]\" type=\"{$this->type}\"{$inputAttributes}>" .
                 $list .

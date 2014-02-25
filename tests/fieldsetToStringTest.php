@@ -57,7 +57,7 @@ class fieldsetToStringTest extends PHPUnit_Framework_TestCase
             '<legend>fieldsetName</legend>' .
             '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
-                    '<span class="label">textName</span>' .
+                    '<span class="depage-label">textName</span>' .
                     '<input name="textName" type="text" value="">' .
                 '</label>' .
             '</p>' . "\n" .

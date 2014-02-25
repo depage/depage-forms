@@ -23,7 +23,7 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">datetimelocalName</span>' .
+                '<span class="depage-label">datetimelocalName</span>' .
                 '<input name="datetimelocalName" type="datetime-local" value="">' .
             '</label>' .
         '</p>' . "\n";
@@ -40,7 +40,7 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">datetimelocalName</span>' .
+                '<span class="depage-label">datetimelocalName</span>' .
                 '<input name="datetimelocalName" type="datetime-local" value="7331">' .
             '</label>' .
         '</p>' . "\n";
@@ -58,7 +58,7 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">datetimelocalName <em>*</em></span>' .
+                '<span class="depage-label">datetimelocalName <em>*</em></span>' .
                 '<input name="datetimelocalName" type="datetime-local" required="required" value="">' .
             '</label>' .
         '</p>' . "\n";
@@ -76,7 +76,7 @@ class datetimelocalToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
-                '<span class="label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
+                '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="datetimelocalName" type="datetime-local" required="required" value="">' .
             '</label>' .
         '</p>' . "\n";

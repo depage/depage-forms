@@ -23,7 +23,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textareaName" class="input-textarea" data-errorMessage="Please enter valid data" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
-                '<span class="label">textareaName</span>' .
+                '<span class="depage-label">textareaName</span>' .
                 '<textarea name="textareaName"></textarea>' .
             '</label>' .
         '</p>' . "\n";
@@ -40,7 +40,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textareaName" class="input-textarea" data-errorMessage="Please enter valid data" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
-                '<span class="label">textareaName</span>' .
+                '<span class="depage-label">textareaName</span>' .
                 '<textarea name="textareaName">testValue</textarea>' .
             '</label>' .
         '</p>' . "\n";
@@ -58,7 +58,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textareaName" class="input-textarea required" data-errorMessage="Please enter valid data" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
-                '<span class="label">textareaName <em>*</em></span>' .
+                '<span class="depage-label">textareaName <em>*</em></span>' .
                 '<textarea name="textareaName" required="required"></textarea>' .
             '</label>' .
         '</p>' . "\n";
@@ -76,7 +76,7 @@ class textareaToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<p id="formName-textareaName" class="input-textarea" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage" data-textarea-options="{&quot;autogrow&quot;:false}">' .
             '<label>' .
-                '<span class="label">la&quot;&gt;bel</span>' .
+                '<span class="depage-label">la&quot;&gt;bel</span>' .
                 '<textarea name="textareaName"></textarea>' .
             '</label>' .
         '</p>' . "\n";

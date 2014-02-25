@@ -62,13 +62,13 @@ class htmlformTest extends PHPUnit_Framework_TestCase
         // populate() only sets (protected) default value. The easiest way to check is to render it.
         $expectedText1 = '<p id="formName-text1Name" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">text1Name</span>' .
+                '<span class="depage-label">text1Name</span>' .
                 '<input name="text1Name" type="text" value="text1Value">' .
             '</label>' .
         '</p>' . "\n";
         $expectedText2 = '<p id="formName-text2Name" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
-                '<span class="label">text2Name</span>' .
+                '<span class="depage-label">text2Name</span>' .
                 '<input name="text2Name" type="text" value="">' .
             '</label>' .
         '</p>' . "\n";
