@@ -419,6 +419,7 @@ abstract class input extends element
     public function setRequired($required = true)
     {
         $this->required = (bool) $required;
+        $this->validated = false;
     }
     // }}}
 
