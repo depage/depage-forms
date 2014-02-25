@@ -589,7 +589,8 @@ class htmlform extends abstracts\container
      *
      * @return  new query
      **/
-    public function buildUrlQuery($args = array()) {
+    public function buildUrlQuery($args = array())
+    {
         $query = '';
         $queryParts = array();
 
@@ -632,9 +633,9 @@ class htmlform extends abstracts\container
      **/
     public function getFirstInvalidStep()
     {
-        if ( count($this->steps ) > 0) {
+        if (count($this->steps) > 0) {
             foreach ($this->steps as $stepNumber => $step) {
-                if (!$step->valid) {
+                if (!$step->validate()) {
                     return $stepNumber;
                 }
             }
@@ -644,7 +645,6 @@ class htmlform extends abstracts\container
              * don't want to jump back to the first step. Hence, this little
              * hack.
              **/
-
             return count($this->steps) - 1;
         } else {
             return 0;
