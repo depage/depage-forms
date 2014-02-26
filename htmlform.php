@@ -590,10 +590,13 @@ class htmlform extends abstracts\container
                 $this->redirect($this->successURL);
             } else {
                 // goto to next step or display first invalid step
-                $firstInvalidStep = $this->getFirstInvalidStep();
                 $nextStep = $this->currentStepId + 1;
+                $firstInvalidStep = $this->getFirstInvalidStep();
                 if ($nextStep > $firstInvalidStep) {
                     $nextStep = $firstInvalidStep;
+                }
+                if ($nextStep >= count($this->steps)) {
+                    $nextStep = count($this->steps) - 1;
                 }
                 $urlStepParameter = ($nextStep == 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $nextStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
