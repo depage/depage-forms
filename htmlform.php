@@ -545,9 +545,9 @@ class htmlform extends abstracts\container
             $cancel = "";
         }
         if (!is_null($this->backLabel) && $this->currentStepId > 0) {
-            $cancel = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
+            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
         } else {
-            $cancel = "";
+            $back = "";
         }
 
 
@@ -555,6 +555,7 @@ class htmlform extends abstracts\container
             $renderedElements .
             "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
             $cancel .
+            $back .
         "</form>";
     }
     // }}}
