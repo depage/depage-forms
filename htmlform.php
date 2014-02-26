@@ -321,6 +321,7 @@ class htmlform extends abstracts\container
 
         $this->defaults['label']        = 'submit';
         $this->defaults['cancelLabel']  = null;
+        $this->defaults['backLabel']  = null;
         $this->defaults['class']        = '';
         $this->defaults['method']       = 'post';
         // @todo adjust submit url for steps when used
@@ -522,6 +523,7 @@ class htmlform extends abstracts\container
         $renderedElements   = '';
         $label              = $this->htmlLabel();
         $cancellabel        = $this->htmlCancelLabel();
+        $backlabel          = $this->htmlBackLabel();
         $class              = $this->htmlClass();
         $method             = $this->htmlMethod();
         $submitURL          = $this->htmlSubmitURL();
@@ -530,8 +532,7 @@ class htmlform extends abstracts\container
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
-            if (
-                !($element instanceof elements\step)
+            if (!($element instanceof elements\step)
                 || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)
             ) {
                 $renderedElements .= $element;
@@ -543,6 +544,12 @@ class htmlform extends abstracts\container
         } else {
             $cancel = "";
         }
+        if (!is_null($this->backLabel) && $this->currentStepId > 0) {
+            $cancel = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
+        } else {
+            $cancel = "";
+        }
+
 
         return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\" data-jsvalidation=\"{$jsValidation}\" data-jsautosave=\"{$jsAutosave}\" enctype=\"multipart/form-data\">" . "\n" .
             $renderedElements .
@@ -570,13 +577,25 @@ class htmlform extends abstracts\container
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             if (!is_null($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
+                // cancel button was pressed
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
+            } elseif (!is_null($this->backLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->backLabel) {
+                // back button was pressed
+                $prevStep = $this->currentStepId - 1;
+                $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
+                $this->redirect($this->url['path'] . $urlStepParameter);
             } elseif ($this->validate()) {
+                // form was successfully submitted
                 $this->redirect($this->successURL);
             } else {
+                // goto to next step or display first invalid step
                 $firstInvalidStep = $this->getFirstInvalidStep();
-                $urlStepParameter = ($firstInvalidStep == 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $firstInvalidStep));
+                $nextStep = $this->currentStepId + 1;
+                if ($nextStep > $firstInvalidStep) {
+                    $nextStep = $firstInvalidStep;
+                }
+                $urlStepParameter = ($nextStep == 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $nextStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
             }
         }
@@ -611,7 +630,7 @@ class htmlform extends abstracts\container
         }
         
         // build the query again
-        $query = htmlspecialchars(http_build_query($queryParts));
+        $query = http_build_query($queryParts);
         
         if ($query != "") {
             $query = "?" . $query;
