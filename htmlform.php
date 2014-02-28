@@ -282,7 +282,6 @@ class htmlform extends abstracts\container
     {
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
-
         parent::__construct($name, $parameters, $this);
 
         $this->currentStepId = (isset($_GET['step'])) ? $_GET['step'] : 0;
@@ -301,7 +300,7 @@ class htmlform extends abstracts\container
 
         // set CSRF Token
         if (!isset($this->sessionSlot['formCsrfToken'])) {
-            $this->sessionSlot['formCsrfToken'] = base64_encode(openssl_random_pseudo_bytes(16));
+            $this->sessionSlot['formCsrfToken'] = $this->getNewCsrfToken();
         }
 
         // create a hidden input element to tell forms apart
@@ -411,7 +410,7 @@ class htmlform extends abstracts\container
         if (
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
             && $this->inCurrentStep($name)
-            && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken']
+            && isset($_POST['formCsrfToken']) && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken']
         ) {
             if ($this->getElement($name) instanceof elements\file) {
                 // handle uploaded file
@@ -513,6 +512,18 @@ class htmlform extends abstracts\container
         }
 
         return $currentElements;
+    }
+    // }}}
+    
+    // {{{ getNewCsrfToken()
+    /**
+     * @brief   Returns new XSRF token
+     *
+     * @return array element objects
+     **/
+    protected function getNewCsrfToken()
+    {
+        return base64_encode(openssl_random_pseudo_bytes(16));
     }
     // }}}
 
@@ -748,6 +759,10 @@ class htmlform extends abstracts\container
     public function validateAutosave()
     {
         parent::validate();
+
+        if (isset($_POST['formCsrfToken'])) {
+            $this->valid = $this->valid && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+        }
 
         $partValid = $this->valid;
 

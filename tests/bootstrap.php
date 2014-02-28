@@ -41,3 +41,15 @@ class nameTestForm
     public function updateInputValue() {}
 }
 // }}}
+//
+// {{{ csrfTestForm
+/**
+ * Dummy form class
+ **/
+class csrfTestForm extends depage\htmlform\htmlform
+{
+    protected function getNewCsrfToken() {
+        return "xxxxxxxx";
+    }
+}
+// }}}

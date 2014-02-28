@@ -103,10 +103,11 @@ class htmlformTest extends PHPUnit_Framework_TestCase
     public function testGetCurrentElementsInStep()
     {
         $_POST['formName']  = 'formName';
+        $_POST['formCsrfToken']  = 'xxxxxxxx';
         $_POST['text0Name'] = 'text0Value';
         $_GET['step']       = '1';
 
-        $form   = new htmlform('formName');
+        $form   = new csrfTestForm('formName');
         $step0  = $form->addStep('step0');
         $step1  = $form->addStep('step1');
         $text0  = $step1->addText('text0Name');
@@ -128,10 +129,11 @@ class htmlformTest extends PHPUnit_Framework_TestCase
     public function testGetCurrentElementsNotInStep()
     {
         $_POST['formName']  = 'formName';
+        $_POST['formCsrfToken']  = 'xxxxxxxx';
         $_POST['text0Name'] = 'text0Value';
         $_GET['step']       = '0';
 
-        $form   = new htmlform('formName');
+        $form   = new csrfTestForm('formName');
         $step0  = $form->addStep('step0');
         $step1  = $form->addStep('step1');
         $text0  = $step1->addText('text0Name');

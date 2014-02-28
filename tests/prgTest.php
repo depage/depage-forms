@@ -6,7 +6,7 @@ use depage\htmlform\htmlform;
 /**
  * Custom htmlform class with overidden redirect method for easier testing
  **/
-class htmlformTestClass extends htmlform
+class htmlformTestClass extends csrfTestForm
 {
     public $testRedirect;
 
@@ -44,6 +44,7 @@ class prgTest extends PHPUnit_Framework_TestCase
     {
         // setting up the post-data (form-name and value for a text-element)
         $_POST['formName'] = 'formName';
+        $_POST['formCsrfToken']  = 'xxxxxxxx';
         $_POST['postedText'] = 'submitted';
 
         $form = new htmlformTestClass('formName', array('successURL' => 'http://www.depagecms.net'));
@@ -61,6 +62,44 @@ class prgTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($form->validate());
         // should redirect to success address
         $this->assertEquals('http://www.depagecms.net', $form->testRedirect);
+    }
+    // }}}
+    
+    // {{{ testProcessCorrectCsrf()
+    /**
+     * Testing validation with correct CSRF token
+     **/
+    public function testProcessCorrectCsrf()
+    {
+        // setting up the post-data (form-name and value for a text-element)
+        $_POST['formName'] = 'formName';
+        $_POST['formCsrfToken']  = 'xxxxxxxx';
+        $_POST['postedText'] = 'submitted';
+
+        $form = new htmlformTestClass('formName');
+        $postedTextElement = $form->addText('postedText');
+
+        $form->process();
+        $this->assertTrue($form->validate());
+    }
+    // }}}
+    
+    // {{{ testProcessIncorrectCsrf()
+    /**
+     * Testing validation with incorrect CSRF token
+     **/
+    public function testProcessIncorrectCsrf()
+    {
+        // setting up the post-data (form-name and value for a text-element)
+        $_POST['formName'] = 'formName';
+        $_POST['formCsrfToken']  = 'yyyyyyyy';
+        $_POST['postedText'] = 'submitted';
+
+        $form = new htmlformTestClass('formName');
+        $postedTextElement = $form->addText('postedText');
+
+        $form->process();
+        $this->assertFalse($form->validate());
     }
     // }}}
 

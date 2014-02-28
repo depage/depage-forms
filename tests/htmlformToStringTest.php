@@ -15,12 +15,13 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-submit" class="submit">' .
                 '<input type="submit" name="formSubmit" value="submit">' .
             '</p>' . "\n" .
         '</form>';
 
-        $form = new htmlform('formName');
+        $form = new csrfTestForm('formName');
         $this->assertEquals($expected, $form->__toString());
     }
     // }}}
@@ -33,6 +34,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-submit" class="submit">' .
                 '<input type="submit" name="formSubmit" value="submit">' .
             '</p>' . "\n" .
@@ -41,7 +43,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
             '</p>' . "\n" .
         '</form>';
 
-        $form = new htmlform('formName', array(
+        $form = new csrfTestForm('formName', array(
             'cancelLabel' => "cancel",
         ));
         $this->assertEquals($expected, $form->__toString());
@@ -56,6 +58,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">text1</span>' .
@@ -68,7 +71,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
         '</form>';
 
         $_GET['step'] = 1;
-        $form = new htmlform('formName');
+        $form = new csrfTestForm('formName');
         $step0 = $form->addStep('step0');
         $step0->addText('text0');
         $step1 = $form->addStep('step1');
@@ -86,6 +89,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">text1</span>' .
@@ -101,7 +105,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
         '</form>';
 
         $_GET['step'] = 1;
-        $form = new htmlform('formName', array(
+        $form = new csrfTestForm('formName', array(
             'backLabel' => "back",
         ));
         $step0 = $form->addStep('step0');
