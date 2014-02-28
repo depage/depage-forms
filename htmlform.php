@@ -321,7 +321,7 @@ class htmlform extends abstracts\container
 
         $this->defaults['label']        = 'submit';
         $this->defaults['cancelLabel']  = null;
-        $this->defaults['backLabel']  = null;
+        $this->defaults['backLabel']    = null;
         $this->defaults['class']        = '';
         $this->defaults['method']       = 'post';
         // @todo adjust submit url for steps when used
