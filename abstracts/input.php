@@ -578,11 +578,11 @@ abstract class input extends element
         $helpMessage = '';
         if (isset($this->helpMessage) && !empty($this->helpMessage)) {
             // escaped message
-            $helpMessage = "<span class=\"helpMessage\" style=\"display:none;\">" . $this->htmlEscape($this->helpMessage) . "</span>";
+            $helpMessage = "<span class=\"helpMessage\">" . $this->htmlEscape($this->helpMessage) . "</span>";
         }
         if (isset($this->helpMessageHtml) && !empty($this->helpMessageHtml)) {
             // html message
-            $helpMessage = "<span class=\"helpMessage\" style=\"display:none;\">" . $this->helpMessageHtml. "</span>";
+            $helpMessage = "<span class=\"helpMessage\">" . $this->helpMessageHtml. "</span>";
         }
 
         return $helpMessage;
