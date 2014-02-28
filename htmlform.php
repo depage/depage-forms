@@ -584,13 +584,16 @@ class htmlform extends abstracts\container
         $this->setCurrentStep();
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
-            if (!is_null($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
+            if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
-            } elseif (!is_null($this->backLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->backLabel) {
+            } elseif (!empty($this->backLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->backLabel) {
                 // back button was pressed
                 $prevStep = $this->currentStepId - 1;
+                if ($prevStep < 0) {
+                    $prevStep = 0;
+                }
                 $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
             } elseif ($this->validate()) {
@@ -603,7 +606,7 @@ class htmlform extends abstracts\container
                 if ($nextStep > $firstInvalidStep) {
                     $nextStep = $firstInvalidStep;
                 }
-                if ($nextStep >= count($this->steps)) {
+                if ($nextStep > count($this->steps)) {
                     $nextStep = count($this->steps) - 1;
                 }
                 $urlStepParameter = ($nextStep == 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $nextStep));
