@@ -299,8 +299,14 @@ class htmlform extends abstracts\container
 
         $this->valid = (isset($this->sessionSlot['formIsValid'])) ? $this->sessionSlot['formIsValid'] : null;
 
+        // set CSRF Token
+        if (!isset($this->sessionSlot['formCsrfToken'])) {
+            $this->sessionSlot['formCsrfToken'] = base64_encode(openssl_random_pseudo_bytes(16));
+        }
+
         // create a hidden input element to tell forms apart
         $this->addHidden('formName', array('defaultValue' => $this->name));
+        $this->addHidden('formCsrfToken', array('defaultValue' => $this->sessionSlot['formCsrfToken']));
         $this->addChildElements();
     }
     // }}}
@@ -405,6 +411,7 @@ class htmlform extends abstracts\container
         if (
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
             && $this->inCurrentStep($name)
+            && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken']
         ) {
             if ($this->getElement($name) instanceof elements\file) {
                 // handle uploaded file
@@ -803,6 +810,7 @@ class htmlform extends abstracts\container
                 'formIsAutosaved' => '',
                 'formName' => '',
                 'formTimestamp' => '',
+                'formCsrfToken' => '',
             ));
         } else {
             return null;

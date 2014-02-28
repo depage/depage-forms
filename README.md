@@ -19,6 +19,7 @@ Features
     - client side [(jQuery Tools)](http://flowplayer.org/tools/ "jQuery Tools")
     - available for standard input elements
     - customizable with regular expressions
+    - basic CSRF protection
 - HTML5 form features
     - attributes : placeholder, autofocus, textbox datalists, title, pattern
     - input elements : boolean (checkbox), email, hidden, multiple (checkbox, select list), number, password, range, search, single (radio, select list), tel, text, textarea, url
