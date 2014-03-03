@@ -843,6 +843,7 @@ class htmlform extends abstracts\container
                 'formIsAutosaved' => '',
                 'formName' => '',
                 'formTimestamp' => '',
+                'formStep' => '',
                 'formFinalPost' => '',
                 'formCsrfToken' => '',
             ));
