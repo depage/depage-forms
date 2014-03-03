@@ -303,8 +303,8 @@ class htmlform extends abstracts\container
             $this->sessionSlot['formCsrfToken'] = $this->getNewCsrfToken();
         }
 
-        if (!isset($this->sessionSlot['finalPost'])) {
-            $this->sessionSlot['finalPost'] = false;
+        if (!isset($this->sessionSlot['formFinalPost'])) {
+            $this->sessionSlot['formFinalPost'] = false;
         }
 
         // create a hidden input to tell forms apart
@@ -606,7 +606,7 @@ class htmlform extends abstracts\container
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             // save in session if submission was from last step
-            $this->sessionSlot['finalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps);
+            $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps);
 
             if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
@@ -614,7 +614,7 @@ class htmlform extends abstracts\container
                 $this->redirect($this->cancelURL);
             } elseif (!empty($this->backLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->backLabel) {
                 // back button was pressed
-                $this->sessionSlot['finalPost'] = false;
+                $this->sessionSlot['formFinalPost'] = false;
                 $prevStep = $this->currentStepId - 1;
                 if ($prevStep < 0) {
                     $prevStep = 0;
@@ -752,7 +752,7 @@ class htmlform extends abstracts\container
                 throw new exceptions\validatorNotCallable("The validator paramater must be callable");
             }
         }
-        $this->valid = $this->valid && $this->sessionSlot['finalPost'];
+        $this->valid = $this->valid && $this->sessionSlot['formFinalPost'];
 
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;
@@ -843,6 +843,7 @@ class htmlform extends abstracts\container
                 'formIsAutosaved' => '',
                 'formName' => '',
                 'formTimestamp' => '',
+                'formFinalPost' => '',
                 'formCsrfToken' => '',
             ));
         } else {
