@@ -7,7 +7,9 @@ require_once '../../htmlform.php';
 /*
  * Create the example form 'stepsExampleForm'
  */
-$form = new depage\htmlform\htmlform('stepsExampleForm');
+$form = new depage\htmlform\htmlform('stepsExampleForm', array(
+    'backLabel' => "back",
+));
 
 /*
  * add (optional) step navigation

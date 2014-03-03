@@ -132,6 +132,7 @@ class prgTest extends PHPUnit_Framework_TestCase
     public function testProcessSteps()
     {
         $_POST['formName'] = 'formName';
+        $_POST['formStep'] = '0';
 
         $_GET['step'] = 'bogusStepId';
 
@@ -162,6 +163,7 @@ class prgTest extends PHPUnit_Framework_TestCase
     public function testStepsFreeFieldset()
     {
         $_POST['formName'] = 'formName';
+        $_POST['formStep'] = '0';
 
         $_GET['step'] = 'bogusStepId';
 

@@ -192,6 +192,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
 
         // pretend the form has been submitted before
         $_SESSION['formName-data']['formName'] = 'formName';
+        $_SESSION['formName-data']['finalPost'] = true;
 
         // building the form with custom validator
         $form = new htmlform('formName', array('validator' => $validator));
