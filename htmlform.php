@@ -284,7 +284,7 @@ class htmlform extends abstracts\container
 
         parent::__construct($name, $parameters, $this);
 
-        $this->currentStepId = (isset($_GET['step'])) ? $_GET['step'] : 0;
+        $this->currentStepId = isset($_GET['step']) ? $_GET['step'] : 0;
 
         // check if there's an open session
         if (!session_id()) {
@@ -303,9 +303,19 @@ class htmlform extends abstracts\container
             $this->sessionSlot['formCsrfToken'] = $this->getNewCsrfToken();
         }
 
-        // create a hidden input element to tell forms apart
-        $this->addHidden('formName', array('defaultValue' => $this->name));
-        $this->addHidden('formCsrfToken', array('defaultValue' => $this->sessionSlot['formCsrfToken']));
+        if (!isset($this->sessionSlot['finalPost'])) {
+            $this->sessionSlot['finalPost'] = false;
+        }
+
+        // create a hidden input to tell forms apart
+        $this->addHidden('formName')->setValue($this->name);
+
+        // create hidden input for submitted step
+        $this->addHidden('formStep')->setValue($this->currentStepId);
+
+        // create hidden input for CSRF token
+        $this->addHidden('formCsrfToken')->setValue($this->sessionSlot['formCsrfToken']);
+
         $this->addChildElements();
     }
     // }}}
@@ -595,12 +605,16 @@ class htmlform extends abstracts\container
         $this->setCurrentStep();
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
+            // save in session if submission was from last step
+            $this->sessionSlot['finalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps);
+
             if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
             } elseif (!empty($this->backLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->backLabel) {
                 // back button was pressed
+                $this->sessionSlot['finalPost'] = false;
                 $prevStep = $this->currentStepId - 1;
                 if ($prevStep < 0) {
                     $prevStep = 0;
@@ -738,6 +752,7 @@ class htmlform extends abstracts\container
                 throw new exceptions\validatorNotCallable("The validator paramater must be callable");
             }
         }
+        $this->valid = $this->valid && $this->sessionSlot['finalPost'];
 
         // save validation-state in session
         $this->sessionSlot['formIsValid'] = $this->valid;

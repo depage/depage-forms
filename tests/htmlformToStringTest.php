@@ -15,6 +15,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="0">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-submit" class="submit">' .
                 '<input type="submit" name="formSubmit" value="submit">' .
@@ -34,6 +35,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="0">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-submit" class="submit">' .
                 '<input type="submit" name="formSubmit" value="submit">' .
@@ -58,6 +60,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="1">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
@@ -89,6 +92,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
     {
         $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="1">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
             '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
