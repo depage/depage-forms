@@ -19,7 +19,7 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase
     public function testSetTimestamp()
     {
         $form = new htmlform('formName', array('ttl' => 60));
-        $this->assertEquals(42, $_SESSION['formName-data']['formTimestamp']);
+        $this->assertEquals(42, $_SESSION['htmlform-formName-data']['formTimestamp']);
     }
     // }}}
 
@@ -30,12 +30,12 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase
      **/
     public function testUpdateTimestamp()
     {
-        $_SESSION['formName-data']['test'] = 'test';
-        $_SESSION['formName-data']['formTimestamp'] = 1;
+        $_SESSION['htmlform-formName-data']['test'] = 'test';
+        $_SESSION['htmlform-formName-data']['formTimestamp'] = 1;
         $form = new htmlform('formName', array('ttl' => 60));
 
-        $this->assertEquals('test', $_SESSION['formName-data']['test']);
-        $this->assertEquals(42, $_SESSION['formName-data']['formTimestamp']);
+        $this->assertEquals('test', $_SESSION['htmlform-formName-data']['test']);
+        $this->assertEquals(42, $_SESSION['htmlform-formName-data']['formTimestamp']);
     }
     // }}}
 
@@ -45,12 +45,12 @@ class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase
      **/
     public function testClearSession()
     {
-        $_SESSION['formName-data']['test'] = 'test';
-        $_SESSION['formName-data']['formTimestamp'] = 1;
+        $_SESSION['htmlform-formName-data']['test'] = 'test';
+        $_SESSION['htmlform-formName-data']['formTimestamp'] = 1;
         $form = new htmlform('formName', array('ttl' => 30));
 
-        $this->assertFalse(isset($_SESSION['formName-data']['test']));
-        $this->assertEquals(42, $_SESSION['formName-data']['formTimestamp']);
+        $this->assertFalse(isset($_SESSION['htmlform-formName-data']['test']));
+        $this->assertEquals(42, $_SESSION['htmlform-formName-data']['formTimestamp']);
     }
     // }}}
 }

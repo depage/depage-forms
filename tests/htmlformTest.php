@@ -33,7 +33,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
      **/
     public function testEmptyFormBeforePostValidation()
     {
-        $_SESSION = array('formName-data' => array());
+        $_SESSION = array('htmlform-formName-data' => array());
         $this->form = new htmlform('formName');
         $this->form->process();
         $this->assertFalse($this->form->validate());
@@ -153,7 +153,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
         $form = new htmlform('formName');
         $this->assertTrue($form->isEmpty());
 
-        $_SESSION['formName-data']['formName'] = 'formName';
+        $_SESSION['htmlform-formName-data']['formName'] = 'formName';
         $this->assertFalse($form->isEmpty());
     }
     // }}}
@@ -169,11 +169,11 @@ class htmlformTest extends PHPUnit_Framework_TestCase
         $form = new htmlform('formName');
         $this->assertNull($form->valid);
 
-        $_SESSION['form2Name-data']['formIsValid'] = true;
+        $_SESSION['htmlform-form2Name-data']['formIsValid'] = true;
         $form2 = new htmlform('form2Name');
         $this->assertTrue($form2->valid);
 
-        $_SESSION['form3Name-data']['formIsValid'] = false;
+        $_SESSION['htmlform-form3Name-data']['formIsValid'] = false;
         $form3 = new htmlform('form3Name');
         $this->assertFalse($form3->valid);
     }
@@ -191,8 +191,8 @@ class htmlformTest extends PHPUnit_Framework_TestCase
         $validator = function () { return true; };
 
         // pretend the form has been submitted before
-        $_SESSION['formName-data']['formName'] = 'formName';
-        $_SESSION['formName-data']['formFinalPost'] = true;
+        $_SESSION['htmlform-formName-data']['formName'] = 'formName';
+        $_SESSION['htmlform-formName-data']['formFinalPost'] = true;
 
         // building the form with custom validator
         $form = new htmlform('formName', array('validator' => $validator));
@@ -204,7 +204,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
         $validator2 = function () { return false; };
 
         // pretending the form has been submitted before
-        $_SESSION['form2Name-data']['form2Name'] = 'form2Name';
+        $_SESSION['htmlform-form2Name-data']['form2Name'] = 'form2Name';
 
         // building the form with custom validator
         $form2 = new htmlform('form2Name', array('validator' => $validator2));
@@ -220,7 +220,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
      **/
     public function testClearSession()
     {
-        $_SESSION['formName-data']['formName'] = 'formName';
+        $_SESSION['htmlform-formName-data']['formName'] = 'formName';
         $form = new htmlform('formName');
 
         $form->clearSession();

@@ -286,15 +286,7 @@ class htmlform extends abstracts\container
 
         $this->currentStepId = isset($_GET['step']) ? $_GET['step'] : 0;
 
-        // check if there's an open session
-        if (!session_id()) {
-            session_set_cookie_params($this->ttl, "/");
-            session_start();
-        }
-        $this->sessionSlotName  = $this->name . '-data';
-        $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
-
-        $this->sessionExpiry();
+        $this->startSession();
 
         $this->valid = (isset($this->sessionSlot['formIsValid'])) ? $this->sessionSlot['formIsValid'] : null;
 
@@ -350,6 +342,52 @@ class htmlform extends abstracts\container
     }
     // }}}
 
+    // {{{ startSession()
+    /**
+     * @brief   Start session when there is no current session yet
+     *
+     * Starts a new session if there is no session, sets the session slot
+     * and also calls the session expiry handler.
+     *
+     * @return void
+     **/
+    private function startSession()
+    {
+        // check if there's an open session
+        if (!session_id()) {
+            $sessionName = session_name();
+            $sessionDomain = false;
+            $sessionSecure = false;
+            $sessionHttponly = true;
+
+            session_set_cookie_params(
+                $this->ttl,
+                "/",
+                $sessionDomain,
+                $sessionSecure,
+                $sessionHttponly
+            );
+            session_start();
+            
+            // Extend the expiration time upon page load
+            if (isset($_COOKIE[$sessionName])) {
+                setcookie(
+                    $sessionName,
+                    $_COOKIE[$sessionName],
+                    time() + $this->ttl,
+                    "/",
+                    $sessionDomain,
+                    $sessionSecure,
+                    $sessionHttponly
+                );
+            }
+        }
+        $this->sessionSlotName  = 'htmlform-' . $this->name . '-data';
+        $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
+
+        $this->sessionExpiry();
+    }
+    // }}}
     // {{{ sessionExpiry()
     /**
      * @brief   Deletes session when it expires.

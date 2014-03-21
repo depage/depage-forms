@@ -111,7 +111,7 @@ class prgTest extends PHPUnit_Framework_TestCase
     public function testProcessOnGet()
     {
         // setting up session-data for text-element
-        $_SESSION['formName-data']['storedText'] = 'stored';
+        $_SESSION['htmlform-formName-data']['storedText'] = 'stored';
 
         $form = new htmlformTestClass('formName');
 
