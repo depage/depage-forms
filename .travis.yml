@@ -4,4 +4,4 @@ php:
   - 5.4
   - 5.3
 
-script: phpunit --bootstrap tests/bootstrap.php tests
+script: phpunit --bootstrap Tests/bootstrap.php Tests
