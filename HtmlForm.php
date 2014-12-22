@@ -267,6 +267,18 @@ class HtmlForm extends Abstracts\Container
      * @brief Form validation result/status
      **/
     public $valid;
+    /**
+     * @brief List of internal fieldnames that are not part of the results
+     **/
+    protected $internalFields = array(
+        'formIsValid',
+        'formIsAutosaved',
+        'formName',
+        'formTimestamp',
+        'formStep',
+        'formFinalPost',
+        'formCsrfToken',
+    );
     // }}}
 
     // {{{ __construct()
@@ -857,10 +869,19 @@ class HtmlForm extends Abstracts\Container
      **/
     public function populate($data = array())
     {
-        foreach ($data as $name => $value) {
-            $element = $this->getElement($name);
-            if ($element) {
-               $element->setDefaultValue($value);
+        if (is_array($data)) {
+            foreach ($data as $name => $value) {
+                $element = $this->getElement($name);
+                if ($element) {
+                    $element->setDefaultValue($value);
+                }
+            }
+        } elseif (is_object($data)) {
+            foreach ($this->getElements() as $element) {
+                $name = $element->name;
+                if (!in_array($name, $this->internalFields) && isset($data->$name)) {
+                    $element->setDefaultValue($data->$name);
+                }
             }
         }
     }
@@ -876,15 +897,7 @@ class HtmlForm extends Abstracts\Container
     {
         if (isset($this->sessionSlot)) {
             // remove internal attributes from values
-            return array_diff_key($this->sessionSlot, array(
-                'formIsValid' => '',
-                'formIsAutosaved' => '',
-                'formName' => '',
-                'formTimestamp' => '',
-                'formStep' => '',
-                'formFinalPost' => '',
-                'formCsrfToken' => '',
-            ));
+            return array_diff_key($this->sessionSlot, array_fill_keys($this->internalFields, ''));
         } else {
             return null;
         }

@@ -40,17 +40,55 @@ class htmlformTest extends PHPUnit_Framework_TestCase
     }
     // }}}
 
-    // {{{ testPopulate()
+    // {{{ testPopulateArray()
     /**
      * "Populating" the forms subelements with values.
      **/
-    public function testPopulate()
+    public function testPopulateArray()
     {
         $form = new HtmlForm('formName');
         $text1 = $form->addText('text1Name');
         $text2 = $form->addText('text2Name');
 
         $values = array(
+            // for $text1
+            'text1Name'             => 'text1Value',
+            // should be ignored
+            'unexistentElementName' => 'testValue',
+        );
+
+        $form->populate($values);
+
+        // populate() only sets (protected) default value. The easiest way to check is to render it.
+        $expectedText1 = '<p id="formName-text1Name" class="input-text" data-errorMessage="Please enter valid data">' .
+            '<label>' .
+                '<span class="depage-label">text1Name</span>' .
+                '<input name="text1Name" type="text" value="text1Value">' .
+            '</label>' .
+        '</p>' . "\n";
+        $expectedText2 = '<p id="formName-text2Name" class="input-text" data-errorMessage="Please enter valid data">' .
+            '<label>' .
+                '<span class="depage-label">text2Name</span>' .
+                '<input name="text2Name" type="text" value="">' .
+            '</label>' .
+        '</p>' . "\n";
+
+        $this->assertEquals($expectedText1, $text1->__toString());
+        $this->assertEquals($expectedText2, $text2->__toString());
+    }
+    // }}}
+
+    // {{{ testPopulateObject()
+    /**
+     * "Populating" the forms subelements with values.
+     **/
+    public function testPopulateObject()
+    {
+        $form = new HtmlForm('formName');
+        $text1 = $form->addText('text1Name');
+        $text2 = $form->addText('text2Name');
+
+        $values = (object) array(
             // for $text1
             'text1Name'             => 'text1Value',
             // should be ignored
