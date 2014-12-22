@@ -384,6 +384,18 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ getDefaultValue()
+    /**
+     * @brief   gets the initial input element value
+     *
+     * @return  value
+     **/
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
+    }
+    // }}}
+
     // {{{ typeCastValue()
     /**
      * @brief converts element value
@@ -433,6 +445,19 @@ abstract class Input extends Element
     public function setDisabled($disabled = true)
     {
         $this->disabled = (bool) $disabled;
+    }
+    // }}}
+
+    // {{{ getDisabled()
+    /**
+     * @brief   Gets if input is currently disabled
+     *
+     * @param  bool $disabled HTML disabled-attribute
+     * @return void
+     **/
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
     // }}}
 

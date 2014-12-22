@@ -466,6 +466,7 @@ class HtmlForm extends Abstracts\Container
      **/
     public function updateInputValue($name)
     {
+        $element = $this->getElement($name);
         // if it's a post, take the value from there and save it to the session
         if (
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
@@ -475,16 +476,19 @@ class HtmlForm extends Abstracts\Container
             if ($this->getElement($name) instanceof elements\file) {
                 // handle uploaded file
                 $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
-                $this->sessionSlot[$name] = $this->getElement($name)->handleUploadedFiles($oldValue);
-            } else {
+                $this->sessionSlot[$name] = $element->handleUploadedFiles($oldValue);
+            } else if (!$element->getDisabled()) {
                 // save value
                 $value = isset($_POST[$name]) ? $_POST[$name] : null;
-                $this->sessionSlot[$name] = $this->getElement($name)->setValue($value);
+                $this->sessionSlot[$name] = $element->setValue($value);
+            } else if (!isset($this->sessionSlot[$name])) {
+                // set default value for disabled elements
+                $this->sessionSlot[$name] = $element->setValue($element->getDefaultValue());
             }
         }
         // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
-            $this->getElement($name)->setValue($this->sessionSlot[$name]);
+            $element->setValue($this->sessionSlot[$name]);
         }
     }
     // }}}
@@ -869,19 +873,23 @@ class HtmlForm extends Abstracts\Container
      **/
     public function populate($data = array())
     {
-        if (is_array($data)) {
-            foreach ($data as $name => $value) {
-                $element = $this->getElement($name);
-                if ($element) {
+        foreach ($this->getElements() as $element) {
+            $name = $element->name;
+            if (!in_array($name, $this->internalFields)) {
+                if (is_array($data) && isset($data[$name])) {
+                    $value = $data[$name];
+                } else if (is_object($data) && isset($data->$name)) {
+                    $value = $data->$name;
+                }
+
+                if (isset($value)) {
                     $element->setDefaultValue($value);
+                    if ($element->getDisabled() && !isset($this->sessionSlot[$name])) {
+                        $this->sessionSlot[$name] = $value;
+                    }
                 }
-            }
-        } elseif (is_object($data)) {
-            foreach ($this->getElements() as $element) {
-                $name = $element->name;
-                if (!in_array($name, $this->internalFields) && isset($data->$name)) {
-                    $element->setDefaultValue($data->$name);
-                }
+
+                unset($value);
             }
         }
     }
@@ -904,7 +912,7 @@ class HtmlForm extends Abstracts\Container
     }
     // }}}
 
-        // {{{ getValuesWithLabel()
+    // {{{ getValuesWithLabel()
     /**
      * @brief   Gets form-data from current PHP session but also contain elemnt labels.
      *
@@ -914,14 +922,18 @@ class HtmlForm extends Abstracts\Container
     {
         //get values first
         $values = $this->getValues();
-        $values_with_label =array();
+        $valuesWithLabel = array();
         if (isset($values)) {
             foreach ($values as $element => $value) {
                 $elem = $this->getElement($element);
-                if ($elem) $values_with_label[$element] = array("value"=>$value, "label"=>$elem->getLabel());
+
+                if ($elem) $valuesWithLabel[$element] = array(
+                    "value" => $value,
+                    "label" => $elem->getLabel()
+                );
             }
 
-            return $values_with_label;
+            return $valuesWithLabel;
         } else {
             return null;
         }
