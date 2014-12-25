@@ -3,7 +3,7 @@
  * @file    htmldom.php
  * @brief   DOM-class for html-content
  *
- * @author    Frank Hellenkamp [jonas@depagecms.net]
+ * @author    Frank Hellenkamp [jonas@depage.net]
  */
 
 namespace Depage\HtmlForm\Abstracts;
