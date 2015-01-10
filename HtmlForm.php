@@ -153,7 +153,7 @@
     @endcode
  *
  * @namespace Depage::HtmlForm::Exceptions
- * @brief Htmlform exceptions
+ * @brief HtmlForm exceptions
  *
  * @namespace Depage::HtmlForm::Validators
  * @brief Validators for HTML input-elements
