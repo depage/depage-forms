@@ -275,6 +275,22 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ invalidate()
+    /**
+     * @brief Invalidates input
+     *
+     * Thats valid state of input to false. Mainly to use in onValidate
+     * function to invalidate input based on other fields values.
+     *
+     * @return void
+     **/
+    public function invalidate()
+    {
+        $this->validated = true;
+        $this->valid = false;
+    }
+    // }}}
+
     // {{{ validatorCall()
     /**
      * @brief   custom validator call hook
