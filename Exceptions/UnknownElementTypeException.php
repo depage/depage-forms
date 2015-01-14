@@ -14,8 +14,8 @@ namespace Depage\HtmlForm\Exceptions;
  **/
 class UnknownElementTypeException extends ElementException
 {
-    public function __construct()
+    public function __construct($type)
     {
-        parent::__construct("Unknown element type.");
+        parent::__construct("Unknown element type '$type'.");
     }
 }

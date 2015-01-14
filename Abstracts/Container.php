@@ -225,7 +225,7 @@ abstract class Container extends Element
     private function checkElementType($type)
     {
         if (!class_exists($type)) {
-            throw new Exceptions\UnknownElementTypeException();
+            throw new Exceptions\UnknownElementTypeException($type);
         }
     }
     // }}}
