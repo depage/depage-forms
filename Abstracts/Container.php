@@ -161,7 +161,7 @@ abstract class Container extends Element
      **/
     public function addStepNav($parameter = array())
     {
-        $htmlElement = new elements\stepnav($parameter, $this->form);
+        $htmlElement = new Elements\Stepnav($parameter, $this->form);
 
         $this->elementsAndHtml[] = $htmlElement;
 
