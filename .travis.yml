@@ -7,4 +7,9 @@ php:
   - hhvm
   - nightly
 
+install:
+  # enable EZC for hhvm
+  - cat /etc/hhvm/php.ini
+  - echo hhvm.enable_zend_compat=true | sudo tee -a /etc/hhvm/php.ini
+
 script: phpunit --bootstrap Tests/bootstrap.php Tests
