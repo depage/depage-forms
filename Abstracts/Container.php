@@ -38,7 +38,6 @@ abstract class Container extends Element
      **/
     protected $namespaces = array('\\Depage\\HtmlForm\\Elements');
     // }}}
-
     // {{{ __construct()
     /**
      * @brief   container class constructor
@@ -108,7 +107,6 @@ abstract class Container extends Element
         $this->namespaces[] = $namespace;
     }
     // }}}
-
     // {{{ addElement()
     /**
      * @brief Generates sub-elements.
@@ -141,7 +139,6 @@ abstract class Container extends Element
         return $newElement;
     }
     // }}}
-
     // {{{ addChildElements()
     /**
      * @brief   Sub-element generator hook
@@ -158,86 +155,6 @@ abstract class Container extends Element
      **/
     public function addChildElements() {}
     // }}}
-
-    // {{{ addHtml()
-    /**
-     * @brief   Adds a new custom HTML element to the container.
-     *
-     * @param  string $html HTML code
-     * @return object $htmlElement    HTML element object
-     *
-     * @see     Depage::HtmlForm::Elements::Html
-     **/
-    public function addHtml($html)
-    {
-        $htmlElement = new Elements\Html($html);
-
-        $this->elementsAndHtml[] = $htmlElement;
-
-        return $htmlElement;
-    }
-    // }}}
-
-    // {{{ addStepNav()
-    /**
-     * @brief   Adds automatic step navigation to output
-     *
-     * @param array $parameter array of opional parameters
-     **/
-    public function addStepNav($parameter = array())
-    {
-        $htmlElement = new Elements\Stepnav($parameter, $this->form);
-
-        $this->elementsAndHtml[] = $htmlElement;
-
-        return $htmlElement;
-    }
-    // }}}
-
-    // {{{ validate()
-    /**
-     * @brief Validates container and its contents.
-     *
-     * Walks recursively through current containers' elements and checks if
-     * they're valid. Saves the result to $this->valid.
-     *
-     * @return bool $this->valid validation result
-     **/
-    public function validate()
-    {
-        if (!$this->validated) {
-            $this->validated = true;
-
-            $this->valid = true;
-            foreach ($this->elements as $element) {
-                $element->validate();
-                $this->valid = (($this->valid) && ($element->validate()));
-            }
-        }
-
-        return $this->valid;
-    }
-    // }}}
-
-    // {{{ setRequired()
-    /**
-     * @brief   Sets required-attribute
-     *
-     * Sets current containers' elements' HTML-required attribute recursively.
-     *
-     * @param  bool $required HTML-required attribute
-     * @return void
-     **/
-    public function setRequired($required = true)
-    {
-        $required = (bool) $required;
-
-        foreach ($this->elements as $element) {
-            $element->setRequired($required);
-        }
-    }
-    // }}}
-
     // {{{ getElements()
     /**
      * @brief Returns containers subelements.
@@ -265,7 +182,6 @@ abstract class Container extends Element
         return $allElements;
     }
     // }}}
-
     // {{{ getElement()
     /**
      * @brief   Gets subelement by name.
@@ -288,6 +204,82 @@ abstract class Container extends Element
     }
     // }}}
 
+    // {{{ addHtml()
+    /**
+     * @brief   Adds a new custom HTML element to the container.
+     *
+     * @param  string $html HTML code
+     * @return object $htmlElement    HTML element object
+     *
+     * @see     Depage::HtmlForm::Elements::Html
+     **/
+    public function addHtml($html)
+    {
+        $htmlElement = new Elements\Html($html);
+
+        $this->elementsAndHtml[] = $htmlElement;
+
+        return $htmlElement;
+    }
+    // }}}
+    // {{{ addStepNav()
+    /**
+     * @brief   Adds automatic step navigation to output
+     *
+     * @param array $parameter array of opional parameters
+     **/
+    public function addStepNav($parameter = array())
+    {
+        $htmlElement = new Elements\Stepnav($parameter, $this->form);
+
+        $this->elementsAndHtml[] = $htmlElement;
+
+        return $htmlElement;
+    }
+    // }}}
+
+    // {{{ setRequired()
+    /**
+     * @brief   Sets required-attribute
+     *
+     * Sets current containers' elements' HTML-required attribute recursively.
+     *
+     * @param  bool $required HTML-required attribute
+     * @return void
+     **/
+    public function setRequired($required = true)
+    {
+        $required = (bool) $required;
+
+        foreach ($this->elements as $element) {
+            $element->setRequired($required);
+        }
+    }
+    // }}}
+    // {{{ validate()
+    /**
+     * @brief Validates container and its contents.
+     *
+     * Walks recursively through current containers' elements and checks if
+     * they're valid. Saves the result to $this->valid.
+     *
+     * @return bool $this->valid validation result
+     **/
+    public function validate()
+    {
+        if (!$this->validated) {
+            $this->validated = true;
+
+            $this->valid = true;
+            foreach ($this->elements as $element) {
+                $element->validate();
+                $this->valid = (($this->valid) && ($element->validate()));
+            }
+        }
+
+        return $this->valid;
+    }
+    // }}}
     // {{{ clearValue()
     /**
      * @brief   Deletes values of all child elements
