@@ -33,6 +33,10 @@ abstract class Container extends Element
      * @brief Parent form object reference
      **/
     protected $form;
+    /**
+     * @brief Namespace strings for addible element classes
+     **/
+    protected $namespaces = array('\\Depage\\HtmlForm\\Elements');
     // }}}
 
     // {{{ __construct()
@@ -72,14 +76,36 @@ abstract class Container extends Element
     public function __call($function, $arguments)
     {
         if (substr($function, 0, 3) === 'add') {
-            $type       = str_replace('add', '\\Depage\\HtmlForm\\Elements\\', $function);
-            $name       = isset($arguments[0])  ? $arguments[0] : '';
-            $parameters = isset($arguments[1])  ? $arguments[1] : array();
+            $type = str_replace('add', '', $function);
 
-            return $this->addElement($type, $name, $parameters);
+            foreach($this->namespaces as $namespace) {
+                $class = $namespace . '\\' . $type;
+                if (class_exists($class)) {
+                    $name = isset($arguments[0])  ? $arguments[0] : '';
+                    $parameters = isset($arguments[1])  ? $arguments[1] : array();
+                    return $this->addElement($class, $name, $parameters);
+                }
+            }
+
+            throw new Exceptions\UnknownElementTypeException($type);
         } else {
             return parent::__call($function, $arguments);
         }
+    }
+    // }}}
+
+    // {{{ registerNamespace
+    /**
+     * @brief   Stores element namespaces for adding
+     *
+     * @param  string $nameSpace namespace name
+     * @return void
+     *
+     * @see     addElement()
+     **/
+    public function registerNamespace($namespace)
+    {
+        $this->namespaces[] = $namespace;
     }
     // }}}
 
@@ -99,7 +125,6 @@ abstract class Container extends Element
      **/
     protected function addElement($type, $name, $parameters)
     {
-        $this->checkElementType($type);
         $this->checkParameters($parameters);
 
         $parameters['log'] = $this->log;
@@ -209,23 +234,6 @@ abstract class Container extends Element
 
         foreach ($this->elements as $element) {
             $element->setRequired($required);
-        }
-    }
-    // }}}
-
-    // {{{ checkElementType()
-    /**
-     * @brief   Checks element class availability
-     *
-     * Checks if an element type class exists. Throws an exception if it doesn't.
-     *
-     * @param  string $type element type
-     * @return void
-     **/
-    private function checkElementType($type)
-    {
-        if (!class_exists($type)) {
-            throw new Exceptions\UnknownElementTypeException($type);
         }
     }
     // }}}
