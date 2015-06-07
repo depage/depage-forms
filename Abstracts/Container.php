@@ -33,10 +33,6 @@ abstract class Container extends Element
      * @brief Parent form object reference
      **/
     protected $form;
-    /**
-     * @brief Namespace strings for addible element classes
-     **/
-    protected $namespaces = array('\\Depage\\HtmlForm\\Elements');
     // }}}
     // {{{ __construct()
     /**
@@ -77,7 +73,7 @@ abstract class Container extends Element
         if (substr($function, 0, 3) === 'add') {
             $type = str_replace('add', '', $function);
 
-            foreach($this->namespaces as $namespace) {
+            foreach($this->form->getNamespaces() as $namespace) {
                 $class = $namespace . '\\' . $type;
                 if (class_exists($class)) {
                     $name = isset($arguments[0])  ? $arguments[0] : '';
@@ -93,20 +89,6 @@ abstract class Container extends Element
     }
     // }}}
 
-    // {{{ registerNamespace
-    /**
-     * @brief   Stores element namespaces for adding
-     *
-     * @param  string $nameSpace namespace name
-     * @return void
-     *
-     * @see     addElement()
-     **/
-    public function registerNamespace($namespace)
-    {
-        $this->namespaces[] = $namespace;
-    }
-    // }}}
     // {{{ addElement()
     /**
      * @brief Generates sub-elements.

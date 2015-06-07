@@ -279,6 +279,10 @@ class HtmlForm extends Abstracts\Container
         'formFinalPost',
         'formCsrfToken',
     );
+    /**
+     * @brief Namespace strings for addible element classes
+     **/
+    protected $namespaces = array('\\Depage\\HtmlForm\\Elements');
     // }}}
     // {{{ __construct()
     /**
@@ -515,6 +519,29 @@ class HtmlForm extends Abstracts\Container
         }
 
         return $currentElements;
+    }
+    // }}}
+    // {{{ registerNamespace
+    /**
+     * @brief   Stores element namespaces for adding
+     *
+     * @param  string $nameSpace namespace name
+     * @return void
+     **/
+    public function registerNamespace($namespace)
+    {
+        $this->namespaces[] = $namespace;
+    }
+    // }}}
+    // {{{ getNamespaces
+    /**
+     * @brief   Returns list of registered namespaces
+     *
+     * @return array
+     **/
+    public function getNamespaces()
+    {
+        return $this->namespaces;
     }
     // }}}
 

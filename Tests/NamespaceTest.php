@@ -48,4 +48,17 @@ class NamespaceTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\\Depage\\HtmlForm\\Tests\\NamespaceTestClass', $text);
     }
     // }}}
+    // {{{ testAddElementsCustomSubContainer
+    /**
+     * test if adding custom element with registered namespace works
+     * for subcontainers
+     */
+    public function testAddElementsCustomSubContainer()
+    {
+        $this->form->registerNamespace('\\Depage\\HtmlForm\\Tests');
+        $fieldset = $this->form->addFieldset('testFieldset');
+        $text = $fieldset->addNamespaceTestClass('testText');
+        $this->assertInstanceOf('\\Depage\\HtmlForm\\Tests\\NamespaceTestClass', $text);
+    }
+    // }}}
 }
