@@ -975,6 +975,25 @@ class HtmlForm extends Abstracts\Container
     }
     // }}}
 
+    // {{{ clearValueOf()
+    /**
+     * @brief clearValueOf
+     *
+     * @param mixed $
+     * @return void
+     **/
+    public function clearValueOf($name)
+    {
+        $element = $this->getElement($name);
+
+        if ($element) {
+            $element->clearValue();
+            $this->sessionSlot[$name] = $element->getValue();
+        }
+
+    }
+    // }}}
+
     // {{{ onValidate()
     /**
      * @brief   Validation hook
