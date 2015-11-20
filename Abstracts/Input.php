@@ -570,6 +570,18 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ htmlDataAttributes()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlDataAttributes()
+    {
+        $this->dataAttr['errorMessage'] = $this->errorMessage;
+
+        return parent::htmlDataAttributes();
+    }
+    // }}}
+
     // {{{ htmlWrapperAttributes()
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
@@ -584,7 +596,7 @@ abstract class Input extends Element
 
         $attributes .= ($this->title) ? " title=\"" . $this->htmlEscape($this->title) . "\"" : "";
 
-        $attributes .= " data-errorMessage=\"" . $this->htmlEscape($this->errorMessage) . "\"";
+        $attributes .= $this->htmlDataAttributes();
 
         return $attributes;
     }
