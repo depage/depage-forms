@@ -73,25 +73,23 @@ class Richtext extends Textarea
         );
     }
     // }}}
-    // {{{ htmlWrapperAttributes()
-    /**
-     * @brief   Returns string of HTML attributes for element wrapper paragraph.
-     *
-     * @return string $attributes HTML attribute
-     **/
-    protected function htmlWrapperAttributes()
-    {
-        $attributes = parent::htmlWrapperAttributes();
 
+    // {{{ htmlDataAttributes()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlDataAttributes()
+    {
         $options = array();
         $options['stylesheet'] = $this->stylesheet;
         $options['allowedTags'] = $this->allowedTags;
 
-        $attributes .= " data-richtext-options=\"" . $this->htmlEscape(json_encode($options)) . "\"";
+        $this->dataAttr['richtext-options'] = json_encode($options);
 
-        return $attributes;
+        return parent::htmlDataAttributes();
     }
     // }}}
+
     // {{{ htmlValue()
     /**
      * @brief   Returns HTML-rendered element value

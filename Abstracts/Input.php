@@ -193,9 +193,23 @@ abstract class Input extends Element
      *     These string won't be escaped as therefor has to be valid html.
      **/
     /**
-     * @brief Extra hep message in html format
+     * @brief Extra help message in html format
      **/
     protected $helpMessageHtml;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default variant $dataInfo
+     *     Optional info for the data saved in the element.
+     *     This value isn't used internally in the htmlform, but can be used
+     *     to add extra data to an element that can be read out at a later time.
+     *     E.g. you can add an object- or an xml-xpath to the element.
+     **/
+    /**
+     * @brief Extra information about the data that is saved inside the element.
+     **/
+    public $dataInfo;
     // }}}
 
     // {{{ __construct()
@@ -247,6 +261,7 @@ abstract class Input extends Element
         $this->defaults['class']           = '';
         $this->defaults['helpMessage']     = '';
         $this->defaults['helpMessageHtml'] = '';
+        $this->defaults['dataInfo']        = null;
     }
     // }}}
 
@@ -555,6 +570,18 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ htmlDataAttributes()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlDataAttributes()
+    {
+        $this->dataAttr['errorMessage'] = $this->errorMessage;
+
+        return parent::htmlDataAttributes();
+    }
+    // }}}
+
     // {{{ htmlWrapperAttributes()
     /**
      * @brief   Returns string of HTML attributes for element wrapper paragraph.
@@ -569,7 +596,7 @@ abstract class Input extends Element
 
         $attributes .= ($this->title) ? " title=\"" . $this->htmlEscape($this->title) . "\"" : "";
 
-        $attributes .= " data-errorMessage=\"" . $this->htmlEscape($this->errorMessage) . "\"";
+        $attributes .= $this->htmlDataAttributes();
 
         return $attributes;
     }

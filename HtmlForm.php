@@ -949,6 +949,18 @@ class HtmlForm extends Abstracts\Container
     }
     // }}}
 
+    // {{{ htmlDataAttributes()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlDataAttributes()
+    {
+        $this->dataAttr['jsvalidation'] = $this->jsValidation;
+        $this->dataAttr['jsautosave'] = $this->jsAutosave === true ? "true" : $this->jsAutosave;
+
+        return parent::htmlDataAttributes();
+    }
+    // }}}
     // {{{ __toString()
     /**
      * @brief   Renders form to HTML.
@@ -967,8 +979,7 @@ class HtmlForm extends Abstracts\Container
         $class              = $this->htmlClass();
         $method             = $this->htmlMethod();
         $submitURL          = $this->htmlSubmitURL();
-        $jsValidation       = $this->htmlJsValidation();
-        $jsAutosave         = $this->jsAutosave === true ? "true" : $this->htmlJsAutosave();
+        $dataAttr           = $this->htmlDataAttributes();
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -991,7 +1002,7 @@ class HtmlForm extends Abstracts\Container
         }
 
 
-        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\" data-jsvalidation=\"{$jsValidation}\" data-jsautosave=\"{$jsAutosave}\" enctype=\"multipart/form-data\">" . "\n" .
+        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\"{$dataAttr} enctype=\"multipart/form-data\">" . "\n" .
             $renderedElements .
             "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
             $cancel .

@@ -179,7 +179,9 @@ class File extends Text
     {
         if (count($this->value)) {
             foreach ($this->value as $file) {
-                unlink($file['tmp_name']);
+                if (file_exists($file['tmp_name'])) {
+                    unlink($file['tmp_name']);
+                }
             }
         }
     }
