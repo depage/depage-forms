@@ -254,8 +254,8 @@ abstract class Container extends Element
 
             $this->valid = true;
             foreach ($this->elements as $element) {
-                $element->validate();
-                $this->valid = (($this->valid) && ($element->validate()));
+                $valid = $element->validate();
+                $this->valid = $this->valid && $valid;
             }
         }
 
