@@ -857,7 +857,12 @@ class HtmlForm extends Abstracts\Container
         parent::validate();
 
         if (isset($_POST['formCsrfToken'])) {
-            $this->valid = $this->valid && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+            $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+            $this->valid = $this->valid && $hasCorrectToken;
+
+            if (!$hasCorrectToken) {
+                $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken");
+            }
         }
 
         $partValid = $this->valid;
@@ -926,26 +931,34 @@ class HtmlForm extends Abstracts\Container
      */
     public function redirect($url)
     {
-        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
-            // don't redirect > it's from ajax
-        } else {
-            header('Location: ' . $url);
-            die( "Tried to redirect you to <a href=\"$url\">$url</a>");
-        }
+        header('Location: ' . $url);
+        die( "Tried to redirect you to <a href=\"$url\">$url</a>");
     }
     // }}}
     // {{{ clearSession()
     /**
      * @brief   Deletes the current forms' PHP session data.
      *
+     * @param bool $clearCsrfToken whether to clear complete form or just the data values and to keep csrf-token.
+     *
      * @return void
      **/
-    public function clearSession()
+    public function clearSession($clearCsrfToken = true)
     {
-        $this->clearValue();
+        if ($clearCsrfToken) {
+            // clear everything
+            $this->clearValue();
 
-        unset($_SESSION[$this->sessionSlotName]);
-        unset($this->sessionSlot);
+            unset($_SESSION[$this->sessionSlotName]);
+            unset($this->sessionSlot);
+        } else {
+            // clear everything except internal fields
+            foreach ($this->getElements(true) as $element) {
+                if (!$element->getDisabled() && !in_array($element->name, $this->internalFields)) {
+                    unset($this->sessionSlot[$element->name]);
+                }
+            }
+        }
     }
     // }}}
 
