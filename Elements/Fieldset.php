@@ -76,6 +76,32 @@ class Fieldset extends Abstracts\Container
     }
     // }}}
 
+    // {{{ setDisabled()
+    /**
+     * @brief   Sets the HTML disabled-attribute of the current input element.
+     *
+     * @param  bool $disabled HTML disabled-attribute
+     * @return void
+     **/
+    public function setDisabled($disabled = true)
+    {
+        $this->disabled = (bool) $disabled;
+    }
+    // }}}
+
+    // {{{ getDisabled()
+    /**
+     * @brief   Gets if input is currently disabled
+     *
+     * @param  bool $disabled HTML disabled-attribute
+     * @return void
+     **/
+    public function getDisabled()
+    {
+        return $this->disabled;
+    }
+    // }}}
+
     // {{{ addElement()
     /**
      * @brief Generates sub-elements.

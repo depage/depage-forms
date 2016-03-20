@@ -856,26 +856,28 @@ class HtmlForm extends Abstracts\Container
     {
         parent::validate();
 
-        if (isset($_POST['formCsrfToken'])) {
-            $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
-            $this->valid = $this->valid && $hasCorrectToken;
-
-            if (!$hasCorrectToken) {
-                $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken");
-            }
-        }
-
         $partValid = $this->valid;
 
-        // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
-                || (isset($this->sessionSlot['formIsAutosaved'])
-                    && $this->sessionSlot['formIsAutosaved'] === true)) {
-            $this->valid = false;
-        }
+        if (isset($_POST['formName']) && $_POST['formName'] == $this->name) {
+            if (isset($_POST['formCsrfToken'])) {
+                $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+                $this->valid = $this->valid && $hasCorrectToken;
 
-        // save whether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+                if (!$hasCorrectToken) {
+                    $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken in form {$this->name}");
+                }
+            }
+
+            // save data in session when autosaving but don't validate successfully
+            if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
+                    || (isset($this->sessionSlot['formIsAutosaved'])
+                        && $this->sessionSlot['formIsAutosaved'] === true)) {
+                $this->valid = false;
+            }
+
+            // save whether form was autosaved the last time
+            $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        }
 
         return $partValid;
     }
