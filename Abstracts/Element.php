@@ -17,7 +17,7 @@ use Depage\HtmlForm\Exceptions;
  * The abstract element class contains the basic attributes and tools of
  * container and input elements.
  **/
-abstract class element
+abstract class Element
 {
     // {{{ variables
     /**
@@ -254,7 +254,7 @@ abstract class element
             foreach ($this->dataAttr as $key => $val) {
                 // @todo throw error when key is not plain string?
                 $attributes .= " data-$key=\"" . $this->htmlEscape($val) . "\"";
-}
+            }
         }
 
         return $attributes;

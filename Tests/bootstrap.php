@@ -42,7 +42,7 @@ class nameTestForm
     public function getNamespaces()
     {
         return array('\\Depage\\HtmlForm\\Elements');
-}
+    }
 }
 // }}}
 //

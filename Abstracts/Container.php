@@ -76,8 +76,8 @@ abstract class Container extends Element
             foreach($this->form->getNamespaces() as $namespace) {
                 $class = $namespace . '\\' . $type;
                 if (class_exists($class)) {
-            $name       = isset($arguments[0])  ? $arguments[0] : '';
-            $parameters = isset($arguments[1])  ? $arguments[1] : array();
+                    $name = isset($arguments[0])  ? $arguments[0] : '';
+                    $parameters = isset($arguments[1])  ? $arguments[1] : array();
                     return $this->addElement($class, $name, $parameters);
                 }
             }
@@ -253,11 +253,11 @@ abstract class Container extends Element
             $this->validated = true;
 
             $this->valid = true;
-        foreach ($this->elements as $element) {
+            foreach ($this->elements as $element) {
                 $valid = $element->validate();
                 $this->valid = $this->valid && $valid;
-                }
             }
+        }
 
         return $this->valid;
     }

@@ -507,15 +507,15 @@ class HtmlForm extends Abstracts\Container
 
         foreach ($this->elements as $element) {
             if ($element instanceof elements\fieldset) {
-        if (
+                if (
                     !($element instanceof elements\step)
                     || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
-        ) {
+                ) {
                     $currentElements = array_merge($currentElements, $element->getElements());
-            }
+                }
             } else {
                 $currentElements[] = $element;
-        }
+            }
         }
 
         return $currentElements;
@@ -625,10 +625,10 @@ class HtmlForm extends Abstracts\Container
              * hack.
              **/
             return count($this->steps) - 1;
-            } else {
+        } else {
             return 0;
-            }
         }
+    }
     // }}}
     // {{{ buildUrlQuery()
     /**
@@ -647,7 +647,7 @@ class HtmlForm extends Abstracts\Container
 
             //parsing the query into an array
             parse_str($query, $queryParts);
-    }
+        }
 
         foreach ($args as $name => $value) {
             if ($value != "") {
@@ -700,7 +700,7 @@ class HtmlForm extends Abstracts\Container
             } else if (!isset($this->sessionSlot[$name])) {
                 // set default value for disabled elements
                 $this->sessionSlot[$name] = $element->setValue($element->getDefaultValue());
-    }
+            }
         }
         // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
@@ -734,11 +734,11 @@ class HtmlForm extends Abstracts\Container
                     $element->setDefaultValue($value);
                     if ($element->getDisabled() && !isset($this->sessionSlot[$name])) {
                         $this->sessionSlot[$name] = $value;
-            }
-        }
+                    }
+                }
 
                 unset($value);
-        }
+            }
         }
     }
     // }}}
@@ -856,29 +856,26 @@ class HtmlForm extends Abstracts\Container
     {
         parent::validate();
 
+        if (isset($_POST['formCsrfToken'])) {
+            $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+            $this->valid = $this->valid && $hasCorrectToken;
+
+            if (!$hasCorrectToken) {
+                $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken");
+            }
+        }
+
         $partValid = $this->valid;
 
-        if (isset($_POST['formName']) && $_POST['formName'] == $this->name) {
-            if (isset($_POST['formCsrfToken'])) {
-                $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
-                $this->valid = $this->valid && $hasCorrectToken;
-                $partValid = $this->valid;
-
-                if (!$hasCorrectToken) {
-                    $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken in form {$this->name}");
-                }
-            }
-
-            // save data in session when autosaving but don't validate successfully
-            if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
-                    || (isset($this->sessionSlot['formIsAutosaved'])
-                        && $this->sessionSlot['formIsAutosaved'] === true)) {
-                $this->valid = false;
-            }
-
-            // save whether form was autosaved the last time
-            $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        // save data in session when autosaving but don't validate successfully
+        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
+                || (isset($this->sessionSlot['formIsAutosaved'])
+                    && $this->sessionSlot['formIsAutosaved'] === true)) {
+            $this->valid = false;
         }
+
+        // save whether form was autosaved the last time
+        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
 
         return $partValid;
     }
@@ -936,7 +933,7 @@ class HtmlForm extends Abstracts\Container
     {
         header('Location: ' . $url);
         die( "Tried to redirect you to <a href=\"$url\">$url</a>");
-            }
+    }
     // }}}
     // {{{ clearSession()
     /**
@@ -950,16 +947,16 @@ class HtmlForm extends Abstracts\Container
     {
         if ($clearCsrfToken) {
             // clear everything
-        $this->clearValue();
+            $this->clearValue();
 
-        unset($_SESSION[$this->sessionSlotName]);
-        unset($this->sessionSlot);
+            unset($_SESSION[$this->sessionSlotName]);
+            unset($this->sessionSlot);
         } else {
             // clear everything except internal fields
             foreach ($this->getElements(true) as $element) {
                 if (!$element->getDisabled() && !in_array($element->name, $this->internalFields)) {
                     unset($this->sessionSlot[$element->name]);
-    }
+                }
             }
         }
     }
@@ -975,7 +972,7 @@ class HtmlForm extends Abstracts\Container
         $this->dataAttr['jsautosave'] = $this->jsAutosave === true ? "true" : $this->jsAutosave;
 
         return parent::htmlDataAttributes();
-        }
+    }
     // }}}
     // {{{ __toString()
     /**
@@ -1003,7 +1000,7 @@ class HtmlForm extends Abstracts\Container
                 || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)
             ) {
                 $renderedElements .= $element;
-    }
+            }
         }
 
         if (!is_null($this->cancelLabel)) {

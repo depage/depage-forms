@@ -18,7 +18,7 @@ class htmlformTestClass extends csrfTestForm
     public function log($message, $type = NULL)
     {
         $this->testLog = $message;
-}
+    }
 }
 // }}}
 
