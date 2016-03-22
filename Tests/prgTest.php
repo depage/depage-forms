@@ -14,6 +14,11 @@ class htmlformTestClass extends csrfTestForm
     {
         $this->testRedirect = $url;
     }
+
+    public function log($message, $type = NULL)
+    {
+        $this->testLog = $message;
+}
 }
 // }}}
 
@@ -100,6 +105,7 @@ class prgTest extends PHPUnit_Framework_TestCase
 
         $form->process();
         $this->assertFalse($form->validate());
+        $this->assertNotEmpty($form->testLog);
     }
     // }}}
 

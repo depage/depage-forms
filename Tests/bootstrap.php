@@ -39,6 +39,10 @@ class nameTestForm
 
     public function checkElementName() {}
     public function updateInputValue() {}
+    public function getNamespaces()
+    {
+        return array('\\Depage\\HtmlForm\\Elements');
+}
 }
 // }}}
 //

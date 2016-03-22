@@ -36,6 +36,18 @@ abstract class element
      * @brief Log object reference
      **/
     protected $log;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default variant $dataAttr
+     *     Optional associated Array of values that will be added as data-Attribute
+     *     to the container element
+     **/
+    /**
+     * @brief Extra information about the data that is saved inside the element.
+     **/
+    public $dataAttr;
     // }}}
 
     // {{{ __construct()
@@ -76,6 +88,7 @@ abstract class element
     {
         $this->defaults['log'] = null;
         $this->defaults['class'] = null;
+        $this->defaults['dataAttr'] = array();
     }
     // }}}
 
@@ -227,6 +240,24 @@ abstract class element
         }
 
         return $htmlOptions;
+    }
+    // }}}
+
+    // {{{ htmlDataAttributes()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlDataAttributes()
+    {
+        $attributes = "";
+        if (is_array($this->dataAttr)) {
+            foreach ($this->dataAttr as $key => $val) {
+                // @todo throw error when key is not plain string?
+                $attributes .= " data-$key=\"" . $this->htmlEscape($val) . "\"";
+}
+        }
+
+        return $attributes;
     }
     // }}}
 }

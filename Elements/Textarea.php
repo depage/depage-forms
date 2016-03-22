@@ -82,24 +82,21 @@ class Textarea extends Text
     }
     // }}}
 
-    // {{{ htmlWrapperAttributes()
+    // {{{ htmlDataAttributes()
     /**
-     * @brief   Returns string of HTML attributes for element wrapper paragraph.
-     *
-     * @return string $attributes HTML attribute
+     * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlWrapperAttributes()
+    protected function htmlDataAttributes()
     {
-        $attributes = parent::htmlWrapperAttributes();
-
         $options = array();
         $options['autogrow'] = $this->autogrow;
 
-        $attributes .= " data-textarea-options=\"" . $this->htmlEscape(json_encode($options)) . "\"";
+        $this->dataAttr['textarea-options'] = json_encode($options);
 
-        return $attributes;
+        return parent::htmlDataAttributes();
     }
     // }}}
+
     // {{{ htmlRows()
     /**
      * @brief   Renders HTML rows attribute

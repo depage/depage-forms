@@ -34,7 +34,6 @@ abstract class Container extends Element
      **/
     protected $form;
     // }}}
-
     // {{{ __construct()
     /**
      * @brief   container class constructor
@@ -72,11 +71,18 @@ abstract class Container extends Element
     public function __call($function, $arguments)
     {
         if (substr($function, 0, 3) === 'add') {
-            $type       = str_replace('add', '\\Depage\\HtmlForm\\Elements\\', $function);
+            $type = str_replace('add', '', $function);
+
+            foreach($this->form->getNamespaces() as $namespace) {
+                $class = $namespace . '\\' . $type;
+                if (class_exists($class)) {
             $name       = isset($arguments[0])  ? $arguments[0] : '';
             $parameters = isset($arguments[1])  ? $arguments[1] : array();
+                    return $this->addElement($class, $name, $parameters);
+                }
+            }
 
-            return $this->addElement($type, $name, $parameters);
+            throw new Exceptions\UnknownElementTypeException($type);
         } else {
             return parent::__call($function, $arguments);
         }
@@ -99,7 +105,6 @@ abstract class Container extends Element
      **/
     protected function addElement($type, $name, $parameters)
     {
-        $this->checkElementType($type);
         $this->checkParameters($parameters);
 
         $parameters['log'] = $this->log;
@@ -116,7 +121,6 @@ abstract class Container extends Element
         return $newElement;
     }
     // }}}
-
     // {{{ addChildElements()
     /**
      * @brief   Sub-element generator hook
@@ -133,103 +137,6 @@ abstract class Container extends Element
      **/
     public function addChildElements() {}
     // }}}
-
-    // {{{ addHtml()
-    /**
-     * @brief   Adds a new custom HTML element to the container.
-     *
-     * @param  string $html HTML code
-     * @return object $htmlElement    HTML element object
-     *
-     * @see     Depage::HtmlForm::Elements::Html
-     **/
-    public function addHtml($html)
-    {
-        $htmlElement = new Elements\Html($html);
-
-        $this->elementsAndHtml[] = $htmlElement;
-
-        return $htmlElement;
-    }
-    // }}}
-
-    // {{{ addStepNav()
-    /**
-     * @brief   Adds automatic step navigation to output
-     *
-     * @param array $parameter array of opional parameters
-     **/
-    public function addStepNav($parameter = array())
-    {
-        $htmlElement = new Elements\Stepnav($parameter, $this->form);
-
-        $this->elementsAndHtml[] = $htmlElement;
-
-        return $htmlElement;
-    }
-    // }}}
-
-    // {{{ validate()
-    /**
-     * @brief Validates container and its contents.
-     *
-     * Walks recursively through current containers' elements and checks if
-     * they're valid. Saves the result to $this->valid.
-     *
-     * @return bool $this->valid validation result
-     **/
-    public function validate()
-    {
-        if (!$this->validated) {
-            $this->validated = true;
-
-            $this->valid = true;
-            foreach ($this->elements as $element) {
-                $element->validate();
-                $this->valid = (($this->valid) && ($element->validate()));
-            }
-        }
-
-        return $this->valid;
-    }
-    // }}}
-
-    // {{{ setRequired()
-    /**
-     * @brief   Sets required-attribute
-     *
-     * Sets current containers' elements' HTML-required attribute recursively.
-     *
-     * @param  bool $required HTML-required attribute
-     * @return void
-     **/
-    public function setRequired($required = true)
-    {
-        $required = (bool) $required;
-
-        foreach ($this->elements as $element) {
-            $element->setRequired($required);
-        }
-    }
-    // }}}
-
-    // {{{ checkElementType()
-    /**
-     * @brief   Checks element class availability
-     *
-     * Checks if an element type class exists. Throws an exception if it doesn't.
-     *
-     * @param  string $type element type
-     * @return void
-     **/
-    private function checkElementType($type)
-    {
-        if (!class_exists($type)) {
-            throw new Exceptions\UnknownElementTypeException($type);
-        }
-    }
-    // }}}
-
     // {{{ getElements()
     /**
      * @brief Returns containers subelements.
@@ -257,7 +164,6 @@ abstract class Container extends Element
         return $allElements;
     }
     // }}}
-
     // {{{ getElement()
     /**
      * @brief   Gets subelement by name.
@@ -280,6 +186,82 @@ abstract class Container extends Element
     }
     // }}}
 
+    // {{{ addHtml()
+    /**
+     * @brief   Adds a new custom HTML element to the container.
+     *
+     * @param  string $html HTML code
+     * @return object $htmlElement    HTML element object
+     *
+     * @see     Depage::HtmlForm::Elements::Html
+     **/
+    public function addHtml($html)
+    {
+        $htmlElement = new Elements\Html($html);
+
+        $this->elementsAndHtml[] = $htmlElement;
+
+        return $htmlElement;
+    }
+    // }}}
+    // {{{ addStepNav()
+    /**
+     * @brief   Adds automatic step navigation to output
+     *
+     * @param array $parameter array of opional parameters
+     **/
+    public function addStepNav($parameter = array())
+    {
+        $htmlElement = new Elements\Stepnav($parameter, $this->form);
+
+        $this->elementsAndHtml[] = $htmlElement;
+
+        return $htmlElement;
+    }
+    // }}}
+
+    // {{{ setRequired()
+    /**
+     * @brief   Sets required-attribute
+     *
+     * Sets current containers' elements' HTML-required attribute recursively.
+     *
+     * @param  bool $required HTML-required attribute
+     * @return void
+     **/
+    public function setRequired($required = true)
+    {
+        $required = (bool) $required;
+
+        foreach ($this->elements as $element) {
+            $element->setRequired($required);
+        }
+    }
+    // }}}
+    // {{{ validate()
+    /**
+     * @brief Validates container and its contents.
+     *
+     * Walks recursively through current containers' elements and checks if
+     * they're valid. Saves the result to $this->valid.
+     *
+     * @return bool $this->valid validation result
+     **/
+    public function validate()
+    {
+        if (!$this->validated) {
+            $this->validated = true;
+
+            $this->valid = true;
+        foreach ($this->elements as $element) {
+                $valid = $element->validate();
+                $this->valid = $this->valid && $valid;
+                }
+            }
+
+        return $this->valid;
+    }
+    // }}}
     // {{{ clearValue()
     /**
      * @brief   Deletes values of all child elements

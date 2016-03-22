@@ -279,8 +279,11 @@ class HtmlForm extends Abstracts\Container
         'formFinalPost',
         'formCsrfToken',
     );
+    /**
+     * @brief Namespace strings for addible element classes
+     **/
+    protected $namespaces = array('\\Depage\\HtmlForm\\Elements');
     // }}}
-
     // {{{ __construct()
     /**
      * @brief   HtmlForm class constructor
@@ -323,7 +326,6 @@ class HtmlForm extends Abstracts\Container
         $this->addChildElements();
     }
     // }}}
-
     // {{{ setDefaults()
     /**
      * @brief   Collects initial values across subclasses.
@@ -426,6 +428,29 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
+    // {{{ isEmpty()
+    /**
+     * @brief   Returns wether form has been submitted before or not.
+     *
+     * @return bool session status
+     **/
+    public function isEmpty()
+    {
+        return !isset($this->sessionSlot['formName']);
+    }
+    // }}}
+
+    // {{{ getNewCsrfToken()
+    /**
+     * @brief   Returns new XSRF token
+     *
+     * @return array element objects
+     **/
+    protected function getNewCsrfToken()
+    {
+        return base64_encode(openssl_random_pseudo_bytes(16));
+    }
+    // }}}
 
     // {{{ addElement()
     /**
@@ -451,6 +476,197 @@ class HtmlForm extends Abstracts\Container
         return $newElement;
     }
     // }}}
+    // {{{ checkElementName()
+    /**
+     * @brief   Checks for duplicate subelement names.
+     *
+     * Checks within the form if an input element or fieldset name is already
+     * taken. If so, it throws an exception.
+     *
+     * @param  string $name name to check
+     * @return void
+     **/
+    public function checkElementName($name)
+    {
+        foreach ($this->getElements(true) as $element) {
+            if ($element->getName() === $name) {
+                throw new Exceptions\DuplicateElementNameException("Element name \"{$name}\" already in use.");
+            }
+        }
+    }
+    // }}}
+    // {{{ getCurrenElements()
+    /**
+     * @brief   Returns an array of input elements contained in the current step.
+     *
+     * @return array element objects
+     **/
+    private function getCurrentElements()
+    {
+        $currentElements = array();
+
+        foreach ($this->elements as $element) {
+            if ($element instanceof elements\fieldset) {
+        if (
+                    !($element instanceof elements\step)
+                    || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
+        ) {
+                    $currentElements = array_merge($currentElements, $element->getElements());
+            }
+            } else {
+                $currentElements[] = $element;
+        }
+        }
+
+        return $currentElements;
+    }
+    // }}}
+    // {{{ registerNamespace
+    /**
+     * @brief   Stores element namespaces for adding
+     *
+     * @param  string $nameSpace namespace name
+     * @return void
+     **/
+    public function registerNamespace($namespace)
+    {
+        $this->namespaces[] = $namespace;
+    }
+    // }}}
+    // {{{ getNamespaces
+    /**
+     * @brief   Returns list of registered namespaces
+     *
+     * @return array
+     **/
+    public function getNamespaces()
+    {
+        return $this->namespaces;
+    }
+    // }}}
+
+    // {{{ inCurrentStep()
+    /**
+     * @brief   Checks if the element named $name is in the current step.
+     *
+     * @param  string $name name of element
+     * @return bool   says wether it's in the current step
+     **/
+    private function inCurrentStep($name)
+    {
+        return in_array($this->getElement($name), $this->getCurrentElements());
+    }
+    // }}}
+    // {{{ setCurrentStep()
+    /**
+     * @brief   Validates step number of GET request.
+     *
+     * Validates step number of the GET request. If it's out of range it's
+     * reset to the number of the first invalid step. (only to be used after
+     * the form is completely created, because the step elements have to be
+     * counted)
+     *
+     * @return void
+     **/
+    private function setCurrentStep()
+    {
+        if (!is_numeric($this->currentStepId)
+            || ($this->currentStepId > count($this->steps) - 1)
+            || ($this->currentStepId < 0)
+        ) {
+            $this->currentStepId = $this->getFirstInvalidStep();
+        }
+    }
+    // }}}
+    // {{{ getSteps()
+    /**
+     * @brief   Returns an array of steps
+     *
+     * @return array step objects
+     **/
+    public function getSteps()
+    {
+        return $this->steps;
+    }
+    // }}}
+    // {{{ getCurrentStepId()
+    /**
+     * @brief   Returns the current step id
+     *
+     * @return int current step
+     **/
+    public function getCurrentStepId()
+    {
+        return $this->currentStepId;
+    }
+    // }}}
+    // {{{ getFirstInvalidStep()
+    /**
+     * @brief   Returns first step that didn't pass validation.
+     *
+     * Checks steps consecutively and returns the number of the first one that
+     * isn't valid (steps need to be submitted at least once to count as valid).
+     * Form must have been validated before calling this method.
+     *
+     * @return int $stepNumber number of first invalid step
+     **/
+    public function getFirstInvalidStep()
+    {
+        if (count($this->steps) > 0) {
+            foreach ($this->steps as $stepNumber => $step) {
+                if (!$step->validate()) {
+                    return $stepNumber;
+                }
+            }
+            /**
+             * If there aren't any invalid steps there must be a fieldset
+             * directly attached to the form that's invalid. In this case we
+             * don't want to jump back to the first step. Hence, this little
+             * hack.
+             **/
+            return count($this->steps) - 1;
+            } else {
+            return 0;
+            }
+        }
+    // }}}
+    // {{{ buildUrlQuery()
+    /**
+     * @brief   Adding step parameter to already existing query
+     *
+     * @return  new query
+     **/
+    public function buildUrlQuery($args = array())
+    {
+        $query = '';
+        $queryParts = array();
+
+        if (isset($this->url['query']) && $this->url['query'] != "") {
+            //decoding query string
+            $query = html_entity_decode($this->url['query']);
+
+            //parsing the query into an array
+            parse_str($query, $queryParts);
+    }
+
+        foreach ($args as $name => $value) {
+            if ($value != "") {
+                $queryParts[$name] = $value;
+            } elseif (isset($queryParts[$name])) {
+                unset($queryParts[$name]);
+            }
+        }
+
+        // build the query again
+        $query = http_build_query($queryParts);
+
+        if ($query != "") {
+            $query = "?" . $query;
+        }
+
+        return $query;
+    }
+    // }}}
 
     // {{{ updateInputValue()
     /**
@@ -473,7 +689,7 @@ class HtmlForm extends Abstracts\Container
             && $this->inCurrentStep($name)
             && isset($_POST['formCsrfToken']) && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken']
         ) {
-            if ($this->getElement($name) instanceof Elements\File) {
+            if ($this->getElement($name) instanceof elements\file) {
                 // handle uploaded file
                 $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
                 $this->sessionSlot[$name] = $element->handleUploadedFiles($oldValue);
@@ -484,7 +700,7 @@ class HtmlForm extends Abstracts\Container
             } else if (!isset($this->sessionSlot[$name])) {
                 // set default value for disabled elements
                 $this->sessionSlot[$name] = $element->setValue($element->getDefaultValue());
-            }
+    }
         }
         // if it's not a post, try to get the value from the session
         else if (isset($this->sessionSlot[$name])) {
@@ -493,155 +709,39 @@ class HtmlForm extends Abstracts\Container
     }
     // }}}
 
-    // {{{ inCurrentStep()
+    // {{{ populate()
     /**
-     * @brief   Checks if the element named $name is in the current step.
+     * @brief   Fills subelement values.
      *
-     * @param  string $name name of element
-     * @return bool   says wether it's in the current step
-     **/
-    private function inCurrentStep($name)
-    {
-        return in_array($this->getElement($name), $this->getCurrentElements());
-    }
-    // }}}
-
-    // {{{ setCurrentStep()
-    /**
-     * @brief   Validates step number of GET request.
+     * Allows to manually populate the forms' input elements with values by
+     * parsing an array of name-value pairs.
      *
-     * Validates step number of the GET request. If it's out of range it's
-     * reset to the number of the first invalid step. (only to be used after
-     * the form is completely created, because the step elements have to be
-     * counted)
-     *
+     * @param  array $data input element names (key) and values (value)
      * @return void
      **/
-    private function setCurrentStep()
+    public function populate($data = array())
     {
-        if (!is_numeric($this->currentStepId)
-            || ($this->currentStepId > count($this->steps) - 1)
-            || ($this->currentStepId < 0)
-        ) {
-            $this->currentStepId = $this->getFirstInvalidStep();
-        }
-    }
-    // }}}
-
-    // {{{ getSteps()
-    /**
-     * @brief   Returns an array of steps
-     *
-     * @return array step objects
-     **/
-    public function getSteps()
-    {
-        return $this->steps;
-    }
-    // }}}
-
-    // {{{ getCurrentStepId()
-    /**
-     * @brief   Returns the current step id
-     *
-     * @return int current step
-     **/
-    public function getCurrentStepId()
-    {
-        return $this->currentStepId;
-    }
-    // }}}
-
-    // {{{ getCurrenElements()
-    /**
-     * @brief   Returns an array of input elements contained in the current step.
-     *
-     * @return array element objects
-     **/
-    private function getCurrentElements()
-    {
-        $currentElements = array();
-
-        foreach ($this->elements as $element) {
-            if ($element instanceof elements\fieldset) {
-                if (
-                    !($element instanceof elements\step)
-                    || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
-                ) {
-                    $currentElements = array_merge($currentElements, $element->getElements());
+        foreach ($this->getElements() as $element) {
+            $name = $element->name;
+            if (!in_array($name, $this->internalFields)) {
+                if (is_array($data) && isset($data[$name])) {
+                    $value = $data[$name];
+                } else if (is_object($data) && isset($data->$name)) {
+                    $value = $data->$name;
                 }
-            } else {
-                $currentElements[] = $element;
+
+                if (isset($value)) {
+                    $element->setDefaultValue($value);
+                    if ($element->getDisabled() && !isset($this->sessionSlot[$name])) {
+                        $this->sessionSlot[$name] = $value;
             }
         }
 
-        return $currentElements;
+                unset($value);
+        }
+        }
     }
     // }}}
-
-    // {{{ getNewCsrfToken()
-    /**
-     * @brief   Returns new XSRF token
-     *
-     * @return array element objects
-     **/
-    protected function getNewCsrfToken()
-    {
-        return base64_encode(openssl_random_pseudo_bytes(16));
-    }
-    // }}}
-
-    // {{{ __toString()
-    /**
-     * @brief   Renders form to HTML.
-     *
-     * Renders the htmlform object to HTML code. If the form contains elements
-     * it calls their rendering methods.
-     *
-     * @return string HTML code
-     **/
-    public function __toString()
-    {
-        $renderedElements   = '';
-        $label              = $this->htmlLabel();
-        $cancellabel        = $this->htmlCancelLabel();
-        $backlabel          = $this->htmlBackLabel();
-        $class              = $this->htmlClass();
-        $method             = $this->htmlMethod();
-        $submitURL          = $this->htmlSubmitURL();
-        $jsValidation       = $this->htmlJsValidation();
-        $jsAutosave         = $this->jsAutosave === true ? "true" : $this->htmlJsAutosave();
-
-        foreach ($this->elementsAndHtml as $element) {
-            // leave out inactive step elements
-            if (!($element instanceof elements\step)
-                || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)
-            ) {
-                $renderedElements .= $element;
-            }
-        }
-
-        if (!is_null($this->cancelLabel)) {
-            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
-        } else {
-            $cancel = "";
-        }
-        if (!is_null($this->backLabel) && $this->currentStepId > 0) {
-            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
-        } else {
-            $back = "";
-        }
-
-
-        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\" data-jsvalidation=\"{$jsValidation}\" data-jsautosave=\"{$jsAutosave}\" enctype=\"multipart/form-data\">" . "\n" .
-            $renderedElements .
-            "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
-            $cancel .
-            $back .
-        "</form>";
-    }
-    // }}}
-
     // {{{ process()
     /**
      * @brief   Calls form validation and handles redirects.
@@ -694,93 +794,6 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
-
-    // {{{ buildUrlQuery()
-    /**
-     * @brief   Adding step parameter to already existing query
-     *
-     * @return  new query
-     **/
-    public function buildUrlQuery($args = array())
-    {
-        $query = '';
-        $queryParts = array();
-
-        if (isset($this->url['query']) && $this->url['query'] != "") {
-            //decoding query string
-            $query = html_entity_decode($this->url['query']);
-
-            //parsing the query into an array
-            parse_str($query, $queryParts);
-        }
-
-        foreach ($args as $name => $value) {
-            if ($value != "") {
-                $queryParts[$name] = $value;
-            } elseif (isset($queryParts[$name])) {
-                unset($queryParts[$name]);
-            }
-        }
-
-        // build the query again
-        $query = http_build_query($queryParts);
-
-        if ($query != "") {
-            $query = "?" . $query;
-        }
-
-        return $query;
-    }
-    // }}}
-
-    // {{{ getFirstInvalidStep()
-    /**
-     * @brief   Returns first step that didn't pass validation.
-     *
-     * Checks steps consecutively and returns the number of the first one that
-     * isn't valid (steps need to be submitted at least once to count as valid).
-     * Form must have been validated before calling this method.
-     *
-     * @return int $stepNumber number of first invalid step
-     **/
-    public function getFirstInvalidStep()
-    {
-        if (count($this->steps) > 0) {
-            foreach ($this->steps as $stepNumber => $step) {
-                if (!$step->validate()) {
-                    return $stepNumber;
-                }
-            }
-            /**
-             * If there aren't any invalid steps there must be a fieldset
-             * directly attached to the form that's invalid. In this case we
-             * don't want to jump back to the first step. Hence, this little
-             * hack.
-             **/
-            return count($this->steps) - 1;
-        } else {
-            return 0;
-        }
-    }
-    // }}}
-
-    // {{{ redirect()
-    /**
-     * @brief Redirects Browser to a different URL.
-     *
-     * @param string $url url to redirect to
-     */
-    public function redirect($url)
-    {
-        if (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
-            // don't redirect > it's from ajax
-        } else {
-            header('Location: ' . $url);
-            die( "Tried to redirect you to <a href=\"$url\">$url</a>");
-        }
-    }
-    // }}}
-
     // {{{ validate()
     /**
      * @brief   Validates the forms subelements.
@@ -814,7 +827,21 @@ class HtmlForm extends Abstracts\Container
         return $this->valid;
     }
     // }}}
-
+    // {{{ onValidate()
+    /**
+     * @brief   Validation hook
+     *
+     * Can be overridden with custom validation rules, field-required rules etc.
+     *
+     * @return void
+     *
+     * @see     validate()
+     **/
+    protected function onValidate()
+    {
+        return true;
+    }
+    // }}}
     // validateAutosave() {{{
     /**
      * If the form is autosaving the validation property is defaulted to false.
@@ -829,72 +856,33 @@ class HtmlForm extends Abstracts\Container
     {
         parent::validate();
 
-        if (isset($_POST['formCsrfToken'])) {
-            $this->valid = $this->valid && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
-        }
-
         $partValid = $this->valid;
 
-        // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
-                || (isset($this->sessionSlot['formIsAutosaved'])
-                    && $this->sessionSlot['formIsAutosaved'] === true)) {
-            $this->valid = false;
-        }
+        if (isset($_POST['formName']) && $_POST['formName'] == $this->name) {
+            if (isset($_POST['formCsrfToken'])) {
+                $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+                $this->valid = $this->valid && $hasCorrectToken;
+                $partValid = $this->valid;
 
-        // save whether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+                if (!$hasCorrectToken) {
+                    $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken in form {$this->name}");
+                }
+            }
+
+            // save data in session when autosaving but don't validate successfully
+            if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
+                    || (isset($this->sessionSlot['formIsAutosaved'])
+                        && $this->sessionSlot['formIsAutosaved'] === true)) {
+                $this->valid = false;
+            }
+
+            // save whether form was autosaved the last time
+            $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        }
 
         return $partValid;
     }
     // }}}
-
-    // {{{ isEmpty()
-    /**
-     * @brief   Returns wether form has been submitted before or not.
-     *
-     * @return bool session status
-     **/
-    public function isEmpty()
-    {
-        return !isset($this->sessionSlot['formName']);
-    }
-    // }}}
-
-    // {{{ populate()
-    /**
-     * @brief   Fills subelement values.
-     *
-     * Allows to manually populate the forms' input elements with values by
-     * parsing an array of name-value pairs.
-     *
-     * @param  array $data input element names (key) and values (value)
-     * @return void
-     **/
-    public function populate($data = array())
-    {
-        foreach ($this->getElements() as $element) {
-            $name = $element->name;
-            if (!in_array($name, $this->internalFields)) {
-                if (is_array($data) && isset($data[$name])) {
-                    $value = $data[$name];
-                } else if (is_object($data) && isset($data->$name)) {
-                    $value = $data->$name;
-                }
-
-                if (isset($value)) {
-                    $element->setDefaultValue($value);
-                    if ($element->getDisabled() && !isset($this->sessionSlot[$name])) {
-                        $this->sessionSlot[$name] = $value;
-                    }
-                }
-
-                unset($value);
-            }
-        }
-    }
-    // }}}
-
     // {{{ getValues()
     /**
      * @brief   Gets form-data from current PHP session.
@@ -911,7 +899,6 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
-
     // {{{ getValuesWithLabel()
     /**
      * @brief   Gets form-data from current PHP session but also contain elemnt labels.
@@ -939,74 +926,104 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
-
-    // {{{ checkElementName()
+    // {{{ redirect()
     /**
-     * @brief   Checks for duplicate subelement names.
+     * @brief Redirects Browser to a different URL.
      *
-     * Checks within the form if an input element or fieldset name is already
-     * taken. If so, it throws an exception.
+     * @param string $url url to redirect to
+     */
+    public function redirect($url)
+    {
+        header('Location: ' . $url);
+        die( "Tried to redirect you to <a href=\"$url\">$url</a>");
+            }
+    // }}}
+    // {{{ clearSession()
+    /**
+     * @brief   Deletes the current forms' PHP session data.
      *
-     * @param  string $name name to check
+     * @param bool $clearCsrfToken whether to clear complete form or just the data values and to keep csrf-token.
+     *
      * @return void
      **/
-    public function checkElementName($name)
+    public function clearSession($clearCsrfToken = true)
     {
-        foreach ($this->getElements(true) as $element) {
-            if ($element->getName() === $name) {
-                throw new Exceptions\DuplicateElementNameException("Element name \"{$name}\" already in use.");
+        if ($clearCsrfToken) {
+            // clear everything
+        $this->clearValue();
+
+        unset($_SESSION[$this->sessionSlotName]);
+        unset($this->sessionSlot);
+        } else {
+            // clear everything except internal fields
+            foreach ($this->getElements(true) as $element) {
+                if (!$element->getDisabled() && !in_array($element->name, $this->internalFields)) {
+                    unset($this->sessionSlot[$element->name]);
+    }
             }
         }
     }
     // }}}
 
-    // {{{ clearSession()
+    // {{{ htmlDataAttributes()
     /**
-     * @brief   Deletes the current forms' PHP session data.
-     *
-     * @return void
+     * @brief   Returns dataAttr escaped as attribute string
      **/
-    public function clearSession()
+    protected function htmlDataAttributes()
     {
-        $this->clearValue();
+        $this->dataAttr['jsvalidation'] = $this->jsValidation;
+        $this->dataAttr['jsautosave'] = $this->jsAutosave === true ? "true" : $this->jsAutosave;
 
-        unset($_SESSION[$this->sessionSlotName]);
-        unset($this->sessionSlot);
-    }
+        return parent::htmlDataAttributes();
+        }
     // }}}
-
-    // {{{ clearValueOf()
+    // {{{ __toString()
     /**
-     * @brief clearValueOf
+     * @brief   Renders form to HTML.
      *
-     * @param mixed $
-     * @return void
+     * Renders the htmlform object to HTML code. If the form contains elements
+     * it calls their rendering methods.
+     *
+     * @return string HTML code
      **/
-    public function clearValueOf($name)
+    public function __toString()
     {
-        $element = $this->getElement($name);
+        $renderedElements   = '';
+        $label              = $this->htmlLabel();
+        $cancellabel        = $this->htmlCancelLabel();
+        $backlabel          = $this->htmlBackLabel();
+        $class              = $this->htmlClass();
+        $method             = $this->htmlMethod();
+        $submitURL          = $this->htmlSubmitURL();
+        $dataAttr           = $this->htmlDataAttributes();
 
-        if ($element) {
-            $element->clearValue();
-            $this->sessionSlot[$name] = $element->getValue();
+        foreach ($this->elementsAndHtml as $element) {
+            // leave out inactive step elements
+            if (!($element instanceof elements\step)
+                || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)
+            ) {
+                $renderedElements .= $element;
+    }
         }
 
-    }
-    // }}}
+        if (!is_null($this->cancelLabel)) {
+            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
+        } else {
+            $cancel = "";
+        }
+        if (!is_null($this->backLabel) && $this->currentStepId > 0) {
+            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
+        } else {
+            $back = "";
+        }
 
-    // {{{ onValidate()
-    /**
-     * @brief   Validation hook
-     *
-     * Can be overridden with custom validation rules, field-required rules etc.
-     *
-     * @return void
-     *
-     * @see     validate()
-     **/
-    protected function onValidate()
-    {
-        return true;
+
+        return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\"{$dataAttr} enctype=\"multipart/form-data\">" . "\n" .
+            $renderedElements .
+            "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
+            $cancel .
+            $back .
+        "</form>";
     }
     // }}}
 }
