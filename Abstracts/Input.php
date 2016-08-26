@@ -553,7 +553,6 @@ abstract class Input extends Element
 
         $autoAttributes = array(
             "autocapitalize",
-            "autocomplete",
             "autocorrect",
         );
         foreach ($autoAttributes as $attr) {
@@ -563,6 +562,17 @@ abstract class Input extends Element
                 } else {
                     $attributes .= " $attr=\"off\"";
                 }
+            }
+        }
+        // enable autocomplete attribute according to
+        // https://html.spec.whatwg.org/multipage/forms.html#autofill
+        if (!is_null($this->autocomplete)) {
+            if (is_string($this->autocomplete)) {
+                $attributes .= " autocomplete=\"" . $this->htmlEscape($this->autocomplete) . "\"";
+            } else if ($this->autocomplete === true) {
+                $attributes .= " autocomplete=\"on\"";
+            } else {
+                $attributes .= " autocomplete=\"off\"";
             }
         }
 
