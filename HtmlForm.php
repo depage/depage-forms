@@ -568,8 +568,11 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    private function setCurrentStep()
+    public function setCurrentStep($step = null)
     {
+        if (!is_null($step)) {
+            $this->currentStepId = $step;
+        }
         if (!is_numeric($this->currentStepId)
             || ($this->currentStepId > count($this->steps) - 1)
             || ($this->currentStepId < 0)
