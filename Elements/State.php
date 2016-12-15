@@ -261,10 +261,14 @@ class State extends Single
         // return a subset
         if ($iso !== null) {
             // search for iso state codes
-            foreach ($country_states as $country => &$states) {
-                if (isset($states[$iso])) {
-                    return $states[$iso];
+            if (is_string($iso) && isset($country_states[$iso])) {
+                return $country_states[$iso];
+            } else if (is_array($iso)) {
+                $toDelete = array_diff(array_keys($country_states), $iso);
+                foreach($toDelete as $country) {
+                    unset($country_states[$country]);
                 }
+                return $country_states;
             }
 
             return '';
