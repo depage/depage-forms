@@ -137,7 +137,7 @@ class Richtext extends Textarea
      **/
     protected function parseHtml($html)
     {
-        $htmlDOM = new \Depage\HtmlForm\Abstracts\HtmlForm();
+        $htmlDOM = new \Depage\HtmlForm\Abstracts\HtmlDom();
 
         $htmlDOM->loadHTML($html);
         $htmlDOM->cleanHTML($this->allowedTags);
