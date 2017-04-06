@@ -205,7 +205,7 @@
                 &.depageEditorButtonBold {
                     background-position: 0 0;
 
-                    &:hover, 
+                    &:hover,
                     &.on {
                         background-position: -25px 0;
                     }
@@ -213,7 +213,7 @@
                 &.depageEditorButtonItalic {
                     background-position: 0 -25px;
 
-                    &:hover, 
+                    &:hover,
                     &.on {
                         background-position: -25px -25px;
                     }
@@ -221,7 +221,7 @@
                 &.depageEditorButtonHyperlink {
                     background-position: 0 -50px;
 
-                    &:hover, 
+                    &:hover,
                     &.on {
                         background-position: -25px -50px;
                     }
@@ -229,7 +229,7 @@
                 &.depageEditorButtonOrderedList {
                     background-position: 0 -75px;
 
-                    &:hover, 
+                    &:hover,
                     &.on {
                         background-position: -25px -75px;
                     }
@@ -237,7 +237,7 @@
                 &.depageEditorButtonUnorderedList {
                     background-position: 0 -100px;
 
-                    &:hover, 
+                    &:hover,
                     &.on {
                         background-position: -25px -100px;
                     }
@@ -245,7 +245,7 @@
                 &.depageEditorButtonHTML {
                     background-position: 0 -125px;
 
-                    &:hover, 
+                    &:hover,
                     &.on {
                         background-position: -25px -125px;
                     }
@@ -254,11 +254,54 @@
         }
     }
     .input-richtext {
+        .textarea,
         textarea,
         iframe {
+            clear: both;
             width: 100%;
             border: 1px solid;
             min-height: 10em;
+        }
+        .textarea {
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            li,
+            dt,
+            dd,
+            p {
+                font-size: 1em !important;
+            }
+        }
+        .depageEditorToolbar {
+            $buttonSize: 1.3em;
+            list-style: none;
+            position: absolute;
+            width: auto;
+            left: 0;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+
+            li {
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+                width: $buttonSize;
+                height: $buttonSize;
+                line-height: $buttonSize;
+                text-align: center;
+                cursor: pointer;
+            }
+            li::before {
+                display: none;
+            }
         }
     }
     /* }}} */

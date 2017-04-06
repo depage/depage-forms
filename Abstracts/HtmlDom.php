@@ -88,7 +88,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
      *
      * @return boolean true on success, false on error
      **/
-    public function loadHTML($html)
+    public function loadHTML($html, $options = null)
     {
         $tmpDOM = new \DOMDocument();
 
@@ -195,6 +195,23 @@ class HtmlDom extends \DOMDocument implements \Serializable
             }
         }
         // }}}
+    }
+    // }}}
+    // {{{ __toString()
+    /**
+     * @brief __toString
+     *
+     * @param mixed
+     * @return void
+     **/
+    public function __toString()
+    {
+        $html = "";
+        foreach ($this->documentElement->childNodes as $node) {
+            $html .= $this->saveXML($node) . "\n";
+        }
+
+        return $html;
     }
     // }}}
     // {{{ getBodyNodes()
