@@ -175,84 +175,6 @@
     /* }}} */
 
     /* {{{ richtext */
-    .depageEditor {
-        clear: left;
-        position: relative;
-        margin-left: 25px;
-    }
-    ul.depageEditorToolbar {
-        position: absolute;
-        left: -25px;
-        top: 0;
-        line-height: auto;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 25px;
-
-        li {
-            padding: 0;
-
-            a {
-                display: block;
-                width: 25px;
-                height: 25px;
-                text-indent: -10000px;
-                background-image: url(../richtext-toolbar.png);
-                background-repeat: none;
-                background-position: 25px 0;
-
-                &.depageEditorButtonBold {
-                    background-position: 0 0;
-
-                    &:hover,
-                    &.on {
-                        background-position: -25px 0;
-                    }
-                }
-                &.depageEditorButtonItalic {
-                    background-position: 0 -25px;
-
-                    &:hover,
-                    &.on {
-                        background-position: -25px -25px;
-                    }
-                }
-                &.depageEditorButtonHyperlink {
-                    background-position: 0 -50px;
-
-                    &:hover,
-                    &.on {
-                        background-position: -25px -50px;
-                    }
-                }
-                &.depageEditorButtonOrderedList {
-                    background-position: 0 -75px;
-
-                    &:hover,
-                    &.on {
-                        background-position: -25px -75px;
-                    }
-                }
-                &.depageEditorButtonUnorderedList {
-                    background-position: 0 -100px;
-
-                    &:hover,
-                    &.on {
-                        background-position: -25px -100px;
-                    }
-                }
-                &.depageEditorButtonHTML {
-                    background-position: 0 -125px;
-
-                    &:hover,
-                    &.on {
-                        background-position: -25px -125px;
-                    }
-                }
-            }
-        }
-    }
     .input-richtext {
         .textarea,
         textarea,
@@ -275,6 +197,7 @@
             dd,
             p {
                 font-size: 1em !important;
+                line-height: 1.5em;
             }
             h1,
             h2,
@@ -282,11 +205,28 @@
             h4,
             h5,
             h6 {
+                position: relative;
                 font-weight: bold;
+                color: #555555;
+
+                &::after {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    opacity: 0.5;
+                }
+            }
+            h1::after {
+                content: "h1";
+            }
+            h2::after {
+                content: "h2";
             }
         }
         .depageEditorToolbar {
             $buttonSize: 1.8em;
+            $radius: $buttonSize * 0.3;
             list-style: none;
             position: absolute;
             width: auto;
@@ -299,12 +239,16 @@
             background: rgba(0, 0, 0, 0.8);
             color: #ffffff;
             font-size: 1em;
-            padding: 0 ($buttonSize * 0.4);
-            -webkit-border-radius: $buttonSize * 0.4;
-            -moz-border-radius: $buttonSize * 0.4;
-            -ms-border-radius: $buttonSize * 0.4;
-            -o-border-radius: $buttonSize * 0.4;
-            border-radius: $buttonSize * 0.4;
+            padding: 0 $radius;
+            -webkit-border-radius: $radius;
+            -moz-border-radius: $radius;
+            -ms-border-radius: $radius;
+            -o-border-radius: $radius;
+            border-radius: $radius;
+
+            .hidden {
+                display: none;
+            }
 
             li {
                 font-size: 1em;
@@ -327,9 +271,22 @@
             li:after {
                 display: none;
             }
+            li:hover,
             li.active {
                 background-color: rgba(255, 255, 255, 0.2);
                 //border-bottom-color: #ff9900;
+            }
+            .format-b {
+                font-weight: bold;
+            }
+            .format-i {
+                font-style: italic;
+            }
+            .format-u {
+                text-decoration: underline;
+            }
+            .format-s {
+                text-decoration: line-through;
             }
         }
     }
