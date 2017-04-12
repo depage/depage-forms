@@ -193,6 +193,10 @@ class Single extends Abstracts\Input
      **/
     protected function typeCastValue()
     {
+        // check if value is in list
+        if (!in_array($this->value, array_keys($this->list))) {
+            $this->value = "";
+        }
         $this->value = (string) $this->value;
     }
     // }}}
