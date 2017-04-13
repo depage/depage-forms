@@ -165,14 +165,14 @@ class HtmlDom extends \DOMDocument implements \Serializable
             }
         }
         // }}}
-        // {{{ add &nbsp; to empty paragraphs to keep them
-        $nodelist = $xpath->query("//p[. = '']");
+        // {{{ add br to empty paragraphs to keep them
+        $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 
         foreach ($nodelist as $node) {
-            $node->appendChild($this->createEntityReference("nbsp"));
+            $node->appendChild($this->createElement("br"));
         }
         // }}}
-        // {{{ make sure li-nodes are alwas inside ul, ol or menu
+        // {{{ make sure li-nodes are always inside ul, ol or menu
         $nodelist = $xpath->query("//li");
         $parentNodes = array("ul", "ol", "menu");
 
@@ -195,6 +195,47 @@ class HtmlDom extends \DOMDocument implements \Serializable
             }
         }
         // }}}
+    }
+    // }}}
+    // {{{ cutToMaxlength()
+    /**
+     * @brief cutToMaxlength
+     *
+     * @param mixed $max
+     * @return void
+     **/
+    public function cutToMaxlength($max)
+    {
+        $charsToRemove = mb_strlen($this->documentElement->textContent) - $max;
+
+        if ($charsToRemove <= 0) {
+            return;
+        }
+
+        $xpath = new \DOMXPath($this);
+        $textNodes = $xpath->query("//text()");
+        $i = $textNodes->length - 1;
+        while ($charsToRemove > 0 && $i >= 0) {
+            $n = $textNodes->item($i);
+            $len = mb_strlen($n->textContent);
+            $parent = $n->parentNode;
+
+            if ($len <= $charsToRemove) {
+                $parent->removeChild($n);
+                $charsToRemove -= $len;
+            } else {
+                $restNode = $n->splitText($len - $charsToRemove);
+                $parent->removeChild($restNode);
+                $charsToRemove = 0;
+            }
+
+            // remove empty nodes
+            if (mb_strlen($parent->textContent) == 0) {
+                $parent->parentNode->removeChild($parent);
+            }
+
+            $i--;
+        }
     }
     // }}}
     // {{{ __toString()

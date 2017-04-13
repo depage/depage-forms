@@ -55,6 +55,13 @@ class Richtext extends Textarea
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
         $this->defaults['allowedTags'] = array(
+            // inline elements
+            "a",
+            "b",
+            "strong",
+            "i",
+            "em",
+
             // block elements
             "p",
             "br",
@@ -63,13 +70,6 @@ class Richtext extends Textarea
             "ul",
             "ol",
             "li",
-
-            // inline elements
-            "a",
-            "b",
-            "strong",
-            "i",
-            "em",
         );
     }
     // }}}
@@ -141,6 +141,10 @@ class Richtext extends Textarea
 
         $htmlDOM->loadHTML($html);
         $htmlDOM->cleanHTML($this->allowedTags);
+
+        if ($this->maxlength) {
+            $htmlDOM->cutToMaxlength($this->maxlength);
+        }
 
         return $htmlDOM;
     }
