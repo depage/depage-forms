@@ -1,5 +1,7 @@
 $depageFormMaxWidth: 40em;
+$depageFormMobileWidth: 600px;
 $depageFormBorderRadius: 0 !default;
+$depageFormTextColor: #000000 !default;
 $depageFormBorderColor: #999999 !default;
 $depageFormBorderColorFocus: #000000 !default;
 $depageFormBorderColorError: #ff0000 !default;
@@ -31,16 +33,104 @@ $depageFormBorderColorError: #ff0000 !default;
 .depage-form {
     max-width: $depageFormMaxWidth;
 
+    // layouts:
+    // {{{ default layout with labels on left
+    &,
+    &.labels-on-left,
+    .labels-on-left {
+        .depage-label {
+            float: left;
+            width: 33.3333%;
+            padding-right: 0.6em;
+        }
+        p {
+            clear: left;
+        }
+        .errorMessage {
+            right: 0;
+            padding-right: 1em;
+            max-width: 66.6666%;
+        }
+    }
+    // }}}
+    // {{{ layout with labels on right
+    &.labels-on-right,
+    .labels-on-right {
+        .depage-label {
+            float: right;
+            width: 33.3333%;
+            padding-left: 0.6em;
+        }
+        p {
+            clear: right;
+        }
+        .errorMessage {
+            right: 33.3333%;
+            padding-right: 1em;
+            max-width: 66.6666%;
+        }
+    }
+    // }}}
+    // {{{ layout with labels on top
+    &.labels-on-top,
+    .labels-on-top {
+        .depage-label {
+            float: none;
+            width: 100%;
+        }
+        input,
+        select,
+        textarea,
+        .textarea,
+        .selectize-input {
+            width: 100%;
+        }
+        .errorMessage {
+            right: 0;
+            padding-right: 1em;
+            max-width: 100%;
+        }
+    }
+    // }}}
+    // {{{ mobile layout with labels on top
+    @media screen and (max-width: $depageFormMobileWidth) {
+        &,
+        &.labels-on-left,
+        &.labels-on-right,
+        &.labels-on-top,
+        .labels-on-left,
+        .labels-on-right,
+        .labels-on-top {
+            .depage-label {
+                float: none;
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            input,
+            select,
+            textarea,
+            .textarea,
+            .selectize-input {
+                width: 100%;
+            }
+            .errorMessage {
+                right: 0;
+                padding-right: 1em;
+                max-width: 100%;
+            }
+        }
+    }
+    // }}}
+
+    // inputs:
     // {{{ input and label sizes
     .depage-label {
         display: block;
-        float: left;
-        width: 33%;
         height: 1em;
         min-height: 1em;
         height: auto !important;
         padding-bottom: 0.3em;
-        padding-right: 0.3em;
     }
     .input-boolean {
         input {
@@ -54,9 +144,6 @@ $depageFormBorderColorError: #ff0000 !default;
             margin-left: 1.7em;
         }
     }
-    p {
-        clear: left;
-    }
     p,
     .depage-label {
         position: relative;
@@ -64,10 +151,13 @@ $depageFormBorderColorError: #ff0000 !default;
     }
     input,
     select,
-    textarea {
-        width: 63%;
+    textarea,
+    .textarea,
+    .selectize-input {
+        width: 66.6667%;
         font-family: inherit;
         font-size: 1em;
+        color: $depageFormTextColor;
     }
     .input-boolean,
     .input-single,
@@ -146,9 +236,8 @@ $depageFormBorderColorError: #ff0000 !default;
     .errorMessage {
         display: block;
         position: absolute;
+        clear: both;
         top: 0.2em;
-        right: 3%;
-        max-width: 70%;
         font-size: 0.8em;
         text-align: right;
     }
@@ -214,6 +303,7 @@ $depageFormBorderColorError: #ff0000 !default;
     }
     // }}}
 
+    // javascript based controls:
     // {{{ selectize
     .selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
         visibility: visible !important;
@@ -312,10 +402,10 @@ $depageFormBorderColorError: #ff0000 !default;
     .selectize-dropdown,
     .selectize-input,
     .selectize-input input {
-        color: #303030;
+        color: $depageFormTextColor;
         font-family: inherit;
-        font-size: 13px;
-        line-height: 18px;
+        font-size: 1em;
+        line-height: 1em;
         -webkit-font-smoothing: inherit;
     }
     .selectize-input,
@@ -328,7 +418,6 @@ $depageFormBorderColorError: #ff0000 !default;
         border: 1px solid $depageFormBorderColor;
         padding: 8px 8px;
         display: inline-block;
-        width: 100%;
         overflow: hidden;
         position: relative;
         z-index: 1;
@@ -505,14 +594,12 @@ $depageFormBorderColorError: #ff0000 !default;
     // {{{ richtext
     .input-richtext {
         .textarea,
-        textarea,
-        iframe {
-            clear: both;
-            width: 100%;
+        textarea {
             min-height: 10em;
         }
         .textarea {
             padding: 0.2em;
+
             h1,
             h2,
             h3,
