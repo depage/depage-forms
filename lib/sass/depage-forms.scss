@@ -29,6 +29,13 @@ $depageFormBorderColorError: #ff0000 !default;
     border-#{$other}radius: $radius;
 }
 // }}}
+// {{{ mixin: box-shadow
+@mixin box-shadow($properties...) {
+    -webkit-box-shadow: $properties;
+    -moz-box-shadow: $properties;
+    box-shadow: $properties;
+}
+// }}}
 
 .depage-form {
     max-width: $depageFormMaxWidth;
@@ -43,7 +50,7 @@ $depageFormBorderColorError: #ff0000 !default;
             width: 33.3333%;
             padding-right: 0.6em;
         }
-        p {
+        > p {
             clear: left;
         }
         .errorMessage {
@@ -61,7 +68,7 @@ $depageFormBorderColorError: #ff0000 !default;
             width: 33.3333%;
             padding-left: 0.6em;
         }
-        p {
+        > p {
             clear: right;
         }
         .errorMessage {
@@ -194,14 +201,11 @@ $depageFormBorderColorError: #ff0000 !default;
 
         &:required,
         &:invalid {
-            box-shadow: none;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
+            @include box-shadow(none);
         }
         &:focus {
             border: 1px solid $depageFormBorderColorFocus;
-            -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+            @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
             outline: none;
         }
     }
@@ -310,16 +314,14 @@ $depageFormBorderColorError: #ff0000 !default;
         background: #f2f2f2 !important;
         background: rgba(0, 0, 0, 0.06) !important;
         border: 0 none !important;
-        -webkit-box-shadow: inset 0 0 12px 4px #ffffff;
-        box-shadow: inset 0 0 12px 4px #ffffff;
+        @include box-shadow(inset 0 0 12px 4px #ffffff);
     }
     .selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
         content: '!';
         visibility: hidden;
     }
     .selectize-control.plugin-drag_drop .ui-sortable-helper {
-        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        @include box-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
     }
     .selectize-dropdown-header {
         position: relative;
@@ -437,8 +439,7 @@ $depageFormBorderColorError: #ff0000 !default;
         cursor: default !important;
     }
     .selectize-input.focus {
-        -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+        @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
     }
     .selectize-input > * {
         vertical-align: baseline;
@@ -478,8 +479,7 @@ $depageFormBorderColorError: #ff0000 !default;
         background: none !important;
         line-height: inherit !important;
         -webkit-user-select: auto !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
+        @include box-shadow(none !important);
     }
     .selectize-input > input::-ms-clear {
         display: none;
@@ -512,8 +512,7 @@ $depageFormBorderColorError: #ff0000 !default;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
         @include radius(0 0 $depageFormBorderRadius $depageFormBorderRadius);
     }
     .selectize-dropdown [data-selectable] {
@@ -596,6 +595,7 @@ $depageFormBorderColorError: #ff0000 !default;
         .textarea,
         textarea {
             min-height: 10em;
+            margin-bottom: 0.3em;
         }
         .textarea {
             padding: 0.2em;
