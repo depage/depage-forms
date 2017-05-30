@@ -142,13 +142,36 @@ class HtmlDom extends \DOMDocument implements \Serializable
             $allowedTags = $this->allowedTags;
         }
 
+        // {{{ split tags and classnames
+        $tags = [];
+        $classByTag = [];
+
+        foreach ($allowedTags as $t) {
+            preg_match("/([a-zA-Z0-9]*)(\.(.*))?/", $t, $matches);
+
+            $tag = $matches[1];
+            $class = $matches[3];
+            $tags[$tag] = true;
+            if (!isset($classByTag[$tag])) {
+                $classByTag[$tag] = [];
+            }
+            if (!empty($class)) {
+                $classByTag[$tag][] = $class;
+            } else {
+                $classByTag[$tag][] = "";
+            }
+        }
+        //var_dump($tags);
+        //var_dump($classByTag);
+        // }}}
+
         // {{{ remove all nodes with tagnames that are not allowed
         $nodelist = $xpath->query("//body//*");
 
         for ($i = $nodelist->length - 1; $i >= 0; $i--) {
             $node = $nodelist->item($i);
 
-            if (!in_array($node->nodeName, $allowedTags)) {
+            if (!isset($tags[$node->nodeName])) {
                 // move child nodes before element itself
                 while ($node->firstChild != null) {
                     if ($node->parentNode->nodeName == "body" && $node->firstChild->nodeType  == XML_TEXT_NODE) {
@@ -162,9 +185,12 @@ class HtmlDom extends \DOMDocument implements \Serializable
 
                 // delete empty node
                 $node->parentNode->removeChild($node);
+            } else {
+                // test classNames
             }
         }
         // }}}
+        //die();
         // {{{ add br to empty paragraphs to keep them
         $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 

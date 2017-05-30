@@ -124,7 +124,7 @@ class Multiple extends Abstracts\Input
         $list       = '';
 
         // select
-        if ($this->skin === "select") {
+        if (in_array($this->skin, ['select', 'tags'])) {
             foreach ($options as $index => $option) {
                 if (is_array($option)) {
                     $list       .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
@@ -170,7 +170,7 @@ class Multiple extends Abstracts\Input
         $errorMessage       = $this->htmlErrorMessage();
         $helpMessage        = $this->htmlHelpMessage();
 
-        if ($this->skin === 'select') {
+        if (in_array($this->skin, ['select', 'tags'])) {
             // render HTML select
 
             $inputAttributes = $this->htmlInputAttributes();
@@ -209,8 +209,8 @@ class Multiple extends Abstracts\Input
         $attributes = '';
 
         // HTML5 validator hack
-        if ($this->required && $this->skin === 'select') $attributes .= ' required="required"';
-        if ($this->autofocus)                            $attributes .= ' autofocus="autofocus"';
+        if ($this->required && in_array($this->skin, ['select', 'tags'])) $attributes .= ' required="required"';
+        if ($this->autofocus)                                             $attributes .= ' autofocus="autofocus"';
         return $attributes;
     }
     // }}}

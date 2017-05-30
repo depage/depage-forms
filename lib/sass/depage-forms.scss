@@ -205,7 +205,6 @@ $depageFormBorderColorError: #ff0000 !default;
         }
         &:focus {
             border: 1px solid $depageFormBorderColorFocus;
-            @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
             outline: none;
         }
     }
@@ -299,10 +298,6 @@ $depageFormBorderColorError: #ff0000 !default;
             &.current-step {
                 background: #dddddd;
             }
-        }
-        li {
-            *display: block; /* IE6/7 hack */
-            *float: left;
         }
     }
     // }}}
@@ -637,67 +632,75 @@ $depageFormBorderColorError: #ff0000 !default;
             h2::after {
                 content: "h2";
             }
+            blockquote {
+                border-left: 0.2em solid;
+                padding-left: 1em;
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
         }
-        .depageEditorToolbar {
-            $buttonSize: 1.8em;
-            $radius: $buttonSize * 0.3;
-            list-style: none;
-            position: absolute;
-            width: auto;
-            height: $buttonSize;
-            left: 0;
-            top: 0;
-            margin: 0;
-            padding: 0;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            color: #ffffff;
+    }
+    // }}}
+    // {{{ toolbar
+    .depageEditorToolbar {
+        $buttonSize: 1.8em;
+        $radius: $buttonSize * 0.3;
+        list-style: none;
+        position: absolute;
+        width: auto;
+        height: $buttonSize;
+        left: 0;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        font-size: 1em;
+        padding: 0 $radius;
+        @include radius($radius);
+
+        .hidden {
+            display: none;
+        }
+
+        li {
             font-size: 1em;
-            padding: 0 $radius;
-            @include radius($radius);
-
-            .hidden {
-                display: none;
-            }
-
-            li {
-                font-size: 1em;
-                margin: 0;
-                padding: 0;
-                display: inline-block;
-                vertical-align: top;
-                line-height: $buttonSize;
-                width: $buttonSize;
-                height: $buttonSize;
-                text-align: center;
-                cursor: pointer;
-                /*
-                border-bottom-width: 0.2em;
-                border-bottom-style: solid;
-                border-bottom-color: transparent;
-                */
-            }
-            li:before,
-            li:after {
-                display: none;
-            }
-            li:hover,
-            li.active {
-                background-color: rgba(255, 255, 255, 0.2);
-                //border-bottom-color: #ff9900;
-            }
-            .format-b {
-                font-weight: bold;
-            }
-            .format-i {
-                font-style: italic;
-            }
-            .format-u {
-                text-decoration: underline;
-            }
-            .format-s {
-                text-decoration: line-through;
-            }
+            margin: 0;
+            padding: 0 0.4em;
+            display: inline-block;
+            vertical-align: top;
+            line-height: $buttonSize;
+            min-width: $buttonSize;
+            height: $buttonSize;
+            text-align: center;
+            cursor: pointer;
+            /*
+            border-bottom-width: 0.2em;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            */
+        }
+        li:before,
+        li:after {
+            display: none;
+        }
+        li:hover,
+        li.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            //border-bottom-color: #ff9900;
+        }
+        .format-b {
+            font-weight: bold;
+        }
+        .format-i {
+            font-style: italic;
+        }
+        .format-u {
+            text-decoration: underline;
+        }
+        .format-s {
+            text-decoration: line-through;
         }
     }
     // }}}
