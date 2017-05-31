@@ -20,7 +20,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
     /**
      * @brief Tags that are allowed inside of html
      **/
-    protected $allowedTags = array(
+    protected $allowedTags = [
         "p",
         "br",
         "h1",
@@ -34,7 +34,18 @@ class HtmlDom extends \DOMDocument implements \Serializable
         "strong",
         "i",
         "em",
-    );
+    ];
+
+    /**
+     * @brief allowedAttributes
+     **/
+    protected $allowedAttributes = [
+        'class',
+        'href',
+        'target',
+        'alt',
+        'title',
+    ];
     // }}}
 
     // {{{ constructor()
@@ -134,12 +145,15 @@ class HtmlDom extends \DOMDocument implements \Serializable
      *
      * @return void
      **/
-    public function cleanHTML($allowedTags = null)
+    public function cleanHTML($allowedTags = null, $allowedAttributes = null)
     {
         $xpath = new \DOMXPath($this);
 
         if (is_null($allowedTags)) {
             $allowedTags = $this->allowedTags;
+        }
+        if (is_null($allowedAttributes)) {
+            $allowedAttributes = $this->allowedAttributes;
         }
 
         // {{{ split tags and classnames
@@ -161,8 +175,6 @@ class HtmlDom extends \DOMDocument implements \Serializable
                 $classByTag[$tag][] = "";
             }
         }
-        //var_dump($tags);
-        //var_dump($classByTag);
         // }}}
 
         // {{{ remove all nodes with tagnames that are not allowed
@@ -186,11 +198,31 @@ class HtmlDom extends \DOMDocument implements \Serializable
                 // delete empty node
                 $node->parentNode->removeChild($node);
             } else {
-                // test classNames
+                // test for allowed attributes
+                for ($j = $node->attributes->length - 1; $j >= 0; $j--) {
+                    $attr = $node->attributes->item($j);
+
+                    // remove attributes that are not in allowedAttributes
+                    if (!in_array($attr->name, $allowedAttributes)) {
+                        $node->removeAttribute($attr->name);
+                    }
+                }
+
+                // remove invalid classnames
+                if ($node->getAttribute("class") != "") {
+                    $attr = implode(" ", array_intersect(
+                        explode(" ", $node->getAttribute("class")),
+                        $classByTag[$node->nodeName]
+                    ));
+                    if (empty($attr)) {
+                        $node->removeAttribute("class");
+                    } else {
+                        $node->setAttribute("class", $attr);
+                    }
+                }
             }
         }
         // }}}
-        //die();
         // {{{ add br to empty paragraphs to keep them
         $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 
