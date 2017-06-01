@@ -394,6 +394,8 @@ abstract class Input extends Element
     public function clearValue()
     {
         $this->value = null;
+
+        return $this->value;
     }
     // }}}
 

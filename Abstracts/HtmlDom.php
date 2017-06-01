@@ -163,8 +163,8 @@ class HtmlDom extends \DOMDocument implements \Serializable
         foreach ($allowedTags as $t) {
             preg_match("/([a-zA-Z0-9]*)(\.(.*))?/", $t, $matches);
 
-            $tag = $matches[1];
-            $class = $matches[3];
+            $tag = $matches[1] ?? "";
+            $class = $matches[3] ?? "";
             $tags[$tag] = true;
             if (!isset($classByTag[$tag])) {
                 $classByTag[$tag] = [];

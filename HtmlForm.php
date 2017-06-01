@@ -692,7 +692,7 @@ class HtmlForm extends Abstracts\Container
             && $this->inCurrentStep($name)
             && isset($_POST['formCsrfToken']) && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken']
         ) {
-            if ($this->getElement($name) instanceof elements\file) {
+            if ($this->getElement($name) instanceof Elements\File) {
                 // handle uploaded file
                 $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
                 $this->sessionSlot[$name] = $element->handleUploadedFiles($oldValue);
@@ -709,6 +709,20 @@ class HtmlForm extends Abstracts\Container
         else if (isset($this->sessionSlot[$name])) {
             $element->setValue($this->sessionSlot[$name]);
         }
+    }
+    // }}}
+    // {{{ clearInputValue()
+    /**
+     * @brief clearInputValue
+     *
+     * @param mixed $name
+     * @return void
+     **/
+    public function clearInputValue($name)
+    {
+        $element = $this->getElement($name);
+
+        $this->sessionSlot[$name] = $element->clearValue();
     }
     // }}}
 

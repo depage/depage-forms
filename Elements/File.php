@@ -181,6 +181,8 @@ class File extends Text
         $this->clearUploadedFiles();
 
         $this->value = array();
+
+        return $this->value;
     }
     // }}}
 
