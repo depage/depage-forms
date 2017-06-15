@@ -2,12 +2,18 @@ $depageFormMaxWidth: 40em;
 $depageFormMobileWidth: 600px;
 $depageFormBorderRadius: 0 !default;
 $depageFormTextColor: #000000 !default;
+$depageFormErrorColor: #ff0000 !default;
+$depageFormSelectionColor: $depageFormTextColor !default;
+$depageFormSelectionBackground: #bbddff !default;
+$depageFormTextColorError: $depageFormTextColor !default;
+$depageFormTextColorFocus: $depageFormTextColor !default;
+$depageFormLabelErrorColor: $depageFormErrorColor !default;
 $depageFormInputBackground: #ffffff !default;
 $depageFormInputBackgroundFocus: #ffffff !default;
 $depageFormInputBackgroundError: #ffffff !default;
 $depageFormBorderColor: #999999 !default;
 $depageFormBorderColorFocus: #000000 !default;
-$depageFormBorderColorError: #ff0000 !default;
+$depageFormBorderColorError: $depageFormErrorColor !default;
 
 // {{{ mixin: radius
 @mixin radius($radius, $vert: "", $horiz: "") {
@@ -203,6 +209,16 @@ $depageFormBorderColorError: #ff0000 !default;
         background-color: $depageFormInputBackground;
         @include radius($depageFormBorderRadius);
 
+        ::-moz-selection,
+        &::-moz-selection {
+            color: $depageFormSelectionColor;
+            background: $depageFormSelectionBackground;
+        }
+        ::selection,
+        &::selection {
+            color: $depageFormSelectionColor;
+            background: $depageFormSelectionBackground;
+        }
         &:required,
         &:invalid {
             @include box-shadow(none);
@@ -232,7 +248,7 @@ $depageFormBorderColorError: #ff0000 !default;
         }
     }
     .error .depage-label {
-        color: #ff0000;
+        color: $depageFormLabelErrorColor;
     }
     .submit input {
         background: #cccccc;
@@ -298,7 +314,7 @@ $depageFormBorderColorError: #ff0000 !default;
             }
             &.invalid a::after {
                 content: " !";
-                color: #ff0000;
+                color: $depageFormLabelErrorColor;
                 font-weight: bold;
             }
             &.current-step {
@@ -455,14 +471,13 @@ $depageFormBorderColorError: #ff0000 !default;
         cursor: pointer;
         margin: 0 3px 3px 0;
         padding: 2px 6px;
-        background: #f2f2f2;
-        color: #303030;
-        border: 0 solid $depageFormBorderColor;
+        background: darken($depageFormInputBackground, 10%);
+        color: $depageFormTextColor;
+        @include radius($depageFormBorderRadius * 0.5);
     }
     .selectize-control.multi .selectize-input > div.active {
-        background: #e8e8e8;
-        color: #303030;
-        border: 0 solid #cacaca;
+        color: $depageFormSelectionColor;
+        background: $depageFormSelectionBackground;
     }
     .selectize-control.multi .selectize-input.disabled > div,
     .selectize-control.multi .selectize-input.disabled > div.active {
@@ -545,8 +560,8 @@ $depageFormBorderColorError: #ff0000 !default;
         cursor: default;
     }
     .selectize-dropdown .active {
-        background-color: #f5fafd;
-        color: #495c68;
+        color: $depageFormSelectionColor;
+        background: $depageFormSelectionBackground;
     }
     .selectize-dropdown .active.create {
         color: #495c68;
