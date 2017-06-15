@@ -2,6 +2,9 @@ $depageFormMaxWidth: 40em;
 $depageFormMobileWidth: 600px;
 $depageFormBorderRadius: 0 !default;
 $depageFormTextColor: #000000 !default;
+$depageFormInputBackground: #ffffff !default;
+$depageFormInputBackgroundFocus: #ffffff !default;
+$depageFormInputBackgroundError: #ffffff !default;
 $depageFormBorderColor: #999999 !default;
 $depageFormBorderColorFocus: #000000 !default;
 $depageFormBorderColorError: #ff0000 !default;
@@ -197,6 +200,7 @@ $depageFormBorderColorError: #ff0000 !default;
     .textarea {
         border: 1px solid $depageFormBorderColor;
         padding: 0.2em;
+        background-color: $depageFormInputBackground;
         @include radius($depageFormBorderRadius);
 
         &:required,
@@ -206,6 +210,7 @@ $depageFormBorderColorError: #ff0000 !default;
         &:focus {
             border: 1px solid $depageFormBorderColorFocus;
             outline: none;
+            background-color: $depageFormInputBackgroundFocus;
         }
     }
     .error {
@@ -214,6 +219,7 @@ $depageFormBorderColorError: #ff0000 !default;
         textarea,
         .textarea {
             border: 1px solid $depageFormBorderColorError;
+            background-color: $depageFormInputBackgroundError;
         }
     }
     .input-boolean,
@@ -321,7 +327,7 @@ $depageFormBorderColorError: #ff0000 !default;
     .selectize-dropdown-header {
         position: relative;
         padding: 5px 8px;
-        border-bottom: 1px solid #d0d0d0;
+        border-bottom: 1px solid $depageFormBorderColor;
         background: #f8f8f8;
         @include radius($depageFormBorderRadius $depageFormBorderRadius 0 0);
     }
@@ -375,7 +381,7 @@ $depageFormBorderColorError: #ff0000 !default;
         vertical-align: middle;
         display: inline-block;
         padding: 2px 0 0 0;
-        border-left: 1px solid #d0d0d0;
+        border-left: 1px solid $depageFormBorderColor;
         @include radius(0 $depageFormBorderRadius $depageFormBorderRadius 0);
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -407,7 +413,7 @@ $depageFormBorderColorError: #ff0000 !default;
     }
     .selectize-input,
     .selectize-control.single .selectize-input.input-active {
-        background: #ffffff;
+        background: $depageFormInputBackground;
         cursor: text;
         display: inline-block;
     }
@@ -427,14 +433,16 @@ $depageFormBorderColorError: #ff0000 !default;
         padding: 6px 8px 3px;
     }
     .selectize-input.full {
-        background-color: #ffffff;
+        background-color: $depageFormInputBackground;
     }
     .selectize-input.disabled,
     .selectize-input.disabled * {
         cursor: default !important;
     }
     .selectize-input.focus {
+        border: 1px solid $depageFormBorderColorFocus;
         @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
+        @include box-shadow(0 0 0.2em rgba(0, 0, 0, 0.5));
     }
     .selectize-input > * {
         vertical-align: baseline;
@@ -449,7 +457,7 @@ $depageFormBorderColorError: #ff0000 !default;
         padding: 2px 6px;
         background: #f2f2f2;
         color: #303030;
-        border: 0 solid #d0d0d0;
+        border: 0 solid $depageFormBorderColor;
     }
     .selectize-control.multi .selectize-input > div.active {
         background: #e8e8e8;
@@ -497,10 +505,14 @@ $depageFormBorderColorError: #ff0000 !default;
         left: 0;
         right: 0;
     }
+    .selectize-input.dropdown-active {
+        @include radius(0, "bottom", "left");
+        @include radius(0, "bottom", "right");
+    }
     .selectize-dropdown {
         position: absolute;
         z-index: 10;
-        border: 1px solid #d0d0d0;
+        border: 1px solid $depageFormBorderColorFocus;
         background: #ffffff;
         margin: -1px 0 0 0;
         border-top: 0 none;
