@@ -1,6 +1,9 @@
+// basics
 $depageFormMaxWidth: 40em;
 $depageFormMobileWidth: 600px;
 $depageFormBorderRadius: 0 !default;
+
+// colors
 $depageFormTextColor: #000000 !default;
 $depageFormErrorColor: #ff0000 !default;
 $depageFormSelectionColor: $depageFormTextColor !default;
@@ -14,6 +17,18 @@ $depageFormInputBackgroundError: #ffffff !default;
 $depageFormBorderColor: #999999 !default;
 $depageFormBorderColorFocus: #000000 !default;
 $depageFormBorderColorError: $depageFormErrorColor !default;
+
+// images
+$depageFormCheckboxImage: "" !default;
+$depageFormCheckboxImageChecked: "" !default;
+$depageFormCheckboxSize: 1em !default;
+$depageFormCheckboxWidth: $depageFormCheckboxSize !default;
+$depageFormCheckboxHeight: $depageFormCheckboxSize !default;
+$depageFormRadiobuttonImage: "" !default;
+$depageFormRadiobuttonImageChecked: "" !default;
+$depageFormRadiobuttonSize: 1em !default;
+$depageFormRadiobuttonWidth: $depageFormRadiobuttonSize !default;
+$depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
 
 // {{{ mixin: radius
 @mixin radius($radius, $vert: "", $horiz: "") {
@@ -150,6 +165,7 @@ $depageFormBorderColorError: $depageFormErrorColor !default;
     }
     .input-boolean {
         input {
+            display: block;
             float: left;
             margin-top: 0.5em;
         }
@@ -157,7 +173,6 @@ $depageFormBorderColorError: $depageFormErrorColor !default;
             display: block;
             float: none;
             width: auto;
-            margin-left: 1.7em;
         }
     }
     p,
@@ -194,7 +209,7 @@ $depageFormBorderColorError: $depageFormErrorColor !default;
             span {
                 padding-left: 0.5em;
                 padding-right: 1em;
-                font-size: 1.1em;
+                font-size: 1em;
             }
         }
     }
@@ -319,6 +334,82 @@ $depageFormBorderColorError: $depageFormErrorColor !default;
             }
             &.current-step {
                 background: #dddddd;
+            }
+        }
+    }
+    // }}}
+    // {{{ checkboxes and radiobuttons
+    @if ($depageFormCheckboxImage != '' && $depageFormRadiobuttonImage != '') {
+        .input-single.skin-radio,
+        .input-multiple.skin-checkbox,
+        .input-boolean {
+            label {
+                position: relative;
+            }
+            input[type="checkbox"],
+            input[type="radio"] {
+                position: absolute;
+                z-index: 100;
+                -webkit-opacity: 0;
+                -moz-opacity: 0;
+                -o-opacity: 0;
+                opacity: 0;
+            }
+            input[type="checkbox"] + span {
+                padding-left: $depageFormCheckboxWidth * 1.25;
+            }
+            input[type="radio"] + span {
+                padding-left: $depageFormRadiobuttonWidth * 1.25;
+            }
+            input[type="checkbox"] + span::before,
+            input[type="radio"] + span::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: "";
+                display: block;
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: top left;
+                background-color: $depageFormInputBackground;
+
+            }
+            input[type="checkbox"] + span::before {
+                background-image: $depageFormCheckboxImage;
+                width: $depageFormCheckboxWidth;
+                height: $depageFormCheckboxHeight;
+                @include radius($depageFormBorderRadius);
+            }
+            input[type="checkbox"]:checked + span::before {
+                background-image: $depageFormCheckboxImageChecked;
+            }
+
+            input[type="radio"] + span::before {
+                background-image: $depageFormRadiobuttonImage;
+                width: $depageFormRadiobuttonWidth;
+                height: $depageFormRadiobuttonHeight;
+                @include radius(50%);
+            }
+
+            input[type="radio"]:checked + span::before {
+                background-image: $depageFormRadiobuttonImageChecked;
+            }
+            input[type="radio"]:disabled + span,
+            input[type="checkbox"]:disabled + span,
+            input[type="radio"]:disabled + span::before,
+            input[type="checkbox"]:disabled + span::before {
+                -webkit-opacity: .4;
+                -moz-opacity: .4;
+                -o-opacity: .4;
+                opacity: .4;
+            }
+
+            /* focused and active form elements */
+            input[type="checkbox"]:focus + span::before,
+            input[type="radio"]:focus + span::before,
+            input[type="checkbox"]:active + span::before,
+            input[type="radio"]:active + span::before {
+                outline: dotted 0.1em #aaaaaa;
             }
         }
     }
