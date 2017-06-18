@@ -219,7 +219,9 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     select,
     textarea,
     .textarea {
-        border: 1px solid $depageFormBorderColor;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $depageFormBorderColor;
         padding: 0.2em;
         background-color: $depageFormInputBackground;
         @include radius($depageFormBorderRadius);
@@ -239,10 +241,10 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             @include box-shadow(none);
         }
         &:hover {
-            border: 1px solid $depageFormBorderColorFocus;
+            border-color: $depageFormBorderColorFocus;
         }
         &:focus {
-            border: 1px solid $depageFormBorderColorFocus;
+            border-color: $depageFormBorderColorFocus;
             outline: none;
             background-color: $depageFormInputBackgroundFocus;
         }
@@ -252,7 +254,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         select,
         textarea,
         .textarea {
-            border: 1px solid $depageFormBorderColorError;
+            border-color: $depageFormBorderColorError;
             background-color: $depageFormInputBackgroundError;
         }
     }
@@ -536,7 +538,9 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         display: inline-block;
     }
     .selectize-input {
-        border: 1px solid $depageFormBorderColor;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $depageFormBorderColor;
         padding: 8px 8px;
         display: inline-block;
         overflow: hidden;
@@ -558,9 +562,12 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         cursor: default !important;
     }
     .selectize-input.focus {
-        border: 1px solid $depageFormBorderColorFocus;
+        border-color: $depageFormBorderColorFocus;
         @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
         @include box-shadow(0 0 0.2em rgba(0, 0, 0, 0.5));
+    }
+    .error .selectize-input {
+        border-color: $depageFormBorderColorError;
     }
     .selectize-input > * {
         vertical-align: baseline;
