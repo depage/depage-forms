@@ -146,10 +146,12 @@ class Fieldset extends Abstracts\Container
 
         $htmlAttributes     = "id=\"{$formName}-{$this->name}\"";
         $htmlAttributes     .= " name=\"{$this->name}\"";
+        $htmlAttributes     .= $this->htmlDataAttributes();
 
         if (!empty($classes)) {
             $htmlAttributes     .= " class=\"" . $classes . "\"";
         }
+
 
         foreach ($this->elementsAndHtml as $element) {
             $renderedElements .= $element;

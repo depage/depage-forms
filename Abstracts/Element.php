@@ -88,7 +88,7 @@ abstract class Element
     {
         $this->defaults['log'] = null;
         $this->defaults['class'] = null;
-        $this->defaults['dataAttr'] = array();
+        $this->defaults['dataAttr'] = [];
     }
     // }}}
 
