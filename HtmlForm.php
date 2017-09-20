@@ -369,17 +369,15 @@ class HtmlForm extends Abstracts\Container
     {
         // check if there's an open session
         if (!session_id()) {
+            $params = session_get_cookie_params();
             $sessionName = session_name();
-            $sessionDomain = false;
-            $sessionSecure = false;
-            $sessionHttponly = true;
 
             session_set_cookie_params(
                 $this->ttl,
-                "/",
-                $sessionDomain,
-                $sessionSecure,
-                $sessionHttponly
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
             );
             session_start();
 
@@ -389,10 +387,10 @@ class HtmlForm extends Abstracts\Container
                     $sessionName,
                     $_COOKIE[$sessionName],
                     time() + $this->ttl,
-                    "/",
-                    $sessionDomain,
-                    $sessionSecure,
-                    $sessionHttponly
+                    $params['path'],
+                    $params['domain'],
+                    $params['secure'],
+                    $params['httponly']
                 );
             }
         }
