@@ -968,7 +968,7 @@ class HtmlForm extends Abstracts\Container
             unset($this->sessionSlot);
         } else {
             // clear everything except internal fields
-            foreach ($this->getElements(true) as $element) {
+            foreach ($this->getElements(false) as $element) {
                 if (!$element->getDisabled() && !in_array($element->name, $this->internalFields)) {
                     unset($this->sessionSlot[$element->name]);
                 }
