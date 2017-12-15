@@ -303,6 +303,8 @@ abstract class Input extends Element
     {
         $this->validated = true;
         $this->valid = false;
+
+        return $this;
     }
     // }}}
 
@@ -373,6 +375,17 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ setLabel()
+    /**
+     * @brief set the label of the input
+     **/
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+    // }}}
     // {{{ getLabel()
     /**
      * @brief   Returns the current input elements' label.
@@ -414,6 +427,8 @@ abstract class Input extends Element
     public function setDefaultValue($newDefaultValue)
     {
         $this->defaultValue = $newDefaultValue;
+
+        return $this;
     }
     // }}}
 
@@ -451,6 +466,8 @@ abstract class Input extends Element
     public function setAutofocus($autofocus = true)
     {
         $this->autofocus = (bool) $autofocus;
+
+        return $this;
     }
     // }}}
 
@@ -465,6 +482,8 @@ abstract class Input extends Element
     {
         $this->required = (bool) $required;
         $this->validated = false;
+
+        return $this;
     }
     // }}}
 
@@ -478,6 +497,8 @@ abstract class Input extends Element
     public function setDisabled($disabled = true)
     {
         $this->disabled = (bool) $disabled;
+
+        return $this;
     }
     // }}}
 
