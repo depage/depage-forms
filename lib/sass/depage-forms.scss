@@ -243,6 +243,12 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         &:hover {
             border-color: $depageFormBorderColorFocus;
         }
+        &:disabled {
+            opacity: .4;
+        }
+        &:disabled:hover {
+            border-color: $depageFormBorderColor;
+        }
         &:focus {
             border-color: $depageFormBorderColorFocus;
             outline: none;
@@ -355,9 +361,6 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             input[type="radio"] {
                 position: absolute;
                 z-index: 100;
-                -webkit-opacity: 0;
-                -moz-opacity: 0;
-                -o-opacity: 0;
                 opacity: 0;
             }
             input[type="checkbox"] + span {
@@ -403,9 +406,6 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             input[type="checkbox"]:disabled + span,
             input[type="radio"]:disabled + span::before,
             input[type="checkbox"]:disabled + span::before {
-                -webkit-opacity: .4;
-                -moz-opacity: .4;
-                -o-opacity: .4;
                 opacity: .4;
             }
             input[type="checkbox"]:hover + span::before,
