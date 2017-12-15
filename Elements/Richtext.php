@@ -90,6 +90,21 @@ class Richtext extends Textarea
     }
     // }}}
 
+    // {{{ isEmpty()
+    /**
+     * @brief   says wether the element value is empty
+     *
+     * Checks wether the input element value is empty. Accepts '0' and false as
+     * not empty.
+     *
+     * @return bool empty-check result
+     **/
+    public function isEmpty()
+    {
+        return empty(trim(strip_tags($this->value)));
+    }
+    // }}}
+
     // {{{ htmlValue()
     /**
      * @brief   Returns HTML-rendered element value
