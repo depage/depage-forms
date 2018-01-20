@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Email;
 
 /**
  * General tests for the email input element.
  **/
-class emailTest extends PHPUnit_Framework_TestCase
+class emailTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

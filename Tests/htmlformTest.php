@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 use Depage\HtmlForm\Exceptions;
 
 /**
  * General tests for the htmlform class.
  **/
-class htmlformTest extends PHPUnit_Framework_TestCase
+class htmlformTest extends TestCase
 {
     // {{{ testDuplicateElementNameException()
     /**

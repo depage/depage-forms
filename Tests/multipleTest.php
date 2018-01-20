@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Multiple;
 
 /**
  * General tests for the multiple input element.
  **/
-class multipleTest extends PHPUnit_Framework_TestCase
+class multipleTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Url;
 
 /**
  * Test namespace handling
  **/
-class NamespaceTest extends PHPUnit_Framework_TestCase
+class NamespaceTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

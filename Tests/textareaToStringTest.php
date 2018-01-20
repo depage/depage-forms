@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Textarea;
 
 /**
  * Tests for boolean input element rendering.
  **/
-class textareaToStringTest extends PHPUnit_Framework_TestCase
+class textareaToStringTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

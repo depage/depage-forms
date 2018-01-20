@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Abstracts\Element;
 use Depage\HtmlForm\Exceptions;
 
@@ -37,7 +38,7 @@ class undefinedMethodException extends Exception {}
 /**
  * General tests for the element class.
  **/
-class elementTest extends PHPUnit_Framework_TestCase
+class elementTest extends TestCase
 {
     // {{{ setUp()
     protected function setUp()

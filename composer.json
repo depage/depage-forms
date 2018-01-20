@@ -12,7 +12,7 @@
         "php": " >= 5.3"
     },
     "require-dev": {
-        "phpunit": "*"
+        "phpunit/phpunit": "^6.5"
     },
     "autoload": {
         "psr-4": { "Depage\\HtmlForm\\": "" }

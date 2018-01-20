@@ -1,15 +1,8 @@
 language: php
 php:
+  - 7.2
+  - 7.1
+  - 7.0
   - 5.6
-  - 5.5
-  - 5.4
-  - 5.3
-  - hhvm
-  - nightly
-
-install:
-  # enable EZC for hhvm
-  - cat /etc/hhvm/php.ini
-  - echo hhvm.enable_zend_compat=true | sudo tee -a /etc/hhvm/php.ini
 
 script: phpunit --bootstrap Tests/bootstrap.php Tests

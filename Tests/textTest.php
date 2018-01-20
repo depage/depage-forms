@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Text;
 
 /**
  * General tests for the text input element.
  **/
-class textTest extends PHPUnit_Framework_TestCase
+class textTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()
