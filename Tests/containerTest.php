@@ -88,15 +88,12 @@ class containerTest extends TestCase
     // {{{ testcheckElementType()
     /**
      * Exception on unknown element type.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\UnknownElementTypeException
      **/
     public function testcheckElementType()
     {
-        try {
-            $this->container->addElement('bogusType', 'elementName');
-        } catch (exceptions\unknownElementTypeException $expected) {
-            return;
-        }
-        $this->fail('Expected unknownElementTypeException.');
+        $this->container->addElement('bogusType', 'elementName');
     }
     // }}}
 
