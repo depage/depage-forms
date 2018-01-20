@@ -249,9 +249,9 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         &:disabled:hover {
             border-color: $depageFormBorderColor;
         }
+        &.focus,
         &:focus {
             border-color: $depageFormBorderColorFocus;
-            outline: none;
             background-color: $depageFormInputBackgroundFocus;
         }
     }
@@ -730,6 +730,10 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         }
         .textarea {
             padding: 0.2em;
+
+            .textarea-content:focus {
+                outline: none;
+            }
 
             h1,
             h2,
