@@ -253,6 +253,15 @@ class HtmlDom extends \DOMDocument implements \Serializable
             }
         }
         // }}}
+        // {{{ remove empty inline element
+        $nodelist = $xpath->query("//b[not(node())] | //i[not(node())] | //strong[not(node())] | //span[not(node())] | //a[not(node())]");
+
+        for ($i = $nodelist->length - 1; $i >= 0; $i--) {
+            $node = $nodelist->item($i);
+
+            $node->parentNode->removeChild($node);
+        }
+        // }}}
     }
     // }}}
     // {{{ cutToMaxlength()
