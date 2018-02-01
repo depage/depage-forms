@@ -724,13 +724,18 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     // {{{ richtext
     .input-richtext {
         .textarea,
+        .textarea-content,
         textarea {
             min-height: 10em;
             margin-bottom: 0.3em;
         }
         .textarea {
+            position: relative;
             padding: 0.2em;
 
+            .textarea-content {
+                margin-bottom: 0;
+            }
             .textarea-content:focus {
                 outline: none;
             }
