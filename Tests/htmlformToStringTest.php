@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 
 /**
  * Tests rendering the form.
  **/
-class htmlformToStringTest extends PHPUnit_Framework_TestCase
+class htmlformToStringTest extends TestCase
 {
     // {{{ testSimple()
     /**

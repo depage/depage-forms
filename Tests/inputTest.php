@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Abstracts\Input;
 
 // {{{ inputTestClass
@@ -36,7 +37,7 @@ class inputTestClass extends Input
 /**
  * General tests for the input class.
  **/
-class inputTest extends PHPUnit_Framework_TestCase
+class inputTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

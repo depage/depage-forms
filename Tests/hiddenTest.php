@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Hidden;
 
 /**
  * General tests for the hidden input element.
  **/
-class hiddenTest extends PHPUnit_Framework_TestCase
+class hiddenTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

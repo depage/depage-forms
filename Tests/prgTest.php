@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 
 // {{{ htmlformTestClass
@@ -25,7 +26,7 @@ class htmlformTestClass extends csrfTestForm
 /**
 * Testing Post/Redirect/Get-relevant behavior
 **/
-class prgTest extends PHPUnit_Framework_TestCase
+class prgTest extends TestCase
 {
     // {{{ testRedirect()
     /**

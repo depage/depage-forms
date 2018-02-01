@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Datetimelocal;
 
 /**
  * Tests for datetime-local input element rendering.
  **/
-class datetimelocalToStringTest extends PHPUnit_Framework_TestCase
+class datetimelocalToStringTest extends TestCase
 {
     // {{{ setUp
     public function setUp()

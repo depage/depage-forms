@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Number;
 
 /**
  * Tests for boolean input element rendering.
  **/
-class numberToStringTest extends PHPUnit_Framework_TestCase
+class numberToStringTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Html;
 
 /**
  * Tests rendering custom HTML element.
  **/
-class htmlTest extends PHPUnit_Framework_TestCase
+class htmlTest extends TestCase
 {
     // {{{ testHtml()
     public function testHtml()

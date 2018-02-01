@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 use Depage\HtmlForm\Elements\Creditcard;
 
 /**
  * General tests for the creditcard element.
  **/
-class creditcardTest extends PHPUnit_Framework_TestCase
+class creditcardTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

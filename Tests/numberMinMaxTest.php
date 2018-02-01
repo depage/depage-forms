@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Number;
 
 /**
  * Tests for boolean input element rendering.
  **/
-class numberMinMaxTest extends PHPUnit_Framework_TestCase
+class numberMinMaxTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

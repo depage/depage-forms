@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Abstracts\Element;
 use Depage\HtmlForm\Exceptions;
 
@@ -37,7 +38,7 @@ class undefinedMethodException extends Exception {}
 /**
  * General tests for the element class.
  **/
-class elementTest extends PHPUnit_Framework_TestCase
+class elementTest extends TestCase
 {
     // {{{ setUp()
     protected function setUp()
@@ -72,60 +73,48 @@ class elementTest extends PHPUnit_Framework_TestCase
     // {{{ testEmptyElementNameException()
     /**
      * Throw an exception on empty element name.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\InvalidElementNameException
      **/
     public function testEmptyElementNameException()
     {
-        try {
-            new elementTestClass(' ', array(), null);
-        } catch (exceptions\invalidElementNameException $expected) {
-            return;
-        }
-        $this->fail('Expected invalidElementNameException.');
+        new elementTestClass(' ', array(), null);
     }
     // }}}
 
     // {{{ testElementNameNoStringException()
     /**
      * Throw an exception if name type isn't string.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\InvalidElementNameException
      **/
     public function testElementNameNoStringException()
     {
-        try {
-            new elementTestClass(42, array(), null);
-        } catch (exceptions\invalidElementNameException $expected) {
-            return;
-        }
-        $this->fail('Expected invalidElementNameException.');
+        new elementTestClass(42, array(), null);
     }
     // }}}
 
     // {{{ testInvalidElementNameException()
     /**
      * Throw an exception if name contains invalid characters.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\InvalidElementNameException
      **/
     public function testInvalidElementNameException()
     {
-        try {
-            new elementTestClass('/', array(), null);
-        } catch (exceptions\invalidElementNameException $expected) {
-            return;
-        }
-        $this->fail('Expected invalidElementNameException.');
+        new elementTestClass('/', array(), null);
     }
     // }}}
 
     // {{{ testElementParametersNoArrayException()
     /**
      * Element parameters need to be of type array.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\ElementParametersNoArrayException
      **/
     public function testElementParametersNoArrayException()
     {
-        try {
-            $input = new inputTestClass('inputName', 'string', $this->form);
-        } catch (exceptions\elementParametersNoArrayException $expected) {
-            return;
-        }
-        $this->fail('Expected elementParametersNoArrayException.');
+        $input = new inputTestClass('inputName', 'string', $this->form);
     }
     // }}}
 
@@ -149,38 +138,6 @@ class elementTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expected, $log->error);
-    }
-    // }}}
-
-    // {{{ undefinedMethodHandler()
-    /**
-     * required for testUndefinedMethodError
-     **/
-    public function undefinedMethodHandler($errno)
-    {
-        if ($errno = 256) throw new undefinedMethodException;
-        return;
-    }
-    // }}}
-
-    // {{{ testUndefinedMethodError()
-    /**
-     * If element::__call can't match a custom method, it triggers an
-     * undefinedMethodError. We test this with our error handler by throwing
-     * and catching an exception.
-     **/
-    public function testUndefinedMethodError()
-    {
-        set_error_handler(array($this, 'undefinedMethodHandler'));
-
-        try {
-            $this->element->__call('undefined', 'argumentString');
-        } catch (undefinedMethodException $expected) {
-            restore_error_handler();
-
-            return;
-        }
-        $this->fail('Expected undefinedMethodException');
     }
     // }}}
 }
