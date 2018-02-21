@@ -152,6 +152,10 @@ class Richtext extends Textarea
      **/
     protected function parseHtml($html)
     {
+        if ($this->normalize) {
+            $html = \Normalizer::normalize($html);
+        }
+
         $htmlDOM = new \Depage\HtmlForm\Abstracts\HtmlDom();
 
         $htmlDOM->loadHTML($html);
