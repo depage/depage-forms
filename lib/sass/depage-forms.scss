@@ -110,6 +110,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             width: 100%;
         }
         input,
+        button,
         select,
         textarea,
         .textarea,
@@ -139,6 +140,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
                 padding-right: 0;
             }
             input,
+            button,
             select,
             textarea,
             .textarea,
@@ -181,6 +183,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         line-height: 1.8em;
     }
     input,
+    button,
     select,
     textarea,
     .textarea,
@@ -193,9 +196,11 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     .input-boolean,
     .input-single,
     .input-multiple,
+    .input-button,
     .back,
     .cancel,
     .submit {
+        button,
         input {
             width: auto;
         }
@@ -216,6 +221,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     // }}}
     // {{{ input states
     input,
+    button,
     select,
     textarea,
     .textarea {
@@ -257,6 +263,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     }
     .error {
         input,
+        button,
         select,
         textarea,
         .textarea {
@@ -276,9 +283,11 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     .error .depage-label {
         color: $depageFormLabelErrorColor;
     }
+    .input-button button,
     .submit input {
         background: #cccccc;
     }
+    .input-button.error button,
     .submit.error input {
         border: 1px solid #dddddd;
         color: #999999;

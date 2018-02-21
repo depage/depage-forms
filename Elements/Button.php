@@ -99,9 +99,7 @@ class Button extends \Depage\HtmlForm\Abstracts\Input
         $helpMessage        = $this->htmlHelpMessage();
 
         return "<p {$wrapperAttributes}>" .
-            "<label>" .
-                "<button name=\"{$this->name}\" type=\"submit\"{$inputAttributes} value=\"{$value}\">{$label}</button>" .
-            "</label>" .
+            "<button name=\"{$this->name}\" type=\"submit\"{$inputAttributes} value=\"{$value}\">{$label}</button>" .
             $errorMessage .
             $helpMessage .
         "</p>\n";

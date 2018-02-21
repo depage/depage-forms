@@ -350,7 +350,7 @@ class HtmlForm extends Abstracts\Container
         $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
         $this->defaults['cancelURL']    = $_SERVER['REQUEST_URI'];
         $this->defaults['validator']    = null;
-        $this->defaults['ttl']          = 30 * 60; // 30 minutes
+        $this->defaults['ttl']          = 60 * 60; // 60 minutes
         $this->defaults['jsValidation'] = 'blur';
         $this->defaults['jsAutosave']   = 'false';
     }
@@ -1000,14 +1000,17 @@ class HtmlForm extends Abstracts\Container
      **/
     public function __toString()
     {
-        $renderedElements   = '';
-        $label              = $this->htmlLabel();
-        $cancellabel        = $this->htmlCancelLabel();
-        $backlabel          = $this->htmlBackLabel();
-        $class              = $this->htmlClass();
-        $method             = $this->htmlMethod();
-        $submitURL          = $this->htmlSubmitURL();
-        $dataAttr           = $this->htmlDataAttributes();
+        $renderedElements = '';
+        $submit           = '';
+        $cancel           = '';
+        $back             = '';
+        $label            = $this->htmlLabel();
+        $cancellabel      = $this->htmlCancelLabel();
+        $backlabel        = $this->htmlBackLabel();
+        $class            = $this->htmlClass();
+        $method           = $this->htmlMethod();
+        $submitURL        = $this->htmlSubmitURL();
+        $dataAttr         = $this->htmlDataAttributes();
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -1020,19 +1023,18 @@ class HtmlForm extends Abstracts\Container
 
         if (!is_null($this->cancelLabel)) {
             $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
-        } else {
-            $cancel = "";
         }
         if (!is_null($this->backLabel) && $this->currentStepId > 0) {
             $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
-        } else {
-            $back = "";
+        }
+        if (!empty($this->label)) {
+            $submit = "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>\n";
         }
 
 
         return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\"{$dataAttr} enctype=\"multipart/form-data\">" . "\n" .
             $renderedElements .
-            "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
+            $submit .
             $cancel .
             $back .
         "</form>";
