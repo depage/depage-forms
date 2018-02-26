@@ -512,7 +512,7 @@ class HtmlForm extends Abstracts\Container
         $currentElements = array();
 
         foreach ($this->elements as $element) {
-            if ($element instanceof Elements\Fieldset) {
+            if ($element instanceof Abstracts\Container) {
                 if (
                     !($element instanceof Elements\Step)
                     || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
@@ -783,7 +783,8 @@ class HtmlForm extends Abstracts\Container
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             // save in session if submission was from last step
-            $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps) && !$_POST['formAutosave'] === "true";
+            $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps)
+                && !(isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true");
 
             if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
@@ -995,6 +996,21 @@ class HtmlForm extends Abstracts\Container
         $this->dataAttr['jsautosave'] = $this->jsAutosave === true ? "true" : $this->jsAutosave;
 
         return parent::htmlDataAttributes();
+    }
+    // }}}
+    // {{{ htmlSubmitURL()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlSubmitURL()
+    {
+        $scheme   = isset($this->form->url['scheme']) ? $this->form->url['scheme'] . '://' : '';
+        $host     = isset($this->form->url['host']) ? $this->form->url['host'] : '';
+        $port     = isset($this->form->url['port']) ? ':' . $this->form->url['port'] : '';
+        $path     = isset($this->form->url['path']) ? $this->form->url['path'] : '';
+        $baseUrl  = "$scheme$host$port$path";
+
+        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $this->currentStepId]));
     }
     // }}}
     // {{{ __toString()
