@@ -299,6 +299,14 @@ class HtmlForm extends Abstracts\Container
 
         parent::__construct($name, $parameters, $this);
 
+        $this->url = parse_url($this->submitURL);
+        if (empty($this->successURL)) {
+            $this->successURL = $this->submitURL;
+        }
+        if (empty($this->cancelURL)) {
+            $this->cancelURL = $this->submitURL;
+        }
+
         $this->currentStepId = isset($_GET['step']) ? $_GET['step'] : 0;
 
         $this->startSession();
@@ -347,8 +355,8 @@ class HtmlForm extends Abstracts\Container
         $this->defaults['method']       = 'post';
         // @todo adjust submit url for steps when used
         $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
-        $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
-        $this->defaults['cancelURL']    = $_SERVER['REQUEST_URI'];
+        $this->defaults['successURL']   = null;
+        $this->defaults['cancelURL']    = null;
         $this->defaults['validator']    = null;
         $this->defaults['ttl']          = 60 * 60; // 60 minutes
         $this->defaults['jsValidation'] = 'blur';
@@ -468,8 +476,8 @@ class HtmlForm extends Abstracts\Container
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if ($newElement instanceof elements\step) { $this->steps[] = $newElement; }
-        if ($newElement instanceof abstracts\input) { $this->updateInputValue($name); }
+        if ($newElement instanceof Elements\Step) { $this->steps[] = $newElement; }
+        if ($newElement instanceof Abstracts\Input) { $this->updateInputValue($name); }
 
         return $newElement;
     }
@@ -504,9 +512,9 @@ class HtmlForm extends Abstracts\Container
         $currentElements = array();
 
         foreach ($this->elements as $element) {
-            if ($element instanceof elements\fieldset) {
+            if ($element instanceof Elements\Fieldset) {
                 if (
-                    !($element instanceof elements\step)
+                    !($element instanceof Elements\Step)
                     || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
                 ) {
                     $currentElements = array_merge($currentElements, $element->getElements());
