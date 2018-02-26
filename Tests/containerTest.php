@@ -70,18 +70,21 @@ class containerTest extends TestCase
     {
         $text1      = $this->container->addText('text1');
         $fieldset   = $this->container->addFieldset('fieldset');
-        $text2      = $this->container->addText('text2');
+        $text2      = $fieldset->addText('text2');
+        $text3      = $this->container->addText('text3');
 
         // input elements only
         $elements = $this->container->getElements();
         $this->assertEquals($text1, $elements[0]);
         $this->assertEquals($text2, $elements[1]);
+        $this->assertEquals($text3, $elements[2]);
 
         // elements including other container elements
         $elements = $this->container->getElements(true);
         $this->assertEquals($text1, $elements[0]);
         $this->assertEquals($fieldset, $elements[1]);
         $this->assertEquals($text2, $elements[2]);
+        $this->assertEquals($text3, $elements[3]);
     }
     // }}}
 
