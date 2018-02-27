@@ -89,6 +89,7 @@ abstract class Element
         $this->defaults['log'] = null;
         $this->defaults['class'] = null;
         $this->defaults['dataAttr'] = [];
+        $this->defaults['disabled'] = false;
     }
     // }}}
 
@@ -115,6 +116,34 @@ abstract class Element
         } else {
             trigger_error("Call to undefined method $function", E_USER_ERROR);
         }
+    }
+    // }}}
+
+    // {{{ setDisabled()
+    /**
+     * @brief   Sets the HTML disabled-attribute of the current input element.
+     *
+     * @param  bool $disabled HTML disabled-attribute
+     * @return void
+     **/
+    public function setDisabled($disabled = true)
+    {
+        $this->disabled = (bool) $disabled;
+
+        return $this;
+    }
+    // }}}
+
+    // {{{ getDisabled()
+    /**
+     * @brief   Gets if input is currently disabled
+     *
+     * @param  bool $disabled HTML disabled-attribute
+     * @return void
+     **/
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
     // }}}
 

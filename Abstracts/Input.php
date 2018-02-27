@@ -252,7 +252,6 @@ abstract class Input extends Element
         $this->defaults['autocomplete']    = null;
         $this->defaults['autocorrect']     = null;
         $this->defaults['autofocus']       = false;
-        $this->defaults['disabled']        = false;
         $this->defaults['errorMessage']    = _('Please enter valid data');
         $this->defaults['label']           = $this->name;
         $this->defaults['marker']          = '*';
@@ -484,34 +483,6 @@ abstract class Input extends Element
         $this->validated = false;
 
         return $this;
-    }
-    // }}}
-
-    // {{{ setDisabled()
-    /**
-     * @brief   Sets the HTML disabled-attribute of the current input element.
-     *
-     * @param  bool $disabled HTML disabled-attribute
-     * @return void
-     **/
-    public function setDisabled($disabled = true)
-    {
-        $this->disabled = (bool) $disabled;
-
-        return $this;
-    }
-    // }}}
-
-    // {{{ getDisabled()
-    /**
-     * @brief   Gets if input is currently disabled
-     *
-     * @param  bool $disabled HTML disabled-attribute
-     * @return void
-     **/
-    public function getDisabled()
-    {
-        return $this->disabled;
     }
     // }}}
 
