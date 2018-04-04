@@ -55,6 +55,13 @@ class Richtext extends Textarea
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
         $this->defaults['allowedTags'] = array(
+            // inline elements
+            "a",
+            "b",
+            "strong",
+            "i",
+            "em",
+
             // block elements
             "p",
             "br",
@@ -63,13 +70,6 @@ class Richtext extends Textarea
             "ul",
             "ol",
             "li",
-
-            // inline elements
-            "a",
-            "b",
-            "strong",
-            "i",
-            "em",
         );
     }
     // }}}
@@ -87,6 +87,21 @@ class Richtext extends Textarea
         $this->dataAttr['richtext-options'] = json_encode($options);
 
         return parent::htmlDataAttributes();
+    }
+    // }}}
+
+    // {{{ isEmpty()
+    /**
+     * @brief   says wether the element value is empty
+     *
+     * Checks wether the input element value is empty. Accepts '0' and false as
+     * not empty.
+     *
+     * @return bool empty-check result
+     **/
+    public function isEmpty()
+    {
+        return empty(trim(strip_tags($this->value)));
     }
     // }}}
 
@@ -137,10 +152,18 @@ class Richtext extends Textarea
      **/
     protected function parseHtml($html)
     {
-        $htmlDOM = new \Depage\HtmlForm\Abstracts\HtmlForm();
+        if ($this->normalize) {
+            $html = \Normalizer::normalize($html);
+        }
+
+        $htmlDOM = new \Depage\HtmlForm\Abstracts\HtmlDom();
 
         $htmlDOM->loadHTML($html);
         $htmlDOM->cleanHTML($this->allowedTags);
+
+        if ($this->maxlength) {
+            $htmlDOM->cutToMaxlength($this->maxlength);
+        }
 
         return $htmlDOM;
     }

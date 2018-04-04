@@ -62,6 +62,11 @@ class Multiple extends Abstracts\Input
      * @brief Contains list of selectable options.
      **/
     protected $list = array();
+
+    /**
+     * @brief maxItems
+     **/
+    protected $maxItems = null;
     // }}}
 
     // {{{ __construct()
@@ -78,6 +83,7 @@ class Multiple extends Abstracts\Input
         parent::__construct($name, $parameters, $form);
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : array();
+        $this->maxItems = isset($parameters['maxItems']) ? $parameters['maxItems'] : $this->maxItems;
     }
     // }}}
 
@@ -98,6 +104,7 @@ class Multiple extends Abstracts\Input
         // multiple-choice-elements have values of type array
         $this->defaults['defaultValue'] = array();
         $this->defaults['skin']         = 'checkbox';
+        $this->defaults['maxItems']     = null;
     }
     // }}}
 
@@ -124,7 +131,7 @@ class Multiple extends Abstracts\Input
         $list       = '';
 
         // select
-        if ($this->skin === "select") {
+        if (in_array($this->skin, ['select', 'tags'])) {
             foreach ($options as $index => $option) {
                 if (is_array($option)) {
                     $list       .= "<optgroup label=\"{$index}\">" . $this->htmlList($option, $value) . "</optgroup>";
@@ -170,7 +177,7 @@ class Multiple extends Abstracts\Input
         $errorMessage       = $this->htmlErrorMessage();
         $helpMessage        = $this->htmlHelpMessage();
 
-        if ($this->skin === 'select') {
+        if (in_array($this->skin, ['select', 'tags'])) {
             // render HTML select
 
             $inputAttributes = $this->htmlInputAttributes();
@@ -209,8 +216,8 @@ class Multiple extends Abstracts\Input
         $attributes = '';
 
         // HTML5 validator hack
-        if ($this->required && $this->skin === 'select') $attributes .= ' required="required"';
-        if ($this->autofocus)                            $attributes .= ' autofocus="autofocus"';
+        if ($this->required && in_array($this->skin, ['select', 'tags'])) $attributes .= ' required="required"';
+        if ($this->maxItems)                                              $attributes .= " data-max-items=\"$this->maxItems\"";
         return $attributes;
     }
     // }}}
@@ -227,6 +234,10 @@ class Multiple extends Abstracts\Input
             $this->value = array();
         } else {
             $this->value = (array) $this->value;
+
+            if ($this->maxItems) {
+                $this->value = array_slice($this->value, 0, $this->maxItems);
+            }
         }
     }
     // }}}

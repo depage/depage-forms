@@ -1,28 +1,40 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 use Depage\HtmlForm\Exceptions;
 
 /**
  * General tests for the htmlform class.
  **/
-class htmlformTest extends PHPUnit_Framework_TestCase
+class htmlformTest extends TestCase
 {
+    // {{{ tearDown()
+    /**
+     * @brief tearDown
+     *
+     * @param mixed
+     * @return void
+     **/
+    public function tearDown()
+    {
+        $_GET = [];
+        $_POST = [];
+        $_SESSION = [];
+    }
+    // }}}
     // {{{ testDuplicateElementNameException()
     /**
      * Throw exception when subelements have the same name.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\DuplicateElementNameException
      **/
     public function testDuplicateElementNameException()
     {
         $this->form = new HtmlForm('formName');
 
         $this->form->addFieldset('duplicate');
-        try {
-            $this->form->addHidden('duplicate');
-        } catch (Exceptions\DuplicateElementNameException $expected) {
-            return;
-        }
-        $this->fail('Expected duplicateElementNameException.');
+        $this->form->addHidden('duplicate');
     }
     // }}}
 
@@ -142,6 +154,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
     {
         $_POST['formName']  = 'formName';
         $_POST['formCsrfToken']  = 'xxxxxxxx';
+        $_POST['formStep'] = '1';
         $_POST['text0Name'] = 'text0Value';
         $_GET['step']       = '1';
 
@@ -168,6 +181,7 @@ class htmlformTest extends PHPUnit_Framework_TestCase
     {
         $_POST['formName']  = 'formName';
         $_POST['formCsrfToken']  = 'xxxxxxxx';
+        $_POST['formStep'] = '0';
         $_POST['text0Name'] = 'text0Value';
         $_GET['step']       = '0';
 

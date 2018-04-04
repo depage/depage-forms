@@ -42,6 +42,11 @@ class Text extends Abstracts\Input
      * @brief HTML placeholder attribute
      **/
     protected $placeholder;
+
+    /**
+     * @brief wether to normalize unicode strings or not
+     **/
+    protected $normalize;
     // }}}
 
     // {{{ __construct()
@@ -78,7 +83,8 @@ class Text extends Abstracts\Input
         // textClass elements have values of type string
         $this->defaults['defaultValue'] = '';
         $this->defaults['placeholder']  = false;
-        $this->defaults['maxlength']  = false;
+        $this->defaults['maxlength']    = false;
+        $this->defaults['normalize']    = true;
     }
     // }}}
 
@@ -174,6 +180,10 @@ class Text extends Abstracts\Input
     protected function typeCastValue()
     {
         $this->value = (string) $this->value;
+
+        if ($this->normalize) {
+            $this->value = \Normalizer::normalize($this->value);
+        }
     }
     // }}}
 }

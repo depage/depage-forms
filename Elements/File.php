@@ -9,6 +9,8 @@
 
 namespace Depage\HtmlForm\Elements;
 
+define("UPLOAD_ERR_FILE_EXTENSION", 1000);
+
 /**
  * @brief   HTML file input type.
  *
@@ -35,6 +37,7 @@ class File extends Text
         // textClass elements have values of type string
         $this->defaults['maxNum'] = 1;
         $this->defaults['maxSize'] = false;
+        $this->defaults['allowedExtensions'] = "";
     }
     // }}}
 
@@ -86,6 +89,9 @@ class File extends Text
         if ($this->maxNum > 1) {
             $attributes .= " multiple=\"multiple\"";
         }
+        if (!empty($this->allowedExtensions)) {
+            $attributes .= " accept=\"" . htmlentities($this->allowedExtensions) . "\"";
+        }
 
         return $attributes;
     }
@@ -114,44 +120,51 @@ class File extends Text
         if (!is_array($files)) {
             $files = array();
         }
+        $extRegex = "";
+        if (!empty($this->allowedExtensions)) {
+            $extRegex = str_replace(array(" ", ",", "."), array("", "|", "\."), $this->allowedExtensions);
+        }
         if (isset($_FILES[$this->name])) {
             foreach ($_FILES[$this->name]["error"] as $key => $error) {
+                if (!empty($extRegex) && !preg_match("/.*(" . $extRegex . ")$/i", $_FILES[$this->name]["name"][$key])) {
+                    $error = UPLOAD_ERR_FILE_EXTENSION;
+                }
                 if ($error == UPLOAD_ERR_OK) {
-                    $upload_name = $_FILES[$this->name]["tmp_name"][$key];
-                    $tmp_name = tempnam(null, "depage-form-upload-");
-                    if (move_uploaded_file($upload_name, $tmp_name)) {
-                        if ($this->maxNum > 1) {
-                            $files[] = array(
-                                'name' => $_FILES[$this->name]["name"][$key],
-                                'tmp_name' => $tmp_name,
-                            );
-
-                        } else {
-                            $files[0] = array(
-                                'name' => $_FILES[$this->name]["name"][$key],
-                                'tmp_name' => $tmp_name,
-                            );
-                        }
-                    } else {
-                        $errorMsgs = array(
-                            UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
-                            UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.",
-                            UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded.",
-                            UPLOAD_ERR_NO_FILE => "No file was uploaded.",
-                            UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
-                            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
-                            UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop.",
+                    $uploadName = $_FILES[$this->name]["tmp_name"][$key];
+                    $tmpName = tempnam("", "depage-form-upload-");
+                    $success = move_uploaded_file($uploadName, $tmpName);
+                    if ($this->maxNum > 1) {
+                        $files[] = array(
+                            'name' => $_FILES[$this->name]["name"][$key],
+                            'tmp_name' => $tmpName,
                         );
-                        $this->log("htmlform: " . $errorMsgs[$error]);
-                        // TODO can't send array here
-                        // $this->log($_FILES[$this->name]);
+
+                    } else {
+                        $files[0] = array(
+                            'name' => $_FILES[$this->name]["name"][$key],
+                            'tmp_name' => $tmpName,
+                        );
                     }
+                } else {
+                    $errorMsgs = array(
+                        UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
+                        UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.",
+                        UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded.",
+                        UPLOAD_ERR_NO_FILE => "No file was uploaded.",
+                        UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+                        UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+                        UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop.",
+                        UPLOAD_ERR_FILE_EXTENSION => "The uploaded file has an unallowed extension.", // @todo add error message to form
+                    );
+                    $this->log("htmlform: " . $errorMsgs[$error]);
+                    // TODO can't send array here
+                    // $this->log($_FILES[$this->name]);
                 }
             }
         }
 
         // truncate files at max
-        $this->value = array_slice($files, -$this->maxNum, $this->maxNum);
+        $this->value = array_slice($files, - $this->maxNum, $this->maxNum);
 
         return $this->value;
     }
@@ -168,6 +181,8 @@ class File extends Text
         $this->clearUploadedFiles();
 
         $this->value = array();
+
+        return $this->value;
     }
     // }}}
 

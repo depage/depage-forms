@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 
 /**
  * Tests rendering the form.
  **/
-class htmlformToStringTest extends PHPUnit_Framework_TestCase
+class htmlformToStringTest extends TestCase
 {
     // {{{ testSimple()
     /**
@@ -58,7 +59,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
      **/
     public function testStep()
     {
-        $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
+        $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/?step=1" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
             '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="1">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
@@ -90,7 +91,7 @@ class htmlformToStringTest extends PHPUnit_Framework_TestCase
      **/
     public function testStepBack()
     {
-        $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
+        $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/?step=1" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
             '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="1">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .

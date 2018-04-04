@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 
 /**
  * Tests availability of input element types.
  **/
-class inputTypesTest extends PHPUnit_Framework_TestCase
+class inputTypesTest extends TestCase
 {
     // {{{ setUp()
     protected function setUp()

@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Validators\Validator;
 use Depage\HtmlForm\Validators\RegEx;
 
@@ -39,7 +40,7 @@ class regExTestClass extends RegEx
 /**
  * General tests for the validator class.
  **/
-class validatorTest extends \PHPUnit_Framework_TestCase
+class validatorTest extends TestCase
 {
     // {{{ testText()
     /**

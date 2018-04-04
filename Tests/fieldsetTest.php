@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 use Depage\HtmlForm\Elements\Fieldset;
 
 /**
  * General tests for the fieldset element.
  **/
-class fieldsetTest extends PHPUnit_Framework_TestCase
+class fieldsetTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

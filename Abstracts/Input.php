@@ -252,7 +252,6 @@ abstract class Input extends Element
         $this->defaults['autocomplete']    = null;
         $this->defaults['autocorrect']     = null;
         $this->defaults['autofocus']       = false;
-        $this->defaults['disabled']        = false;
         $this->defaults['errorMessage']    = _('Please enter valid data');
         $this->defaults['label']           = $this->name;
         $this->defaults['marker']          = '*';
@@ -303,6 +302,8 @@ abstract class Input extends Element
     {
         $this->validated = true;
         $this->valid = false;
+
+        return $this;
     }
     // }}}
 
@@ -373,6 +374,17 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ setLabel()
+    /**
+     * @brief set the label of the input
+     **/
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+    // }}}
     // {{{ getLabel()
     /**
      * @brief   Returns the current input elements' label.
@@ -394,6 +406,8 @@ abstract class Input extends Element
     public function clearValue()
     {
         $this->value = null;
+
+        return $this->value;
     }
     // }}}
 
@@ -412,6 +426,8 @@ abstract class Input extends Element
     public function setDefaultValue($newDefaultValue)
     {
         $this->defaultValue = $newDefaultValue;
+
+        return $this;
     }
     // }}}
 
@@ -449,6 +465,8 @@ abstract class Input extends Element
     public function setAutofocus($autofocus = true)
     {
         $this->autofocus = (bool) $autofocus;
+
+        return $this;
     }
     // }}}
 
@@ -463,32 +481,8 @@ abstract class Input extends Element
     {
         $this->required = (bool) $required;
         $this->validated = false;
-    }
-    // }}}
 
-    // {{{ setDisabled()
-    /**
-     * @brief   Sets the HTML disabled-attribute of the current input element.
-     *
-     * @param  bool $disabled HTML disabled-attribute
-     * @return void
-     **/
-    public function setDisabled($disabled = true)
-    {
-        $this->disabled = (bool) $disabled;
-    }
-    // }}}
-
-    // {{{ getDisabled()
-    /**
-     * @brief   Gets if input is currently disabled
-     *
-     * @param  bool $disabled HTML disabled-attribute
-     * @return void
-     **/
-    public function getDisabled()
-    {
-        return $this->disabled;
+        return $this;
     }
     // }}}
 

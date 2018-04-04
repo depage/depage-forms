@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Abstracts\Container;
 use Depage\HtmlForm\Exceptions;
 
@@ -41,7 +42,7 @@ class testElement
 /**
  * General tests for the container class.
  **/
-class containerTest extends PHPUnit_Framework_TestCase
+class containerTest extends TestCase
 {
     // {{{ setUp()
     protected function setUp()
@@ -69,33 +70,33 @@ class containerTest extends PHPUnit_Framework_TestCase
     {
         $text1      = $this->container->addText('text1');
         $fieldset   = $this->container->addFieldset('fieldset');
-        $text2      = $this->container->addText('text2');
+        $text2      = $fieldset->addText('text2');
+        $text3      = $this->container->addText('text3');
 
         // input elements only
         $elements = $this->container->getElements();
         $this->assertEquals($text1, $elements[0]);
         $this->assertEquals($text2, $elements[1]);
+        $this->assertEquals($text3, $elements[2]);
 
         // elements including other container elements
         $elements = $this->container->getElements(true);
         $this->assertEquals($text1, $elements[0]);
         $this->assertEquals($fieldset, $elements[1]);
         $this->assertEquals($text2, $elements[2]);
+        $this->assertEquals($text3, $elements[3]);
     }
     // }}}
 
     // {{{ testcheckElementType()
     /**
      * Exception on unknown element type.
+     *
+     * @expectedException \Depage\HtmlForm\Exceptions\UnknownElementTypeException
      **/
     public function testcheckElementType()
     {
-        try {
-            $this->container->addElement('bogusType', 'elementName');
-        } catch (exceptions\unknownElementTypeException $expected) {
-            return;
-        }
-        $this->fail('Expected unknownElementTypeException.');
+        $this->container->addElement('bogusType', 'elementName');
     }
     // }}}
 

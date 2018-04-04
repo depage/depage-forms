@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Boolean;
 
 /**
  * General tests for the boolean input element.
  **/
-class booleanTest extends PHPUnit_Framework_TestCase
+class booleanTest extends TestCase
 {
     // {{{ setUp()
     public function setUp()

@@ -1,19 +1,173 @@
-.depage-form {
-    max-width: 40em;
+// basics
+$depageFormMaxWidth: 40em;
+$depageFormMobileWidth: 600px;
+$depageFormBorderRadius: 0 !default;
 
-    /* {{{ input and label sizes */
+// colors
+$depageFormTextColor: #000000 !default;
+$depageFormErrorColor: #ff0000 !default;
+$depageFormSelectionColor: $depageFormTextColor !default;
+$depageFormSelectionBackground: #bbddff !default;
+$depageFormTextColorError: $depageFormTextColor !default;
+$depageFormTextColorFocus: $depageFormTextColor !default;
+$depageFormLabelErrorColor: $depageFormErrorColor !default;
+$depageFormInputBackground: #ffffff !default;
+$depageFormInputBackgroundFocus: #ffffff !default;
+$depageFormInputBackgroundError: #ffffff !default;
+$depageFormBorderColor: #999999 !default;
+$depageFormBorderColorFocus: #000000 !default;
+$depageFormBorderColorError: $depageFormErrorColor !default;
+
+// images
+$depageFormCheckboxImage: "" !default;
+$depageFormCheckboxImageChecked: "" !default;
+$depageFormCheckboxSize: 1em !default;
+$depageFormCheckboxWidth: $depageFormCheckboxSize !default;
+$depageFormCheckboxHeight: $depageFormCheckboxSize !default;
+$depageFormRadiobuttonImage: "" !default;
+$depageFormRadiobuttonImageChecked: "" !default;
+$depageFormRadiobuttonSize: 1em !default;
+$depageFormRadiobuttonWidth: $depageFormRadiobuttonSize !default;
+$depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
+
+// {{{ mixin: radius
+@mixin radius($radius, $vert: "", $horiz: "") {
+    $other: "";
+    $moz: "";
+
+    @if $vert != '' and $horiz != '' {
+        $other: "#{$vert}-#{$horiz}-";
+        $moz: "#{$vert}#{$horiz}-";
+    } @else if $horiz != '' {
+        $other: "#{$horiz}-";
+        $moz: "#{$horiz}-";
+    } @else if $vert != '' {
+        $other: "#{$vert}-";
+        $moz: "#{$vert}-";
+    }
+
+    -webkit-border-#{$other}radius: $radius;
+    -moz-border-#{$moz}radius: $radius;
+    -ms-border-#{$other}radius: $radius;
+    -o-border-#{$other}radius: $radius;
+    border-#{$other}radius: $radius;
+}
+// }}}
+// {{{ mixin: box-shadow
+@mixin box-shadow($properties...) {
+    -webkit-box-shadow: $properties;
+    -moz-box-shadow: $properties;
+    box-shadow: $properties;
+}
+// }}}
+
+.depage-form {
+    max-width: $depageFormMaxWidth;
+
+    // layouts:
+    // {{{ default layout with labels on left
+    &,
+    &.labels-on-left,
+    .labels-on-left {
+        .depage-label {
+            float: left;
+            width: 33.3333%;
+            padding-right: 0.6em;
+        }
+        > p {
+            clear: left;
+        }
+        .errorMessage {
+            right: 0;
+            padding-right: 1em;
+            max-width: 66.6666%;
+        }
+    }
+    // }}}
+    // {{{ layout with labels on right
+    &.labels-on-right,
+    .labels-on-right {
+        .depage-label {
+            float: right;
+            width: 33.3333%;
+            padding-left: 0.6em;
+        }
+        > p {
+            clear: right;
+        }
+        .errorMessage {
+            right: 33.3333%;
+            padding-right: 1em;
+            max-width: 66.6666%;
+        }
+    }
+    // }}}
+    // {{{ layout with labels on top
+    &.labels-on-top,
+    .labels-on-top {
+        .depage-label {
+            float: none;
+            width: 100%;
+        }
+        input,
+        button,
+        select,
+        textarea,
+        .textarea,
+        .selectize-input {
+            width: 100%;
+        }
+        .errorMessage {
+            right: 0;
+            padding-right: 1em;
+            max-width: 100%;
+        }
+    }
+    // }}}
+    // {{{ mobile layout with labels on top
+    @media screen and (max-width: $depageFormMobileWidth) {
+        &,
+        &.labels-on-left,
+        &.labels-on-right,
+        &.labels-on-top,
+        .labels-on-left,
+        .labels-on-right,
+        .labels-on-top {
+            .depage-label {
+                float: none;
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            input,
+            button,
+            select,
+            textarea,
+            .textarea,
+            .selectize-input {
+                width: 100%;
+            }
+            .errorMessage {
+                right: 0;
+                padding-right: 1em;
+                max-width: 100%;
+            }
+        }
+    }
+    // }}}
+
+    // inputs:
+    // {{{ input and label sizes
     .depage-label {
         display: block;
-        float: left;
-        width: 33%;
         height: 1em;
         min-height: 1em;
         height: auto !important;
         padding-bottom: 0.3em;
-        padding-right: 0.3em;
     }
     .input-boolean {
         input {
+            display: block;
             float: left;
             margin-top: 0.5em;
         }
@@ -21,11 +175,7 @@
             display: block;
             float: none;
             width: auto;
-            margin-left: 1.7em;
         }
-    }
-    p {
-        clear: left;
     }
     p,
     .depage-label {
@@ -33,18 +183,24 @@
         line-height: 1.8em;
     }
     input,
+    button,
     select,
-    textarea {
-        width: 63%;
+    textarea,
+    .textarea,
+    .selectize-input {
+        width: 66.6667%;
         font-family: inherit;
         font-size: 1em;
+        color: $depageFormTextColor;
     }
     .input-boolean,
     .input-single,
     .input-multiple,
+    .input-button,
     .back,
     .cancel,
     .submit {
+        button,
         input {
             width: auto;
         }
@@ -58,29 +214,61 @@
             span {
                 padding-left: 0.5em;
                 padding-right: 1em;
-                font-size: 1.1em;
+                font-size: 1em;
             }
         }
     }
-    /* }}} */
-    /* {{{ input states */
+    // }}}
+    // {{{ input states
     input,
+    button,
     select,
-    textarea {
-        border: 1px solid #999999;
+    textarea,
+    .textarea {
+        border-width: 1px;
+        border-style: solid;
+        border-color: $depageFormBorderColor;
         padding: 0.2em;
+        background-color: $depageFormInputBackground;
+        @include radius($depageFormBorderRadius);
 
-        &:focus {
-            border: 1px solid #000000;
+        ::-moz-selection,
+        &::-moz-selection {
+            color: $depageFormSelectionColor;
+            background: $depageFormSelectionBackground;
+        }
+        ::selection,
+        &::selection {
+            color: $depageFormSelectionColor;
+            background: $depageFormSelectionBackground;
         }
         &:required,
         &:invalid {
-            box-shadow: none;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
+            @include box-shadow(none);
         }
-        .error & {
-            border: 1px solid #ff0000;
+        &:hover {
+            border-color: $depageFormBorderColorFocus;
+        }
+        &:disabled {
+            opacity: .4;
+        }
+        &:disabled:hover {
+            border-color: $depageFormBorderColor;
+        }
+        &.focus,
+        &:focus {
+            border-color: $depageFormBorderColorFocus;
+            background-color: $depageFormInputBackgroundFocus;
+        }
+    }
+    .error {
+        input,
+        button,
+        select,
+        textarea,
+        .textarea {
+            border-color: $depageFormBorderColorError;
+            background-color: $depageFormInputBackgroundError;
         }
     }
     .input-boolean,
@@ -93,11 +281,13 @@
         }
     }
     .error .depage-label {
-        color: #ff0000;
+        color: $depageFormLabelErrorColor;
     }
+    .input-button button,
     .submit input {
         background: #cccccc;
     }
+    .input-button.error button,
     .submit.error input {
         border: 1px solid #dddddd;
         color: #999999;
@@ -106,14 +296,13 @@
     .errorMessage {
         display: block;
         position: absolute;
+        clear: both;
         top: 0.2em;
-        right: 3%;
-        max-width: 70%;
         font-size: 0.8em;
         text-align: right;
     }
-    /* }}} */
-    /* {{{ fieldsets */
+    // }}}
+    // {{{ fieldsets
     fieldset {
         /*
         border: none;
@@ -136,8 +325,8 @@
         margin-bottom: 1em;
         */
     }
-    /* }}} */
-    /* {{{ stepnav */
+    // }}}
+    // {{{ stepnav
     ol.stepnav {
         display: table;
         table-layout: fixed;
@@ -160,108 +349,515 @@
             }
             &.invalid a::after {
                 content: " !";
-                color: #ff0000;
+                color: $depageFormLabelErrorColor;
                 font-weight: bold;
             }
             &.current-step {
                 background: #dddddd;
             }
         }
-        li {
-            *display: block; /* IE6/7 hack */
-            *float: left;
-        }
     }
-    /* }}} */
-
-    /* {{{ richtext */
-    .depageEditor {
-        clear: left;
-        position: relative;
-        margin-left: 25px;
-    }
-    ul.depageEditorToolbar {
-        position: absolute;
-        left: -25px;
-        top: 0;
-        line-height: auto;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 25px;
-
-        li {
-            padding: 0;
-
-            a {
+    // }}}
+    // {{{ checkboxes and radiobuttons
+    @if ($depageFormCheckboxImage != '' && $depageFormRadiobuttonImage != '') {
+        .input-single.skin-radio,
+        .input-multiple.skin-checkbox,
+        .input-boolean {
+            label {
+                position: relative;
+            }
+            input[type="checkbox"],
+            input[type="radio"] {
+                position: absolute;
+                z-index: 100;
+                opacity: 0;
+            }
+            input[type="checkbox"] + span {
+                padding-left: $depageFormCheckboxWidth * 1.25;
+            }
+            input[type="radio"] + span {
+                padding-left: $depageFormRadiobuttonWidth * 1.25;
+            }
+            input[type="checkbox"] + span::before,
+            input[type="radio"] + span::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: "";
                 display: block;
-                width: 25px;
-                height: 25px;
-                text-indent: -10000px;
-                background-image: url(../richtext-toolbar.png);
-                background-repeat: none;
-                background-position: 25px 0;
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: top left;
+                background-color: $depageFormInputBackground;
+                border: 1px solid $depageFormBorderColor;
+            }
+            input[type="checkbox"] + span::before {
+                background-image: $depageFormCheckboxImage;
+                width: $depageFormCheckboxWidth;
+                height: $depageFormCheckboxHeight;
+                @include radius($depageFormBorderRadius);
+            }
+            input[type="checkbox"]:checked + span::before {
+                background-image: $depageFormCheckboxImageChecked;
+            }
 
-                &.depageEditorButtonBold {
-                    background-position: 0 0;
+            input[type="radio"] + span::before {
+                background-image: $depageFormRadiobuttonImage;
+                width: $depageFormRadiobuttonWidth;
+                height: $depageFormRadiobuttonHeight;
+                @include radius(50%);
+            }
 
-                    &:hover, 
-                    &.on {
-                        background-position: -25px 0;
-                    }
-                }
-                &.depageEditorButtonItalic {
-                    background-position: 0 -25px;
+            input[type="radio"]:checked + span::before {
+                background-image: $depageFormRadiobuttonImageChecked;
+            }
+            input[type="radio"]:disabled + span,
+            input[type="checkbox"]:disabled + span,
+            input[type="radio"]:disabled + span::before,
+            input[type="checkbox"]:disabled + span::before {
+                opacity: .4;
+            }
+            input[type="checkbox"]:hover + span::before,
+            input[type="radio"]:hover + span::before,
+            input[type="checkbox"]:hover + span::before,
+            input[type="radio"]:hover + span::before {
+                border: 1px solid $depageFormBorderColorFocus;
+            }
 
-                    &:hover, 
-                    &.on {
-                        background-position: -25px -25px;
-                    }
-                }
-                &.depageEditorButtonHyperlink {
-                    background-position: 0 -50px;
-
-                    &:hover, 
-                    &.on {
-                        background-position: -25px -50px;
-                    }
-                }
-                &.depageEditorButtonOrderedList {
-                    background-position: 0 -75px;
-
-                    &:hover, 
-                    &.on {
-                        background-position: -25px -75px;
-                    }
-                }
-                &.depageEditorButtonUnorderedList {
-                    background-position: 0 -100px;
-
-                    &:hover, 
-                    &.on {
-                        background-position: -25px -100px;
-                    }
-                }
-                &.depageEditorButtonHTML {
-                    background-position: 0 -125px;
-
-                    &:hover, 
-                    &.on {
-                        background-position: -25px -125px;
-                    }
-                }
+            /* focused and active form elements */
+            input[type="checkbox"]:focus + span::before,
+            input[type="radio"]:focus + span::before,
+            input[type="checkbox"]:active + span::before,
+            input[type="radio"]:active + span::before {
+                outline: dotted 0.1em #aaaaaa;
+                border: 1px solid $depageFormBorderColorFocus;
+                background-color: $depageFormInputBackgroundFocus;
             }
         }
     }
+    // }}}
+
+    // javascript based controls:
+    // {{{ selectize
+    .selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
+        visibility: visible !important;
+        background: #f2f2f2 !important;
+        background: rgba(0, 0, 0, 0.06) !important;
+        border: 0 none !important;
+        @include box-shadow(inset 0 0 12px 4px #ffffff);
+    }
+    .selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
+        content: '!';
+        visibility: hidden;
+    }
+    .selectize-control.plugin-drag_drop .ui-sortable-helper {
+        @include box-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+    }
+    .selectize-dropdown-header {
+        position: relative;
+        padding: 5px 8px;
+        border-bottom: 1px solid $depageFormBorderColor;
+        background: #f8f8f8;
+        @include radius($depageFormBorderRadius $depageFormBorderRadius 0 0);
+    }
+    .selectize-dropdown-header-close {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        color: #303030;
+        opacity: 0.4;
+        margin-top: -12px;
+        line-height: 20px;
+        font-size: 20px !important;
+    }
+    .selectize-dropdown-header-close:hover {
+        color: #000000;
+    }
+    .selectize-dropdown.plugin-optgroup_columns .optgroup {
+        border-right: 1px solid #f2f2f2;
+        border-top: 0 none;
+        float: left;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
+        border-right: 0 none;
+    }
+    .selectize-dropdown.plugin-optgroup_columns .optgroup:before {
+        display: none;
+    }
+    .selectize-dropdown.plugin-optgroup_columns .optgroup-header {
+        border-top: 0 none;
+    }
+    .selectize-control.plugin-remove_button [data-value] {
+        position: relative;
+        padding-right: 20px !important;
+    }
+    .selectize-control.plugin-remove_button [data-value] .remove {
+        z-index: 1;
+        /* fixes ie bug (see #392) */
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 17px;
+        text-align: center;
+        font-size: 18px;
+        color: inherit;
+        text-decoration: none;
+        vertical-align: middle;
+        display: inline-block;
+        padding: 1px 0 0 0;
+        //border-left: 1px solid $depageFormBorderColor;
+        @include radius(0 $depageFormBorderRadius $depageFormBorderRadius 0);
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        color: mix($depageFormTextColor, $depageFormInputBackground, 50%);
+    }
+    .selectize-control.plugin-remove_button [data-value] .remove:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+    .selectize-control.plugin-remove_button [data-value].active .remove {
+        border-left-color: #cacaca;
+    }
+    .selectize-control.plugin-remove_button .disabled [data-value] .remove:hover {
+        background: none;
+    }
+    .selectize-control.plugin-remove_button .disabled [data-value] .remove {
+        border-left-color: #ffffff;
+    }
+    .selectize-control {
+        position: relative;
+    }
+    .selectize-dropdown,
+    .selectize-input,
+    .selectize-input input {
+        color: $depageFormTextColor;
+        font-family: inherit;
+        font-size: 1em;
+        line-height: 1em;
+        -webkit-font-smoothing: inherit;
+    }
+    .selectize-input,
+    .selectize-control.single .selectize-input.input-active {
+        background: $depageFormInputBackground;
+        cursor: text;
+        display: inline-block;
+    }
+    .selectize-input {
+        border-width: 1px;
+        border-style: solid;
+        border-color: $depageFormBorderColor;
+        padding: 8px 8px;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        @include radius($depageFormBorderRadius);
+    }
+    .selectize-control.multi .selectize-input.has-items {
+        padding: 6px 8px 3px;
+    }
+    .selectize-input.full {
+        background-color: $depageFormInputBackground;
+    }
+    .selectize-input.disabled,
+    .selectize-input.disabled * {
+        cursor: default !important;
+    }
+    .selectize-input.focus {
+        border-color: $depageFormBorderColorFocus;
+        @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
+        @include box-shadow(0 0 0.2em rgba(0, 0, 0, 0.5));
+    }
+    .error .selectize-input {
+        border-color: $depageFormBorderColorError;
+    }
+    .selectize-input > * {
+        vertical-align: baseline;
+        display: -moz-inline-stack;
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+    }
+    .selectize-control.multi .selectize-input > div {
+        cursor: pointer;
+        margin: 0 3px 3px 0;
+        padding: 2px 6px;
+        background: darken($depageFormInputBackground, 10%);
+        color: $depageFormTextColor;
+        @include radius($depageFormBorderRadius * 0.5);
+    }
+    .selectize-control.multi .selectize-input > div.active {
+        color: $depageFormSelectionColor;
+        background: $depageFormSelectionBackground;
+    }
+    .selectize-control.multi .selectize-input.disabled > div,
+    .selectize-control.multi .selectize-input.disabled > div.active {
+        color: #7d7d7d;
+        background: #ffffff;
+        border: 0 solid #ffffff;
+    }
+    .selectize-input > input {
+        display: inline-block !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        max-width: 100% !important;
+        margin: 0 2px 0 0 !important;
+        text-indent: 0 !important;
+        border: 0 none !important;
+        background: none !important;
+        line-height: inherit !important;
+        -webkit-user-select: auto !important;
+        @include box-shadow(none !important);
+    }
+    .selectize-input > input::-ms-clear {
+        display: none;
+    }
+    .selectize-input > input:focus {
+        outline: none !important;
+    }
+    .selectize-input::after {
+        content: ' ';
+        display: block;
+        clear: left;
+    }
+    .selectize-input.dropdown-active::before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        background: #f0f0f0;
+        height: 1px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    .selectize-input.dropdown-active {
+        @include radius(0, "bottom", "left");
+        @include radius(0, "bottom", "right");
+    }
+    .selectize-dropdown {
+        position: absolute;
+        z-index: 10;
+        border: 1px solid $depageFormBorderColorFocus;
+        background: #ffffff;
+        margin: -1px 0 0 0;
+        border-top: 0 none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+        @include radius(0 0 $depageFormBorderRadius $depageFormBorderRadius);
+    }
+    .selectize-dropdown [data-selectable] {
+        cursor: pointer;
+        overflow: hidden;
+    }
+    .selectize-dropdown [data-selectable] .highlight {
+        background: rgba(125, 168, 208, 0.2);
+        -webkit-border-radius: 1px;
+        -moz-border-radius: 1px;
+        border-radius: 1px;
+    }
+    .selectize-dropdown [data-selectable],
+    .selectize-dropdown .optgroup-header {
+        padding: 5px 8px;
+    }
+    .selectize-dropdown .optgroup:first-child .optgroup-header {
+        border-top: 0 none;
+    }
+    .selectize-dropdown .optgroup-header {
+        color: #303030;
+        background: #ffffff;
+        cursor: default;
+    }
+    .selectize-dropdown .active {
+        color: $depageFormSelectionColor;
+        background: $depageFormSelectionBackground;
+    }
+    .selectize-dropdown .active.create {
+        color: #495c68;
+    }
+    .selectize-dropdown .create {
+        color: rgba(48, 48, 48, 0.5);
+    }
+    .selectize-dropdown-content {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 200px;
+    }
+    .selectize-control.single .selectize-input,
+    .selectize-control.single .selectize-input input {
+        cursor: pointer;
+    }
+    .selectize-control.single .selectize-input.input-active,
+    .selectize-control.single .selectize-input.input-active input {
+        cursor: text;
+    }
+    .selectize-control.single .selectize-input:after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        margin-top: -3px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 5px 0 5px;
+        border-color: #808080 transparent transparent transparent;
+    }
+    .selectize-control.single .selectize-input.dropdown-active:after {
+        margin-top: -4px;
+        border-width: 0 5px 5px 5px;
+        border-color: transparent transparent #808080 transparent;
+    }
+    .selectize-control.rtl.single .selectize-input:after {
+        left: 15px;
+        right: auto;
+    }
+    .selectize-control.rtl .selectize-input > input {
+        margin: 0 4px 0 -2px !important;
+    }
+    .selectize-control .selectize-input.disabled {
+        opacity: 0.5;
+        background-color: #fafafa;
+    }
+    // }}}
+    // {{{ richtext
     .input-richtext {
-        textarea,
-        iframe {
-            width: 100%;
-            border: 1px solid;
+        .textarea,
+        .textarea-content,
+        textarea {
             min-height: 10em;
+            margin-bottom: 0.3em;
+        }
+        .textarea {
+            position: relative;
+            padding: 0.2em;
+
+            .textarea-content {
+                margin-bottom: 0;
+            }
+            .textarea-content:focus {
+                outline: none;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            li,
+            dt,
+            dd,
+            p {
+                font-size: 1em !important;
+                line-height: 1.5em;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                position: relative;
+                font-weight: bold;
+                color: #555555;
+
+                &::after {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    opacity: 0.5;
+                }
+            }
+            h1::after {
+                content: "h1";
+            }
+            h2::after {
+                content: "h2";
+            }
+            blockquote {
+                border-left: 0.2em solid;
+                padding-left: 1em;
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
         }
     }
-    /* }}} */
+    // }}}
+    // {{{ toolbar
+    .depageEditorToolbar {
+        $buttonSize: 1.8em;
+        $radius: $buttonSize * 0.3;
+        list-style: none;
+        position: absolute;
+        width: auto;
+        height: $buttonSize;
+        left: 0;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.8);
+        color: #ffffff;
+        font-size: 1em;
+        padding: 0 $radius;
+        @include radius($radius);
+
+        .hidden {
+            display: none;
+        }
+
+        li {
+            font-size: 1em;
+            margin: 0;
+            padding: 0 0.4em;
+            display: inline-block;
+            vertical-align: top;
+            line-height: $buttonSize;
+            min-width: $buttonSize;
+            height: $buttonSize;
+            text-align: center;
+            cursor: pointer;
+            /*
+            border-bottom-width: 0.2em;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            */
+        }
+        li:before,
+        li:after {
+            display: none;
+        }
+        li:hover,
+        li.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            //border-bottom-color: #ff9900;
+        }
+        .format-b {
+            font-weight: bold;
+        }
+        .format-i {
+            font-style: italic;
+        }
+        .format-u {
+            text-decoration: underline;
+        }
+        .format-s {
+            text-decoration: line-through;
+        }
+    }
+    // }}}
 }
 
-/* vim:set ft=css sw=4 sts=4 fdm=marker : */
+// vim:set ft=scss sw=4 sts=4 fdm=marker :

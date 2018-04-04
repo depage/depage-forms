@@ -20,7 +20,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
     /**
      * @brief Tags that are allowed inside of html
      **/
-    protected $allowedTags = array(
+    protected $allowedTags = [
         "p",
         "br",
         "h1",
@@ -34,7 +34,18 @@ class HtmlDom extends \DOMDocument implements \Serializable
         "strong",
         "i",
         "em",
-    );
+    ];
+
+    /**
+     * @brief allowedAttributes
+     **/
+    protected $allowedAttributes = [
+        'class',
+        'href',
+        'target',
+        'alt',
+        'title',
+    ];
     // }}}
 
     // {{{ constructor()
@@ -88,7 +99,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
      *
      * @return boolean true on success, false on error
      **/
-    public function loadHTML($html)
+    public function loadHTML($html, $options = null)
     {
         $tmpDOM = new \DOMDocument();
 
@@ -134,13 +145,37 @@ class HtmlDom extends \DOMDocument implements \Serializable
      *
      * @return void
      **/
-    public function cleanHTML($allowedTags = null)
+    public function cleanHTML($allowedTags = null, $allowedAttributes = null)
     {
         $xpath = new \DOMXPath($this);
 
         if (is_null($allowedTags)) {
             $allowedTags = $this->allowedTags;
         }
+        if (is_null($allowedAttributes)) {
+            $allowedAttributes = $this->allowedAttributes;
+        }
+
+        // {{{ split tags and classnames
+        $tags = [];
+        $classByTag = [];
+
+        foreach ($allowedTags as $t) {
+            preg_match("/([a-zA-Z0-9]*)(\.(.*))?/", $t, $matches);
+
+            $tag = $matches[1] ?? "";
+            $class = $matches[3] ?? "";
+            $tags[$tag] = true;
+            if (!isset($classByTag[$tag])) {
+                $classByTag[$tag] = [];
+            }
+            if (!empty($class)) {
+                $classByTag[$tag][] = $class;
+            } else {
+                $classByTag[$tag][] = "";
+            }
+        }
+        // }}}
 
         // {{{ remove all nodes with tagnames that are not allowed
         $nodelist = $xpath->query("//body//*");
@@ -148,7 +183,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
         for ($i = $nodelist->length - 1; $i >= 0; $i--) {
             $node = $nodelist->item($i);
 
-            if (!in_array($node->nodeName, $allowedTags)) {
+            if (!isset($tags[$node->nodeName])) {
                 // move child nodes before element itself
                 while ($node->firstChild != null) {
                     if ($node->parentNode->nodeName == "body" && $node->firstChild->nodeType  == XML_TEXT_NODE) {
@@ -162,17 +197,40 @@ class HtmlDom extends \DOMDocument implements \Serializable
 
                 // delete empty node
                 $node->parentNode->removeChild($node);
+            } else {
+                // test for allowed attributes
+                for ($j = $node->attributes->length - 1; $j >= 0; $j--) {
+                    $attr = $node->attributes->item($j);
+
+                    // remove attributes that are not in allowedAttributes
+                    if (!in_array($attr->name, $allowedAttributes)) {
+                        $node->removeAttribute($attr->name);
+                    }
+                }
+
+                // remove invalid classnames
+                if ($node->getAttribute("class") != "") {
+                    $attr = implode(" ", array_intersect(
+                        explode(" ", $node->getAttribute("class")),
+                        $classByTag[$node->nodeName]
+                    ));
+                    if (empty($attr)) {
+                        $node->removeAttribute("class");
+                    } else {
+                        $node->setAttribute("class", $attr);
+                    }
+                }
             }
         }
         // }}}
-        // {{{ add &nbsp; to empty paragraphs to keep them
-        $nodelist = $xpath->query("//p[. = '']");
+        // {{{ add br to empty paragraphs to keep them
+        $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 
         foreach ($nodelist as $node) {
-            $node->appendChild($this->createEntityReference("nbsp"));
+            $node->appendChild($this->createElement("br"));
         }
         // }}}
-        // {{{ make sure li-nodes are alwas inside ul, ol or menu
+        // {{{ make sure li-nodes are always inside ul, ol or menu
         $nodelist = $xpath->query("//li");
         $parentNodes = array("ul", "ol", "menu");
 
@@ -195,6 +253,73 @@ class HtmlDom extends \DOMDocument implements \Serializable
             }
         }
         // }}}
+        // {{{ remove empty inline element
+        $nodelist = $xpath->query("//b[not(node())] | //i[not(node())] | //strong[not(node())] | //span[not(node())] | //a[not(node())]");
+
+        for ($i = $nodelist->length - 1; $i >= 0; $i--) {
+            $node = $nodelist->item($i);
+
+            $node->parentNode->removeChild($node);
+        }
+        // }}}
+    }
+    // }}}
+    // {{{ cutToMaxlength()
+    /**
+     * @brief cutToMaxlength
+     *
+     * @param mixed $max
+     * @return void
+     **/
+    public function cutToMaxlength($max)
+    {
+        $charsToRemove = mb_strlen($this->documentElement->textContent) - $max;
+
+        if ($charsToRemove <= 0) {
+            return;
+        }
+
+        $xpath = new \DOMXPath($this);
+        $textNodes = $xpath->query("//text()");
+        $i = $textNodes->length - 1;
+        while ($charsToRemove > 0 && $i >= 0) {
+            $n = $textNodes->item($i);
+            $len = mb_strlen($n->textContent);
+            $parent = $n->parentNode;
+
+            if ($len <= $charsToRemove) {
+                $parent->removeChild($n);
+                $charsToRemove -= $len;
+            } else {
+                $restNode = $n->splitText($len - $charsToRemove);
+                $parent->removeChild($restNode);
+                $charsToRemove = 0;
+            }
+
+            // remove empty nodes
+            if (mb_strlen($parent->textContent) == 0) {
+                $parent->parentNode->removeChild($parent);
+            }
+
+            $i--;
+        }
+    }
+    // }}}
+    // {{{ __toString()
+    /**
+     * @brief __toString
+     *
+     * @param mixed
+     * @return void
+     **/
+    public function __toString()
+    {
+        $html = "";
+        foreach ($this->documentElement->childNodes as $node) {
+            $html .= $this->saveXML($node) . "\n";
+        }
+
+        return $html;
     }
     // }}}
     // {{{ getBodyNodes()

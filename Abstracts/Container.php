@@ -151,11 +151,11 @@ abstract class Container extends Element
     {
         $allElements = array();
         foreach ($this->elements as $element) {
-            if ($element instanceof elements\fieldset) {
-                $allElements = array_merge($allElements, $element->getElements());
+            if ($element instanceof Container) {
                 if ($includeFieldsets) {
                     $allElements[] = $element;
                 }
+                $allElements = array_merge($allElements, $element->getElements($includeFieldsets));
             } else {
                 $allElements[] = $element;
             }
@@ -174,9 +174,9 @@ abstract class Container extends Element
      * @param  string $name name of the input element we're looking for
      * @return object $element    subelement or (bool) false if unsuccessful
      **/
-    public function getElement($name)
+    public function getElement($name, $includeFieldsets = false)
     {
-        foreach ($this->getElements() as $element) {
+        foreach ($this->getElements($includeFieldsets) as $element) {
             if ($name === $element->getName()) {
                 return $element;
             }

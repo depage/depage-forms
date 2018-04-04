@@ -299,6 +299,14 @@ class HtmlForm extends Abstracts\Container
 
         parent::__construct($name, $parameters, $this);
 
+        $this->url = parse_url($this->submitURL);
+        if (empty($this->successURL)) {
+            $this->successURL = $this->submitURL;
+        }
+        if (empty($this->cancelURL)) {
+            $this->cancelURL = $this->submitURL;
+        }
+
         $this->currentStepId = isset($_GET['step']) ? $_GET['step'] : 0;
 
         $this->startSession();
@@ -347,10 +355,10 @@ class HtmlForm extends Abstracts\Container
         $this->defaults['method']       = 'post';
         // @todo adjust submit url for steps when used
         $this->defaults['submitURL']    = $_SERVER['REQUEST_URI'];
-        $this->defaults['successURL']   = $_SERVER['REQUEST_URI'];
-        $this->defaults['cancelURL']    = $_SERVER['REQUEST_URI'];
+        $this->defaults['successURL']   = null;
+        $this->defaults['cancelURL']    = null;
         $this->defaults['validator']    = null;
-        $this->defaults['ttl']          = 30 * 60; // 30 minutes
+        $this->defaults['ttl']          = 60 * 60; // 60 minutes
         $this->defaults['jsValidation'] = 'blur';
         $this->defaults['jsAutosave']   = 'false';
     }
@@ -369,17 +377,15 @@ class HtmlForm extends Abstracts\Container
     {
         // check if there's an open session
         if (!session_id()) {
+            $params = session_get_cookie_params();
             $sessionName = session_name();
-            $sessionDomain = false;
-            $sessionSecure = false;
-            $sessionHttponly = true;
 
             session_set_cookie_params(
                 $this->ttl,
-                "/",
-                $sessionDomain,
-                $sessionSecure,
-                $sessionHttponly
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
             );
             session_start();
 
@@ -389,10 +395,10 @@ class HtmlForm extends Abstracts\Container
                     $sessionName,
                     $_COOKIE[$sessionName],
                     time() + $this->ttl,
-                    "/",
-                    $sessionDomain,
-                    $sessionSecure,
-                    $sessionHttponly
+                    $params['path'],
+                    $params['domain'],
+                    $params['secure'],
+                    $params['httponly']
                 );
             }
         }
@@ -470,8 +476,8 @@ class HtmlForm extends Abstracts\Container
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if ($newElement instanceof elements\step) { $this->steps[] = $newElement; }
-        if ($newElement instanceof abstracts\input) { $this->updateInputValue($name); }
+        if ($newElement instanceof Elements\Step) { $this->steps[] = $newElement; }
+        if ($newElement instanceof Abstracts\Input) { $this->updateInputValue($name); }
 
         return $newElement;
     }
@@ -506,9 +512,9 @@ class HtmlForm extends Abstracts\Container
         $currentElements = array();
 
         foreach ($this->elements as $element) {
-            if ($element instanceof elements\fieldset) {
+            if ($element instanceof Abstracts\Container) {
                 if (
-                    !($element instanceof elements\step)
+                    !($element instanceof Elements\Step)
                     || (isset($this->steps[$this->currentStepId]) && ($element == $this->steps[$this->currentStepId]))
                 ) {
                     $currentElements = array_merge($currentElements, $element->getElements());
@@ -568,8 +574,11 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    private function setCurrentStep()
+    public function setCurrentStep($step = null)
     {
+        if (!is_null($step)) {
+            $this->currentStepId = $step;
+        }
         if (!is_numeric($this->currentStepId)
             || ($this->currentStepId > count($this->steps) - 1)
             || ($this->currentStepId < 0)
@@ -689,7 +698,7 @@ class HtmlForm extends Abstracts\Container
             && $this->inCurrentStep($name)
             && isset($_POST['formCsrfToken']) && $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken']
         ) {
-            if ($this->getElement($name) instanceof elements\file) {
+            if ($this->getElement($name) instanceof Elements\File) {
                 // handle uploaded file
                 $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
                 $this->sessionSlot[$name] = $element->handleUploadedFiles($oldValue);
@@ -706,6 +715,20 @@ class HtmlForm extends Abstracts\Container
         else if (isset($this->sessionSlot[$name])) {
             $element->setValue($this->sessionSlot[$name]);
         }
+    }
+    // }}}
+    // {{{ clearInputValue()
+    /**
+     * @brief clearInputValue
+     *
+     * @param mixed $name
+     * @return void
+     **/
+    public function clearInputValue($name)
+    {
+        $element = $this->getElement($name);
+
+        $this->sessionSlot[$name] = $element->clearValue();
     }
     // }}}
 
@@ -760,7 +783,8 @@ class HtmlForm extends Abstracts\Container
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             // save in session if submission was from last step
-            $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps);
+            $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps)
+                && !(isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true");
 
             if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
@@ -953,7 +977,7 @@ class HtmlForm extends Abstracts\Container
             unset($this->sessionSlot);
         } else {
             // clear everything except internal fields
-            foreach ($this->getElements(true) as $element) {
+            foreach ($this->getElements(false) as $element) {
                 if (!$element->getDisabled() && !in_array($element->name, $this->internalFields)) {
                     unset($this->sessionSlot[$element->name]);
                 }
@@ -974,6 +998,21 @@ class HtmlForm extends Abstracts\Container
         return parent::htmlDataAttributes();
     }
     // }}}
+    // {{{ htmlSubmitURL()
+    /**
+     * @brief   Returns dataAttr escaped as attribute string
+     **/
+    protected function htmlSubmitURL()
+    {
+        $scheme   = isset($this->form->url['scheme']) ? $this->form->url['scheme'] . '://' : '';
+        $host     = isset($this->form->url['host']) ? $this->form->url['host'] : '';
+        $port     = isset($this->form->url['port']) ? ':' . $this->form->url['port'] : '';
+        $path     = isset($this->form->url['path']) ? $this->form->url['path'] : '';
+        $baseUrl  = "$scheme$host$port$path";
+
+        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $this->currentStepId]));
+    }
+    // }}}
     // {{{ __toString()
     /**
      * @brief   Renders form to HTML.
@@ -985,14 +1024,17 @@ class HtmlForm extends Abstracts\Container
      **/
     public function __toString()
     {
-        $renderedElements   = '';
-        $label              = $this->htmlLabel();
-        $cancellabel        = $this->htmlCancelLabel();
-        $backlabel          = $this->htmlBackLabel();
-        $class              = $this->htmlClass();
-        $method             = $this->htmlMethod();
-        $submitURL          = $this->htmlSubmitURL();
-        $dataAttr           = $this->htmlDataAttributes();
+        $renderedElements = '';
+        $submit           = '';
+        $cancel           = '';
+        $back             = '';
+        $label            = $this->htmlLabel();
+        $cancellabel      = $this->htmlCancelLabel();
+        $backlabel        = $this->htmlBackLabel();
+        $class            = $this->htmlClass();
+        $method           = $this->htmlMethod();
+        $submitURL        = $this->htmlSubmitURL();
+        $dataAttr         = $this->htmlDataAttributes();
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -1005,19 +1047,18 @@ class HtmlForm extends Abstracts\Container
 
         if (!is_null($this->cancelLabel)) {
             $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
-        } else {
-            $cancel = "";
         }
         if (!is_null($this->backLabel) && $this->currentStepId > 0) {
             $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
-        } else {
-            $back = "";
+        }
+        if (!empty($this->label)) {
+            $submit = "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>\n";
         }
 
 
         return "<form id=\"{$this->name}\" name=\"{$this->name}\" class=\"depage-form {$class}\" method=\"{$method}\" action=\"{$submitURL}\"{$dataAttr} enctype=\"multipart/form-data\">" . "\n" .
             $renderedElements .
-            "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>" . "\n" .
+            $submit .
             $cancel .
             $back .
         "</form>";

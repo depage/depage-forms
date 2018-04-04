@@ -10,7 +10,7 @@ function time()
     return 42;
 }
 
-class htmlformSessionExpiryTest extends \PHPUnit_Framework_TestCase
+class htmlformSessionExpiryTest extends \PHPUnit\Framework\TestCase
 {
     // {{{ testSetTimestamp()
     /**

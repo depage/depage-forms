@@ -50,7 +50,7 @@ class Email extends Text
     {
         parent::setDefaults();
 
-        $this->defaults['errorMessage'] = _('Please enter a valid e-mail address');
+        $this->defaults['errorMessage'] = _('Please enter a valid email address');
 
         // @todo add option to test mail domain name (dns)
     }

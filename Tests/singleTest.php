@@ -1,17 +1,22 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\Elements\Single;
 
 /**
  * General tests for the multiple input element.
  **/
-class singleTest extends PHPUnit_Framework_TestCase
+class singleTest extends TestCase
 {
     // {{{
     public function setUp()
     {
         $this->form     = new nameTestForm;
-        $this->single   = new Single('singleName', array(), $this->form);
+        $this->single   = new Single('singleName', [
+            'list' => [
+                'valueString',
+            ],
+        ], $this->form);
     }
     // }}}
 
@@ -33,10 +38,6 @@ class singleTest extends PHPUnit_Framework_TestCase
     {
         $this->single->setValue('valueString');
         $this->assertEquals('valueString', $this->single->getValue());
-
-        $this->single->setValue(42);
-        $this->assertInternalType('string', $this->single->getValue());
-        $this->assertEquals('42', $this->single->getValue());
     }
     // }}}
 

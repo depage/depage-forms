@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 
 // {{{ htmlformTestClass
@@ -25,8 +26,24 @@ class htmlformTestClass extends csrfTestForm
 /**
 * Testing Post/Redirect/Get-relevant behavior
 **/
-class prgTest extends PHPUnit_Framework_TestCase
+class prgTest extends TestCase
 {
+    // {{{ tearDown()
+    /**
+     * @brief tearDown
+     *
+     * @param mixed
+     * @return void
+     **/
+    public function tearDown()
+    {
+        $_GET = [];
+        $_REQUEST = [];
+        $_POST = [];
+        $_SESSION = [];
+    }
+    // }}}
+
     // {{{ testRedirect()
     /**
      * Testing the test...
@@ -159,6 +176,50 @@ class prgTest extends PHPUnit_Framework_TestCase
     }
     // }}}
 
+    // {{{ testProcessStepsWithAbsoluteSubmit()
+    /**
+     * Test process() method for forms with steps. Setting an invalid step
+     * number forces call of getFirstInvalidStep().
+     *
+     * The first invalid step should be step1.
+     **/
+    public function testProcessStepsWithAbsoluteSubmit()
+    {
+        // setting up session-data for text-element
+        $_SESSION['htmlform-formName-data']['storedText'] = 'stored';
+        $_SESSION['htmlform-formName-data']['postedText'] = 'stored';
+        $_SESSION['htmlform-formName-data']['notSubmitted'] = 'stored';
+
+        $_POST['formName'] = 'formName';
+        $_POST['formCsrfToken']  = 'xxxxxxxx';
+        $_POST['formStep'] = '1';
+        $_POST['storedText'] = 'posted';
+        $_POST['postedText'] = 'posted';
+        $_POST['notSubmitted'] = 'posted';
+
+        $_GET['step'] = '1';
+
+        $form = new htmlformTestClass('formName', ['submitURL' => "https://depage.net/submiturl.html"]);
+        $step0 = $form->addStep('step0');
+        $text0 = $step0->addText('storedText');
+
+        $step1 = $form->addStep('step1');
+        $text1 = $step1->addText('postedText');
+
+        $step2 = $form->addStep('step2');
+        $text2 = $step2->addText('notSubmitted');
+
+
+        $form->process();
+
+        $this->assertEquals('stored', $text0->getValue());
+        $this->assertEquals('posted', $text1->getValue());
+        $this->assertEquals('stored', $text2->getValue());
+
+        $this->assertEquals('/submiturl.html?step=2', $form->testRedirect);
+    }
+    // }}}
+
     // {{{ testStepsFreeFieldset()
     /**
      * Tests getFirstInvalidStep() for fieldset outside steps. Setting an
@@ -190,3 +251,4 @@ class prgTest extends PHPUnit_Framework_TestCase
     }
     // }}}
 }
+/* vim:set ft=php sw=4 sts=4 fdm=marker et : */
