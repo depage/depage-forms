@@ -359,7 +359,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     }
     // }}}
     // {{{ checkboxes and radiobuttons
-    @if ($depageFormCheckboxImage != '' && $depageFormRadiobuttonImage != '') {
+    @if ($depageFormCheckboxImage != '' and $depageFormRadiobuttonImage != '') {
         .input-single.skin-radio,
         .input-multiple.skin-checkbox,
         .input-boolean {
