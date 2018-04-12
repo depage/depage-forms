@@ -805,6 +805,8 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     width: auto;
     height: $buttonSize;
     left: 0;
+    transform: translateX(-50%);
+    max-width: 90vw;
     top: 0;
     margin: 0;
     padding: 0;
@@ -814,10 +816,6 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     font-size: 1em;
     padding: 0 $radius;
     @include radius($radius);
-
-    .hidden {
-        display: none;
-    }
 
     li {
         font-size: 1em;
