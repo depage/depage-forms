@@ -258,6 +258,7 @@ abstract class Input extends Element
         $this->defaults['required']        = false;
         $this->defaults['title']           = false;
         $this->defaults['class']           = '';
+        $this->defaults['lang']            = '';
         $this->defaults['helpMessage']     = '';
         $this->defaults['helpMessageHtml'] = '';
         $this->defaults['dataInfo']        = null;
@@ -599,6 +600,8 @@ abstract class Input extends Element
         $attributes .= "class=\"" . $this->htmlClasses() . "\"";
 
         $attributes .= ($this->title) ? " title=\"" . $this->htmlEscape($this->title) . "\"" : "";
+
+        $attributes .= ($this->lang) ? " lang=\"" . $this->htmlEscape($this->lang) . "\"" : "";
 
         $attributes .= $this->htmlDataAttributes();
 

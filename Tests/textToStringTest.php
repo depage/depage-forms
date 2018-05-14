@@ -172,7 +172,7 @@ class textToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" lang="la&quot;&gt;ng" data-errorMessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="textName" type="text" required="required" value="val&quot;&gt;ue&lt;&#039;">' .
@@ -184,6 +184,7 @@ class textToStringTest extends TestCase
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
+            'lang'         => 'la">ng',
             'required'      => true,
         );
         $text = new text('textName', $parameters, $this->form);
