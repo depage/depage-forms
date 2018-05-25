@@ -152,7 +152,7 @@ class Richtext extends Textarea
      **/
     protected function parseHtml($html)
     {
-        if ($this->normalize) {
+        if ($this->normalize && class_exists("\\Normalizer")) {
             $html = \Normalizer::normalize($html);
         }
 
