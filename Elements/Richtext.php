@@ -61,6 +61,7 @@ class Richtext extends Textarea
             "strong",
             "i",
             "em",
+            "small",
 
             // block elements
             "p",
