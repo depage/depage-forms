@@ -132,9 +132,10 @@ class Single extends Abstracts\Input
             foreach ($options as $index => $option) {
                 // typecasted for non-associative arrays
                 $selected = ((string) $index === (string) $value) ? " checked=\"yes\"" : '';
+                $class = htmlentities("input-single-option-" . str_replace(" ", "-", $index));
 
                 $list .= "<span>" .
-                    "<label>" .
+                    "<label class=\"{$class}\" title=\"{$option}\">" .
                         "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
                         "<span>{$option}</span>" .
                     "</label>" .
