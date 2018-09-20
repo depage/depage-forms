@@ -3,10 +3,10 @@ RM = rm -rf
 all: test doc
 
 doc:
-	cd Documentation; $(MAKE) $(MFLAGS)
-
-docset:
-	cd Documentation; $(MAKE) $(MFLAGS) docset
+	cd Documentation ; git clone https://github.com/depage/depage-docu.git depage-docu || true
+	doxygen Documentation/Doxyfile
+	cp -r Documentation/depage-docu/www/lib Documentation/html/
+	sed -i".bak" "s/<body class=\\\"\\\"/<body class=\\\"home\\\"/" Documentation/html/index.html
 
 test:
 	cd Tests; $(MAKE) $(MFLAGS)
@@ -29,7 +29,7 @@ jshint:
 	cd lib/js; $(MAKE) $(MFLAGS) jshint
 
 clean:
-	cd Documentation; $(MAKE) $(MFLAGS) clean
+	$(RM) Documentation/depage-docu/ Documentation/html/
 	cd Tests; $(MAKE) $(MFLAGS) clean
 	${RM} Release
 
