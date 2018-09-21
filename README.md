@@ -1,4 +1,4 @@
-depage-forms / HTML5-forms in PHP with ease and comfort
+depage-forms: HTML5-forms in PHP with ease and comfort
 =======================================================
 
 depage-forms is PHP library for HTML form generation with focus on usability.
@@ -44,7 +44,7 @@ Introduction
 - You can get a basic introduction at:
   [depage-forms: html5 forms made easy (part I)](Documentation/Introduction.md)
 - How to do Form Validation
-  [depage-forms: validation of html5 forms (part II)](http://www.depage.net/en/blog/2013/10/depage-forms-html5-form-validation-part-2.html)
+  [depage-forms: validation of html5 forms (part II)](Documentation/Validation.md)
 
 
 Download
