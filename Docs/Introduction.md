@@ -99,6 +99,6 @@ Next Steps:
 
 In the next posts about depage-forms we will introduce some extended features like:
 
-- [form validation, the automatic type-casting of data-values and](Documentation/Validation.md)
+- [form validation, the automatic type-casting of data-values and](Docs/Validation.md)
 - subdividing forms into steps and step-navigation
 - subclassing htmlform

@@ -3,18 +3,17 @@ RM = rm -rf
 all: test doc
 
 doc:
-	cd Documentation ; git clone https://github.com/depage/depage-docu.git depage-docu || true
-	doxygen Documentation/Doxyfile
-	cp -r Documentation/depage-docu/www/lib Documentation/html/
-	sed -i".bak" "s/<body class=\\\"\\\"/<body class=\\\"home\\\"/" Documentation/html/index.html
+	cd Docs ; git clone https://github.com/depage/depage-docu.git depage-docu || true
+	doxygen Docs/Doxyfile
+	cp -r Docs/depage-docu/www/lib Docs/html/
 
 test:
 	cd Tests; $(MAKE) $(MFLAGS)
 
 release: clean jshint min jsmin
 	mkdir Release
-	tar cfz Release/depage-forms.tar.gz README.md Abstracts Documentation/examples Elements Exceptions Validators lib/js/*.min.js lib/css lib/*.png HtmlForm.php composer.json
-	zip -r release/depage-forms.zip README.md Abstracts Documentation/examples Elements Exceptions Validators lib/js/*.min.js lib/css lib/*.png HtmlForm.php composer.json
+	tar cfz Release/depage-forms.tar.gz README.md Abstracts Docs/examples Elements Exceptions Validators lib/js/*.min.js lib/css lib/*.png HtmlForm.php composer.json
+	zip -r release/depage-forms.zip README.md Abstracts Docs/examples Elements Exceptions Validators lib/js/*.min.js lib/css lib/*.png HtmlForm.php composer.json
 	shasum -a 512 Release/depage-forms.zip > Release/depage-forms.zip.sha2
 	shasum -a 512 Release/depage-forms.tar.gz > Release/depage-forms.tar.gz.sha2
 
@@ -29,7 +28,7 @@ jshint:
 	cd lib/js; $(MAKE) $(MFLAGS) jshint
 
 clean:
-	$(RM) Documentation/depage-docu/ Documentation/html/
+	$(RM) Docs/depage-docu/ Docs/html/
 	cd Tests; $(MAKE) $(MFLAGS) clean
 	${RM} Release
 

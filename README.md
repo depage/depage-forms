@@ -42,9 +42,9 @@ Introduction
 ------------
 
 - You can get a basic introduction at:
-  [depage-forms: html5 forms made easy (part I)](Documentation/Introduction.md)
+  [depage-forms: html5 forms made easy (part I)](Docs/Introduction.md)
 - How to do Form Validation
-  [depage-forms: validation of html5 forms (part II)](Documentation/Validation.md)
+  [depage-forms: validation of html5 forms (part II)](Docs/Validation.md)
 
 
 Download
@@ -78,7 +78,7 @@ For more information
 - For more information about depage-cms go to:
   <http://www.depagecms.net/>
 - if you want to support with development
-  [More info](Documentation/Developer.md)
+  [More info](Docs/Developer.md)
 
 License (dual)
 --------------

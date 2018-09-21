@@ -3,9 +3,9 @@
   <navindex>
     <tab type="mainpage" visible="no" title="home"/>
 
-    <tab type="user" url="md__documentation__introduction.html" title="Getting Started">
-        <tab type="user" url="md__documentation__introduction.html" title="Introduction"/>
-        <tab type="user" url="md__documentation__validation.html" title="Validation"/>
+    <tab type="user" url="md__docs__introduction.html" title="Getting Started">
+        <tab type="user" url="md__docs__introduction.html" title="Introduction"/>
+        <tab type="user" url="md__docs__validation.html" title="Validation"/>
     </tab>
     <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm">
         <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm Class"/>

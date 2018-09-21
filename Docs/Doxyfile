@@ -1,4 +1,4 @@
-@INCLUDE = Documentation/depage-docu/Doxyfile
+@INCLUDE = Docs/depage-docu/Doxyfile
 
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded by
 # double-quotes, unless you are using Doxywizard) that should identify the
@@ -38,4 +38,4 @@ OUTPUT_DIRECTORY       = .
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = Documentation/examples/
+EXAMPLE_PATH           = Docs/examples/
