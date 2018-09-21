@@ -92,33 +92,13 @@ Here is the full example:
 
 @htmlonly<iframe class="example" seamless="seamless" src="../examples/simple.php"></iframe>@endhtmlonly
 
-```php
-<?php
-    $form = new Depage\HtmlForm\HtmlForm('simpleForm');
-
-    // add form fields
-    $form->addText('username', array('label' => 'User name', 'required' => true));
-    $form->addEmail('email', array('label' => 'Email address'));
-
-    // process form
-    $form->process();
-
-    if ($form->validate()) {
-        // do something with your valid data
-        var_dump($form->getValues());
-    } else {
-        // Form was empty or data was not valid:
-        // Display the form.
-        echo ($form);
-    }
-```
-
+@include simple.php
 
 Next Steps:
 -----------
 
 In the next posts about depage-forms we will introduce some extended features like:
 
-- form validation, the automatic type-casting of data-values and
+- [form validation, the automatic type-casting of data-values and](Documentation/Validation.md)
 - subdividing forms into steps and step-navigation
 - subclassing htmlform

@@ -119,9 +119,6 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  *
  * You can find a list of available input-class in @link Depage::HtmlForm::Elements
  * elements@endlink.
- *
- * See examples at
- *     - @link simple.php @endlink - a simple form
  **/
 class HtmlForm extends Abstracts\Container
 {

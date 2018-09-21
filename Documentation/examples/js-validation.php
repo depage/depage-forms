@@ -13,16 +13,32 @@ $form = new Depage\HtmlForm\HtmlForm('jsExample');
  * Add the various input elements to the form by calling the '"add" + element
  * type' method.
  */
-$form->addText('username', array('label' => 'User name', 'required' => true));
-$form->addEmail('email', array('label' => 'Email address'));
-$form->addBoolean('accept', array('label' => 'Accept terms and conditions.', 'required' => true));
+$form->addText('username', [
+    'label' => 'User name',
+    'required' => true,
+]);
+$form->addEmail('email', [
+    'label' => 'Email address',
+]);
+$form->addBoolean('accept', [
+    'label' => 'Accept terms and conditions.',
+    'required' => true,
+]);
 
 /*
  * The validator pattern has to match the complete string (HTML5 spec). Here
  * are some examples:
  */
-$form->addText('singleLetter', array('label' => 'Single letter', 'required' => true, 'validator' => '/[a-zA-Z]/'));
-$form->addText('letters', array('label' =>'One ore more letters', 'required' => true, 'validator' => '/[a-zA-Z]+/'));
+$form->addText('singleLetter', [
+    'label' => 'Single letter',
+    'required' => true,
+    'validator' => '/[a-zA-Z]/',
+]);
+$form->addText('letters', [
+    'label' =>'One ore more letters',
+    'required' => true,
+    'validator' => '/[a-zA-Z]+/',
+]);
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -58,7 +74,7 @@ if ($form->validate()) {
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
     <script src="../../lib/js/jquery.tools.min.js"></script>
     <script src="../../lib/js/effect.min.js"></script>
 </head>

@@ -16,8 +16,13 @@ $form = new Depage\HtmlForm\HtmlForm('simpleForm');
  * identifier and therefore required. The optional second parameter is an array
  * of element settings.
  */
-$form->addText('username', array('label' => 'User name', 'required' => true));
-$form->addEmail('email', array('label' => 'Email address'));
+$form->addText('username', [
+    'label' => 'User name',
+    'required' => true,
+]);
+$form->addEmail('email', [
+    'label' => 'Email address',
+]);
 
 /*
  * The process method is essential to the functionality of the form. It serves

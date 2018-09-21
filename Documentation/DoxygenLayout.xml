@@ -3,11 +3,16 @@
   <navindex>
     <tab type="mainpage" visible="no" title="home"/>
 
-    <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="Htmlform Class"/>
-    <tab type="user" url="@ref Depage::HtmlForm::Elements" title="Input Elements"/>
-    <tab type="user" url="@ref htmlformInputDefaults" title="Input Parameters"/>
+    <tab type="user" url="md__documentation__introduction.html" title="Getting Started">
+        <tab type="user" url="md__documentation__introduction.html" title="Introduction"/>
+        <tab type="user" url="md__documentation__validation.html" title="Validation"/>
+    </tab>
+    <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm">
+        <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm Class"/>
+        <tab type="user" url="@ref Depage::HtmlForm::Elements" title="Available Input Elements"/>
+        <tab type="user" url="@ref htmlformInputDefaults" title="Available Input Parameters"/>
+    </tab>
 
-    <tab type="user" url="md__documentation__introduction.html" title="Introduction"/>
     <tab type="examples" visible="yes" title="Examples" intro=""/>
 
     <tab type="classes" visible="yes" title="Classes">
@@ -16,7 +21,7 @@
       <tab type="classmembers" visible="no" title="Members" intro=""/>
       <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="index"/>
     </tab>
-    <tab type="namespaces" visible="yes" title="Namespaces">
+    <tab type="namespaces" visible="no" title="Namespaces">
       <tab type="namespaces" visible="no" title="" intro=""/>
       <tab type="namespacemembers" visible="no" title="" intro=""/>
     </tab>
