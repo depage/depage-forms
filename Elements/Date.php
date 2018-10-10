@@ -16,6 +16,20 @@ namespace Depage\HtmlForm\Elements;
  **/
 class Date extends Text
 {
+    // {{{ setDefaults()
+    /**
+     * @brief   sets defaults for date input
+     *
+     * @return void
+     **/
+    protected function setDefaults()
+    {
+        parent::setDefaults();
+
+        $this->defaults['placeholder']  = _("YYYY-MM-DD");
+        $this->defaults['validator']  = _("/\d{4}-\d{2}-\d{2}/");
+    }
+    // }}}
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */
