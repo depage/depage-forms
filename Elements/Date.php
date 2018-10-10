@@ -27,7 +27,7 @@ class Date extends Text
         parent::setDefaults();
 
         $this->defaults['placeholder']  = _("YYYY-MM-DD");
-        $this->defaults['validator']  = _("/\d{4}-\d{2}-\d{2}/");
+        $this->defaults['validator']  = "/\d{4}-\d{2}-\d{2}/";
     }
     // }}}
 }
