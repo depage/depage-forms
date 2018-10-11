@@ -60,8 +60,8 @@ class validatorTest extends TestCase
     public function testEmail()
     {
         $emailValidator = Validator::factory('email');
-        $this->assertFalse($emailValidator->validate('anyString'));
-        $this->assertTrue($emailValidator->validate('test@depage.net'));
+        $this->assertFalse($emailValidator->validate('anyString', ['checkDns' => false]));
+        $this->assertTrue($emailValidator->validate('test@depage.net', ['checkDns' => false]));
     }
     // }}}
 

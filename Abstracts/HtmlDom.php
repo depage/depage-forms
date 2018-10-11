@@ -223,6 +223,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
             }
         }
         // }}}
+        // @todo check to use br or nbsp
         // {{{ add br to empty paragraphs to keep them
         $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 
@@ -260,6 +261,15 @@ class HtmlDom extends \DOMDocument implements \Serializable
             $node = $nodelist->item($i);
 
             $node->parentNode->removeChild($node);
+        }
+        // }}}
+        // {{{ clean nodes if only one paragraph with a br to leave only empty string in result body
+        $nodes = $this->getBodyNodes();
+        if ($nodes->length == 1) {
+            $node = $nodes->item(0);
+            if ($node->nodeName == "p" && $node->childnodes->length == 1 && $node->childnodes->item(0)->nodeName == "br") {
+                $node->parentNode->removeChild($node);
+            }
         }
         // }}}
     }

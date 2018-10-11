@@ -18,8 +18,6 @@ release: clean jshint min jsmin
 	shasum -a 512 Release/depage-forms.tar.gz > Release/depage-forms.tar.gz.sha2
 
 min: clean jsmin
-	tar cfz depage-forms.tar.gz Abstracts Elements Exceptions Validators lib/js/*.min.js HtmlForm.php
-	sha512sum depage-forms.tar.gz > depage-forms.tar.gz.sha2
 
 jsmin:
 	cd lib/js; $(MAKE) $(MFLAGS) jsmin

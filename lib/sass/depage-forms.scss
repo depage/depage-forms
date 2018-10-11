@@ -359,7 +359,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     }
     // }}}
     // {{{ checkboxes and radiobuttons
-    @if ($depageFormCheckboxImage != '' && $depageFormRadiobuttonImage != '') {
+    @if ($depageFormCheckboxImage != '' and $depageFormRadiobuttonImage != '') {
         .input-single.skin-radio,
         .input-multiple.skin-checkbox,
         .input-boolean {
@@ -795,6 +795,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         }
     }
     // }}}
+}
     // {{{ toolbar
     .depageEditorToolbar {
         $buttonSize: 1.8em;
@@ -804,6 +805,8 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         width: auto;
         height: $buttonSize;
         left: 0;
+    transform: translateX(-50%);
+    max-width: 90vw;
         top: 0;
         margin: 0;
         padding: 0;
@@ -813,10 +816,6 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         font-size: 1em;
         padding: 0 $radius;
         @include radius($radius);
-
-        .hidden {
-            display: none;
-        }
 
         li {
             font-size: 1em;
@@ -844,6 +843,9 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             background-color: rgba(255, 255, 255, 0.2);
             //border-bottom-color: #ff9900;
         }
+    .format-a {
+        text-decoration: underline;
+    }
         .format-b {
             font-weight: bold;
         }
@@ -858,6 +860,5 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         }
     }
     // }}}
-}
 
 // vim:set ft=scss sw=4 sts=4 fdm=marker :

@@ -699,6 +699,8 @@ class HtmlForm extends Abstracts\Container
                 }
                 $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
+            } elseif (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+                // do not redirect -> is autosave
             } elseif ($this->validate()) {
                 // form was successfully submitted
                 $this->redirect($this->successURL);

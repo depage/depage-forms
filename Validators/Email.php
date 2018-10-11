@@ -21,7 +21,17 @@ class Email extends Validator
      **/
     public function validate($email, $parameters = array())
     {
-        return (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
+        $valid = (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
+
+        if ($valid && $parameters['checkDns']) {
+            list($user, $domain) = explode('@', $email);
+
+            $domain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+
+            $valid = checkdnsrr(idn_to_ascii($domain . "."), 'MX');
+        }
+
+        return $valid;
     }
     // }}}
 }

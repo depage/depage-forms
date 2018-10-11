@@ -36,6 +36,11 @@ namespace Depage\HtmlForm\Elements;
  **/
 class Email extends Text
 {
+    /**
+     * @brief checkDns
+     **/
+    protected $checkDns = false;
+
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
@@ -51,8 +56,23 @@ class Email extends Text
         parent::setDefaults();
 
         $this->defaults['errorMessage'] = _('Please enter a valid email address');
+        $this->defaults['checkDns'] = false;
 
         // @todo add option to test mail domain name (dns)
+    }
+    // }}}
+
+    // {{{ validatorCall()
+    /**
+     * @brief   custom validator call hook
+     *
+     * Hook method for validator call. Validator arguments can be adjusted on override.
+     *
+     * @return bool validation result
+     **/
+    protected function validatorCall()
+    {
+        return $this->validator->validate($this->value, ['checkDns' => $this->checkDns]);
     }
     // }}}
 }
