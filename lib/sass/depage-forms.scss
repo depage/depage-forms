@@ -251,14 +251,24 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         }
         &:disabled {
             opacity: .4;
-        }
-        &:disabled:hover {
-            border-color: $depageFormBorderColor;
+
+            &:hover {
+                border-color: $depageFormBorderColor;
+            }
         }
         &.focus,
         &:focus {
             border-color: $depageFormBorderColorFocus;
             background-color: $depageFormInputBackgroundFocus;
+        }
+    }
+    .readonly {
+        input,
+        button,
+        select,
+        textarea,
+        .textarea {
+            opacity: .4;
         }
     }
     .error {
@@ -411,11 +421,15 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             input[type="radio"]:checked + span::before {
                 background-image: $depageFormRadiobuttonImageChecked;
             }
-            input[type="radio"]:disabled + span,
-            input[type="checkbox"]:disabled + span,
-            input[type="radio"]:disabled + span::before,
-            input[type="checkbox"]:disabled + span::before {
-                opacity: .4;
+            input[type="radio"],
+            input[type="checkbox"] {
+                &:disabled,
+                &:readonly {
+                    + span,
+                    + span::before {
+                        opacity: .4;
+                    }
+                }
             }
             input[type="checkbox"]:hover + span::before,
             input[type="radio"]:hover + span::before,
