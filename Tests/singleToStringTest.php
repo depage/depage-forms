@@ -96,19 +96,19 @@ class singleToStringTest extends TestCase
             '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-0" title="item1">' .
                         '<input type="radio" name="singleName" value="0">' .
                         '<span>item1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-1" title="item2">' .
                         '<input type="radio" name="singleName" value="1">' .
                         '<span>item2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-2" title="item3">' .
                         '<input type="radio" name="singleName" value="2">' .
                         '<span>item3</span>' .
                     '</label>' .
@@ -161,19 +161,19 @@ class singleToStringTest extends TestCase
             '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-key1" title="item1">' .
                         '<input type="radio" name="singleName" value="key1">' .
                         '<span>item1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-key2" title="item2">' .
                         '<input type="radio" name="singleName" value="key2">' .
                         '<span>item2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-key3" title="item3">' .
                         '<input type="radio" name="singleName" value="key3">' .
                         '<span>item3</span>' .
                     '</label>' .
@@ -324,19 +324,19 @@ class singleToStringTest extends TestCase
             '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-0" title="it&quot;&gt;em1">' .
                         '<input type="radio" name="singleName" value="0">' .
                         '<span>it&quot;&gt;em1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-1" title="it&quot;&gt;em2">' .
                         '<input type="radio" name="singleName" value="1">' .
                         '<span>it&quot;&gt;em2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-2" title="it&quot;&gt;em3">' .
                         '<input type="radio" name="singleName" value="2">' .
                         '<span>it&quot;&gt;em3</span>' .
                     '</label>' .
@@ -388,19 +388,19 @@ class singleToStringTest extends TestCase
             '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-ke&amp;quot;&amp;gt;y1" title="it&quot;&gt;em1">' .
                         '<input type="radio" name="singleName" value="ke&quot;&gt;y1">' .
                         '<span>it&quot;&gt;em1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-ke&amp;quot;&amp;gt;y2" title="it&quot;&gt;em2">' .
                         '<input type="radio" name="singleName" value="ke&quot;&gt;y2">' .
                         '<span>it&quot;&gt;em2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-single-option-ke&amp;quot;&amp;gt;y3" title="it&quot;&gt;em3">' .
                         '<input type="radio" name="singleName" value="ke&quot;&gt;y3">' .
                         '<span>it&quot;&gt;em3</span>' .
                     '</label>' .

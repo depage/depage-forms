@@ -26,6 +26,8 @@ class Email extends Validator
         if ($valid && $parameters['checkDns']) {
             list($user, $domain) = explode('@', $email);
 
+            $domain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+
             $valid = checkdnsrr(idn_to_ascii($domain . "."), 'MX');
         }
 

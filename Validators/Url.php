@@ -21,7 +21,7 @@ class Url extends Validator
      **/
     public function validate($url, $parameters = array())
     {
-        return (bool) filter_var(idn_to_ascii($url), FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED + FILTER_FLAG_HOST_REQUIRED);
+        return (bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED + FILTER_FLAG_HOST_REQUIRED);
     }
     // }}}
 }

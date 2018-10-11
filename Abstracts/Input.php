@@ -254,6 +254,7 @@ abstract class Input extends Element
         $this->defaults['autofocus']       = false;
         $this->defaults['errorMessage']    = _('Please enter valid data');
         $this->defaults['label']           = $this->name;
+        $this->defaults['labelHtml']       = '';
         $this->defaults['marker']          = '*';
         $this->defaults['required']        = false;
         $this->defaults['title']           = false;

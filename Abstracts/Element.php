@@ -112,6 +112,12 @@ abstract class Element
             $attribute = str_replace('html', '', $function);
             $attribute{0} = strtolower($attribute{0});
 
+            $escapedAttribute = $attribute . "Html";
+
+            if (!empty($this->$escapedAttribute)) {
+                return $this->$escapedAttribute;
+            }
+
             return $this->htmlEscape($this->$attribute);
         } else {
             trigger_error("Call to undefined method $function", E_USER_ERROR);

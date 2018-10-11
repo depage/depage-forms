@@ -181,7 +181,7 @@ class Text extends Abstracts\Input
     {
         $this->value = (string) $this->value;
 
-        if ($this->normalize) {
+        if ($this->normalize && class_exists("\\Normalizer")) {
             $this->value = \Normalizer::normalize($this->value);
         }
     }

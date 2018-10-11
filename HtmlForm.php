@@ -11,103 +11,6 @@
  * @license http://www.spdx.org/licenses/MIT MIT License
  **/
 
-// {{{ documentation
-/**
- * @mainpage
- *
- * @intro
- * @image html icon_depage-forms.png
- * @htmlinclude main-intro.html
- * @endintro
- *
- * Usage
- * -----
- *
- * depage-forms will mainly be used through the @link Depage::HtmlForm::HtmlForm
- * HtmlForm-class@endlink. It is the main interface through which you can add
- * inputs, fieldsets and steps.
- *
- * You can find a list of available input-class in @link Depage::HtmlForm::Elements
- * elements@endlink.
- *
- * You can find a list of available parameters for inputs under @link
- * htmlformInputDefaults the input defaults@endlink.
- *
- * @subpage developer
- *
- * @htmlinclude main-extended.html
- **/
-
-/**
- * @page usage Usage
- *
- **/
-
-/**
- * @page developer Developer guide
- *
- * The idea behind this project is to combine comfortable form-generation and
- * modern browser functionality with maximum client coverage.
- *
- * Comfort
- * -------
- * - We abstract browser specifics from HTML-forms to provide a clean interface
- *   to web developers. All configuration is located in one place.
- *
- * Coverage
- * - To reach as many users as possible we have included several fallbacks for
- *   old browsers. Depage-forms mimics validation-behavior of modern browsers
- *   with JavaScript (client-side) or PHP (server-side).
- *
- * HTML5
- * -----
- * - We follow the HTML5 spec where it's sensible. The only clash so far is
- *   @link Depage::HtmlForm::Elements::Multiple::htmlInputAttributes checkbox
- *   validation @endlink .
- * - We aim to provide as much HTML5 functionality as possible.
- *
- * Customization
- * -------------
- * - Input-elements can be easily modified by overriding the included
- * element-classes.
- * - New element-classes are automatically integrated by the autoloader. (They
- * can be instantiated with @link Depage::HtmlForm::Abstracts::Container::__call
- * add @endlink (runtime generated methods))
- *
- * Developer Prerequisites
- * -----------------------
- * - PHP 5.3
- * - PHPUnit 3.5 (to run included unit tests)
- * - Doxygen 1.7.2 (to generate documentation)
- *
- * Coding style
- * ------------
- * Generally, follow PSR-0, PSR-1, PSR-2 coding standard (http://www.php-fig.org)
- *
- * Deployment
- * ----------
- * To generate a gzipped release of the library (includes examples):
- *
- *     $ make release
- *
- * To generate a gzipped release with the essentials for working environments:
- *
- *     $ make min
- *
- * Tests
- * -----
- * To run the unit tests:
- *
- *     $ make test
- *
- * Documentation
- * -------------
- * To generate documentation:
- *
- *     $ make doc
- **/
-// }}}
-
 // {{{ namespace
 /**
  * @namespace depage
@@ -124,7 +27,7 @@
  *
  * All Classes in this namespace are HTML input-elements that can be added to
  * instances of the @link Depage::HtmlForm::HtmlForm HtmlForm-class@endlink,
- * but also to also to @link Depage::HtmlForm::Elements::Dieldset fieldsets@endlink
+ * but also to also to @link Depage::HtmlForm::Elements::Fieldset fieldsets@endlink
  * and @link Depage::HtmlForm::Elements::Step steps@endlink:
  *
  * These are the most used elements that are added to the form with the add-method:
@@ -216,9 +119,6 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  *
  * You can find a list of available input-class in @link Depage::HtmlForm::Elements
  * elements@endlink.
- *
- * See examples at
- *     - @link simple.php @endlink - a simple form
  **/
 class HtmlForm extends Abstracts\Container
 {
