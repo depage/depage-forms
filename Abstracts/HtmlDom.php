@@ -267,7 +267,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
         $nodes = $this->getBodyNodes();
         if ($nodes->length == 1) {
             $node = $nodes->item(0);
-            if ($node->nodeName == "p" && $node->childnodes->length == 1 && $node->childnodes->item(0)->nodeName == "br") {
+            if ($node->nodeName == "p" && $node->childNodes->length == 1 && $node->childNodes->item(0)->nodeName == "br") {
                 $node->parentNode->removeChild($node);
             }
         }
