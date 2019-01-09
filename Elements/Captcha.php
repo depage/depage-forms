@@ -39,6 +39,10 @@ class Captcha extends Text
         parent::setDefaults();
         $this->defaults['defaultValue'] = false;
         $this->defaults['errorMessage'] = _('Please fill in the correct phrase.');
+        $this->defaults['textColor'] = false;
+        $this->defaults['backgroundColor'] = false;
+        $this->defaults['width'] = 250;
+        $this->defaults['height'] = 100;
     }
     // }}}
     // {{{ __construct()
@@ -54,12 +58,18 @@ class Captcha extends Text
     {
         parent::__construct($name, $parameters, $form);
 
-        // @todo when to reuse old phrase?
         $this->captcha = new CaptchaBuilder();
+        if (is_array($this->textColor)) {
+            $this->captcha->setTextColor($this->textColor[0], $this->textColor[1], $this->textColor[2]);
+        }
+        if (is_array($this->backgroundColor)) {
+            $this->captcha->setBackgroundColor($this->backgroundColor[0], $this->backgroundColor[1], $this->backgroundColor[2]);
+        }
+        // @todo when to reuse old phrase?
+        // @todo where to save old phrase?
+        // @todo move phrase building to htmlform?
         $this->phrase = $this->captcha
-            ->setTextColor(0, 92, 132)
-            ->setBackgroundColor(242, 238, 239)
-            ->build(250, 100)
+            ->build($this->width, $this->height)
             ->getPhrase();
     }
     // }}}
