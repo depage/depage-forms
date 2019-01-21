@@ -12,6 +12,7 @@
 namespace Depage\HtmlForm\Elements;
 
 use Gregwar\Captcha\CaptchaBuilder;
+use Gregwar\Captcha\PhraseBuilder;
 
 /**
  * @brief Captcha
@@ -20,9 +21,14 @@ use Gregwar\Captcha\CaptchaBuilder;
 class Captcha extends Text
 {
     /**
-     * @brief captchaBuilder
+     * @brief captcha
      **/
     protected $captcha = null;
+
+    /**
+     * @brief sessionSlot
+     **/
+    protected $sessionSlot = null;
 
     // {{{ setDefaults()
     /**
@@ -65,12 +71,6 @@ class Captcha extends Text
         if (is_array($this->backgroundColor)) {
             $this->captcha->setBackgroundColor($this->backgroundColor[0], $this->backgroundColor[1], $this->backgroundColor[2]);
         }
-        // @todo when to reuse old phrase?
-        // @todo where to save old phrase?
-        // @todo move phrase building to htmlform?
-        $this->phrase = $this->captcha
-            ->build($this->width, $this->height)
-            ->getPhrase();
     }
     // }}}
     // {{{ setValue()
@@ -87,13 +87,24 @@ class Captcha extends Text
     {
         if (is_bool($newValue)) {
             $this->value = $newValue;
-        } elseif ($newValue === "true") {
-            $this->value = true;
         } else {
-            $this->value = false;
+            $this->value = $newValue;
         }
 
         return $this->value;
+    }
+    // }}}
+    // {{{ setSessionSlot()
+    /**
+     * @brief setSessionSlot
+     *
+     * @param mixed &$
+     * @return void
+     **/
+    public function setSessionSlot(&$sessionSlot)
+    {
+        $this->sessionSlot = &$sessionSlot;
+
     }
     // }}}
     // {{{ validate()
@@ -111,13 +122,45 @@ class Captcha extends Text
         if (!$this->validated) {
             $this->validated = true;
 
-            $this->valid = (($this->value !== null)
-                && ($this->validator->validate($this->value) || $this->isEmpty())
-                && ($this->value || !$this->required)
-            );
+            $this->valid = $this->value === true || $this->testPhrase($this->value);
         }
 
         return $this->valid;
+    }
+    // }}}
+    // {{{ testPhrase()
+    /**
+     * @brief testPhrase
+     *
+     * @param mixed
+     * @return void
+     **/
+    protected function testPhrase($value)
+    {
+        $this->captcha->setPhrase($this->sessionSlot['formCaptcha']);
+
+        if (!$this->captcha->testPhrase($value)) {
+            $this->getNewPhrase();
+
+            return false;
+        }
+
+        return true;
+    }
+    // }}}
+    // {{{ getNewPhrase()
+    /**
+     * @brief getNewPhrase
+     *
+     * @return void
+     **/
+    protected function getNewPhrase()
+    {
+        $phraseBuilder = new PhraseBuilder();
+        $phrase = $phraseBuilder->build();
+
+        $this->captcha->setPhrase($phrase);
+        $this->sessionSlot['formCaptcha'] = $phrase;
     }
     // }}}
     // {{{ __toString()
@@ -138,14 +181,19 @@ class Captcha extends Text
         $errorMessage       = $this->htmlErrorMessage();
         $helpMessage        = $this->htmlHelpMessage();
 
+        if (empty($this->sessionSlot['formCaptcha'])) {
+            $this->getNewPhrase();
+        }
+
+        $this->captcha->build($this->width, $this->height);
+
         return "<p {$wrapperAttributes}>" .
-            $this->phrase .
-            "<span class=\"captcha-img\">" .
-                "<img src=\"" . $this->captcha->inline() . "\" />" .
-            "</span>" .
             "<label>" .
                 "<span class=\"depage-label\">{$label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$type}\"{$inputAttributes} value=\"{$value}\">" .
+                "<span class=\"captcha-img\">" .
+                    "<img src=\"" . $this->captcha->inline() . "\" />" .
+                "</span>" .
+                "<input name=\"{$this->name}\" type=\"{$type}\"{$inputAttributes} value=\"$value\">" .
                 $list .
             "</label>" .
             $errorMessage .

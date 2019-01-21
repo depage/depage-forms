@@ -178,6 +178,7 @@ class HtmlForm extends Abstracts\Container
         'formStep',
         'formFinalPost',
         'formCsrfToken',
+        'formCaptcha',
     );
     /**
      * @brief Namespace strings for addible element classes
@@ -592,6 +593,12 @@ class HtmlForm extends Abstracts\Container
     public function updateInputValue($name)
     {
         $element = $this->getElement($name);
+
+        // handle captcha phrase
+        if ($this->getElement($name) instanceof Elements\Captcha) {
+            $element->setSessionSlot($this->sessionSlot);
+        }
+
         // if it's a post, take the value from there and save it to the session
         if (
             isset($_POST['formName']) && ($_POST['formName'] === $this->name)
