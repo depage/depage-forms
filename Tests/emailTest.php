@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Email;
 class emailTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->email    = new Email('emailName', array(), $this->form);

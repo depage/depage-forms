@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Single;
 class singleToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->single   = new Single('singleName', array(), $this->form);

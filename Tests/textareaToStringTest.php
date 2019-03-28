@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Textarea;
 class textareaToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->textarea = new Textarea('textareaName', array(), $this->form);

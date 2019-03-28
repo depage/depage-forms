@@ -41,7 +41,7 @@ class undefinedMethodException extends Exception {}
 class elementTest extends TestCase
 {
     // {{{ setUp()
-    protected function setUp()
+    protected function setUp():void
     {
         $this->form = new nameTestForm;
         $this->element = new elementTestClass('elementName', array(), $this->form);

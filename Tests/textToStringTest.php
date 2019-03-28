@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Text;
 class textToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form = new nameTestForm;
         $this->text = new Text('textName', array(), $this->form);

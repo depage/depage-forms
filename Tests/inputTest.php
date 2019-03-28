@@ -40,7 +40,7 @@ class inputTestClass extends Input
 class inputTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->input    = new inputTestClass('inputName', array(), $this->form);

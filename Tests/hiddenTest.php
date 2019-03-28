@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Hidden;
 class hiddenTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->hidden   = new Hidden('nameString', array(), $this->form);

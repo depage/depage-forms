@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Datetimelocal;
 class datetimelocalToStringTest extends TestCase
 {
     // {{{ setUp
-    public function setUp()
+    public function setUp():void
     {
         $this->form = new nameTestForm;
         $this->datetimelocal = new Datetimelocal('datetimelocalName', array(), $this->form);

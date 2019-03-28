@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Boolean;
 class booleanToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm();
         $this->boolean  = new Boolean('booleanName', array(), $this->form);

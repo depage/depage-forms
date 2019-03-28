@@ -10,7 +10,7 @@ use Depage\HtmlForm\Elements\Step;
 class stepToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form = new nameTestForm;
         $this->step = new Step('stepName', array(), $this->form);

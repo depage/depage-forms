@@ -35,7 +35,7 @@ class prgTest extends TestCase
      * @param mixed
      * @return void
      **/
-    public function tearDown()
+    public function tearDown():void
     {
         $_GET = [];
         $_REQUEST = [];

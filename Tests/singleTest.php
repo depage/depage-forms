@@ -8,8 +8,8 @@ use Depage\HtmlForm\Elements\Single;
  **/
 class singleTest extends TestCase
 {
-    // {{{
-    public function setUp()
+    // {{{ setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->single   = new Single('singleName', [

@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Number;
 class numberToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->number   = new Number('numberName', array(), $this->form);

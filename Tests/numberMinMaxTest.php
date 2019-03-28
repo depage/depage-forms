@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Number;
 class numberMinMaxTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
     }

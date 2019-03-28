@@ -9,7 +9,7 @@ use Depage\HtmlForm\Elements\Multiple;
 class multipleTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form     = new nameTestForm;
         $this->multiple = new Multiple('multipleName', array(), $this->form);

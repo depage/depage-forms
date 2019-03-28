@@ -9,7 +9,7 @@ use Depage\HtmlForm\HtmlForm;
 class inputTypesTest extends TestCase
 {
     // {{{ setUp()
-    protected function setUp()
+    protected function setUp():void
     {
         $this->form = new HtmlForm('formNameString');
     }

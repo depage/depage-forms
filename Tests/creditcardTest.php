@@ -10,7 +10,7 @@ use Depage\HtmlForm\Elements\Creditcard;
 class creditcardTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form = new nameTestForm;
         $this->creditcard = new Creditcard('creditcardName', array(), $this->form);

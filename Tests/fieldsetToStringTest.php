@@ -10,7 +10,7 @@ use Depage\HtmlForm\Elements\Fieldset;
 class fieldsetToStringTest extends TestCase
 {
     // {{{ setUp()
-    public function setUp()
+    public function setUp():void
     {
         $this->form = new nameTestForm('formName');
         $this->fieldset = new Fieldset('fieldsetName', array(), $this->form);
