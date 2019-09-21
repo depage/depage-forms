@@ -143,12 +143,12 @@ class validatorTest extends TestCase
 
         // telephone number validator returns empty string (tel inputs are automatically validated)
         $telValidator = Validator::factory('tel');
-        $this->assertInternalType('string', $telValidator->getPatternAttribute());
+        $this->assertIsString($telValidator->getPatternAttribute());
         $this->assertEquals('', $telValidator->getPatternAttribute());
 
         // unknown validators are turned into text validators -> they accept anything -> empty string
         $anyValidator = Validator::factory('foo');
-        $this->assertInternalType('string', $telValidator->getPatternAttribute());
+        $this->assertIsString($telValidator->getPatternAttribute());
         $this->assertEquals('', $anyValidator->getPatternAttribute());
     }
     // }}}

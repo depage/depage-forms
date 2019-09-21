@@ -28,7 +28,7 @@ class emailTest extends TestCase
 
         // tests type casting
         $this->email->setValue(42);
-        $this->assertInternalType('string', $this->email->getValue());
+        $this->assertIsString($this->email->getValue());
         $this->assertEquals('42', $this->email->getValue());
     }
     // }}}

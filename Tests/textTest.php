@@ -36,7 +36,7 @@ class textTest extends TestCase
         $this->assertEquals('valueString', $this->text->getValue());
 
         $this->text->setValue(42);
-        $this->assertInternalType('string', $this->text->getValue());
+        $this->assertIsString($this->text->getValue());
         $this->assertEquals('42', $this->text->getValue());
     }
     // }}}
