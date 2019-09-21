@@ -62,9 +62,10 @@ class Captcha extends Text
      **/
     public function __construct($name, $parameters, $form)
     {
+        $this->captcha = new CaptchaBuilder();
+
         parent::__construct($name, $parameters, $form);
 
-        $this->captcha = new CaptchaBuilder();
         if (is_array($this->textColor)) {
             $this->captcha->setTextColor($this->textColor[0], $this->textColor[1], $this->textColor[2]);
         }
