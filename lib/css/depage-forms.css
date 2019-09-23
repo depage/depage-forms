@@ -1,1 +1,702 @@
-.depage-form{max-width:40em}.depage-form .depage-label{display:block;float:left;width:33%;height:1em;min-height:1em;height:auto !important;padding-bottom:0.3em;padding-right:0.3em}.depage-form .input-boolean input{float:left;margin-top:0.5em}.depage-form .input-boolean .depage-label{display:block;float:none;width:auto;margin-left:1.7em}.depage-form p{clear:left}.depage-form p,.depage-form .depage-label{position:relative;line-height:1.8em}.depage-form input,.depage-form select,.depage-form textarea{width:63%;font-family:inherit;font-size:1em}.depage-form .input-boolean input,.depage-form .input-single input,.depage-form .input-multiple input,.depage-form .back input,.depage-form .cancel input,.depage-form .submit input{width:auto}.depage-form .input-single span label,.depage-form .input-multiple span label{display:inline-block;white-space:nowrap}.depage-form .input-single span label span,.depage-form .input-multiple span label span{padding-left:0.5em;padding-right:1em;font-size:1.1em}.depage-form input,.depage-form select,.depage-form textarea{border:1px solid #999999;padding:0.2em}.depage-form input:focus,.depage-form select:focus,.depage-form textarea:focus{border:1px solid #000000}.depage-form input:required,.depage-form input:invalid,.depage-form select:required,.depage-form select:invalid,.depage-form textarea:required,.depage-form textarea:invalid{box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none}.error .depage-form input,.error .depage-form select,.error .depage-form textarea{border:1px solid #ff0000}.depage-form .input-boolean input,.depage-form .input-boolean input:focus,.depage-form .input-boolean.error input,.depage-form .input-single input,.depage-form .input-single input:focus,.depage-form .input-single.error input,.depage-form .input-multiple input,.depage-form .input-multiple input:focus,.depage-form .input-multiple.error input{border:none}.depage-form .error .depage-label{color:#ff0000}.depage-form .submit input{background:#cccccc}.depage-form .submit.error input{border:1px solid #dddddd;color:#999999;background:#dddddd}.depage-form .errorMessage{display:block;position:absolute;top:0.2em;right:3%;max-width:70%;font-size:0.8em;text-align:right}.depage-form ol.stepnav{display:table;table-layout:fixed;width:100%;padding:0;margin:0}.depage-form ol.stepnav li{display:table-cell;list-style:none;background:#eeeeee;border-right:0.3em solid #ffffff}.depage-form ol.stepnav li a{display:block;height:100%;padding:0.4em;color:#000000;text-decoration:none}.depage-form ol.stepnav li.invalid a::after{content:" !";color:#ff0000;font-weight:bold}.depage-form ol.stepnav li.current-step{background:#dddddd}.depage-form ol.stepnav li{*display:block;*float:left}.depage-form .depageEditor{clear:left;position:relative;margin-left:25px}.depage-form ul.depageEditorToolbar{position:absolute;left:-25px;top:0;line-height:auto;list-style:none;padding:0;margin:0;width:25px}.depage-form ul.depageEditorToolbar li{padding:0}.depage-form ul.depageEditorToolbar li a{display:block;width:25px;height:25px;text-indent:-10000px;background-image:url(../richtext-toolbar.png);background-repeat:none;background-position:25px 0}.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold{background-position:0 0}.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold:hover,.depage-form ul.depageEditorToolbar li a.depageEditorButtonBold.on{background-position:-25px 0}.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic{background-position:0 -25px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic:hover,.depage-form ul.depageEditorToolbar li a.depageEditorButtonItalic.on{background-position:-25px -25px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink{background-position:0 -50px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink:hover,.depage-form ul.depageEditorToolbar li a.depageEditorButtonHyperlink.on{background-position:-25px -50px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList{background-position:0 -75px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList:hover,.depage-form ul.depageEditorToolbar li a.depageEditorButtonOrderedList.on{background-position:-25px -75px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList{background-position:0 -100px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList:hover,.depage-form ul.depageEditorToolbar li a.depageEditorButtonUnorderedList.on{background-position:-25px -100px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML{background-position:0 -125px}.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML:hover,.depage-form ul.depageEditorToolbar li a.depageEditorButtonHTML.on{background-position:-25px -125px}.depage-form .input-richtext textarea,.depage-form .input-richtext iframe{width:100%;border:1px solid;min-height:10em}
+.depage-form {
+  max-width: 40em; }
+  .depage-form .depage-label, .depage-form.labels-on-left .depage-label,
+  .depage-form .labels-on-left .depage-label {
+    float: left;
+    width: 33.3333%;
+    padding-right: 0.6em; }
+  .depage-form > p, .depage-form.labels-on-left > p,
+  .depage-form .labels-on-left > p {
+    clear: left; }
+  .depage-form .errorMessage, .depage-form.labels-on-left .errorMessage,
+  .depage-form .labels-on-left .errorMessage {
+    right: 0;
+    padding-right: 1em;
+    max-width: 66.6666%; }
+  .depage-form.labels-on-right .depage-label,
+  .depage-form .labels-on-right .depage-label {
+    float: right;
+    width: 33.3333%;
+    padding-left: 0.6em; }
+  .depage-form.labels-on-right > p,
+  .depage-form .labels-on-right > p {
+    clear: right; }
+  .depage-form.labels-on-right .errorMessage,
+  .depage-form .labels-on-right .errorMessage {
+    right: 33.3333%;
+    padding-right: 1em;
+    max-width: 66.6666%; }
+  .depage-form.labels-on-top .depage-label,
+  .depage-form .labels-on-top .depage-label {
+    float: none;
+    width: 100%; }
+  .depage-form.labels-on-top input,
+  .depage-form.labels-on-top button,
+  .depage-form.labels-on-top select,
+  .depage-form.labels-on-top textarea,
+  .depage-form.labels-on-top .textarea,
+  .depage-form.labels-on-top .selectize-input,
+  .depage-form .labels-on-top input,
+  .depage-form .labels-on-top button,
+  .depage-form .labels-on-top select,
+  .depage-form .labels-on-top textarea,
+  .depage-form .labels-on-top .textarea,
+  .depage-form .labels-on-top .selectize-input {
+    width: 100%; }
+  .depage-form.labels-on-top .errorMessage,
+  .depage-form .labels-on-top .errorMessage {
+    right: 0;
+    padding-right: 1em;
+    max-width: 100%; }
+  @media screen and (max-width: 600px) {
+    .depage-form .depage-label, .depage-form.labels-on-left .depage-label, .depage-form.labels-on-right .depage-label, .depage-form.labels-on-top .depage-label,
+    .depage-form .labels-on-left .depage-label,
+    .depage-form .labels-on-right .depage-label,
+    .depage-form .labels-on-top .depage-label {
+      float: none;
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0; }
+    .depage-form input,
+    .depage-form button,
+    .depage-form select,
+    .depage-form textarea,
+    .depage-form .textarea,
+    .depage-form .selectize-input, .depage-form.labels-on-left input,
+    .depage-form.labels-on-left button,
+    .depage-form.labels-on-left select,
+    .depage-form.labels-on-left textarea,
+    .depage-form.labels-on-left .textarea,
+    .depage-form.labels-on-left .selectize-input, .depage-form.labels-on-right input,
+    .depage-form.labels-on-right button,
+    .depage-form.labels-on-right select,
+    .depage-form.labels-on-right textarea,
+    .depage-form.labels-on-right .textarea,
+    .depage-form.labels-on-right .selectize-input, .depage-form.labels-on-top input,
+    .depage-form.labels-on-top button,
+    .depage-form.labels-on-top select,
+    .depage-form.labels-on-top textarea,
+    .depage-form.labels-on-top .textarea,
+    .depage-form.labels-on-top .selectize-input,
+    .depage-form .labels-on-left input,
+    .depage-form .labels-on-left button,
+    .depage-form .labels-on-left select,
+    .depage-form .labels-on-left textarea,
+    .depage-form .labels-on-left .textarea,
+    .depage-form .labels-on-left .selectize-input,
+    .depage-form .labels-on-right input,
+    .depage-form .labels-on-right button,
+    .depage-form .labels-on-right select,
+    .depage-form .labels-on-right textarea,
+    .depage-form .labels-on-right .textarea,
+    .depage-form .labels-on-right .selectize-input,
+    .depage-form .labels-on-top input,
+    .depage-form .labels-on-top button,
+    .depage-form .labels-on-top select,
+    .depage-form .labels-on-top textarea,
+    .depage-form .labels-on-top .textarea,
+    .depage-form .labels-on-top .selectize-input {
+      width: 100%; }
+    .depage-form .errorMessage, .depage-form.labels-on-left .errorMessage, .depage-form.labels-on-right .errorMessage, .depage-form.labels-on-top .errorMessage,
+    .depage-form .labels-on-left .errorMessage,
+    .depage-form .labels-on-right .errorMessage,
+    .depage-form .labels-on-top .errorMessage {
+      right: 0;
+      padding-right: 1em;
+      max-width: 100%; } }
+  .depage-form .depage-label {
+    display: block;
+    height: 1em;
+    min-height: 1em;
+    height: auto !important;
+    padding-bottom: 0.3em; }
+  .depage-form .input-boolean input {
+    display: block;
+    float: left;
+    margin-top: 0.5em; }
+  .depage-form .input-boolean .depage-label {
+    display: block;
+    float: none;
+    width: auto; }
+  .depage-form p,
+  .depage-form .depage-label {
+    position: relative;
+    line-height: 1.8em; }
+  .depage-form input,
+  .depage-form button,
+  .depage-form select,
+  .depage-form textarea,
+  .depage-form .textarea,
+  .depage-form .selectize-input {
+    width: 66.6667%;
+    font-family: inherit;
+    font-size: 1em;
+    color: black; }
+  .depage-form .input-boolean button,
+  .depage-form .input-boolean input,
+  .depage-form .input-single button,
+  .depage-form .input-single input,
+  .depage-form .input-multiple button,
+  .depage-form .input-multiple input,
+  .depage-form .input-button button,
+  .depage-form .input-button input,
+  .depage-form .back button,
+  .depage-form .back input,
+  .depage-form .cancel button,
+  .depage-form .cancel input,
+  .depage-form .submit button,
+  .depage-form .submit input {
+    width: auto; }
+  .depage-form .input-single span label,
+  .depage-form .input-multiple span label {
+    display: inline-block;
+    white-space: nowrap; }
+    .depage-form .input-single span label span,
+    .depage-form .input-multiple span label span {
+      padding-left: 0.5em;
+      padding-right: 1em;
+      font-size: 1em; }
+  .depage-form input,
+  .depage-form button,
+  .depage-form select,
+  .depage-form textarea,
+  .depage-form .textarea {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding: 0.2em;
+    background-color: white;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0; }
+    .depage-form input ::-moz-selection, .depage-form input::-moz-selection,
+    .depage-form button ::-moz-selection,
+    .depage-form button::-moz-selection,
+    .depage-form select ::-moz-selection,
+    .depage-form select::-moz-selection,
+    .depage-form textarea ::-moz-selection,
+    .depage-form textarea::-moz-selection,
+    .depage-form .textarea ::-moz-selection,
+    .depage-form .textarea::-moz-selection {
+      color: black;
+      background: #bbddff; }
+    .depage-form input ::selection, .depage-form input::selection,
+    .depage-form button ::selection,
+    .depage-form button::selection,
+    .depage-form select ::selection,
+    .depage-form select::selection,
+    .depage-form textarea ::selection,
+    .depage-form textarea::selection,
+    .depage-form .textarea ::selection,
+    .depage-form .textarea::selection {
+      color: black;
+      background: #bbddff; }
+    .depage-form input:required, .depage-form input:invalid,
+    .depage-form button:required,
+    .depage-form button:invalid,
+    .depage-form select:required,
+    .depage-form select:invalid,
+    .depage-form textarea:required,
+    .depage-form textarea:invalid,
+    .depage-form .textarea:required,
+    .depage-form .textarea:invalid {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none; }
+    .depage-form input:hover,
+    .depage-form button:hover,
+    .depage-form select:hover,
+    .depage-form textarea:hover,
+    .depage-form .textarea:hover {
+      border-color: black; }
+    .depage-form input:disabled,
+    .depage-form button:disabled,
+    .depage-form select:disabled,
+    .depage-form textarea:disabled,
+    .depage-form .textarea:disabled {
+      opacity: .4; }
+      .depage-form input:disabled:hover,
+      .depage-form button:disabled:hover,
+      .depage-form select:disabled:hover,
+      .depage-form textarea:disabled:hover,
+      .depage-form .textarea:disabled:hover {
+        border-color: #999999; }
+    .depage-form input.focus, .depage-form input:focus,
+    .depage-form button.focus,
+    .depage-form button:focus,
+    .depage-form select.focus,
+    .depage-form select:focus,
+    .depage-form textarea.focus,
+    .depage-form textarea:focus,
+    .depage-form .textarea.focus,
+    .depage-form .textarea:focus {
+      border-color: black;
+      background-color: white; }
+  .depage-form .readonly input,
+  .depage-form .readonly button,
+  .depage-form .readonly select,
+  .depage-form .readonly textarea,
+  .depage-form .readonly .textarea {
+    opacity: .4; }
+  .depage-form .error input,
+  .depage-form .error button,
+  .depage-form .error select,
+  .depage-form .error textarea,
+  .depage-form .error .textarea {
+    border-color: red;
+    background-color: white; }
+  .depage-form .input-boolean input,
+  .depage-form .input-boolean input:focus, .depage-form .input-boolean.error input,
+  .depage-form .input-single input,
+  .depage-form .input-single input:focus,
+  .depage-form .input-single.error input,
+  .depage-form .input-multiple input,
+  .depage-form .input-multiple input:focus,
+  .depage-form .input-multiple.error input {
+    border: none; }
+  .depage-form .error .depage-label {
+    color: red; }
+  .depage-form .input-button button,
+  .depage-form .submit input {
+    background: #cccccc; }
+  .depage-form .input-button.error button,
+  .depage-form .submit.error input {
+    border: 1px solid #dddddd;
+    color: #999999;
+    background: #dddddd; }
+  .depage-form .errorMessage {
+    display: block;
+    position: absolute;
+    clear: both;
+    top: 0.2em;
+    font-size: 0.8em;
+    text-align: right; }
+  .depage-form fieldset {
+    /*
+    border: none;
+    border-top: 1px solid;
+    padding: 0;
+    position: relative;
+    background: #eeeeee;
+    */ }
+  .depage-form fieldset legend {
+    /*
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.2em;
+    font-weight: bold;
+    background: #dddddd;
+    margin-bottom: 1em;
+    */ }
+  .depage-form ol.stepnav {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    padding: 0;
+    margin: 0; }
+    .depage-form ol.stepnav li {
+      display: table-cell;
+      list-style: none;
+      background: #eeeeee;
+      border-right: 0.3em solid #ffffff; }
+      .depage-form ol.stepnav li a {
+        display: block;
+        height: 100%;
+        padding: 0.4em;
+        color: #000000;
+        text-decoration: none; }
+      .depage-form ol.stepnav li.invalid a::after {
+        content: " !";
+        color: red;
+        font-weight: bold; }
+      .depage-form ol.stepnav li.current-step {
+        background: #dddddd; }
+  .depage-form .selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
+    visibility: visible !important;
+    background: #f2f2f2 !important;
+    background: rgba(0, 0, 0, 0.06) !important;
+    border: 0 none !important;
+    -webkit-box-shadow: inset 0 0 12px 4px white;
+    -moz-box-shadow: inset 0 0 12px 4px white;
+    box-shadow: inset 0 0 12px 4px white; }
+  .depage-form .selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
+    content: '!';
+    visibility: hidden; }
+  .depage-form .selectize-control.plugin-drag_drop .ui-sortable-helper {
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+  .depage-form .selectize-dropdown-header {
+    position: relative;
+    padding: 5px 8px;
+    border-bottom: 1px solid #999999;
+    background: #f8f8f8;
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    -ms-border-radius: 0 0 0 0;
+    -o-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0; }
+  .depage-form .selectize-dropdown-header-close {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    color: #303030;
+    opacity: 0.4;
+    margin-top: -12px;
+    line-height: 20px;
+    font-size: 20px !important; }
+  .depage-form .selectize-dropdown-header-close:hover {
+    color: #000000; }
+  .depage-form .selectize-dropdown.plugin-optgroup_columns .optgroup {
+    border-right: 1px solid #f2f2f2;
+    border-top: 0 none;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  .depage-form .selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
+    border-right: 0 none; }
+  .depage-form .selectize-dropdown.plugin-optgroup_columns .optgroup:before {
+    display: none; }
+  .depage-form .selectize-dropdown.plugin-optgroup_columns .optgroup-header {
+    border-top: 0 none; }
+  .depage-form .selectize-control.plugin-remove_button [data-value] {
+    position: relative;
+    padding-right: 20px !important; }
+  .depage-form .selectize-control.plugin-remove_button [data-value] .remove {
+    z-index: 1;
+    /* fixes ie bug (see #392) */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 17px;
+    text-align: center;
+    font-size: 18px;
+    color: inherit;
+    text-decoration: none;
+    vertical-align: middle;
+    display: inline-block;
+    padding: 1px 0 0 0;
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    -ms-border-radius: 0 0 0 0;
+    -o-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #7f7f7f; }
+  .depage-form .selectize-control.plugin-remove_button [data-value] .remove:hover {
+    background: rgba(0, 0, 0, 0.05); }
+  .depage-form .selectize-control.plugin-remove_button [data-value].active .remove {
+    border-left-color: #cacaca; }
+  .depage-form .selectize-control.plugin-remove_button .disabled [data-value] .remove:hover {
+    background: none; }
+  .depage-form .selectize-control.plugin-remove_button .disabled [data-value] .remove {
+    border-left-color: #ffffff; }
+  .depage-form .selectize-control {
+    position: relative; }
+  .depage-form .selectize-dropdown,
+  .depage-form .selectize-input,
+  .depage-form .selectize-input input {
+    color: black;
+    font-family: inherit;
+    font-size: 1em;
+    line-height: 1em;
+    -webkit-font-smoothing: inherit; }
+  .depage-form .selectize-input,
+  .depage-form .selectize-control.single .selectize-input.input-active {
+    background: white;
+    cursor: text;
+    display: inline-block; }
+  .depage-form .selectize-input {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding: 8px 8px;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0; }
+  .depage-form .selectize-control.multi .selectize-input.has-items {
+    padding: 6px 8px 3px; }
+  .depage-form .selectize-input.full {
+    background-color: white; }
+  .depage-form .selectize-input.disabled,
+  .depage-form .selectize-input.disabled * {
+    cursor: default !important; }
+  .depage-form .selectize-input.focus {
+    border-color: black;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.5); }
+  .depage-form .error .selectize-input {
+    border-color: red; }
+  .depage-form .selectize-input > * {
+    vertical-align: baseline;
+    display: -moz-inline-stack;
+    display: inline-block;
+    zoom: 1;
+    *display: inline; }
+  .depage-form .selectize-control.multi .selectize-input > div {
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    padding: 2px 6px;
+    background: #e6e6e6;
+    color: black;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0; }
+  .depage-form .selectize-control.multi .selectize-input > div.active {
+    color: black;
+    background: #bbddff; }
+  .depage-form .selectize-control.multi .selectize-input.disabled > div,
+  .depage-form .selectize-control.multi .selectize-input.disabled > div.active {
+    color: #7d7d7d;
+    background: #ffffff;
+    border: 0 solid #ffffff; }
+  .depage-form .selectize-input > input {
+    display: inline-block !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    max-width: 100% !important;
+    margin: 0 2px 0 0 !important;
+    text-indent: 0 !important;
+    border: 0 none !important;
+    background: none !important;
+    line-height: inherit !important;
+    -webkit-user-select: auto !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important; }
+  .depage-form .selectize-input > input::-ms-clear {
+    display: none; }
+  .depage-form .selectize-input > input:focus {
+    outline: none !important; }
+  .depage-form .selectize-input::after {
+    content: ' ';
+    display: block;
+    clear: left; }
+  .depage-form .selectize-input.dropdown-active::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    background: #f0f0f0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  .depage-form .selectize-input.dropdown-active {
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-bottomleft-radius: 0;
+    -ms-border-bottom-left-radius: 0;
+    -o-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-bottomright-radius: 0;
+    -ms-border-bottom-right-radius: 0;
+    -o-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0; }
+  .depage-form .selectize-dropdown {
+    position: absolute;
+    z-index: 10;
+    border: 1px solid black;
+    background: #ffffff;
+    margin: -1px 0 0 0;
+    border-top: 0 none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    -ms-border-radius: 0 0 0 0;
+    -o-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0; }
+  .depage-form .selectize-dropdown [data-selectable] {
+    cursor: pointer;
+    overflow: hidden; }
+  .depage-form .selectize-dropdown [data-selectable] .highlight {
+    background: rgba(125, 168, 208, 0.2);
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px; }
+  .depage-form .selectize-dropdown [data-selectable],
+  .depage-form .selectize-dropdown .optgroup-header {
+    padding: 5px 8px; }
+  .depage-form .selectize-dropdown .optgroup:first-child .optgroup-header {
+    border-top: 0 none; }
+  .depage-form .selectize-dropdown .optgroup-header {
+    color: #303030;
+    background: #ffffff;
+    cursor: default; }
+  .depage-form .selectize-dropdown .active {
+    color: black;
+    background: #bbddff; }
+  .depage-form .selectize-dropdown .active.create {
+    color: #495c68; }
+  .depage-form .selectize-dropdown .create {
+    color: rgba(48, 48, 48, 0.5); }
+  .depage-form .selectize-dropdown-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 200px; }
+  .depage-form .selectize-control.single .selectize-input,
+  .depage-form .selectize-control.single .selectize-input input {
+    cursor: pointer; }
+  .depage-form .selectize-control.single .selectize-input.input-active,
+  .depage-form .selectize-control.single .selectize-input.input-active input {
+    cursor: text; }
+  .depage-form .selectize-control.single .selectize-input:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -3px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #808080 transparent transparent transparent; }
+  .depage-form .selectize-control.single .selectize-input.dropdown-active:after {
+    margin-top: -4px;
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent #808080 transparent; }
+  .depage-form .selectize-control.rtl.single .selectize-input:after {
+    left: 15px;
+    right: auto; }
+  .depage-form .selectize-control.rtl .selectize-input > input {
+    margin: 0 4px 0 -2px !important; }
+  .depage-form .selectize-control .selectize-input.disabled {
+    opacity: 0.5;
+    background-color: #fafafa; }
+  .depage-form .input-richtext .textarea,
+  .depage-form .input-richtext .textarea-content,
+  .depage-form .input-richtext textarea {
+    min-height: 10em;
+    margin-bottom: 0.3em; }
+  .depage-form .input-richtext .textarea {
+    position: relative;
+    padding: 0.2em; }
+    .depage-form .input-richtext .textarea .textarea-content {
+      margin-bottom: 0; }
+    .depage-form .input-richtext .textarea .textarea-content:focus {
+      outline: none; }
+    .depage-form .input-richtext .textarea h1,
+    .depage-form .input-richtext .textarea h2,
+    .depage-form .input-richtext .textarea h3,
+    .depage-form .input-richtext .textarea h4,
+    .depage-form .input-richtext .textarea h5,
+    .depage-form .input-richtext .textarea h6,
+    .depage-form .input-richtext .textarea li,
+    .depage-form .input-richtext .textarea dt,
+    .depage-form .input-richtext .textarea dd,
+    .depage-form .input-richtext .textarea p {
+      font-size: 1em !important;
+      line-height: 1.5em; }
+    .depage-form .input-richtext .textarea h1,
+    .depage-form .input-richtext .textarea h2,
+    .depage-form .input-richtext .textarea h3,
+    .depage-form .input-richtext .textarea h4,
+    .depage-form .input-richtext .textarea h5,
+    .depage-form .input-richtext .textarea h6 {
+      position: relative;
+      font-weight: bold;
+      color: #555555; }
+      .depage-form .input-richtext .textarea h1::after,
+      .depage-form .input-richtext .textarea h2::after,
+      .depage-form .input-richtext .textarea h3::after,
+      .depage-form .input-richtext .textarea h4::after,
+      .depage-form .input-richtext .textarea h5::after,
+      .depage-form .input-richtext .textarea h6::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0.5; }
+    .depage-form .input-richtext .textarea h1::after {
+      content: "h1"; }
+    .depage-form .input-richtext .textarea h2::after {
+      content: "h2"; }
+    .depage-form .input-richtext .textarea blockquote {
+      border-left: 0.2em solid;
+      padding-left: 1em;
+      margin-top: 1em;
+      margin-bottom: 1em; }
+
+.depageEditorToolbar {
+  list-style: none;
+  position: absolute;
+  width: auto;
+  height: 1.8em;
+  left: 0;
+  transform: translateX(-50%);
+  max-width: 90vw;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  font-size: 1em;
+  padding: 0 0.54em;
+  -webkit-border-radius: 0.54em;
+  -moz-border-radius: 0.54em;
+  -ms-border-radius: 0.54em;
+  -o-border-radius: 0.54em;
+  border-radius: 0.54em; }
+  .depageEditorToolbar li {
+    font-size: 1em;
+    margin: 0;
+    padding: 0 0.4em;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1.8em;
+    min-width: 1.8em;
+    height: 1.8em;
+    text-align: center;
+    cursor: pointer;
+    /*
+    border-bottom-width: 0.2em;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    */ }
+  .depageEditorToolbar li:before,
+  .depageEditorToolbar li:after {
+    display: none; }
+  .depageEditorToolbar li:hover,
+  .depageEditorToolbar li.active {
+    background-color: rgba(255, 255, 255, 0.2); }
+  .depageEditorToolbar .format-a {
+    text-decoration: underline; }
+  .depageEditorToolbar .format-b {
+    font-weight: bold; }
+  .depageEditorToolbar .format-i {
+    font-style: italic; }
+  .depageEditorToolbar .format-u {
+    text-decoration: underline; }
+  .depageEditorToolbar .format-s {
+    text-decoration: line-through; }

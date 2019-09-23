@@ -251,14 +251,24 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         }
         &:disabled {
             opacity: .4;
-        }
-        &:disabled:hover {
-            border-color: $depageFormBorderColor;
+
+            &:hover {
+                border-color: $depageFormBorderColor;
+            }
         }
         &.focus,
         &:focus {
             border-color: $depageFormBorderColorFocus;
             background-color: $depageFormInputBackgroundFocus;
+        }
+    }
+    .readonly {
+        input,
+        button,
+        select,
+        textarea,
+        .textarea {
+            opacity: .4;
         }
     }
     .error {
@@ -411,11 +421,15 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             input[type="radio"]:checked + span::before {
                 background-image: $depageFormRadiobuttonImageChecked;
             }
-            input[type="radio"]:disabled + span,
-            input[type="checkbox"]:disabled + span,
-            input[type="radio"]:disabled + span::before,
-            input[type="checkbox"]:disabled + span::before {
-                opacity: .4;
+            input[type="radio"],
+            input[type="checkbox"] {
+                &:disabled,
+                &:readonly {
+                    + span,
+                    + span::before {
+                        opacity: .4;
+                    }
+                }
             }
             input[type="checkbox"]:hover + span::before,
             input[type="radio"]:hover + span::before,
@@ -796,69 +810,70 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     }
     // }}}
 }
-    // {{{ toolbar
-    .depageEditorToolbar {
-        $buttonSize: 1.8em;
-        $radius: $buttonSize * 0.3;
-        list-style: none;
-        position: absolute;
-        width: auto;
-        height: $buttonSize;
-        left: 0;
-    transform: translateX(-50%);
-    max-width: 90vw;
-        top: 0;
-        margin: 0;
-        padding: 0;
-        z-index: 1000;
-        background: rgba(0, 0, 0, 0.8);
-        color: #ffffff;
-        font-size: 1em;
-        padding: 0 $radius;
-        @include radius($radius);
 
-        li {
-            font-size: 1em;
-            margin: 0;
-            padding: 0 0.4em;
-            display: inline-block;
-            vertical-align: top;
-            line-height: $buttonSize;
-            min-width: $buttonSize;
-            height: $buttonSize;
-            text-align: center;
-            cursor: pointer;
-            /*
-            border-bottom-width: 0.2em;
-            border-bottom-style: solid;
-            border-bottom-color: transparent;
-            */
-        }
-        li:before,
-        li:after {
-            display: none;
-        }
-        li:hover,
-        li.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            //border-bottom-color: #ff9900;
-        }
-    .format-a {
+// {{{ toolbar
+.depageEditorToolbar {
+    $buttonSize: 1.8em;
+    $radius: $buttonSize * 0.3;
+    list-style: none;
+    position: absolute;
+    width: auto;
+    height: $buttonSize;
+    left: 0;
+transform: translateX(-50%);
+max-width: 90vw;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    font-size: 1em;
+    padding: 0 $radius;
+    @include radius($radius);
+
+    li {
+        font-size: 1em;
+        margin: 0;
+        padding: 0 0.4em;
+        display: inline-block;
+        vertical-align: top;
+        line-height: $buttonSize;
+        min-width: $buttonSize;
+        height: $buttonSize;
+        text-align: center;
+        cursor: pointer;
+        /*
+        border-bottom-width: 0.2em;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        */
+    }
+    li:before,
+    li:after {
+        display: none;
+    }
+    li:hover,
+    li.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        //border-bottom-color: #ff9900;
+    }
+.format-a {
+    text-decoration: underline;
+}
+    .format-b {
+        font-weight: bold;
+    }
+    .format-i {
+        font-style: italic;
+    }
+    .format-u {
         text-decoration: underline;
     }
-        .format-b {
-            font-weight: bold;
-        }
-        .format-i {
-            font-style: italic;
-        }
-        .format-u {
-            text-decoration: underline;
-        }
-        .format-s {
-            text-decoration: line-through;
-        }
+    .format-s {
+        text-decoration: line-through;
     }
-    // }}}
+}
+// }}}
 
 // vim:set ft=scss sw=4 sts=4 fdm=marker :

@@ -212,6 +212,27 @@ class Number extends Text
     }
     // }}}
 
+    // {{{ getStringValue()
+    /**
+     * @brief getStringValue
+     *
+     * converts number value to normalized string to avoid localization issues
+     * when converting to string
+     *
+     * @return string
+     **/
+    public function getStringValue()
+    {
+        $decimals = 0;
+
+        if ($this->step !== null && ($pos = strpos($this->step, ".")) !== false) {
+            $decimals = strlen(substr($this->step, $pos + 1));
+        }
+
+        return number_format($this->getValue(), $decimals, '.', '');
+    }
+    // }}}
+
     // {{{ isEmpty()
     /**
      * @brief  custom empty check
