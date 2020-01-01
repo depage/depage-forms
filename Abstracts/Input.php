@@ -70,6 +70,17 @@ abstract class Input extends Element
     protected $disabled;
 
     /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $readonly
+     *     Marks an input as readonly
+     **/
+    /**
+     * @brief wether a input element will be readonly
+     **/
+    protected $readonly;
+
+    /**
      * @brief Name of the parent HTML form. Used to identify the element once it's rendered.
      **/
     protected $formName;
@@ -257,6 +268,8 @@ abstract class Input extends Element
         $this->defaults['labelHtml']       = '';
         $this->defaults['marker']          = '*';
         $this->defaults['required']        = false;
+        $this->defaults['disabled']        = false;
+        $this->defaults['readonly']        = false;
         $this->defaults['title']           = false;
         $this->defaults['class']           = '';
         $this->defaults['lang']            = '';
@@ -504,6 +517,9 @@ abstract class Input extends Element
         if ($this->disabled) {
             $classes .= ' disabled';
         }
+        if ($this->readonly) {
+            $classes .= ' readonly';
+        }
         if (($this->value !== null) && (!$this->validate())) {
             $classes .= ' error';
         }
@@ -545,6 +561,7 @@ abstract class Input extends Element
 
         if ($this->required)    $attributes .= ' required="required"';
         if ($this->disabled)    $attributes .= ' disabled="disabled"';
+        if ($this->readonly)    $attributes .= ' readonly="readonly"';
         if ($this->autofocus)   $attributes .= ' autofocus="autofocus"';
 
         $autoAttributes = array(

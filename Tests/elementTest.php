@@ -73,11 +73,11 @@ class elementTest extends TestCase
     // {{{ testEmptyElementNameException()
     /**
      * Throw an exception on empty element name.
-     *
-     * @expectedException \Depage\HtmlForm\Exceptions\InvalidElementNameException
      **/
     public function testEmptyElementNameException()
     {
+        $this->expectException(\Depage\HtmlForm\Exceptions\InvalidElementNameException::class);
+
         new elementTestClass(' ', array(), null);
     }
     // }}}
@@ -85,11 +85,11 @@ class elementTest extends TestCase
     // {{{ testElementNameNoStringException()
     /**
      * Throw an exception if name type isn't string.
-     *
-     * @expectedException \Depage\HtmlForm\Exceptions\InvalidElementNameException
      **/
     public function testElementNameNoStringException()
     {
+        $this->expectException(\Depage\HtmlForm\Exceptions\InvalidElementNameException::class);
+
         new elementTestClass(42, array(), null);
     }
     // }}}
@@ -97,11 +97,11 @@ class elementTest extends TestCase
     // {{{ testInvalidElementNameException()
     /**
      * Throw an exception if name contains invalid characters.
-     *
-     * @expectedException \Depage\HtmlForm\Exceptions\InvalidElementNameException
      **/
     public function testInvalidElementNameException()
     {
+        $this->expectException(\Depage\HtmlForm\Exceptions\InvalidElementNameException::class);
+
         new elementTestClass('/', array(), null);
     }
     // }}}
@@ -109,11 +109,11 @@ class elementTest extends TestCase
     // {{{ testElementParametersNoArrayException()
     /**
      * Element parameters need to be of type array.
-     *
-     * @expectedException \Depage\HtmlForm\Exceptions\ElementParametersNoArrayException
      **/
     public function testElementParametersNoArrayException()
     {
+        $this->expectException(\Depage\HtmlForm\Exceptions\ElementParametersNoArrayException::class);
+
         $input = new inputTestClass('inputName', 'string', $this->form);
     }
     // }}}

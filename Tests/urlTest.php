@@ -36,7 +36,7 @@ class urlTest extends TestCase
         $this->assertEquals('valueString', $this->url->getValue());
 
         $this->url->setValue(42);
-        $this->assertInternalType('string', $this->url->getValue());
+        $this->assertIsString($this->url->getValue());
         $this->assertEquals('42', $this->url->getValue());
     }
     // }}}
