@@ -249,6 +249,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         &:hover {
             border-color: $depageFormBorderColorFocus;
         }
+        &.disabled,
         &:disabled {
             opacity: .4;
 
