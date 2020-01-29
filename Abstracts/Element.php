@@ -110,7 +110,7 @@ abstract class Element
     {
         if (substr($function, 0, 4) === 'html') {
             $attribute = str_replace('html', '', $function);
-            $attribute{0} = strtolower($attribute{0});
+            $attribute[0] = strtolower($attribute[0]);
 
             $escapedAttribute = $attribute . "Html";
 
