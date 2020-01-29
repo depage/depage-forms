@@ -211,7 +211,7 @@ abstract class Input extends Element
     /**
      * @addtogroup htmlformInputDefaults
      *
-     * @default variant $dataInfo
+     * @default variant $dataPath
      *     Optional info for the data saved in the element.
      *     This value isn't used internally in the htmlform, but can be used
      *     to add extra data to an element that can be read out at a later time.
@@ -220,7 +220,7 @@ abstract class Input extends Element
     /**
      * @brief Extra information about the data that is saved inside the element.
      **/
-    public $dataInfo;
+    public $dataPath;
     // }}}
 
     // {{{ __construct()
@@ -275,7 +275,7 @@ abstract class Input extends Element
         $this->defaults['lang']            = '';
         $this->defaults['helpMessage']     = '';
         $this->defaults['helpMessageHtml'] = '';
-        $this->defaults['dataInfo']        = null;
+        $this->defaults['dataPath']        = null;
     }
     // }}}
 
