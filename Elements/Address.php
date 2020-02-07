@@ -135,19 +135,10 @@ class Address extends Fieldset
             ));
         }
 
-        if (isset($this->defaults['defaultCountry'])) {
-            $this->addCountry($this->prefix . "country", array(
-                'label' => $this->labelCountry,
-                'priorityCountries' => $this->defaults['priorityCountries'],
-                'defaultValue' => $this->defaults['defaultCountry'],
-                'required' => $this->required,
-            ));
-        }
-
-        if (isset($this->defaults['defaultState'])) {
-            $this->addState($this->prefix . "state", array(
-                'label' => $this->labelState,
-                'defaultValue' => $this->defaults['defaultState'],
+        if (isset($this->defaults['defaultZip'])) {
+            $this->addText($this->prefix . "zip", array(
+                'label' => $this->labelZip,
+                'defaultValue' => $this->defaults['defaultZip'],
                 'required' => $this->required,
             ));
         }
@@ -160,10 +151,19 @@ class Address extends Fieldset
             ));
         }
 
-        if (isset($this->defaults['defaultZip'])) {
-            $this->addText($this->prefix . "zip", array(
-                'label' => $this->labelZip,
-                'defaultValue' => $this->defaults['defaultZip'],
+        if (isset($this->defaults['defaultState'])) {
+            $this->addState($this->prefix . "state", array(
+                'label' => $this->labelState,
+                'defaultValue' => $this->defaults['defaultState'],
+                'required' => $this->required,
+            ));
+        }
+
+        if (isset($this->defaults['defaultCountry'])) {
+            $this->addCountry($this->prefix . "country", array(
+                'label' => $this->labelCountry,
+                'priorityCountries' => $this->defaults['priorityCountries'],
+                'defaultValue' => $this->defaults['defaultCountry'],
                 'required' => $this->required,
             ));
         }
