@@ -51,28 +51,22 @@ class Address extends Fieldset
     {
         parent::__construct($name, $parameters, $form);
 
-        if (isset($parameters['defaultAddress1'])) {
-            $this->defaults['defaultAddress1'] = $parameters['defaultAddress1'];
-        }
+        $this->props = [
+            'Address1',
+            'Address2',
+            'Zip',
+            'City',
+            'State',
+            'Country',
+        ];
 
-        if (isset($parameters['defaultAddress2'])) {
-            $this->defaults['defaultAddress2'] = $parameters['defaultAddress2'];
+        if (isset($parameters['props'])) {
+            $this->props = $parameters['props'];
         }
-
-        if (isset($parameters['defaultCity'])) {
-            $this->defaults['defaultCity'] = $parameters['defaultCity'];
-        }
-
-        if (isset($parameters['defaultState'])) {
-            $this->defaults['defaultState'] = $parameters['defaultState'];
-        }
-
-        if (isset($parameters['defaultCountry'])) {
-            $this->defaults['defaultCountry'] = $parameters['defaultCountry'];
-        }
-
-        if (isset($parameters['defaultZip'])) {
-            $this->defaults['defaultZip'] = $parameters['defaultZip'];
+        foreach ($this->props as $prop) {
+            if (isset($parameters["default$prop"])) {
+                $this->defaults["default$prop"] = $parameters["default$prop"];
+            }
         }
 
         $this->defaults['priorityCountries'] = isset($parameters['priorityCountries'])
@@ -119,53 +113,31 @@ class Address extends Fieldset
     {
         parent::addChildElements();
 
-        if (isset($this->defaults['defaultAddress1'])) {
-            $this->addText($this->prefix . "line_1", array(
-                'label' => $this->labelAddress1,
-                'defaultValue' => $this->defaults['defaultAddress1'],
-                'required' => $this->required,
-            ));
-        }
+        foreach ($this->props as $prop) {
+            if (isset($this->defaults["default$prop"])) {
+                $labelVar = "label$prop";
 
-        if (isset($this->defaults['defaultAddress2'])) {
-            $this->addText($this->prefix . "line_2", array(
-                'label' => $this->labelAddress2,
-                'defaultValue' => $this->defaults['defaultAddress2'],
-                'required' => $this->required,
-            ));
-        }
-
-        if (isset($this->defaults['defaultZip'])) {
-            $this->addText($this->prefix . "zip", array(
-                'label' => $this->labelZip,
-                'defaultValue' => $this->defaults['defaultZip'],
-                'required' => $this->required,
-            ));
-        }
-
-        if (isset($this->defaults['defaultCity'])) {
-            $this->addText($this->prefix . "city", array(
-                'label' => $this->labelCity,
-                'defaultValue' => $this->defaults['defaultCity'],
-                'required' => $this->required,
-            ));
-        }
-
-        if (isset($this->defaults['defaultState'])) {
-            $this->addState($this->prefix . "state", array(
-                'label' => $this->labelState,
-                'defaultValue' => $this->defaults['defaultState'],
-                'required' => $this->required,
-            ));
-        }
-
-        if (isset($this->defaults['defaultCountry'])) {
-            $this->addCountry($this->prefix . "country", array(
-                'label' => $this->labelCountry,
-                'priorityCountries' => $this->defaults['priorityCountries'],
-                'defaultValue' => $this->defaults['defaultCountry'],
-                'required' => $this->required,
-            ));
+                if ($prop == "State") {
+                    $this->addState($this->prefix . "state", array(
+                        'label' => $this->labelState,
+                        'defaultValue' => $this->defaults['defaultState'],
+                        'required' => $this->required,
+                    ));
+                } else if ($prop == "Country") {
+                    $this->addCountry($this->prefix . "country", array(
+                        'label' => $this->labelCountry,
+                        'priorityCountries' => $this->defaults['priorityCountries'],
+                        'defaultValue' => $this->defaults['defaultCountry'],
+                        'required' => $this->required,
+                    ));
+                } else {
+                    $this->addText($this->prefix . strtolower($prop), array(
+                        'label' => $this->$labelVar,
+                        'defaultValue' => $this->defaults["default$prop"],
+                        'required' => $this->required,
+                    ));
+                }
+            }
         }
     }
     // }}}
