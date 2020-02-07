@@ -340,7 +340,7 @@ class Country extends Single
 
         // move priority countries to the top based on options and language
         if (defined("DEPAGE_LANG") && isset($parameters['priorityCountries'][DEPAGE_LANG])) {
-            $priorityCountries = $parameters['priorityCountries'][DEPAGE_LANG];
+            $priorityCountries = array_reverse($parameters['priorityCountries'][DEPAGE_LANG], true);
             // make sure all keys are lower case to match countries
             $priorityCountries = array_change_key_case($priorityCountries, CASE_LOWER);
 

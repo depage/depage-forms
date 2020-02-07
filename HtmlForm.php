@@ -122,6 +122,14 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  **/
 class HtmlForm extends Abstracts\Container
 {
+    // {{{ constants
+    const priorityCountries = [
+        'en' => ['us','gb','ie','au','nz'],
+        'de' => ['de','at','ch'],
+        'fr' => ['fr','ch','be','lu','ca'],
+        'it' => ['it','ch'],
+    ];
+    // }}}
     // {{{ variables
     /**
      * @brief HTML form method attribute
