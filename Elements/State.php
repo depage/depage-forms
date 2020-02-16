@@ -41,7 +41,7 @@ class State extends Single
     protected $list = array();
     // }}}
 
-    // {{{ variables
+    // {{{ getStates()
     /**
      * @brief Gets the Default States list
      *
