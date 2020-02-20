@@ -138,7 +138,7 @@ class Captcha extends Text
      **/
     protected function testPhrase($value)
     {
-        $this->captcha->setPhrase($this->sessionSlot['formCaptcha']);
+        $this->captcha->setPhrase($this->sessionSlot['formCaptcha'] ?? "");
 
         if (!$this->captcha->testPhrase($value)) {
             $this->getNewPhrase();
