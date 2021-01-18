@@ -184,7 +184,7 @@ class Fieldset extends Abstracts\Container
         }
 
         return "<fieldset {$htmlAttributes}>" .
-            "<legend>{$label}</legend>{$renderedElements}" .
+            "<legend><span>{$label}</span></legend>{$renderedElements}" .
         "</fieldset>\n";
     }
     // }}}
