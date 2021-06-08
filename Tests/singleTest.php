@@ -15,6 +15,13 @@ class singleTest extends TestCase
         $this->single   = new Single('singleName', [
             'list' => [
                 'valueString',
+                'valueString2',
+            ],
+        ], $this->form);
+        $this->singleAssoc = new Single('singleName', [
+            'list' => [
+                'valueString' => "label 1",
+                'valueString2' => "label 2",
             ],
         ], $this->form);
     }
@@ -36,8 +43,47 @@ class singleTest extends TestCase
      **/
     public function testSingleSetValue()
     {
-        $this->single->setValue('valueString');
-        $this->assertEquals('valueString', $this->single->getValue());
+        $this->single->setValue('0');
+        $this->assertEquals('0', $this->single->getValue());
+
+        $this->single->setValue('1');
+        $this->assertEquals('1', $this->single->getValue());
+    }
+    // }}}
+
+    // {{{ testSingleSetValueNotAvailable()
+    /**
+     * Tests setValue method with various values. (typecasting)
+     **/
+    public function testSingleSetValueNotAvailable()
+    {
+        $this->single->setValue('2');
+        $this->assertEquals('', $this->single->getValue());
+    }
+    // }}}
+
+    // {{{ testSingleSetValueAssoc()
+    /**
+     * Tests setValue method with various values. (typecasting)
+     **/
+    public function testSingleSetValueAssoc()
+    {
+        $this->singleAssoc->setValue('valueString');
+        $this->assertEquals('valueString', $this->singleAssoc->getValue());
+
+        $this->singleAssoc->setValue('valueString2');
+        $this->assertEquals('valueString2', $this->singleAssoc->getValue());
+    }
+    // }}}
+
+    // {{{ testSingleSetValueNotAvailableAssoc()
+    /**
+     * Tests setValue method with various values. (typecasting)
+     **/
+    public function testSingleSetValueNotAvailableAssoc()
+    {
+        $this->singleAssoc->setValue('valueStringNotAvailable');
+        $this->assertEquals('', $this->singleAssoc->getValue());
     }
     // }}}
 
