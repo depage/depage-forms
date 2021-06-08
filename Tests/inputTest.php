@@ -78,6 +78,48 @@ class inputTest extends TestCase
     }
     // }}}
 
+    // {{{ testGetLabel()
+    /**
+     * Testing getName method
+     **/
+    public function testGetLabel()
+    {
+        $this->assertEquals('inputName', $this->input->getLabel());
+    }
+    // }}}
+    //
+    // {{{ testSetLabel()
+    /**
+     * Testing getName method
+     **/
+    public function testSetLabel()
+    {
+        $this->input->setLabel('new label');
+        $this->assertEquals('new label', $this->input->getLabel());
+    }
+    // }}}
+
+    // {{{ testGetErrorMessage()
+    /**
+     * Testing getName method
+     **/
+    public function testGetErrorMessage()
+    {
+        $this->assertEquals('Please enter valid data', $this->input->getErrorMessage());
+    }
+    // }}}
+    //
+    // {{{ testSetErrorMessage()
+    /**
+     * Testing getName method
+     **/
+    public function testSetErrorMessage()
+    {
+        $this->input->setErrorMessage('new error message');
+        $this->assertEquals('new error message', $this->input->getErrorMessage());
+    }
+    // }}}
+
     // {{{ testHtmlClasses()
     /**
      * Tests getting rendered HTML classes.

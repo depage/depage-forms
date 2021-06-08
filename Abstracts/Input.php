@@ -412,6 +412,33 @@ abstract class Input extends Element
     }
     // }}}
 
+    // {{{ setErrorMessage()
+    /**
+     * @brief setErrorMessage
+     *
+     * @param mixed $
+     * @return void
+     **/
+    public function setErrorMessage($message)
+    {
+        $this->errorMessage = $message;
+
+        return $this;
+    }
+    // }}}
+    // {{{ getErrorMessage()
+    /**
+     * @brief getErrorMessage
+     *
+     * @param mixed $
+     * @return void
+     **/
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+    // }}}
+
     // {{{ clearValue()
     /**
      * @brief   resets the value to null
