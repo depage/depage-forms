@@ -926,8 +926,9 @@ class HtmlForm extends Abstracts\Container
         $port     = isset($this->form->url['port']) ? ':' . $this->form->url['port'] : '';
         $path     = isset($this->form->url['path']) ? $this->form->url['path'] : '';
         $baseUrl  = "$scheme$host$port$path";
+        $step     = $this->currentStepId != 0 ? $this->currentStepId : '';
 
-        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $this->currentStepId]));
+        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $step]));
     }
     // }}}
     // {{{ __toString()
