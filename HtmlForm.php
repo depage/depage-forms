@@ -902,6 +902,30 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
+    // {{{ clearOldSessions()
+    /**
+     * @brief clearOldSessions
+     *
+     * @param mixed
+     * @return void
+     **/
+    public static function clearOldSessions($ttl = 3600, $pattern = "/^htmlform-.*/")
+    {
+        $timestamp = time();
+
+        if (empty($_SESSION)) {
+            return;
+        }
+        foreach ($_SESSION as $key => &$val) {
+            if (preg_match($pattern, $key)
+                && isset($val['formTimestamp'])
+                && ($timestamp - $val['formTimestamp'] > $ttl)
+            ) {
+                unset($_SESSION[$key]);
+            }
+        }
+    }
+    // }}}
 
     // {{{ htmlDataAttributes()
     /**
