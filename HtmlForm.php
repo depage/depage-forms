@@ -953,6 +953,7 @@ class HtmlForm extends Abstracts\Container
         $method           = $this->htmlMethod();
         $submitURL        = $this->htmlSubmitURL();
         $dataAttr         = $this->htmlDataAttributes();
+        $disabledAttr     = $this->disabled ? " disabled=\"disabled\"" : "";
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -964,13 +965,13 @@ class HtmlForm extends Abstracts\Container
         }
 
         if (!is_null($this->cancelLabel)) {
-            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
+            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"$disabledAttr></p>\n";
         }
         if (!is_null($this->backLabel) && $this->currentStepId > 0) {
-            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
+            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"$disabledAttr></p>\n";
         }
         if (!empty($this->label)) {
-            $submit = "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>\n";
+            $submit = "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"$disabledAttr></p>\n";
         }
 
 

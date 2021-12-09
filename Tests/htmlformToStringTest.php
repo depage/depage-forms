@@ -53,6 +53,28 @@ class htmlformToStringTest extends TestCase
     }
     // }}}
 
+    // {{{ testDisabled()
+    /**
+     * Form with default setup
+     **/
+    public function testDisabled()
+    {
+        $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
+            '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="0">' . "\n" .
+            '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
+            '<p id="formName-submit" class="submit">' .
+                '<input type="submit" name="formSubmit" value="submit" disabled="disabled">' .
+            '</p>' . "\n" .
+        '</form>';
+
+        $form = new csrfTestForm('formName', array(
+            'disabled' => true,
+        ));
+        $this->assertEquals($expected, $form->__toString());
+    }
+    // }}}
+
     // {{{ testStep()
     /**
      * Form with 2 steps, only step1 should be rendered.
