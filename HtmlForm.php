@@ -176,6 +176,10 @@ class HtmlForm extends Abstracts\Container
      **/
     public $valid;
     /**
+     * @brief true if form request is from autosave call
+     **/
+    public $isAutoSaveRequest = false;
+    /**
      * @brief List of internal fieldnames that are not part of the results
      **/
     protected $internalFields = array(
@@ -204,6 +208,8 @@ class HtmlForm extends Abstracts\Container
      **/
     public function __construct($name, $parameters = array(), $form = null)
     {
+        $this->isAutoSaveRequest = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
         parent::__construct($name, $parameters, $this);
@@ -699,7 +705,7 @@ class HtmlForm extends Abstracts\Container
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             // save in session if submission was from last step
             $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps)
-                && !(isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true");
+                && !$this->isAutoSaveRequest;
 
             if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
@@ -714,7 +720,7 @@ class HtmlForm extends Abstracts\Container
                 }
                 $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
-            } elseif (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+            } elseif ($this->isAutoSaveRequest) {
                 // do not redirect -> is autosave
             } elseif ($this->validate()) {
                 // form was successfully submitted
@@ -802,6 +808,7 @@ class HtmlForm extends Abstracts\Container
             $this->valid = $this->valid && $hasCorrectToken;
 
             if (!$hasCorrectToken) {
+                http_response_code(400);
                 $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken");
             }
         }
@@ -809,14 +816,15 @@ class HtmlForm extends Abstracts\Container
         $partValid = $this->valid;
 
         // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
-                || (isset($this->sessionSlot['formIsAutosaved'])
-                    && $this->sessionSlot['formIsAutosaved'] === true)) {
+        if ($this->isAutoSaveRequest
+            || (isset($this->sessionSlot['formIsAutosaved'])
+            && $this->sessionSlot['formIsAutosaved'] === true)
+        ) {
             $this->valid = false;
         }
 
         // save whether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        $this->sessionSlot['formIsAutosaved'] = $this->isAutoSaveRequest;
 
         return $partValid;
     }
