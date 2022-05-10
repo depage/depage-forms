@@ -179,7 +179,8 @@ class Text extends Abstracts\Input
      **/
     protected function typeCastValue()
     {
-        $this->value = (string) $this->value;
+        // strip control characters
+        $this->value = preg_replace( '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', (string) $this->value);
 
         if ($this->normalize && class_exists("\\Normalizer")) {
             $this->value = \Normalizer::normalize($this->value);
