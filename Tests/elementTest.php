@@ -10,6 +10,10 @@ use Depage\HtmlForm\Exceptions;
  **/
 class elementTestClass extends element
 {
+    public $testValue1;
+    public $TestValue2;
+    public $TESTValue3;
+
     // required for testSetParameters()
     protected function setDefaults()
     {
@@ -40,6 +44,9 @@ class undefinedMethodException extends Exception {}
  **/
 class elementTest extends TestCase
 {
+    protected $form;
+    protected $element;
+
     // {{{ setUp()
     protected function setUp():void
     {

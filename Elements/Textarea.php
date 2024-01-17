@@ -33,6 +33,22 @@ namespace Depage\HtmlForm\Elements;
  **/
 class Textarea extends Text
 {
+    // {{{ variables
+    /**
+     * @brief HTML rows attribute
+     **/
+    protected $rows;
+
+    /**
+     * @brief HTML cols attribute
+     **/
+    protected $cols;
+
+    /**
+     * @brief wether to autogrow textarea or not
+     **/
+    protected $autogrow = false;
+    // }}}
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses

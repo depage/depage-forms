@@ -47,6 +47,16 @@ class Text extends Abstracts\Input
      * @brief wether to normalize unicode strings or not
      **/
     protected $normalize;
+
+    /**
+     * @brief HTML maxlength attribute
+     **/
+    protected $maxlength = false;
+
+    /**
+     * @brief HTML list
+     **/
+    protected $list = false;
     // }}}
 
     // {{{ __construct()

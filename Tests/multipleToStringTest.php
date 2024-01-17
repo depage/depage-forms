@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Multiple;
  **/
 class multipleToStringTest extends TestCase
 {
+    protected $form;
+    protected $multiple;
+
     // {{{ setUp()
     public function setUp():void
     {

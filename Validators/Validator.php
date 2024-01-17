@@ -53,7 +53,7 @@ namespace Depage\HtmlForm\Validators;
             $closureValidator->setFunc($argument);
 
             return $closureValidator;
-        } elseif (($argument[0] === '/') && ($argument[strlen($argument)-1] ==='/')) {
+        } elseif (($argument[0] === '/') && ($argument[strlen($argument)-1] === '/')) {
             $regExValidator = new RegEx($log);
             $regExValidator->setRegEx($argument);
 

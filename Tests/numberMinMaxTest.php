@@ -8,6 +8,8 @@ use Depage\HtmlForm\Elements\Number;
  **/
 class numberMinMaxTest extends TestCase
 {
+    protected $form;
+
     // {{{ setUp()
     public function setUp():void
     {

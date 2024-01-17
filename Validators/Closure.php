@@ -8,7 +8,7 @@ namespace Depage\HtmlForm\Validators;
 /**
  * @brief customizable validator for input elements
  **/
-class closure extends Validator
+class Closure extends Validator
 {
     // {{{ variables
     /**

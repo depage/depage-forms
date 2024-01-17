@@ -59,6 +59,11 @@ class Single extends Abstracts\Input
      * @brief Contains list of selectable options.
      **/
     protected $list = array();
+
+    /**
+     * @brief HTML skin type (radio or select).
+     **/
+    protected $skin = 'radio';
     // }}}
 
     // {{{ __construct()

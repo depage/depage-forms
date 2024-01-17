@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Boolean;
  **/
 class booleanTest extends TestCase
 {
+    protected $form;
+    protected $boolean;
+
     // {{{ setUp()
     public function setUp():void
     {

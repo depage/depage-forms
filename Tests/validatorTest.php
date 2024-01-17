@@ -48,7 +48,7 @@ class validatorTest extends TestCase
      **/
     public function testText()
     {
-        $textValidator = Validator::factory('text');
+        $textValidator = Validator::factory('Text');
         $this->assertTrue($textValidator->validate('anyString'));
     }
     // }}}
@@ -59,7 +59,7 @@ class validatorTest extends TestCase
      **/
     public function testEmail()
     {
-        $emailValidator = Validator::factory('email');
+        $emailValidator = Validator::factory('Email');
         $this->assertFalse($emailValidator->validate('anyString', ['checkDns' => false]));
         $this->assertTrue($emailValidator->validate('test@depage.net', ['checkDns' => false]));
     }
@@ -71,7 +71,7 @@ class validatorTest extends TestCase
      **/
     public function testUrl()
     {
-        $urlValidator = Validator::factory('url');
+        $urlValidator = Validator::factory('Url');
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('http://www.depage.net'));
     }
@@ -83,7 +83,7 @@ class validatorTest extends TestCase
      **/
     public function testTel()
     {
-        $urlValidator = Validator::factory('tel');
+        $urlValidator = Validator::factory('Tel');
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('+(123)-32 2.3'));
     }
@@ -108,7 +108,7 @@ class validatorTest extends TestCase
      **/
     public function testNumber()
     {
-        $numberValidator = Validator::factory('number');
+        $numberValidator = Validator::factory('Number');
         $this->assertFalse($numberValidator->validate('letters',   array('min' => null,    'max' => null)));
         $this->assertFalse($numberValidator->validate(-10,         array('min' => 0,       'max' => 10)));
         $this->assertTrue($numberValidator->validate(5,           array('min' => 0,       'max' => 10)));
@@ -142,7 +142,7 @@ class validatorTest extends TestCase
         $this->assertEquals(' pattern="[a-z]"', $regExValidator->getPatternAttribute());
 
         // telephone number validator returns empty string (tel inputs are automatically validated)
-        $telValidator = Validator::factory('tel');
+        $telValidator = Validator::factory('Tel');
         $this->assertIsString($telValidator->getPatternAttribute());
         $this->assertEquals('', $telValidator->getPatternAttribute());
 

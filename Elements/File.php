@@ -18,7 +18,24 @@ define("UPLOAD_ERR_FILE_EXTENSION", 1000);
  **/
 class File extends Text
 {
+    // {{{ variables
     protected $value = array();
+
+    /**
+     * @brief HTML maxNum attribute
+     **/
+    protected $maxNum;
+
+    /**
+     * @brief HTML maxSize attribute
+     **/
+    protected $maxSize;
+
+    /**
+     * @brief HTML allowedExtensions attribute
+     **/
+    protected $allowedExtensions;
+    // }}}
 
     // {{{ setDefaults()
     /**

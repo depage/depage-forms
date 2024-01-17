@@ -8,6 +8,10 @@ use Depage\HtmlForm\Elements\Single;
  **/
 class singleTest extends TestCase
 {
+    protected $form;
+    protected $single;
+    protected $singleAssoc;
+
     // {{{ setUp()
     public function setUp():void
     {

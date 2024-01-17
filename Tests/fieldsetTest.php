@@ -9,6 +9,9 @@ use Depage\HtmlForm\Elements\Fieldset;
  **/
 class fieldsetTest extends TestCase
 {
+    protected $form;
+    protected $fieldset;
+
     // {{{ setUp()
     public function setUp():void
     {

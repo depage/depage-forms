@@ -8,6 +8,10 @@ use Depage\HtmlForm\Elements\Email;
  **/
 class emailTest extends TestCase
 {
+    protected $form;
+    protected $email;
+
+
     // {{{ setUp()
     public function setUp():void
     {

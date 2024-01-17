@@ -8,6 +8,8 @@ use Depage\HtmlForm\Elements\Url;
  **/
 class NamespaceTest extends TestCase
 {
+    protected $form;
+
     // {{{ setUp()
     public function setUp():void
     {

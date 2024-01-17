@@ -133,52 +133,99 @@ class HtmlForm extends Abstracts\Container
     // {{{ variables
     /**
      * @brief HTML form method attribute
-     * */
+     **/
     protected $method;
+
+    /**
+     * @brief url of the current page
+     **/
+    protected $url;
+
     /**
      * @brief HTML form action attribute
      **/
     protected $submitURL;
+
     /**
      * @brief Specifies where the user is redirected to, once the form-data is valid
      **/
     protected $successURL;
+
+    /**
+     * @brief Specifies where the user is redirected to, once the form-data is cancelled
+     **/
+    protected $cancelURL;
+
     /**
      * @brief Contains the submit button label of the form
      **/
     protected $label;
+
+    /**
+     * @brief Contains the back button label of the form
+     **/
+    protected $backLabel;
+
+    /**
+     * @brief Contains the cancel button label of the form
+     **/
+    protected $cancelLabel;
+
     /**
      * @brief Contains the additional class value of the form
      **/
     protected $class;
+
+    /**
+     * @brief Contains the validator function of the form
+     **/
+    protected $validator;
+
+    /**
+     * @brief Contains the javascript validation type of the form
+     **/
+    protected $jsValidation;
+
+    /**
+     * @brief Contains the javascript autosave type of the form
+     **/
+    protected $jsAutosave;
+
     /**
      * @brief Contains the name of the array in the PHP session, holding the form-data
      **/
     protected $sessionSlotName;
+
     /**
      * @brief PHP session handle
      **/
     protected $sessionSlot;
+
     /**
      * @brief Contains current step number
      **/
     private $currentStepId;
+
     /**
      * @brief Contains array of step object references
      **/
     private $steps = array();
+
     /**
      * @brief Time until session expiry (seconds)
      **/
     protected $ttl;
+
     /**
      * @brief Form validation result/status
      **/
     public $valid;
+
     /**
      * @brief true if form request is from autosave call
      **/
     public $isAutoSaveRequest = false;
+
     /**
      * @brief List of internal fieldnames that are not part of the results
      **/
@@ -192,6 +239,7 @@ class HtmlForm extends Abstracts\Container
         'formCsrfToken',
         'formCaptcha',
     );
+
     /**
      * @brief Namespace strings for addible element classes
      **/

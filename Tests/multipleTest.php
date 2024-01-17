@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Multiple;
  **/
 class multipleTest extends TestCase
 {
+    protected $form;
+    protected $multiple;
+
     // {{{ setUp()
     public function setUp():void
     {

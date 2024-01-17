@@ -39,6 +39,9 @@ class inputTestClass extends Input
  **/
 class inputTest extends TestCase
 {
+    protected $form;
+    protected $input;
+
     // {{{ setUp()
     public function setUp():void
     {

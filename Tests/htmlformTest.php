@@ -9,6 +9,8 @@ use Depage\HtmlForm\Exceptions;
  **/
 class htmlformTest extends TestCase
 {
+    protected $form;
+
     // {{{ tearDown()
     /**
      * @brief tearDown

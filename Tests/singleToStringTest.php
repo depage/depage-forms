@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Single;
  **/
 class singleToStringTest extends TestCase
 {
+    protected $form;
+    protected $single;
+
     // {{{ setUp()
     public function setUp():void
     {

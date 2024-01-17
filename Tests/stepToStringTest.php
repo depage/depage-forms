@@ -9,6 +9,9 @@ use Depage\HtmlForm\Elements\Step;
  **/
 class stepToStringTest extends TestCase
 {
+    protected $form;
+    protected $step;
+
     // {{{ setUp()
     public function setUp():void
     {

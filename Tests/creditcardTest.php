@@ -9,6 +9,9 @@ use Depage\HtmlForm\Elements\Creditcard;
  **/
 class creditcardTest extends TestCase
 {
+    protected $form;
+    protected $creditcard;
+
     // {{{ setUp()
     public function setUp():void
     {

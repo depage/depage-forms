@@ -44,6 +44,32 @@ namespace Depage\HtmlForm\Elements;
  **/
 class Creditcard extends Fieldset
 {
+    // {{{ variables
+    /**
+     * @brief   label for the creditcard-number field
+     **/
+    protected $labelNumber;
+
+    /**
+     * @brief   label for the creditcard-check field
+     **/
+    protected $labelCheck;
+
+    /**
+     * @brief   label for the creditcard-expirydate field
+     **/
+    protected $labelExpirationDate;
+
+    /**
+     * @brief   label for the creditcard-owner field
+     **/
+    protected $labelOwner;
+
+    /**
+     * @brief   list of cardtypes to choose from
+     **/
+    protected $cardtypes;
+    // }}}
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
