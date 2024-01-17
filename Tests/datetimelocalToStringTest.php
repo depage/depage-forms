@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Datetimelocal;
  **/
 class datetimelocalToStringTest extends TestCase
 {
+    protected $form;
+    protected $datetimelocal;
+
     // {{{ setUp
     public function setUp():void
     {

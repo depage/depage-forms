@@ -10,6 +10,7 @@ use Depage\HtmlForm\HtmlForm;
 class htmlformTestClass extends csrfTestForm
 {
     public $testRedirect;
+    public $testLog;
 
     public function redirect($url)
     {
@@ -28,6 +29,8 @@ class htmlformTestClass extends csrfTestForm
 **/
 class prgTest extends TestCase
 {
+    protected $form;
+
     // {{{ tearDown()
     /**
      * @brief tearDown

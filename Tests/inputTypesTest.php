@@ -8,6 +8,8 @@ use Depage\HtmlForm\HtmlForm;
  **/
 class inputTypesTest extends TestCase
 {
+    protected $form;
+
     // {{{ setUp()
     protected function setUp():void
     {
@@ -126,7 +128,7 @@ class inputTypesTest extends TestCase
     // {{{ testAddDateTimeLocal()
     public function testAddDateTimeLocal()
     {
-        $this->form->addDateTimeLocal('nameString');
+        $this->form->addDatetimelocal('nameString');
         $element = $this->form->getElement('nameString');
         $this->assertInstanceOf('\\Depage\\HtmlForm\\Elements\\Datetimelocal', $element);
     }

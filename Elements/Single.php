@@ -59,6 +59,11 @@ class Single extends Abstracts\Input
      * @brief Contains list of selectable options.
      **/
     protected $list = array();
+
+    /**
+     * @brief HTML skin type (radio or select).
+     **/
+    protected $skin = 'radio';
     // }}}
 
     // {{{ __construct()
@@ -195,7 +200,20 @@ class Single extends Abstracts\Input
     protected function typeCastValue()
     {
         // check if value is in list
-        if (!in_array($this->value, array_keys($this->list))) {
+        $inList = false;
+
+        if (in_array($this->value, array_keys($this->list))) {
+            $inList = true;
+        }
+        if (!$inList) {
+            foreach($this->list as $sub) {
+                if (is_array($sub) && in_array($this->value, array_keys($sub))) {
+                    $inList = true;
+                    break;
+                }
+            }
+        }
+        if (!$inList) {
             $this->value = "";
         }
         $this->value = (string) $this->value;

@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Text;
  **/
 class textToStringTest extends TestCase
 {
+    protected $form;
+    protected $text;
+
     // {{{ setUp()
     public function setUp():void
     {

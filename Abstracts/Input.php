@@ -39,6 +39,50 @@ abstract class Input extends Element
     /**
      * @addtogroup htmlformInputDefaults
      *
+     * @default string $labelHtml
+     *     Sets the unescaped label for the input
+     **/
+    /**
+     * @brief Input element - HTML label in html format
+     **/
+    protected $labelHtml;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $title
+     *     Sets the title for the input
+     **/
+    /**
+     * @brief Input element - HTML title
+     **/
+    protected $title;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $lang
+     *     Sets the lang for the input
+     **/
+    /**
+     * @brief Input element - lang
+     **/
+    protected $lang;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default string $defaultValue
+     *     Sets the default value for the input
+     **/
+    /**
+     * @brief Input element - default value
+     **/
+    protected $defaultValue;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
      * @default string $marker
      *     Sets marker character(s) that gets display on required fields.
      **/
@@ -57,17 +101,6 @@ abstract class Input extends Element
      * @brief True if the input element is required to hold a value to be valid.
      **/
     protected $required;
-
-    /**
-     * @addtogroup htmlformInputDefaults
-     *
-     * @default bool $disabled
-     *     Enables/disables an input
-     **/
-    /**
-     * @brief wether a input element will be disabled
-     **/
-    protected $disabled;
 
     /**
      * @addtogroup htmlformInputDefaults
@@ -409,6 +442,33 @@ abstract class Input extends Element
     public function getLabel()
     {
         return $this->label;
+    }
+    // }}}
+
+    // {{{ setErrorMessage()
+    /**
+     * @brief setErrorMessage
+     *
+     * @param mixed $
+     * @return void
+     **/
+    public function setErrorMessage($message)
+    {
+        $this->errorMessage = $message;
+
+        return $this;
+    }
+    // }}}
+    // {{{ getErrorMessage()
+    /**
+     * @brief getErrorMessage
+     *
+     * @param mixed $
+     * @return void
+     **/
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
     // }}}
 

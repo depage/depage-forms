@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Url;
  **/
 class urlTest extends TestCase
 {
+    protected $form;
+    protected $url;
+
     // {{{ setUp()
     public function setUp():void
     {

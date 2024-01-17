@@ -9,6 +9,9 @@ use Depage\HtmlForm\Elements\Fieldset;
  **/
 class fieldsetToStringTest extends TestCase
 {
+    protected $form;
+    protected $fieldset;
+
     // {{{ setUp()
     public function setUp():void
     {
@@ -24,7 +27,7 @@ class fieldsetToStringTest extends TestCase
     public function testSimple()
     {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
-                        '<legend>fieldsetName</legend>' .
+                        '<legend><span>fieldsetName</span></legend>' .
                     '</fieldset>' . "\n";
         $this->assertEquals($expected, $this->fieldset->__toString());
     }
@@ -37,9 +40,9 @@ class fieldsetToStringTest extends TestCase
     public function testAddFieldset()
     {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
-            '<legend>fieldsetName</legend>' .
+            '<legend><span>fieldsetName</span></legend>' .
             '<fieldset id="formName-secondFieldsetName" name="secondFieldsetName">' .
-                '<legend>secondFieldsetName</legend>' .
+                '<legend><span>secondFieldsetName</span></legend>' .
             '</fieldset>' . "\n" .
         '</fieldset>' . "\n";
         $this->fieldset->addFieldset('secondFieldsetName');
@@ -55,7 +58,7 @@ class fieldsetToStringTest extends TestCase
     public function testAddText()
     {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
-            '<legend>fieldsetName</legend>' .
+            '<legend><span>fieldsetName</span></legend>' .
             '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">textName</span>' .

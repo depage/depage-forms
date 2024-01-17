@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Number;
  **/
 class numberToStringTest extends TestCase
 {
+    protected $form;
+    protected $number;
+
     // {{{ setUp()
     public function setUp():void
     {

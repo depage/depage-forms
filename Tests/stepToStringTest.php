@@ -9,6 +9,9 @@ use Depage\HtmlForm\Elements\Step;
  **/
 class stepToStringTest extends TestCase
 {
+    protected $form;
+    protected $step;
+
     // {{{ setUp()
     public function setUp():void
     {
@@ -35,7 +38,7 @@ class stepToStringTest extends TestCase
     public function testAddFieldset()
     {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
-            '<legend>fieldsetName</legend>' .
+            '<legend><span>fieldsetName</span></legend>' .
         '</fieldset>' . "\n";
         $this->step->addFieldset('fieldsetName');
 

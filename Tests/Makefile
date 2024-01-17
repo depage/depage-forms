@@ -1,7 +1,7 @@
 RM = rm -rf
 
 test:
-	phpunit --bootstrap bootstrap.php --coverage-html phpunit/ .
+	phpunit  --process-isolation --bootstrap bootstrap.php --coverage-html phpunit/ .
 
 clean:
 	${RM} phpunit

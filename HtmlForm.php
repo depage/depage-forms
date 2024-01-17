@@ -122,51 +122,110 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  **/
 class HtmlForm extends Abstracts\Container
 {
+    // {{{ constants
+    const priorityCountries = [
+        'en' => ['us','gb','ie','au','nz'],
+        'de' => ['de','at','ch'],
+        'fr' => ['fr','ch','be','lu','ca'],
+        'it' => ['it','ch'],
+    ];
+    // }}}
     // {{{ variables
     /**
      * @brief HTML form method attribute
-     * */
+     **/
     protected $method;
+
+    /**
+     * @brief url of the current page
+     **/
+    protected $url;
+
     /**
      * @brief HTML form action attribute
      **/
     protected $submitURL;
+
     /**
      * @brief Specifies where the user is redirected to, once the form-data is valid
      **/
     protected $successURL;
+
+    /**
+     * @brief Specifies where the user is redirected to, once the form-data is cancelled
+     **/
+    protected $cancelURL;
+
     /**
      * @brief Contains the submit button label of the form
      **/
     protected $label;
+
+    /**
+     * @brief Contains the back button label of the form
+     **/
+    protected $backLabel;
+
+    /**
+     * @brief Contains the cancel button label of the form
+     **/
+    protected $cancelLabel;
+
     /**
      * @brief Contains the additional class value of the form
      **/
     protected $class;
+
+    /**
+     * @brief Contains the validator function of the form
+     **/
+    protected $validator;
+
+    /**
+     * @brief Contains the javascript validation type of the form
+     **/
+    protected $jsValidation;
+
+    /**
+     * @brief Contains the javascript autosave type of the form
+     **/
+    protected $jsAutosave;
+
     /**
      * @brief Contains the name of the array in the PHP session, holding the form-data
      **/
     protected $sessionSlotName;
+
     /**
      * @brief PHP session handle
      **/
     protected $sessionSlot;
+
     /**
      * @brief Contains current step number
      **/
     private $currentStepId;
+
     /**
      * @brief Contains array of step object references
      **/
     private $steps = array();
+
     /**
      * @brief Time until session expiry (seconds)
      **/
     protected $ttl;
+
     /**
      * @brief Form validation result/status
      **/
     public $valid;
+
+    /**
+     * @brief true if form request is from autosave call
+     **/
+    public $isAutoSaveRequest = false;
+
     /**
      * @brief List of internal fieldnames that are not part of the results
      **/
@@ -180,6 +239,7 @@ class HtmlForm extends Abstracts\Container
         'formCsrfToken',
         'formCaptcha',
     );
+
     /**
      * @brief Namespace strings for addible element classes
      **/
@@ -196,6 +256,8 @@ class HtmlForm extends Abstracts\Container
      **/
     public function __construct($name, $parameters = array(), $form = null)
     {
+        $this->isAutoSaveRequest = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+
         $this->url = parse_url($_SERVER['REQUEST_URI']);
 
         parent::__construct($name, $parameters, $this);
@@ -691,7 +753,7 @@ class HtmlForm extends Abstracts\Container
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
             // save in session if submission was from last step
             $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps)
-                && !(isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true");
+                && !$this->isAutoSaveRequest;
 
             if (!empty($this->cancelLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->cancelLabel) {
                 // cancel button was pressed
@@ -706,7 +768,7 @@ class HtmlForm extends Abstracts\Container
                 }
                 $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
-            } elseif (isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true") {
+            } elseif ($this->isAutoSaveRequest) {
                 // do not redirect -> is autosave
             } elseif ($this->validate()) {
                 // form was successfully submitted
@@ -794,6 +856,7 @@ class HtmlForm extends Abstracts\Container
             $this->valid = $this->valid && $hasCorrectToken;
 
             if (!$hasCorrectToken) {
+                http_response_code(400);
                 $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken");
             }
         }
@@ -801,14 +864,15 @@ class HtmlForm extends Abstracts\Container
         $partValid = $this->valid;
 
         // save data in session when autosaving but don't validate successfully
-        if ((isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true")
-                || (isset($this->sessionSlot['formIsAutosaved'])
-                    && $this->sessionSlot['formIsAutosaved'] === true)) {
+        if ($this->isAutoSaveRequest
+            || (isset($this->sessionSlot['formIsAutosaved'])
+            && $this->sessionSlot['formIsAutosaved'] === true)
+        ) {
             $this->valid = false;
         }
 
         // save whether form was autosaved the last time
-        $this->sessionSlot['formIsAutosaved'] = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
+        $this->sessionSlot['formIsAutosaved'] = $this->isAutoSaveRequest;
 
         return $partValid;
     }
@@ -894,6 +958,30 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
+    // {{{ clearOldSessions()
+    /**
+     * @brief clearOldSessions
+     *
+     * @param mixed
+     * @return void
+     **/
+    public static function clearOldSessions($ttl = 3600, $pattern = "/^htmlform-.*/")
+    {
+        $timestamp = time();
+
+        if (empty($_SESSION)) {
+            return;
+        }
+        foreach ($_SESSION as $key => &$val) {
+            if (preg_match($pattern, $key)
+                && isset($val['formTimestamp'])
+                && ($timestamp - $val['formTimestamp'] > $ttl)
+            ) {
+                unset($_SESSION[$key]);
+            }
+        }
+    }
+    // }}}
 
     // {{{ htmlDataAttributes()
     /**
@@ -918,8 +1006,9 @@ class HtmlForm extends Abstracts\Container
         $port     = isset($this->form->url['port']) ? ':' . $this->form->url['port'] : '';
         $path     = isset($this->form->url['path']) ? $this->form->url['path'] : '';
         $baseUrl  = "$scheme$host$port$path";
+        $step     = $this->currentStepId != 0 ? $this->currentStepId : '';
 
-        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $this->currentStepId]));
+        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $step]));
     }
     // }}}
     // {{{ __toString()
@@ -944,6 +1033,7 @@ class HtmlForm extends Abstracts\Container
         $method           = $this->htmlMethod();
         $submitURL        = $this->htmlSubmitURL();
         $dataAttr         = $this->htmlDataAttributes();
+        $disabledAttr     = $this->disabled ? " disabled=\"disabled\"" : "";
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
@@ -955,13 +1045,13 @@ class HtmlForm extends Abstracts\Container
         }
 
         if (!is_null($this->cancelLabel)) {
-            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"></p>\n";
+            $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"$disabledAttr></p>\n";
         }
         if (!is_null($this->backLabel) && $this->currentStepId > 0) {
-            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"></p>\n";
+            $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"$disabledAttr></p>\n";
         }
         if (!empty($this->label)) {
-            $submit = "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"></p>\n";
+            $submit = "<p id=\"{$this->name}-submit\" class=\"submit\"><input type=\"submit\" name=\"formSubmit\" value=\"{$label}\"$disabledAttr></p>\n";
         }
 
 

@@ -20,7 +20,7 @@ class creditcardToStringTest extends TestCase
         $creditcard->addChildElements();
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName">' .
-            '<legend>creditcardName</legend>' .
+            '<legend><span>creditcardName</span></legend>' .
             '<p id="formName-creditcardName_card_type" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label"></span>' .
@@ -73,7 +73,7 @@ class creditcardToStringTest extends TestCase
         $creditcard->addChildElements();
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName" class="required">' .
-            '<legend>creditcardName</legend>' .
+            '<legend><span>creditcardName</span></legend>' .
             '<p id="formName-creditcardName_card_type" class="input-single skin-select" data-errorMessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label"></span>' .

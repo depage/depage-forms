@@ -8,6 +8,8 @@ use Depage\HtmlForm\Elements\Password;
  **/
 class passwordToStringTest extends TestCase
 {
+    protected $form;
+
     // {{{ setUp()
     public function setUp():void
     {

@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Textarea;
  **/
 class textareaToStringTest extends TestCase
 {
+    protected $form;
+    protected $textarea;
+
     // {{{ setUp()
     public function setUp():void
     {

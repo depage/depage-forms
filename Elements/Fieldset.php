@@ -54,6 +54,21 @@ class Fieldset extends Abstracts\Container
      * @brief parent HTML form.
      **/
     protected $form;
+
+    /**
+     * @brief label text
+     **/
+    protected $label;
+
+    /**
+     * @brief HTML disabled attribute
+     **/
+    protected $disabled;
+
+    /**
+     * @brief HTML required attribute
+     **/
+    protected $required;
     // }}}
 
     // {{{ setDefaults()
@@ -184,7 +199,7 @@ class Fieldset extends Abstracts\Container
         }
 
         return "<fieldset {$htmlAttributes}>" .
-            "<legend>{$label}</legend>{$renderedElements}" .
+            "<legend><span>{$label}</span></legend>{$renderedElements}" .
         "</fieldset>\n";
     }
     // }}}

@@ -24,18 +24,37 @@ abstract class Element
      * @brief Element name.
      **/
     protected $name;
+
     /**
      * @brief Contains element validation status/result.
      **/
     public $valid;
+
     /**
      * @brief True if the element has been validated before.
      **/
     protected $validated = false;
+
     /**
      * @brief Log object reference
      **/
     protected $log;
+
+    /**
+     * @brief holds default values for element attributes
+     **/
+    protected $defaults = [];
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default bool $disabled
+     *     Enables/disables an input
+     **/
+    /**
+     * @brief wether a input element will be disabled
+     **/
+    protected $disabled;
 
     /**
      * @addtogroup htmlformInputDefaults
@@ -48,6 +67,17 @@ abstract class Element
      * @brief Extra information about the data that is saved inside the element.
      **/
     public $dataAttr;
+
+    /**
+     * @addtogroup htmlformInputDefaults
+     *
+     * @default variant $class
+     *     Optional CSS class of the container element
+     **/
+    /**
+     * @brief CSS class of the container element.
+     **/
+    protected $class;
     // }}}
 
     // {{{ __construct()

@@ -64,6 +64,11 @@ class Multiple extends Abstracts\Input
     protected $list = array();
 
     /**
+     * @brief HTML skin type (checkbox or select).
+     **/
+    protected $skin = 'radio';
+
+    /**
      * @brief maxItems
      **/
     protected $maxItems = null;

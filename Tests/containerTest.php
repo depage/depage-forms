@@ -44,6 +44,9 @@ class testElement
  **/
 class containerTest extends TestCase
 {
+    protected $form;
+    protected $container;
+
     // {{{ setUp()
     protected function setUp():void
     {

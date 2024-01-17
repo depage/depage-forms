@@ -8,6 +8,9 @@ use Depage\HtmlForm\Elements\Hidden;
  **/
 class hiddenTest extends TestCase
 {
+    protected $form;
+    protected $hidden;
+
     // {{{ setUp()
     public function setUp():void
     {
