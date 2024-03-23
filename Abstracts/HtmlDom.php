@@ -45,6 +45,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
         'target',
         'alt',
         'title',
+        'data-dbid',
     ];
     // }}}
 
