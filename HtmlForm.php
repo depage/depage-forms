@@ -759,8 +759,13 @@ class HtmlForm extends Abstracts\Container
                 // cancel button was pressed
                 $this->clearSession();
                 $this->redirect($this->cancelURL);
+            } elseif ($this->isAutoSaveRequest) {
+                // do not redirect -> is autosave
+                $this->onPost();
             } elseif (!empty($this->backLabel) && isset($_POST['formSubmit']) && $_POST['formSubmit'] === $this->backLabel) {
                 // back button was pressed
+                $this->onPost();
+
                 $this->sessionSlot['formFinalPost'] = false;
                 $prevStep = $this->currentStepId - 1;
                 if ($prevStep < 0) {
@@ -768,13 +773,15 @@ class HtmlForm extends Abstracts\Container
                 }
                 $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
                 $this->redirect($this->url['path'] . $urlStepParameter);
-            } elseif ($this->isAutoSaveRequest) {
-                // do not redirect -> is autosave
             } elseif ($this->validate()) {
                 // form was successfully submitted
+                $this->onPost();
+
                 $this->redirect($this->successURL);
             } else {
                 // goto to next step or display first invalid step
+                $this->onPost();
+
                 $nextStep = $this->currentStepId + 1;
                 $firstInvalidStep = $this->getFirstInvalidStep();
                 if ($nextStep > $firstInvalidStep) {
@@ -820,6 +827,21 @@ class HtmlForm extends Abstracts\Container
         $this->sessionSlot['formIsValid'] = $this->valid;
 
         return $this->valid;
+    }
+    // }}}
+    // {{{ onPost()
+    /**
+     * @brief   onPost hook
+     *
+     * Can be overridden to run a custom method when form is posted
+     *
+     * @return targetUrl
+     *
+     * @see     process()
+     **/
+    protected function onPost()
+    {
+        return true;
     }
     // }}}
     // {{{ onValidate()
