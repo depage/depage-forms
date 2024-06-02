@@ -14,7 +14,7 @@ namespace Depage\HtmlForm\Abstracts;
  * Serializable subclass of DOMDocument with helper methods especially
  * for html-content, and for removing up unwanted tags from html.
  */
-class HtmlDom extends \DOMDocument implements \Serializable
+class HtmlDom extends \DOMDocument
 {
     // {{{ variables
     /**
@@ -58,35 +58,9 @@ class HtmlDom extends \DOMDocument implements \Serializable
      *
      * @return Depage::HtmlForm::Abstracts::HtmlDom htmlDOM
      **/
-    public function __construct($version = null, $encoding = null)
+    public function __construct($version = "1.0", $encoding = "")
     {
         parent::__construct($version, $encoding);
-    }
-    // }}}
-    // {{{ serialize()
-    /**
-     * @brief   serializes htmldom into string
-     *
-     * @return string xml-content saved by saveXML()
-     **/
-    public function serialize()
-    {
-        $s = $this->saveXML();
-
-        return $s;
-    }
-    // }}}
-    // {{{ unserialize()
-    /**
-     * @brief   unserializes htmldom-objects
-     *
-     * @param   string  $serialized php-serialized xml string
-     *
-     * @return void
-     **/
-    public function unserialize($serialized)
-    {
-        $this->loadXML($serialized);
     }
     // }}}
     // {{{ loadHTML()
@@ -100,7 +74,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
      *
      * @return boolean true on success, false on error
      **/
-    public function loadHTML($html, $options = null)
+    public function loadHTML($html, $options = 0):bool
     {
         $tmpDOM = new \DOMDocument();
 
@@ -256,7 +230,7 @@ class HtmlDom extends \DOMDocument implements \Serializable
         }
         // }}}
         // {{{ remove empty inline element
-        $nodelist = $xpath->query("//b[not(node())] | //i[not(node())] | //strong[not(node())] | //span[not(node())] | //a[not(node())]");
+        $nodelist = $xpath->query("//b[not(node())] | //i[not(node())] | //strong[not(node())] | //span[not(node())] | //a[not(node())] | //u[not(node())]");
 
         for ($i = $nodelist->length - 1; $i >= 0; $i--) {
             $node = $nodelist->item($i);
@@ -333,6 +307,21 @@ class HtmlDom extends \DOMDocument implements \Serializable
         return $html;
     }
     // }}}
+    // {{{ __serialize()
+    public function __serialize():array
+    {
+        return [
+            'xml' => $this->saveXML(),
+        ];
+    }
+    // }}}
+    // {{{ __unserialize()
+    public function __unserialize(array $data):void
+    {
+        $this->loadXML($data['xml']);
+    }
+    // }}}
+
     // {{{ getBodyNodes()
     /**
      * @brief   gets a nodelist with all nodes inside the body
