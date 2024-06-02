@@ -36,6 +36,23 @@ namespace Depage\HtmlForm\Elements;
  **/
 class Richtext extends Textarea
 {
+    // {{{ variables
+    /**
+     * @brief   stylesheet
+     **/
+    public $stylesheet = null;
+
+    /**
+     * @brief   allowedTags
+     **/
+    public $allowedTags = [];
+
+    /**
+     * @brief   autogrow
+     **/
+    public $autogrow = true;
+    // }}}
+
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses
