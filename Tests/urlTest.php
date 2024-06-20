@@ -15,7 +15,7 @@ class urlTest extends TestCase
     public function setUp():void
     {
         $this->form = new nameTestForm;
-        $this->url  = new Url('urlName', array(), $this->form);
+        $this->url  = new Url('urlName', [], $this->form);
     }
     // }}}
 
@@ -77,6 +77,22 @@ class urlTest extends TestCase
         $this->url->setValue("https://depage.net/äöüß-test/");
         $this->assertEquals("https://depage.net/%C3%A4%C3%B6%C3%BC%C3%9F-test/", $this->url->getValue());
         $this->assertTrue($this->url->validate());
+    }
+    // }}}
+
+    // {{{ testDisabledNormalization()
+    /**
+     * Tests setValue with an URL containing special characters
+     **/
+    public function testDisabledNormalization()
+    {
+        $url  = new Url('urlName2', [
+            'normalize' => false,
+        ], $this->form);
+
+        $url->setValue("https://äöüß-test.de/äöüß-test/");
+        $this->assertEquals("https://äöüß-test.de/äöüß-test/", $url->getValue());
+        $this->assertTrue($url->validate());
     }
     // }}}
 
