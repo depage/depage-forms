@@ -44,6 +44,54 @@ class urlTest extends TestCase
     }
     // }}}
 
+    // {{{ testSetIdnUrl()
+    /**
+     * Tests setValue with an IDN url
+     **/
+    public function testSetIdnUrl()
+    {
+        $this->url->setValue("https://äöüß-test.de");
+        $this->assertEquals("https://xn--ss-test-4wa6n9b.de", $this->url->getValue());
+        $this->assertTrue($this->url->validate());
+    }
+    // }}}
+
+    // {{{ testSetUrlWithAllOptions()
+    /**
+     * Tests setValue with an IDN url
+     **/
+    public function testSetUrlWithAllOptions()
+    {
+        $this->url->setValue("https://username:password@depage.net:8443/path/to/file/?query=string#fragment");
+        $this->assertEquals("https://username:password@depage.net:8443/path/to/file/?query=string#fragment", $this->url->getValue());
+        $this->assertTrue($this->url->validate());
+    }
+    // }}}
+
+    // {{{ testSetPathUrlEncoding()
+    /**
+     * Tests setValue with an URL containing special characters
+     **/
+    public function testSetPathUrlEncoding()
+    {
+        $this->url->setValue("https://depage.net/äöüß-test/");
+        $this->assertEquals("https://depage.net/%C3%A4%C3%B6%C3%BC%C3%9F-test/", $this->url->getValue());
+        $this->assertTrue($this->url->validate());
+    }
+    // }}}
+
+    // {{{ testSetPathUrlEncodingNoDoubleEncode()
+    /**
+     * Tests setValue to make sure that the URL is not double encoded
+     **/
+    public function testSetPathUrlEncodingNoDoubleEncode()
+    {
+        $this->url->setValue("https://depage.net/%C3%A4%C3%B6%C3%BC%C3%9F-test/");
+        $this->assertEquals("https://depage.net/%C3%A4%C3%B6%C3%BC%C3%9F-test/", $this->url->getValue());
+        $this->assertTrue($this->url->validate());
+    }
+    // }}}
+
     // {{{ testNotRequiredEmpty()
     /**
      * Not required, empty -> valid
@@ -61,7 +109,7 @@ class urlTest extends TestCase
      **/
     public function testValidNotRequiredNotEmpty()
     {
-        $this->url->setValue('http://www.depage.com');
+        $this->url->setValue('http://depage.net');
         $this->assertTrue($this->url->validate());
     }
     // }}}

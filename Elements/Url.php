@@ -54,6 +54,50 @@ class Url extends Text
         // @todo add option to test url by domain name (dns) or also with a request (for http/https urls)
     }
     // }}}
+
+    // {{{ typeCastValue()
+    /**
+     * @brief   Converts value into htmlDOM
+     *
+     * @return void
+     **/
+    protected function typeCastValue()
+    {
+        $info = parse_url(trim($this->value));
+
+        $scheme   = isset($info['scheme']) ? $info['scheme'] . '://' : '';
+        $host     = $info['host'] ?? '';
+        $host     = idn_to_ascii($host);
+        $port     = isset($info['port']) ? ':' . $info['port'] : '';
+        $user     = $info['user'] ?? '';
+        $pass     = isset($info['pass']) ? ':' . $info['pass']  : '';
+        $pass     = ($user || $pass) ? "$pass@" : '';
+        $path     = $info['path'] ?? '';
+        $query    = isset($info['query']) ? '?' . $info['query'] : '';
+        $fragment = isset($info['fragment']) ? '#' . $info['fragment'] : '';
+
+        $encodedPath = implode('/', array_map([$this, 'encodeUrlPath'], explode('/', $path)));
+
+        $this->value = "$scheme$user$pass$host$port$encodedPath$query$fragment";
+    }
+    // }}}
+    // {{{ encodeUrlPath()
+    /**
+     * @brief   Encodes the path of an URL
+     *
+     * @param   string $path
+     *
+     * @return  string
+     **/
+    protected function encodeUrlPath($path)
+    {
+        if (rawurlencode($path) != str_replace(['%','+'], ['%25','%2B'], $path)) {
+            $path = rawurlencode($path);
+        }
+
+        return $path;
+    }
+    // }}}
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */
