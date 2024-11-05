@@ -21,6 +21,11 @@ class Stepnav
      * @brief HTML code to be printed
      **/
     private $htmlString;
+
+    /**
+     * @brief form object
+     **/
+    protected $form;
     // }}}
 
     // {{{ __construct()

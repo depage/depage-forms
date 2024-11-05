@@ -75,7 +75,7 @@ if ($form->validate()) {
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-    <script src="../../lib/js/jquery.tools.min.js"></script>
+    <script src="../../lib/js/validator.js"></script>
     <script src="../../lib/js/effect.min.js"></script>
 </head>
 <body>
