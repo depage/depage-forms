@@ -137,12 +137,7 @@ class Richtext extends Textarea
             $htmlDOM = $this->value;
         }
 
-        $html = "";
-
-        // add content of every node in body
-        foreach ($htmlDOM->documentElement->childNodes as $node) {
-            $html .= $htmlDOM->saveXML($node);
-        }
+        $html = (string) $htmlDOM;
 
         return $this->htmlEscape($html);
     }

@@ -198,7 +198,6 @@ class HtmlDom extends \DOMDocument
             }
         }
         // }}}
-        // @todo check to use br or nbsp
         // {{{ add br to empty paragraphs to keep them
         $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 
@@ -301,7 +300,7 @@ class HtmlDom extends \DOMDocument
     {
         $html = "";
         foreach ($this->documentElement->childNodes as $node) {
-            $html .= $this->saveXML($node) . "\n";
+            $html .= $this->saveHTML($node) . "\n";
         }
 
         return $html;
