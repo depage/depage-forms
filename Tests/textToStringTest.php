@@ -54,6 +54,24 @@ class textToStringTest extends TestCase
     }
     // }}}
 
+    // {{{ testDefaultValue()
+    /**
+     * Element with setting default value.
+     **/
+    public function testDefaultValue()
+    {
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+            '<label>' .
+                '<span class="depage-label">textName</span>' .
+                '<input name="textName" type="text" value="testValue">' .
+            '</label>' .
+        '</p>' . "\n";
+
+        $this->text->setDefaultValue('testValue');
+        $this->assertEquals($expected, $this->text->__toString());
+    }
+    // }}}
+
     // {{{ testRequired()
     /**
      * Rendered element with 'required' attribute set.

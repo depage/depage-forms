@@ -54,6 +54,24 @@ class booleanToStringTest extends TestCase
     }
     // }}}
 
+    // {{{ testCheckedDefault()
+    /**
+     * Checked element
+     **/
+    public function testCheckedDefault()
+    {
+        $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed">' .
+            '<label>' .
+                '<input type="checkbox" name="booleanName" value="true" checked="yes">' .
+                '<span class="depage-label">booleanName</span>' .
+            '</label>' .
+        '</p>' . "\n";
+
+        $this->boolean->setDefaultValue(true);
+        $this->assertEquals($expected, $this->boolean->__toString());
+    }
+    // }}}
+
     // {{{ testRequired()
     /**
      * Rendered element with set required attribute
