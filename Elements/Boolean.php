@@ -81,7 +81,12 @@ class Boolean extends Abstracts\Input
         $errorMessage       = $this->htmlErrorMessage();
         $helpMessage        = $this->htmlHelpMessage();
 
-        $selected = ($this->getValue() === true) ? " checked=\"yes\"" : '';
+        $selected = '';
+        if (is_null($this->getValue()) && $this->defaultValue === true) {
+            $selected = " checked=\"yes\"";
+        } elseif ($this->getValue() === true) {
+            $selected = " checked=\"yes\"";
+        }
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
