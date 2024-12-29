@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    single.php
  * @brief   single input element
@@ -58,7 +59,7 @@ class Single extends Abstracts\Input
     /**
      * @brief Contains list of selectable options.
      **/
-    protected $list = array();
+    protected $list = [];
 
     /**
      * @brief HTML skin type (radio or select).
@@ -75,11 +76,11 @@ class Single extends Abstracts\Input
      * @param  object $form       parent form object
      * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         parent::__construct($name, $parameters, $form);
 
-        $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : array();
+        $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : [];
     }
     // }}}
 
@@ -93,7 +94,7 @@ class Single extends Abstracts\Input
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -114,10 +115,14 @@ class Single extends Abstracts\Input
      * @param  string $value   value to be marked as selected
      * @return string $list       options-part of the HTML-select-element
      **/
-    protected function htmlList($options = null, $value = null)
+    protected function htmlList(?array $options = null, ?string $value = null): string
     {
-        if ($value == null)     $value      = $this->htmlValue();
-        if ($options == null)   $options    = $this->list;
+        if ($value == null) {
+            $value      = $this->htmlValue();
+        }
+        if ($options == null) {
+            $options    = $this->list;
+        }
 
         $options    = $this->htmlEscape($options);
         $list       = '';
@@ -158,7 +163,7 @@ class Single extends Abstracts\Input
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $marker             = $this->htmlMarker();
         $label              = $this->htmlLabel();
@@ -197,7 +202,7 @@ class Single extends Abstracts\Input
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         // check if value is in list
         $inList = false;
@@ -206,7 +211,7 @@ class Single extends Abstracts\Input
             $inList = true;
         }
         if (!$inList) {
-            foreach($this->list as $sub) {
+            foreach ($this->list as $sub) {
                 if (is_array($sub) && in_array($this->value, array_keys($sub))) {
                     $inList = true;
                     break;

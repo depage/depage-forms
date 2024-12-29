@@ -53,7 +53,7 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

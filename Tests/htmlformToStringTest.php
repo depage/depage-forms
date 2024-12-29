@@ -46,9 +46,9 @@ class htmlformToStringTest extends TestCase
             '</p>' . "\n" .
         '</form>';
 
-        $form = new csrfTestForm('formName', array(
+        $form = new csrfTestForm('formName', [
             'cancelLabel' => "cancel",
-        ));
+        ]);
         $this->assertEquals($expected, $form->__toString());
     }
     // }}}
@@ -68,9 +68,9 @@ class htmlformToStringTest extends TestCase
             '</p>' . "\n" .
         '</form>';
 
-        $form = new csrfTestForm('formName', array(
+        $form = new csrfTestForm('formName', [
             'disabled' => true,
-        ));
+        ]);
         $this->assertEquals($expected, $form->__toString());
     }
     // }}}
@@ -132,9 +132,9 @@ class htmlformToStringTest extends TestCase
         '</form>';
 
         $_GET['step'] = 1;
-        $form = new csrfTestForm('formName', array(
+        $form = new csrfTestForm('formName', [
             'backLabel' => "back",
-        ));
+        ]);
         $step0 = $form->addStep('step0');
         $step0->addText('text0');
         $step1 = $form->addStep('step1');

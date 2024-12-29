@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    textarea.php
  * @brief   textarea input element
@@ -59,7 +60,7 @@ class Textarea extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -75,7 +76,7 @@ class Textarea extends Text
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $label              = $this->htmlLabel();
         $marker             = $this->htmlMarker();
@@ -102,9 +103,9 @@ class Textarea extends Text
     /**
      * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlDataAttributes()
+    protected function htmlDataAttributes(): string
     {
-        $options = array();
+        $options = [];
         $options['autogrow'] = $this->autogrow;
 
         $this->dataAttr['textarea-options'] = json_encode($options);
@@ -119,7 +120,7 @@ class Textarea extends Text
      *
      * @return string HTML rows attribute
      **/
-    protected function htmlRows()
+    protected function htmlRows(): string
     {
         return ($this->rows === null) ? "" : " rows=\"" . $this->htmlEscape($this->rows) . "\"";
     }
@@ -130,7 +131,7 @@ class Textarea extends Text
      *
      * @return string HTML cols attribute
      **/
-    protected function htmlCols()
+    protected function htmlCols(): string
     {
         return ($this->cols === null) ? "" : " cols=\"" . $this->htmlEscape($this->cols) . "\"";
     }

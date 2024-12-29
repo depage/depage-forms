@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    validatorNotCallable.php
  * @brief   validator not callable exception
@@ -12,6 +13,4 @@ namespace Depage\HtmlForm\Exceptions;
 /**
  * @brief parent for element specific exceptions
  **/
-class ValidatorNotCallable extends \Exception
-{
-}
+class ValidatorNotCallable extends \Exception {}

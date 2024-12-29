@@ -12,10 +12,10 @@ class datetimelocalToStringTest extends TestCase
     protected $datetimelocal;
 
     // {{{ setUp
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form = new nameTestForm;
-        $this->datetimelocal = new Datetimelocal('datetimelocalName', array(), $this->form);
+        $this->form = new nameTestForm();
+        $this->datetimelocal = new Datetimelocal('datetimelocalName', [], $this->form);
     }
     // }}}
 
@@ -85,13 +85,13 @@ class datetimelocalToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
-        );
+        ];
         $datetimelocal = new datetimelocal('datetimelocalName', $parameters, $this->form);
         $this->assertEquals($expected, $datetimelocal->__toString());
     }

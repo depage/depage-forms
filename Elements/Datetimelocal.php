@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    datetimelocal.php
  * @brief   datetime-local input element
@@ -23,7 +24,7 @@ class Datetimelocal extends Text
      *
      * @return string HTML-rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $wrapperAttributes  = $this->htmlWrapperAttributes();
         $label              = $this->htmlLabel();

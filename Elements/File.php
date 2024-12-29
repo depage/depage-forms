@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    file.php
  * @brief   file input element
@@ -19,7 +20,7 @@ define("UPLOAD_ERR_FILE_EXTENSION", 1000);
 class File extends Text
 {
     // {{{ variables
-    protected $value = array();
+    protected $value = [];
 
     /**
      * @brief HTML maxNum attribute
@@ -47,7 +48,7 @@ class File extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -64,7 +65,7 @@ class File extends Text
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->maxSize !== false) {
             $maxInput = "<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"{$this->maxSize}\" />";
@@ -99,7 +100,7 @@ class File extends Text
      *
      * @return string $attributes rendered HTML attributes
      **/
-    protected function htmlInputAttributes()
+    protected function htmlInputAttributes(): string
     {
         $attributes = parent::htmlInputAttributes();
 
@@ -120,7 +121,7 @@ class File extends Text
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         $this->value = (array) $this->value;
     }
@@ -132,14 +133,14 @@ class File extends Text
      *
      * @return array $files returns an array of all uploaded files
      **/
-    public function handleUploadedFiles($files = null)
+    public function handleUploadedFiles(array $files = null): array
     {
         if (!is_array($files)) {
-            $files = array();
+            $files = [];
         }
         $extRegex = "";
         if (!empty($this->allowedExtensions)) {
-            $extRegex = str_replace(array(" ", ",", "."), array("", "|", "\."), $this->allowedExtensions);
+            $extRegex = str_replace([" ", ",", "."], ["", "|", "\."], $this->allowedExtensions);
         }
         if (isset($_FILES[$this->name])) {
             foreach ($_FILES[$this->name]["error"] as $key => $error) {
@@ -151,19 +152,19 @@ class File extends Text
                     $tmpName = tempnam("", "depage-form-upload-");
                     $success = move_uploaded_file($uploadName, $tmpName);
                     if ($this->maxNum > 1) {
-                        $files[] = array(
+                        $files[] = [
                             'name' => $_FILES[$this->name]["name"][$key],
                             'tmp_name' => $tmpName,
-                        );
+                        ];
 
                     } else {
-                        $files[0] = array(
+                        $files[0] = [
                             'name' => $_FILES[$this->name]["name"][$key],
                             'tmp_name' => $tmpName,
-                        );
+                        ];
                     }
                 } else {
-                    $errorMsgs = array(
+                    $errorMsgs = [
                         UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
                         UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.",
                         UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded.",
@@ -172,7 +173,7 @@ class File extends Text
                         UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
                         UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop.",
                         UPLOAD_ERR_FILE_EXTENSION => "The uploaded file has an unallowed extension.", // @todo add error message to form
-                    );
+                    ];
                     $this->log("htmlform: " . $errorMsgs[$error]);
                     // TODO can't send array here
                     // $this->log($_FILES[$this->name]);
@@ -193,13 +194,11 @@ class File extends Text
      *
      * @return void
      **/
-    public function clearValue()
+    public function clearValue(): void
     {
         $this->clearUploadedFiles();
 
-        $this->value = array();
-
-        return $this->value;
+        $this->value = [];
     }
     // }}}
 
@@ -207,7 +206,7 @@ class File extends Text
     /**
      * @brief cleans uploaded files when session is cleared
      **/
-    public function clearUploadedFiles()
+    public function clearUploadedFiles(): void
     {
         if (count($this->value)) {
             foreach ($this->value as $file) {

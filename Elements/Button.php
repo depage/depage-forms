@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    text.php
  * @brief   text input element
@@ -49,7 +50,7 @@ class Button extends \Depage\HtmlForm\Abstracts\Input
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -67,7 +68,7 @@ class Button extends \Depage\HtmlForm\Abstracts\Input
      * @param  mixed $newValue new element value
      * @return bool  $this->value    converted value
      **/
-    public function setValue($newValue)
+    public function setValue(mixed $newValue): bool
     {
         if (is_bool($newValue)) {
             $this->value = $newValue;
@@ -87,7 +88,7 @@ class Button extends \Depage\HtmlForm\Abstracts\Input
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $value              = "true";
         $type               = "submit";

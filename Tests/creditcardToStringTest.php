@@ -16,7 +16,7 @@ class creditcardToStringTest extends TestCase
     {
         $form = new nameTestForm();
 
-        $creditcard = new Creditcard('creditcardName', array(), $form);
+        $creditcard = new Creditcard('creditcardName', [], $form);
         $creditcard->addChildElements();
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName">' .
@@ -69,7 +69,7 @@ class creditcardToStringTest extends TestCase
     {
         $form = new nameTestForm();
 
-        $creditcard = new creditcard('creditcardName', array('required' => true), $form);
+        $creditcard = new creditcard('creditcardName', ['required' => true], $form);
         $creditcard->addChildElements();
 
         $expected = '<fieldset id="formName-creditcardName" name="creditcardName" class="required">' .

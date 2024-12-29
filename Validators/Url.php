@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    Validators/Url.php
  * @brief   url validator
@@ -19,7 +20,7 @@ class Url extends Validator
      * @param  array  $parameters validation parameters
      * @return bool   validation result
      **/
-    public function validate($url, $parameters = array())
+    public function validate($url, $parameters = [])
     {
         return (bool) filter_var(self::normalizeUrl($url), FILTER_VALIDATE_URL);
     }
@@ -32,7 +33,7 @@ class Url extends Validator
      * @param  string $url url to be normalized
      * @return string normalized url
      **/
-    static public function normalizeUrl($url)
+    public static function normalizeUrl($url)
     {
         $info = parse_url(trim($url));
 
@@ -41,7 +42,7 @@ class Url extends Validator
         $host     = idn_to_ascii($host);
         $port     = isset($info['port']) ? ':' . $info['port'] : '';
         $user     = $info['user'] ?? '';
-        $pass     = isset($info['pass']) ? ':' . $info['pass']  : '';
+        $pass     = isset($info['pass']) ? ':' . $info['pass'] : '';
         $pass     = ($user || $pass) ? "$pass@" : '';
         $path     = $info['path'] ?? '';
         $query    = isset($info['query']) ? '?' . $info['query'] : '';
@@ -61,7 +62,7 @@ class Url extends Validator
      *
      * @return  string
      **/
-    static protected function encodeUrlPath($path)
+    protected static function encodeUrlPath($path)
     {
         if (rawurlencode($path) != str_replace(['%','+'], ['%25','%2B'], $path)) {
             $path = rawurlencode($path);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elements/range.php
  * @brief   range input element
@@ -37,8 +38,6 @@ namespace Depage\HtmlForm\Elements;
         echo ($form);
     @endcode
  **/
-class Range extends Number
-{
-}
+class Range extends Number {}
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

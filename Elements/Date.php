@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    date.php
  * @brief   date input element
@@ -22,7 +23,7 @@ class Date extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 

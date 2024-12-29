@@ -13,10 +13,10 @@ class stepToStringTest extends TestCase
     protected $step;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form = new nameTestForm;
-        $this->step = new Step('stepName', array(), $this->form);
+        $this->form = new nameTestForm();
+        $this->step = new Step('stepName', [], $this->form);
     }
     // }}}
 

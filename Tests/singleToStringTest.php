@@ -12,10 +12,10 @@ class singleToStringTest extends TestCase
     protected $single;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->single   = new Single('singleName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->single   = new Single('singleName', [], $this->form);
     }
     // }}}
 
@@ -47,7 +47,7 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array('skin' => 'select');
+        $parameters = ['skin' => 'select'];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -82,7 +82,7 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array('skin' => 'select');
+        $parameters = ['skin' => 'select'];
         $single = new single('singleName', $parameters, $this->form);
         $single->setRequired();
         $this->assertEquals($expected, $single->__toString());
@@ -119,9 +119,9 @@ class singleToStringTest extends TestCase
             '</span>' .
         '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array('item1', 'item2', 'item3')
-        );
+        $parameters = [
+            'list' => ['item1', 'item2', 'item3'],
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -144,10 +144,10 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'skin' => 'select',
-            'list' => array('item1', 'item2', 'item3')
-        );
+            'list' => ['item1', 'item2', 'item3'],
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -184,13 +184,13 @@ class singleToStringTest extends TestCase
             '</span>' .
         '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array(
+        $parameters = [
+            'list' => [
                 'key1' => 'item1',
                 'key2' => 'item2',
                 'key3' => 'item3',
-            )
-        );
+            ],
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -214,14 +214,14 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'skin' => 'select',
-            'list' => array(
+            'list' => [
                 'key1' => 'item1',
                 'key2' => 'item2',
                 'key3' => 'item3',
-            )
-        );
+            ],
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -250,19 +250,19 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'skin' => 'select',
-            'list' => array(
-                'group1' => array(
+            'list' => [
+                'group1' => [
                     'key1' => 'item1',
                     'key2' => 'item2',
-                ),
-                'group2' => array(
+                ],
+                'group2' => [
                     'key3' => 'item3',
-                ),
+                ],
                 'key4' => 'item4',
-            )
-        );
+            ],
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -279,13 +279,13 @@ class singleToStringTest extends TestCase
             '<span></span>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
-        );
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -304,14 +304,14 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'skin'          => 'select',
             'required'      => true,
-        );
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -347,9 +347,9 @@ class singleToStringTest extends TestCase
             '</span>' .
         '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array('it">em1', 'it">em2', 'it">em3'),
-        );
+        $parameters = [
+            'list' => ['it">em1', 'it">em2', 'it">em3'],
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -372,10 +372,10 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array('it">em1', 'it">em2', 'it">em3'),
+        $parameters = [
+            'list' => ['it">em1', 'it">em2', 'it">em3'],
             'skin' => 'select',
-        );
+        ];
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
     }
@@ -385,8 +385,8 @@ class singleToStringTest extends TestCase
     /**
      * Rendered radio input; tests html escaping of associative option list.
      **/
-     public function testRadioEscapedAssociativeList()
-     {
+    public function testRadioEscapedAssociativeList()
+    {
         $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
             '<span class="depage-label">singleName</span>' .
             '<span>' .
@@ -409,15 +409,15 @@ class singleToStringTest extends TestCase
                     '</label>' .
                 '</span>' .
             '</span>' .
-        '</p>'. "\n";
+        '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array(
+        $parameters = [
+            'list' => [
                 'ke">y1' => 'it">em1',
                 'ke">y2' => 'it">em2',
                 'ke">y3' => 'it">em3',
-            )
-        );
+            ],
+        ];
 
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());
@@ -441,14 +441,14 @@ class singleToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'skin' => 'select',
-            'list' => array(
+            'list' => [
                 'ke">y1' => 'it">em1',
                 'ke">y2' => 'it">em2',
                 'ke">y3' => 'it">em3',
-            ),
-        );
+            ],
+        ];
 
         $single = new single('singleName', $parameters, $this->form);
         $this->assertEquals($expected, $single->__toString());

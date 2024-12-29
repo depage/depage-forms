@@ -12,10 +12,10 @@ class textareaToStringTest extends TestCase
     protected $textarea;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->textarea = new Textarea('textareaName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->textarea = new Textarea('textareaName', [], $this->form);
     }
     // }}}
 
@@ -85,12 +85,12 @@ class textareaToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
-        );
+        ];
         $textarea = new textarea('textareaName', $parameters, $this->form);
         $this->assertEquals($expected, $textarea->__toString());
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elements/tel.php
  * @brief   tel input element
@@ -46,7 +47,7 @@ class Tel extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 

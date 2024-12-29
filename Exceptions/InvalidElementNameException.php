@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    invalidElementNameException.php
  * @brief   invalid element name exception class
@@ -12,6 +13,4 @@ namespace Depage\HtmlForm\Exceptions;
 /**
  * @brief thrown when element name is empty or contains invalid characters
  **/
-class InvalidElementNameException extends ElementException
-{
-}
+class InvalidElementNameException extends ElementException {}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    duplicateElementNameException.php
  * @brief   duplicate element name exception class
@@ -14,6 +15,4 @@ namespace Depage\HtmlForm\Exceptions;
  *
  * Element names are also used for identification, so they have to be unique.
  **/
-class DuplicateElementNameException extends ElementException
-{
-}
+class DuplicateElementNameException extends ElementException {}

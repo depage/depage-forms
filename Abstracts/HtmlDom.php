@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    htmldom.php
  * @brief   DOM-class for html-content
@@ -74,7 +75,7 @@ class HtmlDom extends \DOMDocument
      *
      * @return boolean true on success, false on error
      **/
-    public function loadHTML($html, $options = 0):bool
+    public function loadHTML($html, $options = 0): bool
     {
         $tmpDOM = new \DOMDocument();
 
@@ -187,7 +188,7 @@ class HtmlDom extends \DOMDocument
                 if ($node->getAttribute("class") != "") {
                     $attr = implode(" ", array_intersect(
                         explode(" ", $node->getAttribute("class")),
-                        $classByTag[$node->nodeName]
+                        $classByTag[$node->nodeName],
                     ));
                     if (empty($attr)) {
                         $node->removeAttribute("class");
@@ -207,7 +208,7 @@ class HtmlDom extends \DOMDocument
         // }}}
         // {{{ make sure li-nodes are always inside ul, ol or menu
         $nodelist = $xpath->query("//li");
-        $parentNodes = array("ul", "ol", "menu");
+        $parentNodes = ["ul", "ol", "menu"];
 
         foreach ($nodelist as $node) {
             if (!in_array($node->parentNode->nodeName, $parentNodes)) {
@@ -307,7 +308,7 @@ class HtmlDom extends \DOMDocument
     }
     // }}}
     // {{{ __serialize()
-    public function __serialize():array
+    public function __serialize(): array
     {
         return [
             'xml' => $this->saveXML(),
@@ -315,7 +316,7 @@ class HtmlDom extends \DOMDocument
     }
     // }}}
     // {{{ __unserialize()
-    public function __unserialize(array $data):void
+    public function __unserialize(array $data): void
     {
         $this->loadXML($data['xml']);
     }

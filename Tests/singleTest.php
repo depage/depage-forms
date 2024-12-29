@@ -13,9 +13,9 @@ class singleTest extends TestCase
     protected $singleAssoc;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
+        $this->form     = new nameTestForm();
         $this->single   = new Single('singleName', [
             'list' => [
                 'valueString',

@@ -11,7 +11,7 @@ class inputTypesTest extends TestCase
     protected $form;
 
     // {{{ setUp()
-    protected function setUp():void
+    protected function setUp(): void
     {
         $this->form = new HtmlForm('formNameString');
     }

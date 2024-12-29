@@ -8,57 +8,57 @@ require_once '../../HtmlForm.php';
  * Create the example form 'userInfoExample'. This time, instead of the default
  * 'submit', the button text should say 'Send'.
  */
-$form = new Depage\HtmlForm\HtmlForm('userInfoExample', array('label' => 'Send'));
+$form = new Depage\HtmlForm\HtmlForm('userInfoExample', ['label' => 'Send']);
 
 /*
  * Create subgroup of data elements
  */
-$dataFieldset = $form->addFieldset('dataFieldset', array('label' => 'Personal Information'));
+$dataFieldset = $form->addFieldset('dataFieldset', ['label' => 'Personal Information']);
 
 /*
  * First & last name fields. Nothing special here.
  */
-$dataFieldset->addText('firstName', array('label' => 'First name'));
-$dataFieldset->addText('lastName', array('label' => 'Last name'));
+$dataFieldset->addText('firstName', ['label' => 'First name']);
+$dataFieldset->addText('lastName', ['label' => 'Last name']);
 
 /*
  * User name field, required by the form. Contains custom validator with a
  * regular expression. The title text is displayed on mousover; it should
  * usually explain the validator pattern.
  */
-$dataFieldset->addText('userName', array('label' => 'User name', 'required' => true, 'validator' => '/.{6,}/', 'title' => 'at least 6 characters'));
+$dataFieldset->addText('userName', ['label' => 'User name', 'required' => true, 'validator' => '/.{6,}/', 'title' => 'at least 6 characters']);
 
 /*
  * Email field, required by the form.
  */
-$dataFieldset->addEmail('email', array('label' => 'Email address', 'required' => true));
+$dataFieldset->addEmail('email', ['label' => 'Email address', 'required' => true]);
 
 /*
  * Language selection
  */
-$dataFieldset->addSingle('language', array(
+$dataFieldset->addSingle('language', [
     'label' => 'Language',
     'skin'  => 'select',
-    'list'  => array(
+    'list'  => [
         'en' => 'English',
         'es' => 'Spanish',
         'fr' => 'French',
         'de' => 'German',
-    ),
-));
+    ],
+]);
 
 /*
  * Subgroup for the legal stuff
  */
-$checkFieldset = $form->addFieldset('checkFieldset', array('label' => 'Terms and Conditions'));
+$checkFieldset = $form->addFieldset('checkFieldset', ['label' => 'Terms and Conditions']);
 
 /*
  * Terms & conditions checkboxes
  *
  * When they're set required, they have to be checked to continue
  */
-$checkFieldset->addBoolean('read', array('label' => 'I have read and understood the terms and conditions.', 'required' => true));
-$checkFieldset->addBoolean('accept', array('label' => 'Accept terms and conditions.', 'required' => true));
+$checkFieldset->addBoolean('read', ['label' => 'I have read and understood the terms and conditions.', 'required' => true]);
+$checkFieldset->addBoolean('accept', ['label' => 'Accept terms and conditions.', 'required' => true]);
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -87,7 +87,7 @@ if ($form->validate()) {
 
     $form->clearSession();
 } else {
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

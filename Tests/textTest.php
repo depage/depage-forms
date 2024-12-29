@@ -12,10 +12,10 @@ class textTest extends TestCase
     protected $text;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form = new nameTestForm;
-        $this->text = new Text('textName', array(), $this->form);
+        $this->form = new nameTestForm();
+        $this->text = new Text('textName', [], $this->form);
     }
     // }}}
 

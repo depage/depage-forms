@@ -12,10 +12,10 @@ class multipleTest extends TestCase
     protected $multiple;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->multiple = new Multiple('multipleName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->multiple = new Multiple('multipleName', [], $this->form);
     }
     // }}}
 
@@ -35,11 +35,11 @@ class multipleTest extends TestCase
      **/
     public function testMultipleSetValue()
     {
-        $this->multiple->setValue(array('1'=>'1'));
-        $this->assertEquals(array('1'=>'1'), $this->multiple->getValue());
+        $this->multiple->setValue(['1' => '1']);
+        $this->assertEquals(['1' => '1'], $this->multiple->getValue());
 
         $this->multiple->setValue('');
-        $this->assertEquals(array(), $this->multiple->getValue());
+        $this->assertEquals([], $this->multiple->getValue());
     }
     // }}}
 
@@ -49,7 +49,7 @@ class multipleTest extends TestCase
      **/
     public function testMultipleNotRequiredEmpty()
     {
-        $this->multiple->setValue(array());
+        $this->multiple->setValue([]);
         $this->assertTrue($this->multiple->validate());
     }
     // }}}
@@ -60,7 +60,7 @@ class multipleTest extends TestCase
      **/
     public function testMultipleValidNotRequiredNotEmpty()
     {
-        $this->multiple->setValue(array('1'=>'1'));
+        $this->multiple->setValue(['1' => '1']);
         $this->assertTrue($this->multiple->validate());
     }
     // }}}
@@ -72,7 +72,7 @@ class multipleTest extends TestCase
     public function testMultipleRequiredEmpty()
     {
         $this->multiple->setRequired();
-        $this->multiple->setValue(array());
+        $this->multiple->setValue([]);
         $this->assertFalse($this->multiple->validate());
     }
     // }}}

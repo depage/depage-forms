@@ -11,9 +11,9 @@ class numberMinMaxTest extends TestCase
     protected $form;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
+        $this->form     = new nameTestForm();
     }
     // }}}
 
@@ -23,7 +23,7 @@ class numberMinMaxTest extends TestCase
      **/
     public function testEmpty()
     {
-        $number = new number('numberName', array(), $this->form);
+        $number = new number('numberName', [], $this->form);
 
         $number->setValue("");
         $this->assertTrue($number->isEmpty());
@@ -45,7 +45,7 @@ class numberMinMaxTest extends TestCase
      **/
     public function testTypeCast()
     {
-        $number = new number('numberName', array(), $this->form);
+        $number = new number('numberName', [], $this->form);
 
         $number->setValue("");
         $this->assertNull($number->getValue());
@@ -112,10 +112,10 @@ class numberMinMaxTest extends TestCase
      **/
     public function testMin()
     {
-        $number = new number('numberName', array(
+        $number = new number('numberName', [
             "min" => 0,
             "required" => true,
-        ), $this->form);
+        ], $this->form);
 
         $number->setValue("-1");
         $this->assertFalse($number->validate());
@@ -134,10 +134,10 @@ class numberMinMaxTest extends TestCase
      **/
     public function testMax()
     {
-        $number = new number('numberName', array(
+        $number = new number('numberName', [
             "max" => 0,
             "required" => true,
-        ), $this->form);
+        ], $this->form);
 
         $number->setValue("-1");
         $this->assertTrue($number->validate());

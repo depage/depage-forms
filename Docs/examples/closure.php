@@ -15,10 +15,10 @@ $form = new Depage\HtmlForm\HtmlForm('closureValidator');
  * In this case you must enter "2" oder a string
  * containing "yes" to pass validation.
  */
-$form->addText('closure', array(
+$form->addText('closure', [
     'label' => 'closure validated',
     'required' => true,
-    'validator' => function($value) {
+    'validator' => function ($value) {
         if ($value == 2) {
             return true;
         } else {
@@ -26,7 +26,7 @@ $form->addText('closure', array(
         }
     },
     'errorMessage' => "Your input must include 'yes' or be '2'",
-));
+]);
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -57,7 +57,7 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

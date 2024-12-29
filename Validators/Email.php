@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    Validators/Email.php
  * @brief   email validator
@@ -19,7 +20,7 @@ class Email extends Validator
      * @param  array  $parameters validation parameters
      * @return bool   validation result
      **/
-    public function validate($email, $parameters = array())
+    public function validate($email, $parameters = [])
     {
         $valid = (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
 

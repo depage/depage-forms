@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    country.php
  * @brief   country select input element
@@ -42,7 +43,7 @@ class Country extends Single
     /**
     * @brief Contains list of ISO countries.
     **/
-    protected $list = array();
+    protected $list = [];
     // }}}
 
     // {{{ getCountries
@@ -51,9 +52,9 @@ class Country extends Single
      *
      * @param array $iso list/subset of country iso codes to filter
      **/
-    public static function getCountries($iso = null)
+    public static function getCountries(array|string $iso = null): array
     {
-        $countries = array(
+        $countries = [
             'ad' => _("Andorra"),
             'ae' => _("United Arab Emirates"),
             'af' => _("Afghanistan"),
@@ -291,8 +292,8 @@ class Country extends Single
             'za' => _("South Africa"),
             'zm' => _("Zambia"),
             'zr' => _("Zaire"),
-            'zw' => _("Zimbabwe")
-        );
+            'zw' => _("Zimbabwe"),
+        ];
 
         // return a subset
         if ($iso !== null) {
@@ -316,7 +317,7 @@ class Country extends Single
     * @param   object   $form       parent form object
     * @return  void
     **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         parent::__construct($name, $parameters, $form);
 
@@ -346,14 +347,14 @@ class Country extends Single
 
             foreach ($priorityCountries as &$country_code) {
                 if (isset($this->list[$country_code])) {
-                    $top = array($country_code => $this->list[$country_code]);
+                    $top = [$country_code => $this->list[$country_code]];
                     unset($this->list[$country_code]);
                     $this->list = $top + $this->list;
                 }
             }
         }
 
-        $this->list = array('' => _("Please Select")) + $this->list;
+        $this->list = ['' => _("Please Select")] + $this->list;
     }
     // }}}
 
@@ -367,7 +368,7 @@ class Country extends Single
     *
     * @return  void
     **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 

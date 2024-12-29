@@ -12,10 +12,10 @@ class hiddenTest extends TestCase
     protected $hidden;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->hidden   = new Hidden('nameString', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->hidden   = new Hidden('nameString', [], $this->form);
     }
     // }}}
 

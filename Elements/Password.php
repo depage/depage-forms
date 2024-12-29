@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    password.php
  * @brief   password input element
@@ -34,8 +35,6 @@ namespace Depage\HtmlForm\Elements;
         echo ($form);
     @endcode
  **/
-class Password extends Text
-{
-}
+class Password extends Text {}
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

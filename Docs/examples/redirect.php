@@ -7,13 +7,13 @@ require_once '../../HtmlForm.php';
 /*
  * Create the example form 'originForm' with different success page url.
  */
-$form = new Depage\HtmlForm\HtmlForm('originForm', array('successURL' => 'redirect-success.php'));
+$form = new Depage\HtmlForm\HtmlForm('originForm', ['successURL' => 'redirect-success.php']);
 
 /*
  * Create input elements
  */
-$form->addText('username', array('label' => 'User name'));
-$form->addEmail('email', array('label' => 'Email address'));
+$form->addText('username', ['label' => 'User name']);
+$form->addEmail('email', ['label' => 'Email address']);
 
 /*
  * The process method is essential to the functionality of the form. It serves

@@ -12,9 +12,9 @@ class urlTest extends TestCase
     protected $url;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form = new nameTestForm;
+        $this->form = new nameTestForm();
         $this->url  = new Url('urlName', [], $this->form);
     }
     // }}}

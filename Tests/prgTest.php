@@ -12,12 +12,12 @@ class htmlformTestClass extends csrfTestForm
     public $testRedirect;
     public $testLog;
 
-    public function redirect($url)
+    public function redirect($url): void
     {
         $this->testRedirect = $url;
     }
 
-    public function log($message, $type = NULL)
+    public function log($message, $type = null): void
     {
         $this->testLog = $message;
     }
@@ -38,7 +38,7 @@ class prgTest extends TestCase
      * @param mixed
      * @return void
      **/
-    public function tearDown():void
+    public function tearDown(): void
     {
         $_GET = [];
         $_REQUEST = [];
@@ -72,7 +72,7 @@ class prgTest extends TestCase
         $_POST['formCsrfToken']  = 'xxxxxxxx';
         $_POST['postedText'] = 'submitted';
 
-        $form = new htmlformTestClass('formName', array('successURL' => 'http://www.depagecms.net'));
+        $form = new htmlformTestClass('formName', ['successURL' => 'http://www.depagecms.net']);
 
         $postedTextElement = $form->addText('postedText');
         $unpostedTextElement = $form->addText('unpostedText');

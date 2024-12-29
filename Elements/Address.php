@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    address.php
  * @brief   address fieldset element
@@ -47,7 +48,7 @@ class Address extends Fieldset
      * @param  object $form       parent form object
      * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         parent::__construct($name, $parameters, $form);
 
@@ -79,7 +80,7 @@ class Address extends Fieldset
 
         $this->defaults['priorityCountries'] = isset($parameters['priorityCountries'])
             ? $parameters['priorityCountries']
-            : array();
+            : [];
 
         $this->prefix = isset($parameters['prefix'])
             ? rtrim($parameters['prefix'], '_') . '_'
@@ -97,7 +98,7 @@ class Address extends Fieldset
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -117,7 +118,7 @@ class Address extends Fieldset
      *
      * @return void
      **/
-    public function addChildElements()
+    public function addChildElements(): void
     {
         parent::addChildElements();
 
@@ -126,25 +127,25 @@ class Address extends Fieldset
                 $labelVar = "label$prop";
 
                 if ($prop == "State") {
-                    $this->addState($this->prefix . "state", array(
+                    $this->addState($this->prefix . "state", [
                         'label' => $this->labelState,
                         'defaultValue' => $this->defaults['defaultState'],
                         //'required' => $this->required,
-                    ));
-                } else if ($prop == "Country") {
-                    $this->addCountry($this->prefix . "country", array(
+                    ]);
+                } elseif ($prop == "Country") {
+                    $this->addCountry($this->prefix . "country", [
                         'label' => $this->labelCountry,
                         'priorityCountries' => $this->defaults['priorityCountries'],
                         'defaultValue' => $this->defaults['defaultCountry'],
                         'required' => $this->required,
-                    ));
+                    ]);
                 } else {
-                    $this->addText($this->prefix . strtolower($prop), array(
+                    $this->addText($this->prefix . strtolower($prop), [
                         'label' => $this->$labelVar,
                         'maxlength' => $this->propsMaxLength[$prop],
                         'defaultValue' => $this->defaults["default$prop"],
                         'required' => $prop != "Address2" && $this->required,
-                    ));
+                    ]);
                 }
             }
         }
@@ -157,7 +158,7 @@ class Address extends Fieldset
      *
      * @return bool validation result
      **/
-    public function validate()
+    public function validate(): bool
     {
         if (parent::validate() && isset($this->defaultCountry) && isset($this->defaultState)) {
             // check selected state matches the country

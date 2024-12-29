@@ -1,5 +1,5 @@
 <?php
-    header("Content-type: text/html; charset=UTF-8");
+header("Content-type: text/html; charset=UTF-8");
 /*
  * Load the library...
  */
@@ -14,7 +14,7 @@ $form = new Depage\HtmlForm\HtmlForm('jsRichtext');
  * Add the various input elements to the form by calling the '"add" + element
  * type' method.
  */
-$form->addRichtext('html', array(
+$form->addRichtext('html', [
     'label' => 'Richtext',
     'stylesheet' => '../../lib/css/depage-richtext.css',
     'defaultValue' => "
@@ -34,7 +34,7 @@ $form->addRichtext('html', array(
             <li>text</li>
         </ol>
     ",
-));
+]);
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -82,6 +82,6 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
-    echo ($form);
+    echo($form);
 ?>
 </body>

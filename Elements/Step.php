@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    step.php
  * @brief   step container element
@@ -25,8 +26,8 @@ class Step extends Fieldset
      *
      * @return string $renderedElement HTML rendered element
      **/
-     public function __toString()
-     {
+    public function __toString(): string
+    {
         $renderedElements = '';
         foreach ($this->elementsAndHtml as $element) {
             $renderedElements .= $element;

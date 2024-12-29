@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file    Validators/Closure.php
  * @brief   closure validator
  **/
+
 namespace Depage\HtmlForm\Validators;
 
 /**
@@ -25,7 +27,7 @@ class Closure extends Validator
      * @param  array  $parameters validation parameters
      * @return bool   validation result
      **/
-    public function validate($value, $parameters = array())
+    public function validate($value, $parameters = [])
     {
         return call_user_func($this->validatorFunction, $value, $parameters);
     }

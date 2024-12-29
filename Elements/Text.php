@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    text.php
  * @brief   text input element
@@ -86,7 +87,7 @@ class Text extends Abstracts\Input
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -104,7 +105,7 @@ class Text extends Abstracts\Input
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $value              = $this->htmlValue();
         $type               = strtolower($this->type);
@@ -167,13 +168,19 @@ class Text extends Abstracts\Input
      *
      * @return string $attributes rendered HTML attributes
      **/
-    protected function htmlInputAttributes()
+    protected function htmlInputAttributes(): string
     {
         $attributes = parent::htmlInputAttributes();
 
-        if ($this->maxlength)   $attributes .= " maxlength=\"{$this->maxlength}\"";
-        if ($this->placeholder) $attributes .= " placeholder=\"{$this->placeholder}\"";
-        if ($this->list)        $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";
+        if ($this->maxlength) {
+            $attributes .= " maxlength=\"{$this->maxlength}\"";
+        }
+        if ($this->placeholder) {
+            $attributes .= " placeholder=\"{$this->placeholder}\"";
+        }
+        if ($this->list) {
+            $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";
+        }
 
         $attributes .= $this->validator->getPatternAttribute();
 
@@ -187,10 +194,10 @@ class Text extends Abstracts\Input
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         // strip control characters
-        $this->value = preg_replace( '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', (string) $this->value);
+        $this->value = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', (string) $this->value);
 
         if ($this->normalize && class_exists("\\Normalizer")) {
             $this->value = \Normalizer::normalize($this->value);

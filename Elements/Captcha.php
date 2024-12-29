@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    Captcha.php
  *
@@ -40,7 +41,7 @@ class Captcha extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
         $this->defaults['defaultValue'] = false;
@@ -60,7 +61,7 @@ class Captcha extends Text
      * @param  object $form       parent form object
      * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         $this->captcha = new CaptchaBuilder();
 
@@ -84,7 +85,7 @@ class Captcha extends Text
      * @param  mixed $newValue new element value
      * @return bool  $this->value    converted value
      **/
-    public function setValue($newValue)
+    public function setValue(mixed $newValue): mixed
     {
         if (is_bool($newValue)) {
             $this->value = $newValue;
@@ -102,7 +103,7 @@ class Captcha extends Text
      * @param mixed &$
      * @return void
      **/
-    public function setSessionSlot(&$sessionSlot)
+    public function setSessionSlot(&$sessionSlot): void
     {
         $this->sessionSlot = &$sessionSlot;
 
@@ -118,7 +119,7 @@ class Captcha extends Text
      *
      * @return bool $this->valid validation result
      **/
-    public function validate()
+    public function validate(): bool
     {
         if (!$this->validated) {
             $this->validated = true;
@@ -136,7 +137,7 @@ class Captcha extends Text
      * @param mixed
      * @return void
      **/
-    protected function testPhrase($value)
+    protected function testPhrase(mixed $value): bool
     {
         $this->captcha->setPhrase($this->sessionSlot['formCaptcha'] ?? "");
 
@@ -155,7 +156,7 @@ class Captcha extends Text
      *
      * @return void
      **/
-    protected function getNewPhrase()
+    protected function getNewPhrase(): void
     {
         $phraseBuilder = new PhraseBuilder();
         $phrase = $phraseBuilder->build();
@@ -170,7 +171,7 @@ class Captcha extends Text
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $value              = $this->htmlValue();
         $type               = strtolower($this->type);

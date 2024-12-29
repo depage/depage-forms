@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    boolean.php
  * @brief   boolean input element
@@ -57,7 +58,7 @@ class Boolean extends Abstracts\Input
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
         $this->defaults['defaultValue'] = false;
@@ -71,7 +72,7 @@ class Boolean extends Abstracts\Input
      *
      * @return string HTML-rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $inputAttributes    = $this->htmlInputAttributes();
         $label              = $this->htmlLabel();
@@ -80,7 +81,7 @@ class Boolean extends Abstracts\Input
         $errorMessage       = $this->htmlErrorMessage();
         $helpMessage        = $this->htmlHelpMessage();
 
-        $selected = ($this->htmlValue() === true) ? " checked=\"yes\"" : '';
+        $selected = ($this->getValue() === true) ? " checked=\"yes\"" : '';
 
         return "<p {$wrapperAttributes}>" .
             "<label>" .
@@ -103,12 +104,13 @@ class Boolean extends Abstracts\Input
      *
      * @return bool $this->valid validation result
      **/
-    public function validate()
+    public function validate(): bool
     {
         if (!$this->validated) {
             $this->validated = true;
 
-            $this->valid = (($this->value !== null)
+            $this->valid = (
+                ($this->value !== null)
                 && ($this->validator->validate($this->value) || $this->isEmpty())
                 && ($this->value || !$this->required)
             );
@@ -128,7 +130,7 @@ class Boolean extends Abstracts\Input
      * @param  mixed $newValue new element value
      * @return bool  $this->value    converted value
      **/
-    public function setValue($newValue)
+    public function setValue(mixed $newValue): bool
     {
         if (is_bool($newValue)) {
             $this->value = $newValue;

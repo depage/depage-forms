@@ -12,10 +12,10 @@ class numberToStringTest extends TestCase
     protected $number;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->number   = new Number('numberName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->number   = new Number('numberName', [], $this->form);
     }
     // }}}
 
@@ -85,12 +85,12 @@ class numberToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $number = new number('numberName', array(
+        $number = new number('numberName', [
             "min" => 0,
             "max" => 150,
             "step" => 2,
             "required" => true,
-        ), $this->form);
+        ], $this->form);
 
         $this->assertEquals($expected, $number->__toString());
     }
@@ -110,13 +110,13 @@ class numberToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
-        );
+        ];
         $number = new number('numberName', $parameters, $this->form);
         $this->assertEquals($expected, $number->__toString());
     }

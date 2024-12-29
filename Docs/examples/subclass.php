@@ -9,15 +9,15 @@ require_once '../../HtmlForm.php';
  */
 class HtmlFormSubclass extends Depage\HtmlForm\HtmlForm
 {
-    public function __construct($name, $parameters = array())
+    public function __construct($name, $parameters = [])
     {
         parent::__construct($name, $parameters);
 
         /*
          * Attach elements
          */
-        $this->addText('username', array('label' => 'User name'));
-        $this->addEmail('email', array('label' => 'Email address'));
+        $this->addText('username', ['label' => 'User name']);
+        $this->addEmail('email', ['label' => 'Email address']);
     }
 
     /*
@@ -68,7 +68,7 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

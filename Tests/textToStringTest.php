@@ -12,10 +12,10 @@ class textToStringTest extends TestCase
     protected $text;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form = new nameTestForm;
-        $this->text = new Text('textName', array(), $this->form);
+        $this->form = new nameTestForm();
+        $this->text = new Text('textName', [], $this->form);
     }
     // }}}
 
@@ -78,18 +78,18 @@ class textToStringTest extends TestCase
      **/
     public function testAttributes()
     {
-        $autoAttributes = array(
+        $autoAttributes = [
             "autocapitalize",
             "autocomplete",
             "autocorrect",
-        );
+        ];
 
         foreach ($autoAttributes as $attr) {
-            foreach (array(null, true, false) as $status) {
-                $this->form = new nameTestForm;
-                $this->text = new text('textName', array(
+            foreach ([null, true, false] as $status) {
+                $this->form = new nameTestForm();
+                $this->text = new text('textName', [
                     $attr => $status,
-                ), $this->form);
+                ], $this->form);
 
                 if (is_null($status)) {
                     $attribute = "";
@@ -118,7 +118,7 @@ class textToStringTest extends TestCase
      **/
     public function testList()
     {
-        $expected ='<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -130,9 +130,9 @@ class textToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array('item1', 'item2', 'item3')
-        );
+        $parameters = [
+            'list' => ['item1', 'item2', 'item3'],
+        ];
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
@@ -155,15 +155,15 @@ class textToStringTest extends TestCase
                     '<option value="key3" label="item3">' .
                 '</datalist>' .
             '</label>' .
-        '</p>'. "\n";
+        '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array(
+        $parameters = [
+            'list' => [
                 'key1' => 'item1',
                 'key2' => 'item2',
                 'key3' => 'item3',
-            )
-        );
+            ],
+        ];
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
@@ -182,14 +182,14 @@ class textToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'lang'         => 'la">ng',
             'required'      => true,
-        );
+        ];
         $text = new text('textName', $parameters, $this->form);
         $text->setValue("val\">ue<'");
         $this->assertEquals($expected, $text->__toString());
@@ -214,9 +214,9 @@ class textToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array('it">em1', 'it">em2', 'it">em3'),
-        );
+        $parameters = [
+            'list' => ['it">em1', 'it">em2', 'it">em3'],
+        ];
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());
     }
@@ -226,8 +226,8 @@ class textToStringTest extends TestCase
     /**
      * Rendered element; tests html escaping of associative option list.
      **/
-     public function testEscapedAssociativeList()
-     {
+    public function testEscapedAssociativeList()
+    {
         $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
@@ -238,15 +238,15 @@ class textToStringTest extends TestCase
                     '<option value="ke&quot;&gt;y3" label="it&quot;&gt;em3">' .
                 '</datalist>' .
             '</label>' .
-        '</p>'. "\n";
+        '</p>' . "\n";
 
-        $parameters = array(
-            'list' => array(
+        $parameters = [
+            'list' => [
                 'ke">y1' => 'it">em1',
                 'ke">y2' => 'it">em2',
                 'ke">y3' => 'it">em3',
-            )
-        );
+            ],
+        ];
 
         $text = new text('textName', $parameters, $this->form);
         $this->assertEquals($expected, $text->__toString());

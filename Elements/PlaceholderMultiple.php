@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    placeholderMultiple.php
  * @brief   adds a placeholder for an array element
@@ -32,9 +33,9 @@ class PlaceholderMultiple extends Placeholder
      *
      * @return array empty array
      **/
-    public function typeCastValue()
+    public function typeCastValue(): array
     {
-        return array();
+        return [];
     }
     // }}}
 }

@@ -11,7 +11,7 @@ class htmlDomTest extends TestCase
     protected $htmldom;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
         $this->htmldom = new HtmlDom();
     }

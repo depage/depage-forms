@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elementParametersNoArrayException.php
  * @brief   element parameters no array exception class
@@ -12,6 +13,4 @@ namespace Depage\HtmlForm\Exceptions;
 /**
  * @brief thrown when element parameters aren't of type array on construction
  **/
-class ElementParametersNoArrayException extends ElementException
-{
-}
+class ElementParametersNoArrayException extends ElementException {}

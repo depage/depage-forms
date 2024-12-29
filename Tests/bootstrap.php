@@ -1,4 +1,5 @@
 <?php
+
 $_SERVER['REQUEST_URI'] = 'http://www.depagecms.net/';
 session_start();
 
@@ -11,17 +12,17 @@ require_once(__DIR__ . '/../HtmlForm.php');
  **/
 class logTestClass
 {
-    public $error = array(
+    public $error = [
         'argument'  => '',
         'type'      => '',
-    );
+    ];
 
     public function log($argument, $type = null)
     {
-        $this->error = array(
+        $this->error = [
             'argument'  => $argument,
             'type'      => $type,
-        );
+        ];
     }
 }
 // }}}
@@ -41,7 +42,7 @@ class nameTestForm
     public function updateInputValue() {}
     public function getNamespaces()
     {
-        return array('\\Depage\\HtmlForm\\Elements');
+        return ['\\Depage\\HtmlForm\\Elements'];
     }
 }
 // }}}
@@ -52,7 +53,8 @@ class nameTestForm
  **/
 class csrfTestForm extends Depage\HtmlForm\HtmlForm
 {
-    protected function getNewCsrfToken() {
+    protected function getNewCsrfToken()
+    {
         return "xxxxxxxx";
     }
 }

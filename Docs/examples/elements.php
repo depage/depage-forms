@@ -31,14 +31,14 @@ $form->addEmail('Email');
  * By default, the multiple input element is a HTML checkbox where more than
  * one option can be selected. Returns array of option strings.
  */
-$form->addMultiple('multipleCheckbox', array(
+$form->addMultiple('multipleCheckbox', [
     'label' => 'Multiple-checkbox',
-    'list' => array(
+    'list' => [
         'option one'    => 'label one',
         'option two'    => 'label two',
         'option three'  => 'label three',
-    ),
-));
+    ],
+]);
 
 /*
  * Multiple input element with select skin
@@ -47,15 +47,15 @@ $form->addMultiple('multipleCheckbox', array(
  * select element where more than one option can be selected. Returns array of
  * option strings.
  */
-$form->addMultiple('multipleSelect', array(
+$form->addMultiple('multipleSelect', [
     'label' => 'Multiple-select',
     'skin' => 'select',
-    'list' => array(
+    'list' => [
         'option one'    => 'label one',
         'option two'    => 'label two',
         'option three'  => 'label three',
-    ),
-));
+    ],
+]);
 
 /*
  * Number input element
@@ -63,11 +63,11 @@ $form->addMultiple('multipleSelect', array(
  * By default, min, max, step values aren't set (Depend on browser, step is
  * usually 1). Returns float value.
  */
-$form->addNumber('Number', array(
+$form->addNumber('Number', [
     'min'   => 0,
     'max'   => 10,
     'step'  => 2,
-));
+]);
 
 /*
  * Password input element
@@ -82,10 +82,10 @@ $form->addPassword('Password');
  *
  * Same as number input element but with a slider interface.
  */
-$form->addRange('Range', array(
+$form->addRange('Range', [
     'min'   => 0,
     'max'   => 10,
-));
+]);
 
 /*
  * Single input element with radio skin
@@ -93,14 +93,14 @@ $form->addRange('Range', array(
  * By default the single element is a HTML radio element (only one option can
  * be slected). Returns string value of selected option.
  */
-$form->addSingle('singleRadio', array(
+$form->addSingle('singleRadio', [
     'label' => 'Single-radio',
-    'list' => array(
+    'list' => [
         'option one'    => 'label one',
         'option two'    => 'label two',
         'option three'  => 'label three',
-    ),
-));
+    ],
+]);
 
 /*
  * Single input element with select skin
@@ -109,15 +109,15 @@ $form->addSingle('singleRadio', array(
  * select element (only one option can be selected). Returns string value of
  * selected option.
  */
-$form->addSingle('SingleSelect', array(
+$form->addSingle('SingleSelect', [
     'label' => 'Single-select',
     'skin' => 'select',
-    'list' => array(
+    'list' => [
         'option one'    => 'label one',
         'option two'    => 'label two',
         'option three'  => 'label three',
-    ),
-));
+    ],
+]);
 
 /*
  * Tel input element
@@ -192,7 +192,7 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

@@ -11,7 +11,7 @@ class NamespaceTest extends TestCase
     protected $form;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
         $this->form = new \Depage\HtmlForm\HtmlForm('testForm');
     }

@@ -43,10 +43,10 @@ class inputTest extends TestCase
     protected $input;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->input    = new inputTestClass('inputName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->input    = new inputTestClass('inputName', [], $this->form);
     }
     // }}}
 
@@ -129,7 +129,7 @@ class inputTest extends TestCase
      **/
     public function testHtmlClasses()
     {
-        $input = new inputTestClass('inputName', array(), $this->form);
+        $input = new inputTestClass('inputName', [], $this->form);
 
         // default
         $this->assertEquals('input-inputtestclass', $input->htmlClasses());

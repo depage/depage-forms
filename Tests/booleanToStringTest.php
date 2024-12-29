@@ -12,10 +12,10 @@ class booleanToStringTest extends TestCase
     protected $boolean;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
         $this->form     = new nameTestForm();
-        $this->boolean  = new Boolean('booleanName', array(), $this->form);
+        $this->boolean  = new Boolean('booleanName', [], $this->form);
     }
     // }}}
 
@@ -85,13 +85,13 @@ class booleanToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
-        );
+        ];
         $boolean = new boolean('booleanName', $parameters, $this->form);
         $this->assertEquals($expected, $boolean->__toString());
     }

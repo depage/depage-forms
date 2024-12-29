@@ -7,9 +7,9 @@ require_once '../../HtmlForm.php';
 /*
  * Create the example form 'stepsExampleForm'
  */
-$form = new Depage\HtmlForm\HtmlForm('stepsExampleForm', array(
+$form = new Depage\HtmlForm\HtmlForm('stepsExampleForm', [
     'backLabel' => "back",
-));
+]);
 
 /*
  * add (optional) step navigation
@@ -19,20 +19,20 @@ $form->addStepNav();
 /*
  * Create the first step.
  */
-$firstStep = $form->addStep('firstStep', array('label' => "1. First step"));
+$firstStep = $form->addStep('firstStep', ['label' => "1. First step"]);
 
 /*
  * Attach the first text input element
  */
-$firstStep->addText('text1', array('label' => 'First step text field', 'required' => true));
+$firstStep->addText('text1', ['label' => 'First step text field', 'required' => true]);
 
 /*
  * And so on...
  */
-$secondStep = $form->addStep('secondStep', array('label' => "2. Second step"));
-$secondStep->addText('text2', array('label' => 'Second step text field', 'required' => true));
-$thirdStep = $form->addStep('thirdStep', array('label' => "3. Third step"));
-$thirdStep->addText('text3', array('label' => 'Third step text field', 'required' => true));
+$secondStep = $form->addStep('secondStep', ['label' => "2. Second step"]);
+$secondStep->addText('text2', ['label' => 'Second step text field', 'required' => true]);
+$thirdStep = $form->addStep('thirdStep', ['label' => "3. Third step"]);
+$thirdStep->addText('text3', ['label' => 'Third step text field', 'required' => true]);
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -63,7 +63,7 @@ if ($form->validate()) {
     /*
      * Display the form (current step).
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

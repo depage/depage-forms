@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    Validators/Validator.php
  * @brief   basic validator
@@ -11,8 +12,8 @@ namespace Depage\HtmlForm\Validators;
  *
  * Basic validator. Contaіns validator factory.
  **/
- class Validator
- {
+class Validator
+{
     // {{{ variables
     /**
      * @brief log object
@@ -53,7 +54,7 @@ namespace Depage\HtmlForm\Validators;
             $closureValidator->setFunc($argument);
 
             return $closureValidator;
-        } elseif (($argument[0] === '/') && ($argument[strlen($argument)-1] === '/')) {
+        } elseif (($argument[0] === '/') && ($argument[strlen($argument) - 1] === '/')) {
             $regExValidator = new RegEx($log);
             $regExValidator->setRegEx($argument);
 
@@ -80,7 +81,7 @@ namespace Depage\HtmlForm\Validators;
      * @param  array $parameters validation parameters
      * @return bool  validation result
      **/
-    public function validate($value, $parameters = array())
+    public function validate($value, $parameters = [])
     {
         return true;
     }
@@ -96,7 +97,7 @@ namespace Depage\HtmlForm\Validators;
      **/
     protected function log($argument, $type)
     {
-        if (is_callable(array($this->log, 'log'))) {
+        if (is_callable([$this->log, 'log'])) {
             $this->log->log($argument, $type);
         } else {
             error_log($argument);
@@ -113,7 +114,7 @@ namespace Depage\HtmlForm\Validators;
     public function getPatternAttribute()
     {
         if (isset($this->regEx)) {
-            return ' pattern="' . htmlspecialchars(substr($this->regEx, 1,-1), ENT_QUOTES) . '"';
+            return ' pattern="' . htmlspecialchars(substr($this->regEx, 1, -1), ENT_QUOTES) . '"';
         }
     }
     // }}}

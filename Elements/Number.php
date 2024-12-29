@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elements/number.php
  * @brief   number input element
@@ -68,7 +69,7 @@ class Number extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -86,7 +87,7 @@ class Number extends Text
      *
      * @return string HTML rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $value              = $this->htmlValue();
         $type               = strtolower($this->type);
@@ -119,7 +120,7 @@ class Number extends Text
      *
      * @return string HTML min attribute
      **/
-    protected function htmlMin()
+    protected function htmlMin(): string
     {
         return ($this->min === null) ? "" : " min=\"" . $this->htmlEscape($this->min) . "\"";
     }
@@ -131,7 +132,7 @@ class Number extends Text
      *
      * @return string HTML max attribute
      **/
-    protected function htmlMax()
+    protected function htmlMax(): string
     {
         return ($this->max === null) ? "" : " max=\"" . $this->htmlEscape($this->max) . "\"";
     }
@@ -143,7 +144,7 @@ class Number extends Text
      *
      * @return string HTML step attribute
      **/
-    protected function htmlStep()
+    protected function htmlStep(): string
     {
         return ($this->step === null) ? "" : " step=\"" . $this->htmlEscape($this->step) . "\"";
     }
@@ -157,12 +158,12 @@ class Number extends Text
      *
      * @return bool validaton result
      **/
-    protected function validatorCall()
+    protected function validatorCall(): bool
     {
-        $parameters = array(
+        $parameters = [
             'min' => $this->min,
             'max' => $this->max,
-        );
+        ];
 
         return $this->validator->validate($this->value, $parameters);
     }
@@ -176,7 +177,7 @@ class Number extends Text
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         $ptString = $this->value;
 
@@ -197,7 +198,7 @@ class Number extends Text
         // remove all remaining marks but the decimal mark
         if ($commaset > $pointset) {
             $pString = str_replace(".", "", $pString);
-        } else if ($commaset < $pointset) {
+        } elseif ($commaset < $pointset) {
             $pString = str_replace(",", "", $pString);
         }
 
@@ -221,7 +222,7 @@ class Number extends Text
      *
      * @return string
      **/
-    public function getStringValue()
+    public function getStringValue(): string
     {
         $decimals = 0;
 
@@ -241,7 +242,8 @@ class Number extends Text
      *
      * @return bool empty-check result
      **/
-    public function isEmpty() {
+    public function isEmpty(): bool
+    {
         return (
             empty($this->value)
             && $this->value !== 0
@@ -249,7 +251,6 @@ class Number extends Text
         );
     }
     // }}}
-
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

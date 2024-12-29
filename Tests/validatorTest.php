@@ -13,7 +13,7 @@ class validatorTestClass extends Validator
     // needed for testLog() ($this->log() is protected)
     public function log($argument, $type = null)
     {
-        parent::log ($argument, $type);
+        parent::log($argument, $type);
     }
 }
 // }}}
@@ -32,7 +32,7 @@ class regExTestClass extends RegEx
     // needed for testLog() ($this->log() is protected)
     public function log($argument, $type = null)
     {
-        parent::log ($argument, $type);
+        parent::log($argument, $type);
     }
 }
 // }}}
@@ -109,10 +109,10 @@ class validatorTest extends TestCase
     public function testNumber()
     {
         $numberValidator = Validator::factory('Number');
-        $this->assertFalse($numberValidator->validate('letters',   array('min' => null,    'max' => null)));
-        $this->assertFalse($numberValidator->validate(-10,         array('min' => 0,       'max' => 10)));
-        $this->assertTrue($numberValidator->validate(5,           array('min' => 0,       'max' => 10)));
-        $this->assertTrue($numberValidator->validate(5,           array('min' => null,    'max' => null)));
+        $this->assertFalse($numberValidator->validate('letters', ['min' => null,    'max' => null]));
+        $this->assertFalse($numberValidator->validate(-10, ['min' => 0,       'max' => 10]));
+        $this->assertTrue($numberValidator->validate(5, ['min' => 0,       'max' => 10]));
+        $this->assertTrue($numberValidator->validate(5, ['min' => null,    'max' => null]));
     }
     // }}}
 
@@ -122,7 +122,7 @@ class validatorTest extends TestCase
      **/
     public function testClosure()
     {
-        $testClosure = function($value, $parameters) {
+        $testClosure = function ($value, $parameters) {
             return $value == "is-true";
         };
         $customValidator = Validator::factory($testClosure);
@@ -159,15 +159,15 @@ class validatorTest extends TestCase
      **/
     public function testLog()
     {
-        $log        = new logTestClass;
+        $log        = new logTestClass();
         $validator  = new validatorTestClass($log);
 
         $validator->log('argumentString', 'typeString');
 
-        $expected = array(
+        $expected = [
             'argument'  => 'argumentString',
             'type'      => 'typeString',
-        );
+        ];
 
         $this->assertEquals($expected, $log->error);
     }
@@ -180,16 +180,16 @@ class validatorTest extends TestCase
      **/
     public function testPregError()
     {
-        $log        = new logTestClass;
+        $log        = new logTestClass();
         $regEx      = '/(?:\D+|<\d+>)*[!?]/';
         $validator  = new regExTestClass($regEx, $log);
 
         $validator->validate('foobar foobar foobar');
 
-        $expected = array(
+        $expected = [
             'argument'  => 'Regular expression warning: error code 2',
             'type'      => null,
-        );
+        ];
 
         $this->assertEquals($expected, $log->error);
     }

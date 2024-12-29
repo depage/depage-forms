@@ -15,7 +15,7 @@ class elementTestClass extends element
     public $TESTValue3;
 
     // required for testSetParameters()
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -25,7 +25,7 @@ class elementTestClass extends element
     }
 
     // needed for testLog() (element::log() is protected)
-    public function log($argument, $type = null)
+    public function log($argument, $type = null): void
     {
         parent::log($argument, $type);
     }
@@ -48,10 +48,10 @@ class elementTest extends TestCase
     protected $element;
 
     // {{{ setUp()
-    protected function setUp():void
+    protected function setUp(): void
     {
-        $this->form = new nameTestForm;
-        $this->element = new elementTestClass('elementName', array(), $this->form);
+        $this->form = new nameTestForm();
+        $this->element = new elementTestClass('elementName', [], $this->form);
     }
     // }}}
 
@@ -62,11 +62,11 @@ class elementTest extends TestCase
      **/
     public function testSetParameters()
     {
-        $parameters = array(
+        $parameters = [
             'testValue1' => '1',
             'testvalue2' => '2',
             'testvalue3' => '3',
-        );
+        ];
 
         $element = new elementTestClass('elementName', $parameters, null);
 
@@ -85,19 +85,7 @@ class elementTest extends TestCase
     {
         $this->expectException(\Depage\HtmlForm\Exceptions\InvalidElementNameException::class);
 
-        new elementTestClass(' ', array(), null);
-    }
-    // }}}
-
-    // {{{ testElementNameNoStringException()
-    /**
-     * Throw an exception if name type isn't string.
-     **/
-    public function testElementNameNoStringException()
-    {
-        $this->expectException(\Depage\HtmlForm\Exceptions\InvalidElementNameException::class);
-
-        new elementTestClass(42, array(), null);
+        new elementTestClass(' ', [], null);
     }
     // }}}
 
@@ -109,19 +97,7 @@ class elementTest extends TestCase
     {
         $this->expectException(\Depage\HtmlForm\Exceptions\InvalidElementNameException::class);
 
-        new elementTestClass('/', array(), null);
-    }
-    // }}}
-
-    // {{{ testElementParametersNoArrayException()
-    /**
-     * Element parameters need to be of type array.
-     **/
-    public function testElementParametersNoArrayException()
-    {
-        $this->expectException(\Depage\HtmlForm\Exceptions\ElementParametersNoArrayException::class);
-
-        $input = new inputTestClass('inputName', 'string', $this->form);
+        new elementTestClass('/', [], null);
     }
     // }}}
 
@@ -132,17 +108,17 @@ class elementTest extends TestCase
      **/
     public function testLog()
     {
-        $log        = new logTestClass;
+        $log        = new logTestClass();
 
-        $parameters = array('log' => $log);
+        $parameters = ['log' => $log];
         $element       = new elementTestClass('elementName', $parameters, $this->form);
 
         $element->log('argumentString', 'typeString');
 
-        $expected = array(
+        $expected = [
             'argument'  => 'argumentString',
             'type'      => 'typeString',
-        );
+        ];
 
         $this->assertEquals($expected, $log->error);
     }

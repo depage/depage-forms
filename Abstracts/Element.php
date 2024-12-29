@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    element.php
  * @brief   element class
@@ -54,7 +55,7 @@ abstract class Element
     /**
      * @brief wether a input element will be disabled
      **/
-    protected $disabled;
+    protected $disabled = false;
 
     /**
      * @addtogroup htmlformInputDefaults
@@ -89,10 +90,9 @@ abstract class Element
      * @param  object $form       parent form object reference
      * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object|null $form)
     {
         $this->checkName($name);
-        $this->checkParameters($parameters);
 
         $this->name = $name;
 
@@ -114,7 +114,7 @@ abstract class Element
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         $this->defaults['log'] = null;
         $this->defaults['class'] = null;
@@ -136,7 +136,7 @@ abstract class Element
      *
      * @see     htmlEscape()
      **/
-    public function __call($function, $arguments)
+    public function __call(string $function, array $arguments): mixed
     {
         if (substr($function, 0, 4) === 'html') {
             $attribute = str_replace('html', '', $function);
@@ -146,6 +146,9 @@ abstract class Element
 
             if (!empty($this->$escapedAttribute)) {
                 return $this->$escapedAttribute;
+            }
+            if (!isset($this->$attribute)) {
+                trigger_error("Call to undefined method $function", E_USER_ERROR);
             }
 
             return $this->htmlEscape($this->$attribute);
@@ -162,7 +165,7 @@ abstract class Element
      * @param  bool $disabled HTML disabled-attribute
      * @return void
      **/
-    public function setDisabled($disabled = true)
+    public function setDisabled(bool $disabled = true): self
     {
         $this->disabled = (bool) $disabled;
 
@@ -177,7 +180,7 @@ abstract class Element
      * @param  bool $disabled HTML disabled-attribute
      * @return void
      **/
-    public function getDisabled()
+    public function getDisabled(): bool
     {
         return $this->disabled;
     }
@@ -193,9 +196,7 @@ abstract class Element
      *
      * @return void
      **/
-    public function clearValue()
-    {
-    }
+    public function clearValue(): void {}
     // }}}
 
     // {{{ getName()
@@ -204,26 +205,9 @@ abstract class Element
      *
      * @return string $this->name element name
      **/
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
-    }
-    // }}}
-
-    // {{{ checkParameters()
-    /**
-     * @brief   checks element parameters
-     *
-     * Throws an exception if $parameters isn't of type array.
-     *
-     * @param  array $parameters parameters for element constructor
-     * @return void
-     **/
-    protected function checkParameters($parameters)
-    {
-        if ((isset($parameters)) && (!is_array($parameters))) {
-            throw new Exceptions\ElementParametersNoArrayException('Element "' . $this->getName() . '": parameters must be of type array.');
-        }
     }
     // }}}
 
@@ -243,7 +227,7 @@ abstract class Element
             !is_string($name)
             || trim($name) === ''
             || preg_match('/[^a-zA-Z0-9_\-\[\]]/', $name)
-        )  {
+        ) {
             throw new Exceptions\InvalidElementNameException('"' . $name . '" is not a valid element name.');
         }
     }
@@ -260,9 +244,9 @@ abstract class Element
      * @param  string $type     type of log message
      * @return void
      **/
-    protected function log($argument, $type = null)
+    protected function log(string $argument, string $type = null): void
     {
-        if (is_callable(array($this->log, 'log'))) {
+        if (is_callable([$this->log, 'log'])) {
             $this->log->log($argument, $type);
         } else {
             if (gettype($argument) != 'string') {
@@ -287,16 +271,20 @@ abstract class Element
      *
      * @see     __call()
      **/
-    protected function htmlEscape($options = array())
+    protected function htmlEscape(array|string $options = []): array|string
     {
         if (is_string($options)) {
             $htmlOptions = htmlspecialchars($options, ENT_QUOTES);
         } elseif (is_array($options)) {
-            $htmlOptions = array();
+            $htmlOptions = [];
 
             foreach ($options as $index => $option) {
-                if (is_string($index))  $index  = htmlspecialchars($index, ENT_QUOTES);
-                if (is_string($option)) $option = htmlspecialchars($option, ENT_QUOTES);
+                if (is_string($index)) {
+                    $index  = htmlspecialchars($index, ENT_QUOTES);
+                }
+                if (is_string($option)) {
+                    $option = htmlspecialchars($option, ENT_QUOTES);
+                }
 
                 $htmlOptions[$index] = $option;
             }
@@ -312,7 +300,7 @@ abstract class Element
     /**
      * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlDataAttributes()
+    protected function htmlDataAttributes(): string
     {
         $attributes = "";
         if (is_array($this->dataAttr)) {

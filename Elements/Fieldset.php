@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    fieldset.php
  * @brief   fieldset container element
@@ -81,39 +82,13 @@ class Fieldset extends Abstracts\Container
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
         $this->defaults['label']    = $this->name;
         $this->defaults['disabled'] = false;
         $this->defaults['required'] = false;
-    }
-    // }}}
-
-    // {{{ setDisabled()
-    /**
-     * @brief   Sets the HTML disabled-attribute of the current input element.
-     *
-     * @param  bool $disabled HTML disabled-attribute
-     * @return void
-     **/
-    public function setDisabled($disabled = true)
-    {
-        $this->disabled = (bool) $disabled;
-    }
-    // }}}
-
-    // {{{ getDisabled()
-    /**
-     * @brief   Gets if input is currently disabled
-     *
-     * @param  bool $disabled HTML disabled-attribute
-     * @return void
-     **/
-    public function getDisabled()
-    {
-        return $this->disabled;
     }
     // }}}
 
@@ -132,13 +107,13 @@ class Fieldset extends Abstracts\Container
      * @see     __call()
      * @see     addChildElements()
      **/
-     public function addElement($type, $name, $parameters)
-     {
+    public function addElement(string $type, string $name, array $parameters): object
+    {
         $this->form->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if ( !($newElement instanceof fieldset) ) {
+        if (!($newElement instanceof fieldset)) {
             $this->form->updateInputValue($name);
         }
 
@@ -152,7 +127,7 @@ class Fieldset extends Abstracts\Container
      *
      * @return string $classes HTML-classes
      **/
-    protected function htmlClasses()
+    protected function htmlClasses(): string
     {
         $classes = '';
 
@@ -178,8 +153,8 @@ class Fieldset extends Abstracts\Container
      *
      * @return string HTML-rendered fieldset
      **/
-     public function __toString()
-     {
+    public function __toString(): string
+    {
         $renderedElements   = '';
         $formName           = $this->form->getName();
         $label              = $this->htmlLabel();

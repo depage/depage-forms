@@ -12,10 +12,10 @@ class booleanTest extends TestCase
     protected $boolean;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
         $this->form     = new nameTestForm();
-        $this->boolean  = new Boolean('booleanName', array(), $this->form);
+        $this->boolean  = new Boolean('booleanName', [], $this->form);
     }
     // }}}
 
@@ -46,7 +46,7 @@ class booleanTest extends TestCase
         $this->boolean->setValue('foo');
         $this->assertFalse($this->boolean->getValue());
 
-        $this->boolean->setValue(array());
+        $this->boolean->setValue([]);
         $this->assertFalse($this->boolean->getValue());
 
         $this->boolean->setValue(1);

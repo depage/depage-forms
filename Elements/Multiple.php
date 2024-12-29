@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    multiple.php
  * @brief   multiple input element
@@ -61,7 +62,7 @@ class Multiple extends Abstracts\Input
     /**
      * @brief Contains list of selectable options.
      **/
-    protected $list = array();
+    protected $list = [];
 
     /**
      * @brief HTML skin type (checkbox or select).
@@ -81,13 +82,12 @@ class Multiple extends Abstracts\Input
      * @param  string $name       element name
      * @param  array  $parameters element parameters, HTML attributes, validator specs etc.
      * @param  object $form       parent form object
-     * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         parent::__construct($name, $parameters, $form);
 
-        $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : array();
+        $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : [];
         $this->maxItems = isset($parameters['maxItems']) ? $parameters['maxItems'] : $this->maxItems;
     }
     // }}}
@@ -102,12 +102,12 @@ class Multiple extends Abstracts\Input
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
         // multiple-choice-elements have values of type array
-        $this->defaults['defaultValue'] = array();
+        $this->defaults['defaultValue'] = [];
         $this->defaults['skin']         = 'checkbox';
         $this->defaults['maxItems']     = null;
     }
@@ -127,10 +127,14 @@ class Multiple extends Abstracts\Input
      *
      * @see     __toString()
      **/
-    protected function htmlList($options = null, $value = null)
+    protected function htmlList(array|null $options = null, array|null $value = null): string
     {
-        if ($value == null)     $value      = $this->htmlValue();
-        if ($options == null)   $options    = $this->list;
+        if ($value == null) {
+            $value      = $this->htmlValue();
+        }
+        if ($options == null) {
+            $options    = $this->list;
+        }
 
         $options    = $this->htmlEscape($options);
         $list       = '';
@@ -145,7 +149,7 @@ class Multiple extends Abstracts\Input
                     $list       .= "<option value=\"{$index}\"{$selected}>{$option}</option>";
                 }
             }
-        // checkbox
+            // checkbox
         } else {
             $inputAttributes = $this->htmlInputAttributes();
 
@@ -173,7 +177,7 @@ class Multiple extends Abstracts\Input
      *
      * @see     htmlList()
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $marker             = $this->htmlMarker();
         $label              = $this->htmlLabel();
@@ -216,13 +220,17 @@ class Multiple extends Abstracts\Input
      *
      * @return string $attributes HTML attributes
      **/
-    protected function htmlInputAttributes()
+    protected function htmlInputAttributes(): string
     {
         $attributes = '';
 
         // HTML5 validator hack
-        if ($this->required && in_array($this->skin, ['select', 'tags'])) $attributes .= ' required="required"';
-        if ($this->maxItems)                                              $attributes .= " data-max-items=\"$this->maxItems\"";
+        if ($this->required && in_array($this->skin, ['select', 'tags'])) {
+            $attributes .= ' required="required"';
+        }
+        if ($this->maxItems) {
+            $attributes .= " data-max-items=\"$this->maxItems\"";
+        }
         return $attributes;
     }
     // }}}
@@ -233,10 +241,10 @@ class Multiple extends Abstracts\Input
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         if ($this->value == "") {
-            $this->value = array();
+            $this->value = [];
         } else {
             $this->value = (array) $this->value;
 

@@ -12,10 +12,10 @@ class richtextToStringTest extends TestCase
     protected $textarea;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->textarea = new Richtext('textareaName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->textarea = new Richtext('textareaName', [], $this->form);
     }
     // }}}
 
@@ -85,12 +85,12 @@ class richtextToStringTest extends TestCase
             '</label>' .
         '</p>' . "\n";
 
-        $parameters = array(
+        $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
             'errorMessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
-        );
+        ];
         $textarea = new Richtext('textareaName', $parameters, $this->form);
         $this->assertEquals($expected, $textarea->__toString());
     }

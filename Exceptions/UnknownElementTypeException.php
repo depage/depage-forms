@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    unknownElementTypeException.php
  * @brief   unknown element type exception class

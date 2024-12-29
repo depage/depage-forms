@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    search.php
  * @brief   search input element
@@ -12,8 +13,6 @@ namespace Depage\HtmlForm\Elements;
 /**
  * @brief HTML search input type.
  **/
-class Search extends Text
-{
-}
+class Search extends Text {}
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

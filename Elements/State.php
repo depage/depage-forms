@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    state.php
  * @brief   state select input element
@@ -38,7 +39,7 @@ class State extends Single
     /**
     * @brief Contains list of ISO countries.
     **/
-    protected $list = array();
+    protected $list = [];
     // }}}
 
     // {{{ getStates()
@@ -47,11 +48,11 @@ class State extends Single
      *
      * @param array $iso list/subset of state iso codes to filter
      **/
-    public static function getStates($iso = null)
+    public static function getStates(?array $iso = null): array
     {
-        $country_states = array(
+        $country_states = [
             // http://en.wikipedia.org/wiki/ISO_3166-2:DE
-            'de' => array(
+            'de' => [
                 'de-bw' => _("Baden-Württemberg"),
                 'de-by' => _("Bayern"),
                 'de-be' => _("Berlin"),
@@ -67,10 +68,10 @@ class State extends Single
                 'de-sn' => _("Sachsen"),
                 'de-st' => _("Sachsen-Anhalt"),
                 'de-sh' => _("Schleswig-Holstein"),
-                'de-th' => _("Thüringen")
-            ),
+                'de-th' => _("Thüringen"),
+            ],
             // http://en.wikipedia.org/wiki/ISO_3166-2:US
-            'us' => array(
+            'us' => [
                 'us-al' => _("Alabama"),
                 'us-ak' => _("Alaska"),
                 'us-az' => _("Arizona"),
@@ -127,9 +128,9 @@ class State extends Single
                 'us-mp' => _("Northern Mariana Islands"),
                 'us-pr' => _("Puerto Rico"),
                 'us-um' => _("United States Minor Outlying Islands"),
-                'us-vi' => _("Virgin Islands, U.S.)")
-            ),
-            'ca' => array(
+                'us-vi' => _("Virgin Islands, U.S.)"),
+            ],
+            'ca' => [
                 'ca-ab' => _("Alberta"),
                 'ca-bc' => _("British Columbia"),
                 'ca-mb' => _("Manitoba"),
@@ -143,8 +144,8 @@ class State extends Single
                 'ca-qc' => _("Quebec"),
                 'ca-sk' => _("Saskatchewan"),
                 'ca-yt' => _("Yukon"),
-            ),
-            'it' => array(
+            ],
+            'it' => [
                 'it-ag' => _("Agrigento"),
                 'it-al' => _("Alessandria"),
                 'it-an' => _("Ancona"),
@@ -255,17 +256,17 @@ class State extends Single
                 'it-vv' => _("Vibo Valentia"),
                 'it-vi' => _("Vicenza"),
                 'it-vt' => _("Viterbo"),
-            ),
-        );
+            ],
+        ];
 
         // return a subset
         if ($iso !== null) {
             // search for iso state codes
             if (is_string($iso) && isset($country_states[$iso])) {
                 return $country_states[$iso];
-            } else if (is_array($iso)) {
+            } elseif (is_array($iso)) {
                 $toDelete = array_diff(array_keys($country_states), $iso);
-                foreach($toDelete as $country) {
+                foreach ($toDelete as $country) {
                     unset($country_states[$country]);
                 }
                 return $country_states;
@@ -285,9 +286,8 @@ class State extends Single
     * @param   strin    $name       element name
     * @param   array    $parameters element parameters, HTML attributes, validator specs etc.
     * @param   object   $form       parent form object
-    * @return  void
     **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         parent::__construct($name, $parameters, $form);
 
@@ -305,7 +305,7 @@ class State extends Single
         // sort alphabetically
         asort($this->list);
 
-        $this->list = array('' => _("Please Select")) + $this->list;
+        $this->list = ['' => _("Please Select")] + $this->list;
     }
     // }}}
 
@@ -319,7 +319,7 @@ class State extends Single
     *
     * @return  void
     **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 

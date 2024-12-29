@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    htmlform.php
  * @brief   htmlform class and autoloader
@@ -61,6 +62,7 @@
  * @namespace Depage::HtmlForm::Validators
  * @brief Validators for HTML input-elements
  **/
+
 namespace Depage\HtmlForm;
 
 // }}}
@@ -74,7 +76,7 @@ namespace Depage\HtmlForm;
 function autoload($class)
 {
     $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
-    $file = __DIR__ . '/' .  $class . '.php';
+    $file = __DIR__ . '/' . $class . '.php';
 
     if (file_exists($file)) {
         require_once($file);
@@ -123,7 +125,7 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
 class HtmlForm extends Abstracts\Container
 {
     // {{{ constants
-    const priorityCountries = [
+    public const priorityCountries = [
         'en' => ['us','gb','ie','au','nz'],
         'de' => ['de','at','ch'],
         'fr' => ['fr','ch','be','lu','ca'],
@@ -209,7 +211,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief Contains array of step object references
      **/
-    private $steps = array();
+    private $steps = [];
 
     /**
      * @brief Time until session expiry (seconds)
@@ -229,7 +231,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief List of internal fieldnames that are not part of the results
      **/
-    protected $internalFields = array(
+    protected $internalFields = [
         'formIsValid',
         'formIsAutosaved',
         'formName',
@@ -238,12 +240,12 @@ class HtmlForm extends Abstracts\Container
         'formFinalPost',
         'formCsrfToken',
         'formCaptcha',
-    );
+    ];
 
     /**
      * @brief Namespace strings for addible element classes
      **/
-    protected $namespaces = array('\\Depage\\HtmlForm\\Elements');
+    protected $namespaces = ['\\Depage\\HtmlForm\\Elements'];
     // }}}
     // {{{ __construct()
     /**
@@ -254,7 +256,7 @@ class HtmlForm extends Abstracts\Container
      * @param  object $form       parent form object reference (not used in this case)
      * @return void
      **/
-    public function __construct($name, $parameters = array(), $form = null)
+    public function __construct(string $name, array $parameters = [], HtmlForm|null $form = null)
     {
         $this->isAutoSaveRequest = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
 
@@ -307,13 +309,13 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
         $this->defaults['label']        = 'submit';
-        $this->defaults['cancelLabel']  = null;
-        $this->defaults['backLabel']    = null;
+        $this->defaults['cancelLabel']  = '';
+        $this->defaults['backLabel']    = '';
         $this->defaults['class']        = '';
         $this->defaults['method']       = 'post';
         // @todo adjust submit url for steps when used
@@ -348,7 +350,7 @@ class HtmlForm extends Abstracts\Container
                 $params['path'],
                 $params['domain'],
                 $params['secure'],
-                $params['httponly']
+                $params['httponly'],
             );
             session_start();
 
@@ -361,12 +363,12 @@ class HtmlForm extends Abstracts\Container
                     $params['path'],
                     $params['domain'],
                     $params['secure'],
-                    $params['httponly']
+                    $params['httponly'],
                 );
             }
         }
         $this->sessionSlotName  = 'htmlform-' . $this->name . '-data';
-        $this->sessionSlot      =& $_SESSION[$this->sessionSlotName];
+        $this->sessionSlot      = & $_SESSION[$this->sessionSlotName];
 
         $this->sessionExpiry();
     }
@@ -390,7 +392,7 @@ class HtmlForm extends Abstracts\Container
                 && ($timestamp - $this->sessionSlot['formTimestamp'] > $this->ttl)
             ) {
                 $this->clearSession();
-                $this->sessionSlot =& $_SESSION[$this->sessionSlotName];
+                $this->sessionSlot = & $_SESSION[$this->sessionSlotName];
             }
 
             $this->sessionSlot['formTimestamp'] = $timestamp;
@@ -433,14 +435,18 @@ class HtmlForm extends Abstracts\Container
      * @param  array  $parameters element attributes: HTML attributes, validation parameters etc.
      * @return object $newElement element object
      **/
-    protected function addElement($type, $name, $parameters)
+    protected function addElement(string $type, string $name, array $parameters): Abstracts\Element
     {
         $this->checkElementName($name);
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if ($newElement instanceof Elements\Step) { $this->steps[] = $newElement; }
-        if ($newElement instanceof Abstracts\Input) { $this->updateInputValue($name); }
+        if ($newElement instanceof Elements\Step) {
+            $this->steps[] = $newElement;
+        }
+        if ($newElement instanceof Abstracts\Input) {
+            $this->updateInputValue($name);
+        }
 
         return $newElement;
     }
@@ -455,7 +461,7 @@ class HtmlForm extends Abstracts\Container
      * @param  string $name name to check
      * @return void
      **/
-    public function checkElementName($name)
+    public function checkElementName(string $name): void
     {
         foreach ($this->getElements(true) as $element) {
             if ($element->getName() === $name) {
@@ -470,9 +476,9 @@ class HtmlForm extends Abstracts\Container
      *
      * @return array element objects
      **/
-    private function getCurrentElements()
+    private function getCurrentElements(): array
     {
-        $currentElements = array();
+        $currentElements = [];
 
         foreach ($this->elements as $element) {
             if ($element instanceof Abstracts\Container) {
@@ -497,7 +503,7 @@ class HtmlForm extends Abstracts\Container
      * @param  string $nameSpace namespace name
      * @return void
      **/
-    public function registerNamespace($namespace)
+    public function registerNamespace(string $namespace): void
     {
         $this->namespaces[] = $namespace;
     }
@@ -508,7 +514,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return array
      **/
-    public function getNamespaces()
+    public function getNamespaces(): array
     {
         return $this->namespaces;
     }
@@ -521,7 +527,7 @@ class HtmlForm extends Abstracts\Container
      * @param  string $name name of element
      * @return bool   says wether it's in the current step
      **/
-    private function inCurrentStep($name)
+    private function inCurrentStep(string $name): bool
     {
         return in_array($this->getElement($name), $this->getCurrentElements());
     }
@@ -537,7 +543,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    public function setCurrentStep($step = null)
+    public function setCurrentStep(int|null $step = null): void
     {
         if (!is_null($step)) {
             $this->currentStepId = $step;
@@ -556,7 +562,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return array step objects
      **/
-    public function getSteps()
+    public function getSteps(): array
     {
         return $this->steps;
     }
@@ -567,7 +573,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return int current step
      **/
-    public function getCurrentStepId()
+    public function getCurrentStepId(): int
     {
         return $this->currentStepId;
     }
@@ -582,7 +588,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return int $stepNumber number of first invalid step
      **/
-    public function getFirstInvalidStep()
+    public function getFirstInvalidStep(): int
     {
         if (count($this->steps) > 0) {
             foreach ($this->steps as $stepNumber => $step) {
@@ -608,10 +614,10 @@ class HtmlForm extends Abstracts\Container
      *
      * @return  new query
      **/
-    public function buildUrlQuery($args = array())
+    public function buildUrlQuery(array $args = []): string
     {
         $query = '';
-        $queryParts = array();
+        $queryParts = [];
 
         if (isset($this->url['query']) && $this->url['query'] != "") {
             //decoding query string
@@ -652,7 +658,7 @@ class HtmlForm extends Abstracts\Container
      * @param  string $name name of the input element
      * @return void
      **/
-    public function updateInputValue($name)
+    public function updateInputValue(string $name): void
     {
         $element = $this->getElement($name);
 
@@ -671,17 +677,17 @@ class HtmlForm extends Abstracts\Container
                 // handle uploaded file
                 $oldValue = isset($this->sessionSlot[$name]) ? $this->sessionSlot[$name] : null;
                 $this->sessionSlot[$name] = $element->handleUploadedFiles($oldValue);
-            } else if (!$element->getDisabled()) {
+            } elseif (!$element->getDisabled()) {
                 // save value
                 $value = isset($_POST[$name]) ? $_POST[$name] : null;
                 $this->sessionSlot[$name] = $element->setValue($value);
-            } else if (!isset($this->sessionSlot[$name])) {
+            } elseif (!isset($this->sessionSlot[$name])) {
                 // set default value for disabled elements
                 $this->sessionSlot[$name] = $element->setValue($element->getDefaultValue());
             }
         }
         // if it's not a post, try to get the value from the session
-        else if (isset($this->sessionSlot[$name])) {
+        elseif (isset($this->sessionSlot[$name])) {
             $element->setValue($this->sessionSlot[$name]);
         }
     }
@@ -693,7 +699,7 @@ class HtmlForm extends Abstracts\Container
      * @param mixed $name
      * @return void
      **/
-    public function clearInputValue($name)
+    public function clearInputValue(string $name): void
     {
         $element = $this->getElement($name);
 
@@ -711,14 +717,14 @@ class HtmlForm extends Abstracts\Container
      * @param  array $data input element names (key) and values (value)
      * @return void
      **/
-    public function populate($data = array())
+    public function populate(array|object $data = []): void
     {
         foreach ($this->getElements() as $element) {
             $name = $element->name;
             if (!in_array($name, $this->internalFields)) {
                 if (is_array($data) && isset($data[$name])) {
                     $value = $data[$name];
-                } else if (is_object($data) && isset($data->$name)) {
+                } elseif (is_object($data) && isset($data->$name)) {
                     $value = $data->$name;
                 }
 
@@ -746,8 +752,8 @@ class HtmlForm extends Abstracts\Container
      *
      * @see     validate()
      **/
-   public function process()
-   {
+    public function process(): void
+    {
         $this->setCurrentStep();
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
@@ -771,7 +777,7 @@ class HtmlForm extends Abstracts\Container
                 if ($prevStep < 0) {
                     $prevStep = 0;
                 }
-                $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $prevStep));
+                $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(['step' => '']) : $this->buildUrlQuery(['step' => $prevStep]);
                 $this->redirect($this->url['path'] . $urlStepParameter);
             } elseif ($this->validate()) {
                 // form was successfully submitted
@@ -790,7 +796,7 @@ class HtmlForm extends Abstracts\Container
                 if ($nextStep > count($this->steps)) {
                     $nextStep = count($this->steps) - 1;
                 }
-                $urlStepParameter = ($nextStep == 0) ? $this->buildUrlQuery(array('step' => '')) : $this->buildUrlQuery(array('step' => $nextStep));
+                $urlStepParameter = ($nextStep == 0) ? $this->buildUrlQuery(['step' => '']) : $this->buildUrlQuery(['step' => $nextStep]);
                 $this->redirect($this->url['path'] . $urlStepParameter);
             }
         }
@@ -807,7 +813,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @see     process()
      **/
-    public function validate()
+    public function validate(): bool
     {
         // onValidate hook for custom required/validation rules
         $this->valid = $this->onValidate();
@@ -839,7 +845,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @see     process()
      **/
-    protected function onPost()
+    protected function onPost(): bool
     {
         return true;
     }
@@ -854,7 +860,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @see     validate()
      **/
-    protected function onValidate()
+    protected function onValidate(): bool
     {
         return true;
     }
@@ -869,7 +875,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return bool $partValid - whether the autosave postback data is valid
      */
-    public function validateAutosave()
+    public function validateAutosave(): bool
     {
         parent::validate();
 
@@ -905,7 +911,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return array form-data
      **/
-    public function getValues()
+    public function getValues(): ?array
     {
         if (isset($this->sessionSlot)) {
             // remove internal attributes from values
@@ -921,19 +927,21 @@ class HtmlForm extends Abstracts\Container
      *
      * @return array form-data with labels
      **/
-    public function getValuesWithLabel()
+    public function getValuesWithLabel(): ?array
     {
         //get values first
         $values = $this->getValues();
-        $valuesWithLabel = array();
+        $valuesWithLabel = [];
         if (isset($values)) {
             foreach ($values as $element => $value) {
                 $elem = $this->getElement($element);
 
-                if ($elem) $valuesWithLabel[$element] = array(
-                    "value" => $value,
-                    "label" => $elem->getLabel()
-                );
+                if ($elem) {
+                    $valuesWithLabel[$element] = [
+                        "value" => $value,
+                        "label" => $elem->getLabel(),
+                    ];
+                }
             }
 
             return $valuesWithLabel;
@@ -948,10 +956,10 @@ class HtmlForm extends Abstracts\Container
      *
      * @param string $url url to redirect to
      */
-    public function redirect($url)
+    public function redirect(string $url): void
     {
         header('Location: ' . $url);
-        die( "Tried to redirect you to <a href=\"$url\">$url</a>");
+        die("Tried to redirect you to <a href=\"$url\">$url</a>");
     }
     // }}}
     // {{{ clearSession()
@@ -962,7 +970,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    public function clearSession($clearCsrfToken = true)
+    public function clearSession(bool $clearCsrfToken = true): void
     {
         if ($clearCsrfToken) {
             // clear everything
@@ -987,7 +995,7 @@ class HtmlForm extends Abstracts\Container
      * @param mixed
      * @return void
      **/
-    public static function clearOldSessions($ttl = 3600, $pattern = "/^htmlform-.*/")
+    public static function clearOldSessions(int $ttl = 3600, string $pattern = "/^htmlform-.*/"): void
     {
         $timestamp = time();
 
@@ -1009,7 +1017,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlDataAttributes()
+    protected function htmlDataAttributes(): string
     {
         $this->dataAttr['jsvalidation'] = $this->jsValidation;
         $this->dataAttr['jsautosave'] = $this->jsAutosave === true ? "true" : $this->jsAutosave;
@@ -1021,7 +1029,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlSubmitURL()
+    protected function htmlSubmitURL(): string
     {
         $scheme   = isset($this->form->url['scheme']) ? $this->form->url['scheme'] . '://' : '';
         $host     = isset($this->form->url['host']) ? $this->form->url['host'] : '';
@@ -1042,7 +1050,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return string HTML code
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $renderedElements = '';
         $submit           = '';
@@ -1066,10 +1074,10 @@ class HtmlForm extends Abstracts\Container
             }
         }
 
-        if (!is_null($this->cancelLabel)) {
+        if (!empty($this->cancelLabel)) {
             $cancel = "<p id=\"{$this->name}-cancel\" class=\"cancel\"><input type=\"submit\" name=\"formSubmit\" value=\"{$cancellabel}\"$disabledAttr></p>\n";
         }
-        if (!is_null($this->backLabel) && $this->currentStepId > 0) {
+        if (!empty($this->backLabel) && $this->currentStepId > 0) {
             $back = "<p id=\"{$this->name}-back\" class=\"back\"><input type=\"submit\" name=\"formSubmit\" value=\"{$backlabel}\"$disabledAttr></p>\n";
         }
         if (!empty($this->label)) {

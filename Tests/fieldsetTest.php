@@ -13,10 +13,10 @@ class fieldsetTest extends TestCase
     protected $fieldset;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
         $this->form = new nameTestForm('formName');
-        $this->fieldset = new Fieldset('fieldsetName', array(), $this->form);
+        $this->fieldset = new Fieldset('fieldsetName', [], $this->form);
     }
     // }}}
 

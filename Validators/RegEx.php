@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file    Validators/RegEx.php
  * @brief   regular expression validator
  **/
+
 namespace Depage\HtmlForm\Validators;
 
 /**
@@ -25,7 +27,7 @@ class RegEx extends Validator
      * @param  array  $parameters validation parameters
      * @return bool   validation result
      **/
-    public function validate($value, $parameters = array())
+    public function validate($value, $parameters = [])
     {
         $match = (bool) preg_match($this->regEx, $value, $matchedSubstring);
 

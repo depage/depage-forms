@@ -18,7 +18,7 @@ class htmlformTest extends TestCase
      * @param mixed
      * @return void
      **/
-    public function tearDown():void
+    public function tearDown(): void
     {
         $_GET = [];
         $_POST = [];
@@ -47,7 +47,7 @@ class htmlformTest extends TestCase
      **/
     public function testEmptyFormBeforePostValidation()
     {
-        $_SESSION = array('htmlform-formName-data' => array());
+        $_SESSION = ['htmlform-formName-data' => []];
         $this->form = new HtmlForm('formName');
         $this->form->process();
         $this->assertFalse($this->form->validate());
@@ -64,12 +64,12 @@ class htmlformTest extends TestCase
         $text1 = $form->addText('text1Name');
         $text2 = $form->addText('text2Name');
 
-        $values = array(
+        $values = [
             // for $text1
             'text1Name'             => 'text1Value',
             // should be ignored
             'unexistentElementName' => 'testValue',
-        );
+        ];
 
         $form->populate($values);
 
@@ -102,12 +102,12 @@ class htmlformTest extends TestCase
         $text1 = $form->addText('text1Name');
         $text2 = $form->addText('text2Name');
 
-        $values = (object) array(
+        $values = (object) [
             // for $text1
             'text1Name'             => 'text1Value',
             // should be ignored
             'unexistentElementName' => 'testValue',
-        );
+        ];
 
         $form->populate($values);
 
@@ -249,7 +249,7 @@ class htmlformTest extends TestCase
         $_SESSION['htmlform-formName-data']['formFinalPost'] = true;
 
         // building the form with custom validator
-        $form = new HtmlForm('formName', array('validator' => $validator));
+        $form = new HtmlForm('formName', ['validator' => $validator]);
         $form->validate();
 
         $this->assertTrue($form->valid);
@@ -261,7 +261,7 @@ class htmlformTest extends TestCase
         $_SESSION['htmlform-form2Name-data']['form2Name'] = 'form2Name';
 
         // building the form with custom validator
-        $form2 = new HtmlForm('form2Name', array('validator' => $validator2));
+        $form2 = new HtmlForm('form2Name', ['validator' => $validator2]);
         $form2->validate();
 
         $this->assertFalse($form2->valid);

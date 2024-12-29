@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    html.php
  * @brief   html element
@@ -46,7 +47,7 @@ class Html
      *
      * @param string $htmlString HTML to be printed
      **/
-    public function __construct($htmlString)
+    public function __construct(string $htmlString)
     {
         $this->htmlString = $htmlString;
     }
@@ -58,7 +59,7 @@ class Html
      *
      * @return string $this->htmlString HTML-rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->htmlString;
     }

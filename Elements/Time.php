@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    time.php
  * @brief   time input element
@@ -14,8 +15,6 @@ namespace Depage\HtmlForm\Elements;
  *
  * @todo    dummy - no validator implemented yet
  **/
-class Time extends Text
-{
-}
+class Time extends Text {}
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

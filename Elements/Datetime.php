@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    datetime.php
  * @brief   datetime input element
@@ -14,8 +15,6 @@ namespace Depage\HtmlForm\Elements;
  *
  * @todo dummy - no validator implemented yet
  **/
-class Datetime extends Text
-{
-}
+class Datetime extends Text {}
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

@@ -13,10 +13,10 @@ class creditcardTest extends TestCase
     protected $creditcard;
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form = new nameTestForm;
-        $this->creditcard = new Creditcard('creditcardName', array(), $this->form);
+        $this->form = new nameTestForm();
+        $this->creditcard = new Creditcard('creditcardName', [], $this->form);
         $this->creditcard->addChildElements();
     }
     // }}}

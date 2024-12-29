@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file container.php
  * @brief abstract container element class
@@ -24,11 +25,11 @@ abstract class Container extends Element
     /**
      * @brief References to input elements and fieldsets.
      **/
-    protected $elements = array();
+    protected $elements = [];
     /**
      * @brief Input element, fieldset and custom HTML object references.
      **/
-    protected $elementsAndHtml = array();
+    protected $elementsAndHtml = [];
     /**
      * @brief Parent form object reference
      **/
@@ -43,7 +44,7 @@ abstract class Container extends Element
      * @param  object $form       parent form object
      * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         $this->form = $form;
 
@@ -68,16 +69,16 @@ abstract class Container extends Element
      * @see     addElement()
      * @see     htmlEscape()
      **/
-    public function __call($function, $arguments)
+    public function __call(string $function, array $arguments): mixed
     {
         if (substr($function, 0, 3) === 'add') {
             $type = str_replace('add', '', $function);
 
-            foreach($this->form->getNamespaces() as $namespace) {
+            foreach ($this->form->getNamespaces() as $namespace) {
                 $class = $namespace . '\\' . $type;
                 if (class_exists($class)) {
-                    $name = isset($arguments[0])  ? $arguments[0] : '';
-                    $parameters = isset($arguments[1])  ? $arguments[1] : array();
+                    $name = isset($arguments[0]) ? $arguments[0] : '';
+                    $parameters = isset($arguments[1]) ? $arguments[1] : [];
                     return $this->addElement($class, $name, $parameters);
                 }
             }
@@ -103,10 +104,8 @@ abstract class Container extends Element
      * @see     __call()
      * @see     addChildElements()
      **/
-    protected function addElement($type, $name, $parameters)
+    protected function addElement(string $type, string $name, array $parameters): object
     {
-        $this->checkParameters($parameters);
-
         $parameters['log'] = $this->log;
 
         $newElement = new $type($name, $parameters, $this->form);
@@ -135,7 +134,7 @@ abstract class Container extends Element
      *
      * @see     addElement()
      **/
-    public function addChildElements() {}
+    public function addChildElements(): void {}
     // }}}
     // {{{ getElements()
     /**
@@ -147,9 +146,9 @@ abstract class Container extends Element
      * @param  bool  $includeFieldsets include fieldset/step elements in result
      * @return array $allElements       subelements
      **/
-    public function getElements($includeFieldsets = false)
+    public function getElements(bool $includeFieldsets = false): array
     {
-        $allElements = array();
+        $allElements = [];
         foreach ($this->elements as $element) {
             if ($element instanceof Container) {
                 if ($includeFieldsets) {
@@ -174,7 +173,7 @@ abstract class Container extends Element
      * @param  string $name name of the input element we're looking for
      * @return object $element    subelement or (bool) false if unsuccessful
      **/
-    public function getElement($name, $includeFieldsets = false)
+    public function getElement(string $name, bool $includeFieldsets = false): object|bool
     {
         foreach ($this->getElements($includeFieldsets) as $element) {
             if ($name === $element->getName()) {
@@ -195,7 +194,7 @@ abstract class Container extends Element
      *
      * @see     Depage::HtmlForm::Elements::Html
      **/
-    public function addHtml($html)
+    public function addHtml(string $html): object
     {
         $htmlElement = new Elements\Html($html);
 
@@ -210,7 +209,7 @@ abstract class Container extends Element
      *
      * @param array $parameter array of opional parameters
      **/
-    public function addStepNav($parameter = array())
+    public function addStepNav(array $parameter = []): object
     {
         $htmlElement = new Elements\Stepnav($parameter, $this->form);
 
@@ -229,7 +228,7 @@ abstract class Container extends Element
      * @param  bool $required HTML-required attribute
      * @return void
      **/
-    public function setRequired($required = true)
+    public function setRequired(bool $required = true): void
     {
         $required = (bool) $required;
 
@@ -247,7 +246,7 @@ abstract class Container extends Element
      *
      * @return bool $this->valid validation result
      **/
-    public function validate()
+    public function validate(): bool
     {
         if (!$this->validated) {
             $this->validated = true;
@@ -268,7 +267,7 @@ abstract class Container extends Element
      *
      * @return void
      **/
-    public function clearValue()
+    public function clearValue(): void
     {
         foreach ($this->getElements(true) as $element) {
             $element->clearValue();

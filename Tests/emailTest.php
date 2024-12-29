@@ -13,10 +13,10 @@ class emailTest extends TestCase
 
 
     // {{{ setUp()
-    public function setUp():void
+    public function setUp(): void
     {
-        $this->form     = new nameTestForm;
-        $this->email    = new Email('emailName', array(), $this->form);
+        $this->form     = new nameTestForm();
+        $this->email    = new Email('emailName', [], $this->form);
     }
     // }}}
 

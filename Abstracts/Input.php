@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file input.php
  * @brief abstract input element class
@@ -265,7 +266,7 @@ abstract class Input extends Element
      * @param  object $form       parent form object
      * @return void
      **/
-    public function __construct($name, $parameters, $form)
+    public function __construct(string $name, array $parameters, object $form)
     {
         $this->type         = str_replace('Depage\\HtmlForm\\Elements\\', '', get_class($this));
         $this->formName     = $form->getName();
@@ -288,7 +289,7 @@ abstract class Input extends Element
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -301,7 +302,6 @@ abstract class Input extends Element
         $this->defaults['labelHtml']       = '';
         $this->defaults['marker']          = '*';
         $this->defaults['required']        = false;
-        $this->defaults['disabled']        = false;
         $this->defaults['readonly']        = false;
         $this->defaults['title']           = false;
         $this->defaults['class']           = '';
@@ -321,7 +321,7 @@ abstract class Input extends Element
      *
      * @return bool $this->valid validation result
      **/
-    public function validate()
+    public function validate(): bool
     {
         if (!$this->validated) {
             $this->validated = true;
@@ -346,7 +346,7 @@ abstract class Input extends Element
      *
      * @return void
      **/
-    public function invalidate()
+    public function invalidate(): self
     {
         $this->validated = true;
         $this->valid = false;
@@ -363,7 +363,7 @@ abstract class Input extends Element
      *
      * @return bool validation result
      **/
-    protected function validatorCall()
+    protected function validatorCall(): bool
     {
         return $this->validator->validate($this->value);
     }
@@ -378,7 +378,7 @@ abstract class Input extends Element
      *
      * @return bool empty-check result
      **/
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return (
             empty($this->value)
@@ -400,7 +400,7 @@ abstract class Input extends Element
      *
      * @see     typeCastValue()
      **/
-    public function setValue($newValue)
+    public function setValue(mixed $newValue): mixed
     {
         $this->value = $newValue;
         $this->typeCastValue();
@@ -416,7 +416,7 @@ abstract class Input extends Element
      *
      * @return mixed $this->value input element value
      **/
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
@@ -426,7 +426,7 @@ abstract class Input extends Element
     /**
      * @brief set the label of the input
      **/
-    public function setLabel($label)
+    public function setLabel(string $label): self
     {
         $this->label = $label;
 
@@ -439,7 +439,7 @@ abstract class Input extends Element
      *
      * @return  $this->label HTML label
      **/
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -452,7 +452,7 @@ abstract class Input extends Element
      * @param mixed $
      * @return void
      **/
-    public function setErrorMessage($message)
+    public function setErrorMessage(string $message): self
     {
         $this->errorMessage = $message;
 
@@ -466,7 +466,7 @@ abstract class Input extends Element
      * @param mixed $
      * @return void
      **/
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         return $this->errorMessage;
     }
@@ -478,11 +478,9 @@ abstract class Input extends Element
      *
      * @return void
      **/
-    public function clearValue()
+    public function clearValue(): void
     {
         $this->value = null;
-
-        return $this->value;
     }
     // }}}
 
@@ -498,7 +496,7 @@ abstract class Input extends Element
      *
      * @see     htmlValue()
      **/
-    public function setDefaultValue($newDefaultValue)
+    public function setDefaultValue(mixed $newDefaultValue): self
     {
         $this->defaultValue = $newDefaultValue;
 
@@ -512,7 +510,7 @@ abstract class Input extends Element
      *
      * @return  value
      **/
-    public function getDefaultValue()
+    public function getDefaultValue(): mixed
     {
         return $this->defaultValue;
     }
@@ -527,7 +525,10 @@ abstract class Input extends Element
      *
      * @return void
      **/
-    protected function typeCastValue() {}
+    protected function typeCastValue(): void
+    {
+        // to be overridden by child classes
+    }
     // }}}
 
     // {{{ setAutofocus()
@@ -537,7 +538,7 @@ abstract class Input extends Element
      * @param       $autofocus (bool) HTML autofocus-attribute
      * @return void
      **/
-    public function setAutofocus($autofocus = true)
+    public function setAutofocus(bool $autofocus = true): self
     {
         $this->autofocus = (bool) $autofocus;
 
@@ -552,7 +553,7 @@ abstract class Input extends Element
      * @param  bool $required HTML required-attribute
      * @return void
      **/
-    public function setRequired($required = true)
+    public function setRequired(bool $required = true): self
     {
         $this->required = (bool) $required;
         $this->validated = false;
@@ -615,19 +616,27 @@ abstract class Input extends Element
      *
      * @return string $attributes HTML attribute
      **/
-    protected function htmlInputAttributes()
+    protected function htmlInputAttributes(): string
     {
         $attributes = '';
 
-        if ($this->required)    $attributes .= ' required="required"';
-        if ($this->disabled)    $attributes .= ' disabled="disabled"';
-        if ($this->readonly)    $attributes .= ' readonly="readonly"';
-        if ($this->autofocus)   $attributes .= ' autofocus="autofocus"';
+        if ($this->required) {
+            $attributes .= ' required="required"';
+        }
+        if ($this->disabled) {
+            $attributes .= ' disabled="disabled"';
+        }
+        if ($this->readonly) {
+            $attributes .= ' readonly="readonly"';
+        }
+        if ($this->autofocus) {
+            $attributes .= ' autofocus="autofocus"';
+        }
 
-        $autoAttributes = array(
+        $autoAttributes = [
             "autocapitalize",
             "autocorrect",
-        );
+        ];
         foreach ($autoAttributes as $attr) {
             if (!is_null($this->$attr)) {
                 if ($this->$attr) {
@@ -642,7 +651,7 @@ abstract class Input extends Element
         if (!is_null($this->autocomplete)) {
             if (is_string($this->autocomplete)) {
                 $attributes .= " autocomplete=\"" . $this->htmlEscape($this->autocomplete) . "\"";
-            } else if ($this->autocomplete === true) {
+            } elseif ($this->autocomplete === true) {
                 $attributes .= " autocomplete=\"on\"";
             } else {
                 $attributes .= " autocomplete=\"off\"";
@@ -657,7 +666,7 @@ abstract class Input extends Element
     /**
      * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlDataAttributes()
+    protected function htmlDataAttributes(): string
     {
         $this->dataAttr['errorMessage'] = $this->errorMessage;
 
@@ -735,7 +744,7 @@ abstract class Input extends Element
         }
         if (isset($this->helpMessageHtml) && !empty($this->helpMessageHtml)) {
             // html message
-            $helpMessage = "<span class=\"helpMessage\">" . $this->helpMessageHtml. "</span>";
+            $helpMessage = "<span class=\"helpMessage\">" . $this->helpMessageHtml . "</span>";
         }
 
         return $helpMessage;

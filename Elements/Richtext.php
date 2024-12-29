@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    richtext.php
  * @brief   richtext input element
@@ -63,7 +64,7 @@ class Richtext extends Textarea
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -71,7 +72,7 @@ class Richtext extends Textarea
         $this->defaults['cols'] = null;
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
-        $this->defaults['allowedTags'] = array(
+        $this->defaults['allowedTags'] = [
             // inline elements
             "a",
             "b",
@@ -88,7 +89,7 @@ class Richtext extends Textarea
             "ul",
             "ol",
             "li",
-        );
+        ];
     }
     // }}}
 
@@ -96,9 +97,9 @@ class Richtext extends Textarea
     /**
      * @brief   Returns dataAttr escaped as attribute string
      **/
-    protected function htmlDataAttributes()
+    protected function htmlDataAttributes(): string
     {
-        $options = array();
+        $options = [];
         $options['stylesheet'] = $this->stylesheet;
         $options['allowedTags'] = $this->allowedTags;
 
@@ -117,7 +118,7 @@ class Richtext extends Textarea
      *
      * @return bool empty-check result
      **/
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty(trim(strip_tags($this->value)));
     }
@@ -129,7 +130,7 @@ class Richtext extends Textarea
      *
      * @return mixed element value
      **/
-    protected function htmlValue()
+    protected function htmlValue(): string
     {
         if ($this->value === null) {
             $htmlDOM = $this->parseHtml($this->defaultValue);
@@ -148,7 +149,7 @@ class Richtext extends Textarea
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         if (is_string($this->value)) {
             $this->value = $this->parseHtml($this->value);
@@ -163,7 +164,7 @@ class Richtext extends Textarea
      *
      * @return Depage::HtmlForm::Abstract::HtmlDom htmlDOM
      **/
-    protected function parseHtml($html)
+    protected function parseHtml(string $html): \Depage\HtmlForm\Abstracts\HtmlDom
     {
         if ($this->normalize && class_exists("\\Normalizer")) {
             $html = \Normalizer::normalize($html);

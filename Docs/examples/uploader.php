@@ -3,8 +3,8 @@
 require_once '../../HtmlForm.php';
 
 $form = new Depage\HtmlForm\HtmlForm('uploader');
-$form->addHidden('APC_UPLOAD_PROGRESS', array('defaultValue' => 'xxx'));
-$form->addFile('file', array('label' => 'File', 'required' => true));
+$form->addHidden('APC_UPLOAD_PROGRESS', ['defaultValue' => 'xxx']);
+$form->addFile('file', ['label' => 'File', 'required' => true]);
 $form->process();
 
 if ($form->validate()) {
@@ -16,7 +16,7 @@ if ($form->validate()) {
 
     $form->clearSession();
 } else {
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
@@ -26,7 +26,7 @@ if ($form->validate()) {
     <script src="../../lib/js/effect.js"></script>
 </head>
 <body>
-    <?php // echo($form); ?>
+    <?php // echo($form);?>
     <form id="uploader" name="uploader" class="depage-form" method="post" action="/documentation/examples/uploader.php" enctype="multipart/form-data">
         <input name="APC_UPLOAD_PROGRESS" id="APC_UPLOAD_PROGRESS" type="hidden" class="input-hidden" value="xxx">
         <input id="file" name="file" type="file">

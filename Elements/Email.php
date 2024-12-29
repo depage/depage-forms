@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elements/email.php
  * @brief   email input element
@@ -51,7 +52,7 @@ class Email extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -70,7 +71,7 @@ class Email extends Text
      *
      * @return bool validation result
      **/
-    protected function validatorCall()
+    protected function validatorCall(): bool
     {
         return $this->validator->validate($this->value, ['checkDns' => $this->checkDns]);
     }

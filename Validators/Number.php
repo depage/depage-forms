@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    Validators/Number.php
  * @brief   number validator
@@ -19,7 +20,7 @@ class Number extends Validator
      * @param  array $parameters validation parameters
      * @return bool  validation result
      **/
-    public function validate($value, $parameters = array())
+    public function validate($value, $parameters = [])
     {
         $min = isset($parameters['min']) ? $parameters['min'] : null;
         $max = isset($parameters['max']) ? $parameters['max'] : null;

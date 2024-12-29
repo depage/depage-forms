@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    placeholder.php
  * @brief   Adds a Placeholder for a form element
@@ -39,7 +40,7 @@ class Placeholder extends Abstracts\Input
      *
      * @return string HTML-rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         return "";
     }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Redirect to success page example
  *

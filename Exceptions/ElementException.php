@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elementException.php
  * @brief   element exception
@@ -12,6 +13,4 @@ namespace Depage\HtmlForm\Exceptions;
 /**
  * @brief parent for element specific exceptions
  **/
-class ElementException extends \Exception
-{
-}
+class ElementException extends \Exception {}

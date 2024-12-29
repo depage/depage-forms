@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    stepnav.php
  * @brief   Navigation element for steps
@@ -34,9 +35,8 @@ class Stepnav
      *
      * @param  array  $parameters input element parameters, HTML attributes, validator specs etc.
      * @param  object $form       parent form object
-     * @return void
      **/
-    public function __construct($parameters, $form)
+    public function __construct(array $parameters, object $form)
     {
         $this->form = $form;
     }
@@ -48,7 +48,7 @@ class Stepnav
      *
      * @return string $htmlString HTML-rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $scheme   = isset($this->form->url['scheme']) ? $this->form->url['scheme'] . '://' : '';
         $host     = isset($this->form->url['host']) ? $this->form->url['host'] : '';
@@ -68,7 +68,7 @@ class Stepnav
 
             // add link to previously unsaved steps
             if ($stepNum <= $firstInvalidStep && $stepNum != $currentStepId) {
-                $link = "href=\"" . htmlspecialchars($baseUrl . $this->form->buildUrlQuery(array('step' => $stepNum))) . "\"";
+                $link = "href=\"" . htmlspecialchars($baseUrl . $this->form->buildUrlQuery(['step' => $stepNum])) . "\"";
             }
 
             // add valid-class to previous steps

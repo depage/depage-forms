@@ -35,7 +35,7 @@ $form->addText('singleLetter', [
     'validator' => '/[a-zA-Z]/',
 ]);
 $form->addText('letters', [
-    'label' =>'One ore more letters',
+    'label' => 'One ore more letters',
     'required' => true,
     'validator' => '/[a-zA-Z]+/',
 ]);
@@ -70,7 +70,7 @@ if ($form->validate()) {
      * Load the necessary scripts. jQuery, jQuery Tools and the depage-forms
      * customization.
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
@@ -80,11 +80,11 @@ if ($form->validate()) {
 </head>
 <body>
 <?php
-    /*
-     * Display the form.
-     */
-    echo ($form);
-?>
+        /*
+         * Display the form.
+         */
+        echo($form);
+    ?>
 </body>
 <?php
 }

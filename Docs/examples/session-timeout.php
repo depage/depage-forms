@@ -9,13 +9,13 @@ require_once '../../HtmlForm.php';
  * (this is mainly to demonstrate the feature, 3 seconds will probably irritate
  * users)
  */
-$form = new Depage\HtmlForm\HtmlForm('timeoutForm', array('ttl' => 3));
+$form = new Depage\HtmlForm\HtmlForm('timeoutForm', ['ttl' => 3]);
 
 /*
  * Add input elements
  */
-$form->addText('username', array('label' => 'User name'));
-$form->addEmail('email', array('label' => 'Email address'));
+$form->addText('username', ['label' => 'User name']);
+$form->addEmail('email', ['label' => 'Email address']);
 
 /*
  * The process method is essential to the functionality of the form. It serves
@@ -46,7 +46,7 @@ if ($form->validate()) {
     /*
      * Display the form.
      */
-?>
+    ?>
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">

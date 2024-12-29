@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    hidden.php
  * @brief   hidden input element
@@ -41,7 +42,7 @@ class Hidden extends Text
      *
      * @return string HTML-rendered element
      **/
-    public function __toString()
+    public function __toString(): string
     {
         $formName   = $this->htmlFormName();
         $classes    = $this->htmlClasses();

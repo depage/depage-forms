@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file    elements/url.php
  * @brief   url input element
@@ -45,7 +46,7 @@ class Url extends Text
      *
      * @return void
      **/
-    protected function setDefaults()
+    protected function setDefaults(): void
     {
         parent::setDefaults();
 
@@ -61,7 +62,7 @@ class Url extends Text
      *
      * @return void
      **/
-    protected function typeCastValue()
+    protected function typeCastValue(): void
     {
         parent::typeCastValue();
 

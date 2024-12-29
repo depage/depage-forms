@@ -48,10 +48,10 @@ class containerTest extends TestCase
     protected $container;
 
     // {{{ setUp()
-    protected function setUp():void
+    protected function setUp(): void
     {
-        $this->form         = new nameTestForm;
-        $this->container    = new containerTestClass('containerName', array(), $this->form);
+        $this->form         = new nameTestForm();
+        $this->container    = new containerTestClass('containerName', [], $this->form);
     }
     // }}}
 
@@ -120,8 +120,8 @@ class containerTest extends TestCase
      **/
     public function testSetRequired()
     {
-        $element1 = new testElement;
-        $element2 = new testElement;
+        $element1 = new testElement();
+        $element2 = new testElement();
 
         $this->container->addTestElement($element1);
         $this->container->addTestElement($element2);
@@ -144,7 +144,7 @@ class containerTest extends TestCase
      **/
     public function testGetElement()
     {
-        $element = new testElement;
+        $element = new testElement();
 
         $this->container->addTestElement($element);
 

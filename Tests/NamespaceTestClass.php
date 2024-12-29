@@ -7,6 +7,4 @@ use Depage\HtmlForm\Elements\Text;
 /**
  * Text element class with different namespace for testing
  **/
-class NamespaceTestClass extends Text
-{
-}
+class NamespaceTestClass extends Text {}
