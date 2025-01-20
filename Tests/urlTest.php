@@ -51,7 +51,7 @@ class urlTest extends TestCase
     public function testSetIdnUrl()
     {
         $this->url->setValue("https://äöüß-test.de");
-        $this->assertEquals("https://xn--ss-test-4wa6n9b.de", $this->url->getValue());
+        $this->assertEquals("https://xn---test-kqa8ayk4b.de", $this->url->getValue());
         $this->assertTrue($this->url->validate());
     }
     // }}}

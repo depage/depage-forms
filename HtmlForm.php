@@ -556,6 +556,12 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
+    // {{{ getUrl()
+    public function getUrl(): array
+    {
+        return $this->url;
+    }
+    // }}}
     // {{{ getSteps()
     /**
      * @brief   Returns an array of steps
@@ -1031,10 +1037,10 @@ class HtmlForm extends Abstracts\Container
      **/
     protected function htmlSubmitURL(): string
     {
-        $scheme   = isset($this->form->url['scheme']) ? $this->form->url['scheme'] . '://' : '';
-        $host     = isset($this->form->url['host']) ? $this->form->url['host'] : '';
-        $port     = isset($this->form->url['port']) ? ':' . $this->form->url['port'] : '';
-        $path     = isset($this->form->url['path']) ? $this->form->url['path'] : '';
+        $scheme   = $this->url['scheme'] . '://' ?? '';
+        $host     = $this->url['host'] ?? '';
+        $port     = isset($this->url['port']) ? ':' . $this->url['port'] : '';
+        $path     = $this->url['path'] ?? '';
         $baseUrl  = "$scheme$host$port$path";
         $step     = $this->currentStepId != 0 ? $this->currentStepId : '';
 
