@@ -3,27 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use Depage\HtmlForm\HtmlForm;
 
-// {{{ htmlformTestClass
-/**
- * Custom htmlform class with overidden redirect method for easier testing
- **/
-class htmlformTestClass extends csrfTestForm
-{
-    public $testRedirect;
-    public $testLog;
-
-    public function redirect($url): void
-    {
-        $this->testRedirect = $url;
-    }
-
-    public function log($message, $type = null): void
-    {
-        $this->testLog = $message;
-    }
-}
-// }}}
-
 /**
 * Testing Post/Redirect/Get-relevant behavior
 **/
@@ -175,7 +154,7 @@ class prgTest extends TestCase
 
         $form->process();
 
-        $this->assertEquals('/?step=1', $form->testRedirect);
+        $this->assertEquals('http://www.depagecms.net/?step=1', $form->testRedirect);
     }
     // }}}
 
@@ -219,7 +198,7 @@ class prgTest extends TestCase
         $this->assertEquals('posted', $text1->getValue());
         $this->assertEquals('stored', $text2->getValue());
 
-        $this->assertEquals('/submiturl.html?step=2', $form->testRedirect);
+        $this->assertEquals('https://depage.net/submiturl.html?step=2', $form->testRedirect);
     }
     // }}}
 
@@ -250,7 +229,39 @@ class prgTest extends TestCase
 
         $form->process();
 
-        $this->assertEquals('/?step=1', $form->testRedirect);
+        $this->assertEquals('http://www.depagecms.net/?step=1', $form->testRedirect);
+    }
+    // }}}
+
+    // {{{ testBuildUrlRelative()
+    public function testBuildUrlRelative()
+    {
+        $form = new htmlformTestClass('formName', ['submitURL' => "/submiturl.html"]);
+        $this->assertEquals("/submiturl.html", $form->buildUrl());
+    }
+    // }}}
+
+    // {{{ testBuildUrlAbsolute()
+    public function testBuildUrlAbsolute()
+    {
+        $form = new htmlformTestClass('formName', ['submitURL' => "https://depage.net/submiturl.html"]);
+        $this->assertEquals("https://depage.net/submiturl.html", $form->buildUrl());
+    }
+    // }}}
+
+    // {{{ testBuildUrlAbsoluteWithPort()
+    public function testBuildUrlAbsolutePort()
+    {
+        $form = new htmlformTestClass('formName', ['submitURL' => "https://depage.net:8888/submiturl.html"]);
+        $this->assertEquals("https://depage.net:8888/submiturl.html", $form->buildUrl());
+    }
+    // }}}
+
+    // {{{ testBuildUrlAbsoluteWithQuery()
+    public function testBuildUrlAbsoluteWithQuery()
+    {
+        $form = new htmlformTestClass('formName', ['submitURL' => "https://depage.net/submiturl.html?test=bogus"]);
+        $this->assertEquals("https://depage.net/submiturl.html?test=bogus", $form->buildUrl());
     }
     // }}}
 }

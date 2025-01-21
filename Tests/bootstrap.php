@@ -59,3 +59,24 @@ class csrfTestForm extends Depage\HtmlForm\HtmlForm
     }
 }
 // }}}
+// {{{ htmlformTestClass
+/**
+ * Custom htmlform class with overidden redirect method for easier testing
+ **/
+class htmlformTestClass extends csrfTestForm
+{
+    public $testRedirect;
+    public $testLog;
+
+    public function redirect($url): void
+    {
+        $this->testRedirect = $url;
+    }
+
+    public function log($message, $type = null): void
+    {
+        $this->testLog = $message;
+    }
+}
+// }}}
+

@@ -614,6 +614,24 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
+
+    // {{{ buildUrl()
+    /**
+     * @brief   Builds URL from parts
+     *
+     * @return  new URL
+     **/
+    public function buildUrl(array $args = []): string
+    {
+        $url = isset($this->url['scheme']) ? $this->url['scheme'] . '://' : '';
+        $url .= $this->url['host'] ?? '';
+        $url .= isset($this->url['port']) ? ':' . $this->url['port'] : '';
+        $url .= $this->url['path'] ?? '';
+        $url .= $this->buildUrlQuery($args);
+
+        return $url;
+    }
+    // }}}
     // {{{ buildUrlQuery()
     /**
      * @brief   Adding step parameter to already existing query
@@ -644,11 +662,11 @@ class HtmlForm extends Abstracts\Container
         // build the query again
         $query = http_build_query($queryParts);
 
-        if ($query != "") {
-            $query = "?" . $query;
+        if ($query == "") {
+            return "";
         }
 
-        return $query;
+        return "?" . $query;
     }
     // }}}
 
@@ -783,8 +801,7 @@ class HtmlForm extends Abstracts\Container
                 if ($prevStep < 0) {
                     $prevStep = 0;
                 }
-                $urlStepParameter = ($prevStep <= 0) ? $this->buildUrlQuery(['step' => '']) : $this->buildUrlQuery(['step' => $prevStep]);
-                $this->redirect($this->url['path'] . $urlStepParameter);
+                $this->redirect($this->buildUrl(['step' => ($prevStep <= 0) ? '' : $prevStep]));
             } elseif ($this->validate()) {
                 // form was successfully submitted
                 $this->onPost();
@@ -802,8 +819,7 @@ class HtmlForm extends Abstracts\Container
                 if ($nextStep > count($this->steps)) {
                     $nextStep = count($this->steps) - 1;
                 }
-                $urlStepParameter = ($nextStep == 0) ? $this->buildUrlQuery(['step' => '']) : $this->buildUrlQuery(['step' => $nextStep]);
-                $this->redirect($this->url['path'] . $urlStepParameter);
+                $this->redirect($this->buildUrl(['step' => ($nextStep == 0) ? '' : $nextStep]));
             }
         }
     }
@@ -1033,18 +1049,13 @@ class HtmlForm extends Abstracts\Container
     // }}}
     // {{{ htmlSubmitURL()
     /**
-     * @brief   Returns dataAttr escaped as attribute string
+     * @brief   Returns form url escaped as attribute string
      **/
     protected function htmlSubmitURL(): string
     {
-        $scheme   = $this->url['scheme'] . '://' ?? '';
-        $host     = $this->url['host'] ?? '';
-        $port     = isset($this->url['port']) ? ':' . $this->url['port'] : '';
-        $path     = $this->url['path'] ?? '';
-        $baseUrl  = "$scheme$host$port$path";
-        $step     = $this->currentStepId != 0 ? $this->currentStepId : '';
+        $step = $this->currentStepId != 0 ? $this->currentStepId : '';
 
-        return $this->htmlEscape($baseUrl . $this->form->buildUrlQuery(['step' => $step]));
+        return $this->htmlEscape($this->buildUrl(['step' => $step]));
     }
     // }}}
     // {{{ __toString()
