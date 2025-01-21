@@ -50,14 +50,6 @@ class Stepnav
      **/
     public function __toString(): string
     {
-        $url = $this->form->getUrl();
-        $scheme   = isset($url['scheme']) ? $url['scheme'] . '://' : '';
-        $scheme   = $url['scheme'] . '://' ?? '';
-        $host     = $url['host'] ?? '';
-        $port     = isset($url['port']) ? ':' . $url['port'] : '';
-        $path     = $url['path'] ?? '';
-        $baseUrl  = "$scheme$host$port$path";
-
         $currentStepId = $this->form->getCurrentStepId();
         $firstInvalidStep = $this->form->getFirstInvalidStep();
 
