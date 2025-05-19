@@ -103,6 +103,7 @@ class prgTest extends TestCase
         $postedTextElement = $form->addText('postedText');
 
         $form->process();
+        $this->assertEquals($form->httpResponseCode, 400);
         $this->assertFalse($form->validate());
         $this->assertNotEmpty($form->testLog);
     }

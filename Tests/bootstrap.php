@@ -67,6 +67,7 @@ class htmlformTestClass extends csrfTestForm
 {
     public $testRedirect;
     public $testLog;
+    public $httpResponseCode = 200;
 
     public function redirect($url): void
     {
@@ -77,6 +78,10 @@ class htmlformTestClass extends csrfTestForm
     {
         $this->testLog = $message;
     }
+
+    public function httpResponseCode($code): void
+    {
+        $this->httpResponseCode = $code;
+    }
 }
 // }}}
-
