@@ -71,6 +71,21 @@ class Url extends Text
         }
     }
     // }}}
+
+    // {{{ htmlValue()
+    /**
+     * @brief   Returns the value of the element as HTML.
+     *
+     * @return string HTML-rendered value
+     **/
+    protected function htmlValue(): string
+    {
+        $value = $this->value === null ? $this->defaultValue : $this->value;
+        $value = \Depage\HtmlForm\Validators\Url::humanReadableUrl($value);
+
+        return $this->htmlEscape($value);
+    }
+    // }}}
 }
 
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

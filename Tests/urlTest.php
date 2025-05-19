@@ -50,8 +50,20 @@ class urlTest extends TestCase
      **/
     public function testSetIdnUrl()
     {
-        $this->url->setValue("https://äöüß-test.de");
-        $this->assertEquals("https://xn---test-kqa8ayk4b.de", $this->url->getValue());
+        $this->url->setValue("https://täöüst.de");
+        $this->assertEquals("https://xn--tst-qla4gpb.de", $this->url->getValue());
+        $this->assertTrue($this->url->validate());
+    }
+    // }}}
+
+    // {{{ testSetEncodedIdnUrl()
+    /**
+     * Tests setValue with an IDN url
+     **/
+    public function testSetEncodedIdnUrl()
+    {
+        $this->url->setValue("https://xn--tst-qla4gpb.de");
+        $this->assertEquals("https://xn--tst-qla4gpb.de", $this->url->getValue());
         $this->assertTrue($this->url->validate());
     }
     // }}}
@@ -74,8 +86,8 @@ class urlTest extends TestCase
      **/
     public function testSetPathUrlEncoding()
     {
-        $this->url->setValue("https://depage.net/äöüß-test/");
-        $this->assertEquals("https://depage.net/%C3%A4%C3%B6%C3%BC%C3%9F-test/", $this->url->getValue());
+        $this->url->setValue("https://depage.net/äöü-test/");
+        $this->assertEquals("https://depage.net/%C3%A4%C3%B6%C3%BC-test/", $this->url->getValue());
         $this->assertTrue($this->url->validate());
     }
     // }}}
@@ -90,8 +102,8 @@ class urlTest extends TestCase
             'normalize' => false,
         ], $this->form);
 
-        $url->setValue("https://äöüß-test.de/äöüß-test/");
-        $this->assertEquals("https://äöüß-test.de/äöüß-test/", $url->getValue());
+        $url->setValue("https://täöüst.de/äöü-test/");
+        $this->assertEquals("https://täöüst.de/äöü-test/", $url->getValue());
         $this->assertTrue($url->validate());
     }
     // }}}
