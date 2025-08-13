@@ -210,21 +210,18 @@ class multipleToStringTest extends TestCase
                     '<label class="input-multiple-option-key1" title="item1">' .
                         '<input type="checkbox" name="elementName[]" value="key1">' .
                         '<strong>item1</strong>' .
-                        '<span>item1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
                     '<label class="input-multiple-option-key2" title="item2">' .
                         '<input type="checkbox" name="elementName[]" value="key2">' .
                         '<em>item2</em>' .
-                        '<span>item2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
                     '<label class="input-multiple-option-key3" title="item3">' .
                         '<input type="checkbox" name="elementName[]" value="key3">' .
                         '<span class="custom">item3</span>' .
-                        '<span>item3</span>' .
                     '</label>' .
                 '</span>' .
             '</span>' .

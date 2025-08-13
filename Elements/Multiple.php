@@ -166,13 +166,12 @@ class Multiple extends Abstracts\Input
             foreach ($options as $index => $option) {
                 $selected = (is_array($value) && (in_array($index, $value))) ? " checked=\"yes\"" : '';
                 $class = "input-multiple-option-" . str_replace(" ", "-", $index);
-                $custumHtml = $this->listHtml[$index] ?? '';
+                $optionHtml = $this->listHtml[$index] ?? "<span>{$option}</span>";
 
                 $list .= "<span>" .
                     "<label class=\"{$class}\" title=\"{$option}\">" .
                         "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
-                        $custumHtml .
-                        "<span>{$option}</span>" .
+                        $optionHtml .
                     "</label>" .
                 "</span>";
             }

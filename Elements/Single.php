@@ -153,13 +153,12 @@ class Single extends Abstracts\Input
                 // typecasted for non-associative arrays
                 $selected = ((string) $index === (string) $value) ? " checked=\"yes\"" : '';
                 $class = "input-single-option-" . str_replace(" ", "-", $index);
-                $custumHtml = $this->listHtml[$index] ?? '';
+                $optionHtml = $this->listHtml[$index] ?? "<span>{$option}</span>";
 
                 $list .= "<span>" .
                     "<label class=\"{$class}\" title=\"{$option}\">" .
                         "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
-                        $custumHtml .
-                        "<span>{$option}</span>" .
+                        $optionHtml .
                     "</label>" .
                 "</span>";
             }

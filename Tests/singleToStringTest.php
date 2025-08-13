@@ -210,21 +210,18 @@ class singleToStringTest extends TestCase
                     '<label class="input-single-option-key1" title="item1">' .
                         '<input type="radio" name="singleName" value="key1">' .
                         '<strong>item1</strong>' .
-                        '<span>item1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
                     '<label class="input-single-option-key2" title="item2">' .
                         '<input type="radio" name="singleName" value="key2">' .
                         '<em>item2</em>' .
-                        '<span>item2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
                     '<label class="input-single-option-key3" title="item3">' .
                         '<input type="radio" name="singleName" value="key3">' .
                         '<span class="custom">item3</span>' .
-                        '<span>item3</span>' .
                     '</label>' .
                 '</span>' .
             '</span>' .
