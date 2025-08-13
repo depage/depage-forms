@@ -196,6 +196,57 @@ class singleToStringTest extends TestCase
     }
     // }}}
 
+    // {{{ testRadioAssociativeListHtml()
+    /**
+     * Rendered radio input with option list. List Parameters are parsed as
+     * associative array.
+     **/
+    public function testRadioAssociativeListHtml()
+    {
+        $expected = '<p id="formName-singleName" class="input-single skin-radio" data-errorMessage="Please enter valid data">' .
+            '<span class="depage-label">singleName</span>' .
+            '<span>' .
+                '<span>' .
+                    '<label class="input-single-option-key1" title="item1">' .
+                        '<input type="radio" name="singleName" value="key1">' .
+                        '<strong>item1</strong>' .
+                        '<span>item1</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label class="input-single-option-key2" title="item2">' .
+                        '<input type="radio" name="singleName" value="key2">' .
+                        '<em>item2</em>' .
+                        '<span>item2</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label class="input-single-option-key3" title="item3">' .
+                        '<input type="radio" name="singleName" value="key3">' .
+                        '<span class="custom">item3</span>' .
+                        '<span>item3</span>' .
+                    '</label>' .
+                '</span>' .
+            '</span>' .
+        '</p>' . "\n";
+
+        $parameters = [
+            'list' => [
+                'key1' => 'item1',
+                'key2' => 'item2',
+                'key3' => 'item3',
+            ],
+            'listHtml' => [
+                'key1' => '<strong>item1</strong>',
+                'key2' => '<em>item2</em>',
+                'key3' => '<span class="custom">item3</span>',
+            ],
+        ];
+        $single = new single('singleName', $parameters, $this->form);
+        $this->assertEquals($expected, $single->__toString());
+    }
+    // }}}
+
     // {{{ testSelectAssociativeList()
     /**
      * Rendered "select" input with option list. List Parameters are parsed as
@@ -391,19 +442,19 @@ class singleToStringTest extends TestCase
             '<span class="depage-label">singleName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label class="input-single-option-ke&amp;quot;&amp;gt;y1" title="it&quot;&gt;em1">' .
+                    '<label class="input-single-option-ke&quot;&gt;y1" title="it&quot;&gt;em1">' .
                         '<input type="radio" name="singleName" value="ke&quot;&gt;y1">' .
                         '<span>it&quot;&gt;em1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label class="input-single-option-ke&amp;quot;&amp;gt;y2" title="it&quot;&gt;em2">' .
+                    '<label class="input-single-option-ke&quot;&gt;y2" title="it&quot;&gt;em2">' .
                         '<input type="radio" name="singleName" value="ke&quot;&gt;y2">' .
                         '<span>it&quot;&gt;em2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label class="input-single-option-ke&amp;quot;&amp;gt;y3" title="it&quot;&gt;em3">' .
+                    '<label class="input-single-option-ke&quot;&gt;y3" title="it&quot;&gt;em3">' .
                         '<input type="radio" name="singleName" value="ke&quot;&gt;y3">' .
                         '<span>it&quot;&gt;em3</span>' .
                     '</label>' .

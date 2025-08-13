@@ -99,19 +99,19 @@ class multipleToStringTest extends TestCase
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-0" title="item1">' .
                         '<input type="checkbox" name="elementName[]" value="0">' .
                         '<span>item1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-1" title="item2">' .
                         '<input type="checkbox" name="elementName[]" value="1">' .
                         '<span>item2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-2" title="item3">' .
                         '<input type="checkbox" name="elementName[]" value="2">' .
                         '<span>item3</span>' .
                     '</label>' .
@@ -164,19 +164,19 @@ class multipleToStringTest extends TestCase
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-key1" title="item1">' .
                         '<input type="checkbox" name="elementName[]" value="key1">' .
                         '<span>item1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-key2" title="item2">' .
                         '<input type="checkbox" name="elementName[]" value="key2">' .
                         '<span>item2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-key3" title="item3">' .
                         '<input type="checkbox" name="elementName[]" value="key3">' .
                         '<span>item3</span>' .
                     '</label>' .
@@ -189,6 +189,57 @@ class multipleToStringTest extends TestCase
                 'key1' => 'item1',
                 'key2' => 'item2',
                 'key3' => 'item3',
+            ],
+        ];
+        $multiple = new multiple('elementName', $parameters, $this->form);
+        $this->assertEquals($expected, $multiple->__toString());
+    }
+    // }}}
+
+    // {{{ testCheckboxAssociativeListHtml()
+    /**
+     * Rendered checkbox input with option list. List Parameters are parsed as
+     * associative array.
+     **/
+    public function testCheckboxAssociativeListHtml()
+    {
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+            '<span class="depage-label">elementName</span>' .
+            '<span>' .
+                '<span>' .
+                    '<label class="input-multiple-option-key1" title="item1">' .
+                        '<input type="checkbox" name="elementName[]" value="key1">' .
+                        '<strong>item1</strong>' .
+                        '<span>item1</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label class="input-multiple-option-key2" title="item2">' .
+                        '<input type="checkbox" name="elementName[]" value="key2">' .
+                        '<em>item2</em>' .
+                        '<span>item2</span>' .
+                    '</label>' .
+                '</span>' .
+                '<span>' .
+                    '<label class="input-multiple-option-key3" title="item3">' .
+                        '<input type="checkbox" name="elementName[]" value="key3">' .
+                        '<span class="custom">item3</span>' .
+                        '<span>item3</span>' .
+                    '</label>' .
+                '</span>' .
+            '</span>' .
+        '</p>' . "\n";
+
+        $parameters = [
+            'list' => [
+                'key1' => 'item1',
+                'key2' => 'item2',
+                'key3' => 'item3',
+            ],
+            'listHtml' => [
+                'key1' => '<strong>item1</strong>',
+                'key2' => '<em>item2</em>',
+                'key3' => '<span class="custom">item3</span>',
             ],
         ];
         $multiple = new multiple('elementName', $parameters, $this->form);
@@ -327,19 +378,19 @@ class multipleToStringTest extends TestCase
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-0" title="it&quot;&gt;em1">' .
                         '<input type="checkbox" name="elementName[]" value="0">' .
                         '<span>it&quot;&gt;em1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-1" title="it&quot;&gt;em2">' .
                         '<input type="checkbox" name="elementName[]" value="1">' .
                         '<span>it&quot;&gt;em2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-2" title="it&quot;&gt;em3">' .
                         '<input type="checkbox" name="elementName[]" value="2">' .
                         '<span>it&quot;&gt;em3</span>' .
                     '</label>' .
@@ -391,19 +442,19 @@ class multipleToStringTest extends TestCase
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-ke&quot;&gt;y1" title="it&quot;&gt;em1">' .
                         '<input type="checkbox" name="elementName[]" value="ke&quot;&gt;y1">' .
                         '<span>it&quot;&gt;em1</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-ke&quot;&gt;y2" title="it&quot;&gt;em2">' .
                         '<input type="checkbox" name="elementName[]" value="ke&quot;&gt;y2">' .
                         '<span>it&quot;&gt;em2</span>' .
                     '</label>' .
                 '</span>' .
                 '<span>' .
-                    '<label>' .
+                    '<label class="input-multiple-option-ke&quot;&gt;y3" title="it&quot;&gt;em3">' .
                         '<input type="checkbox" name="elementName[]" value="ke&quot;&gt;y3">' .
                         '<span>it&quot;&gt;em3</span>' .
                     '</label>' .

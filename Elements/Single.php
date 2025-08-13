@@ -62,6 +62,15 @@ class Single extends Abstracts\Input
     protected $list = [];
 
     /**
+     * @brief Contains list of html prerendered options
+     *
+     * This is used for custom html inside of options.
+     * Indexes have to be the same as in $list.
+     * This also only works with radio and checkbox skins.
+     */
+    protected $listHtml = [];
+
+    /**
      * @brief HTML skin type (radio or select).
      **/
     protected $skin = 'radio';
@@ -81,6 +90,7 @@ class Single extends Abstracts\Input
         parent::__construct($name, $parameters, $form);
 
         $this->list = (isset($parameters['list']) && is_array($parameters['list'])) ? $parameters['list'] : [];
+        $this->listHtml = (isset($parameters['listHtml']) && is_array($parameters['listHtml'])) ? $parameters['listHtml'] : [];
     }
     // }}}
 
@@ -142,11 +152,13 @@ class Single extends Abstracts\Input
             foreach ($options as $index => $option) {
                 // typecasted for non-associative arrays
                 $selected = ((string) $index === (string) $value) ? " checked=\"yes\"" : '';
-                $class = htmlentities("input-single-option-" . str_replace(" ", "-", $index));
+                $class = "input-single-option-" . str_replace(" ", "-", $index);
+                $custumHtml = $this->listHtml[$index] ?? '';
 
                 $list .= "<span>" .
                     "<label class=\"{$class}\" title=\"{$option}\">" .
                         "<input type=\"radio\" name=\"{$this->name}\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
+                        $custumHtml .
                         "<span>{$option}</span>" .
                     "</label>" .
                 "</span>";
