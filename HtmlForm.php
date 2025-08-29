@@ -206,7 +206,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief Contains current step number
      **/
-    private $currentStepId;
+    private $currentStepId = 0;
 
     /**
      * @brief Contains array of step object references
