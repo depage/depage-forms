@@ -20,7 +20,7 @@ class Email extends Validator
      * @param  array  $parameters validation parameters
      * @return bool   validation result
      **/
-    public function validate($email, $parameters = [])
+    public function validate($email, $parameters = []): bool
     {
         $valid = (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
 
