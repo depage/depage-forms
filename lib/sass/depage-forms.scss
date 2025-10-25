@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // basics
 $depageFormMaxWidth: 40em;
 $depageFormMobileWidth: 600px;
@@ -538,7 +540,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
-        color: mix($depageFormTextColor, $depageFormInputBackground, 50%);
+        color: color.mix($depageFormTextColor, $depageFormInputBackground, 50%);
     }
     .selectize-control.plugin-remove_button [data-value] .remove:hover {
         background: rgba(0, 0, 0, 0.05);
@@ -606,14 +608,12 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         vertical-align: baseline;
         display: -moz-inline-stack;
         display: inline-block;
-        zoom: 1;
-        *display: inline;
     }
     .selectize-control.multi .selectize-input > div {
         cursor: pointer;
         margin: 0 3px 3px 0;
         padding: 2px 6px;
-        background: darken($depageFormInputBackground, 10%);
+        background: color.adjust($depageFormInputBackground, $lightness: -10%, $space: hsl);
         color: $depageFormTextColor;
         @include radius($depageFormBorderRadius * 0.5);
     }

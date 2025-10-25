@@ -17,6 +17,14 @@ use Depage\HtmlForm\Exceptions;
  *
  * The abstract element class contains the basic attributes and tools of
  * container and input elements.
+ *
+ * @method string htmlValue() Returns HTML escaped value attribute.
+ * @method array  htmlDataAttr() Returns HTML escaped dataAttr attribute.
+ * @method string htmlMarker() Returns HTML escaped marker attribute.
+ * @method string htmlLabel() Returns HTML escaped label attribute.
+ * @method string htmlWrapperAttributes() Returns HTML escaped wrapperAttributes attribute.
+ * @method string htmlErrorMessage() Returns HTML escaped errorMessage attribute.
+ * @method string htmlHelpMessage() Returns HTML escaped helpMessage attribute.
  **/
 abstract class Element
 {
