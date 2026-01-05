@@ -298,7 +298,7 @@ class Country extends Single
         // return a subset
         if ($iso !== null) {
             if (is_array($iso)) {
-                return array_intersect_key($countries, $iso);
+                return array_intersect_key($countries, array_fill_keys($iso, true));
             } else {
                 return isset($countries[$iso]) ? $countries[$iso] : '';
             }
