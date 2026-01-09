@@ -1,5 +1,5 @@
-depage-forms: Validation
-==========================
+Input Validation      {#validation}
+================
 
 Validation of HTML form data
 ----------------------------

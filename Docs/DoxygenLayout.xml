@@ -1,88 +1,79 @@
 <doxygenlayout version="1.0">
   <!-- Navigation index tabs for HTML output -->
   <navindex>
-    <tab type="mainpage" visible="no" title="home"/>
+    <tab type="mainpage" visible="yes" title="Home"/>
 
-    <tab type="user" url="md__docs__introduction.html" title="Getting Started">
-        <tab type="user" url="md__docs__introduction.html" title="Introduction"/>
-        <tab type="user" url="md__docs__validation.html" title="Validation"/>
-    </tab>
-    <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm">
-        <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm Class"/>
-        <tab type="user" url="@ref Depage::HtmlForm::Elements" title="Available Input Elements"/>
-        <tab type="user" url="@ref htmlformInputDefaults" title="Available Input Parameters"/>
-    </tab>
+    <tab type="user" url="." title=""/>
 
+    <tab type="user" url="@ref introduction" title="Getting Started"/>
+    <tab type="user" url="@ref validation" title="Input Validation"/>
+    <tab type="usergroup" url="@ref Depage::HtmlForm::Elements" title="Available Input Elements"/>
+    <tab type="user" url="@ref htmlformInputDefaults" title="Available Input Parameters"/>
+    <tab type="user" url="@ref Depage::HtmlForm::Validators" title="Available Validators"/>
+    <tab type="user" url="@ref Depage::HtmlForm::HtmlForm" title="HtmlForm Class"/>
     <tab type="examples" visible="yes" title="Examples" intro=""/>
+    <tab type="user" url="@ref developer-guide" visible="yes" title="Developer Guide" intro=""/>
 
-    <tab type="classes" visible="yes" title="Classes">
-      <tab type="classes" visible="no" title="Classes" intro=""/>
-      <tab type="hierarchy" visible="no" title="Hierarchy" intro=""/>
-      <tab type="classmembers" visible="no" title="Members" intro=""/>
-      <tab type="classindex" visible="$ALPHABETICAL_INDEX" title="index"/>
-    </tab>
-    <tab type="namespaces" visible="no" title="Namespaces">
-      <tab type="namespaces" visible="no" title="" intro=""/>
-      <tab type="namespacemembers" visible="no" title="" intro=""/>
-    </tab>
-    <tab type="files" visible="no" title="Files">
-      <tab type="files" visible="no" title="" intro=""/>
-      <tab type="globals" visible="no" title="" intro=""/>
-    </tab>
-    <tab type="pages" visible="no" title="" intro=""/>
-    <tab type="modules" visible="no" title="" intro=""/>
+    <tab type="user" url="." title=""/>
+
+    <tab type="namespacelist" visible="yes" title="Classes" intro="A list of namespaces and its classes"/>
   </navindex>
 
   <!-- Layout definition for a class page -->
   <class>
-    <briefdescription visible="no"/>
-    <detaileddescription title=""/>
-    <includes visible="$SHOW_INCLUDE_FILES"/>
-    <inheritancegraph visible="$CLASS_GRAPH"/>
-    <collaborationgraph visible="$COLLABORATION_GRAPH"/>
-    <allmemberslink visible="yes"/>
+    <briefdescription visible="yes"/>
+    <detaileddescription visible="yes" title=""/>
+    <includes visible="$SHOW_HEADERFILE"/>
+    <inheritancegraph visible="yes"/>
+    <collaborationgraph visible="yes"/>
     <memberdecl>
       <nestedclasses visible="yes" title=""/>
-      <publictypes title=""/>
-      <publicslots title=""/>
-      <signals title=""/>
-      <publicmethods title=""/>
-      <publicstaticmethods title=""/>
-      <publicattributes title=""/>
-      <publicstaticattributes title=""/>
-      <protectedtypes title=""/>
-      <protectedslots title=""/>
-      <protectedmethods title=""/>
-      <protectedstaticmethods title=""/>
-      <protectedattributes title=""/>
-      <protectedstaticattributes title=""/>
-      <packagetypes title=""/>
-      <packagemethods title=""/>
-      <packagestaticmethods title=""/>
-      <packageattributes title=""/>
-      <packagestaticattributes title=""/>
-      <properties title=""/>
-      <events title=""/>
-      <privatetypes title=""/>
-      <privateslots title=""/>
-      <privatemethods title=""/>
-      <privatestaticmethods title=""/>
-      <privateattributes title=""/>
-      <privatestaticattributes title=""/>
-      <friends title=""/>
-      <related title="" subtitle=""/>
+      <publictypes visible="yes" title=""/>
+      <services visible="yes" title=""/>
+      <interfaces visible="yes" title=""/>
+      <publicslots visible="yes" title=""/>
+      <signals visible="yes" title=""/>
+      <publicmethods visible="yes" title=""/>
+      <publicstaticmethods visible="yes" title=""/>
+      <publicattributes visible="yes" title=""/>
+      <publicstaticattributes visible="yes" title=""/>
+      <protectedtypes visible="yes" title=""/>
+      <protectedslots visible="yes" title=""/>
+      <protectedmethods visible="yes" title=""/>
+      <protectedstaticmethods visible="yes" title=""/>
+      <protectedattributes visible="yes" title=""/>
+      <protectedstaticattributes visible="yes" title=""/>
+      <packagetypes visible="yes" title=""/>
+      <packagemethods visible="yes" title=""/>
+      <packagestaticmethods visible="yes" title=""/>
+      <packageattributes visible="yes" title=""/>
+      <packagestaticattributes visible="yes" title=""/>
+      <properties visible="yes" title=""/>
+      <events visible="yes" title=""/>
+      <privatetypes visible="yes" title=""/>
+      <privateslots visible="yes" title=""/>
+      <privatemethods visible="yes" title=""/>
+      <privatestaticmethods visible="yes" title=""/>
+      <privateattributes visible="yes" title=""/>
+      <privatestaticattributes visible="yes" title=""/>
+      <friends visible="yes" title=""/>
+      <related visible="yes" title="" subtitle=""/>
       <membergroups visible="yes"/>
     </memberdecl>
     <memberdef>
-      <typedefs title=""/>
-      <enums title="Constants"/>
-      <constructors title=""/>
-      <functions title=""/>
-      <related title=""/>
-      <variables title=""/>
-      <properties title=""/>
-      <events title=""/>
+      <inlineclasses visible="yes" title=""/>
+      <typedefs visible="yes" title=""/>
+      <enums visible="yes" title=""/>
+      <services visible="yes" title=""/>
+      <interfaces visible="yes" title=""/>
+      <constructors visible="yes" title=""/>
+      <functions visible="yes" title=""/>
+      <related visible="yes" title=""/>
+      <variables visible="yes" title=""/>
+      <properties visible="yes" title=""/>
+      <events visible="yes" title=""/>
     </memberdef>
+    <allmemberslink visible="yes"/>
     <usedfiles visible="$SHOW_USED_FILES"/>
     <authorsection visible="yes"/>
   </class>

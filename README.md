@@ -1,14 +1,11 @@
-depage-forms: HTML5-forms in PHP with ease and comfort
-=======================================================
+HTML5-forms in PHP with ease and comfort
+========================================
 
 depage-forms is PHP library for HTML form generation with focus on usability.
 It is part of the upcoming version of [depage-cms](http://www.depagecms.net),
 but it also works as a standalone library. By abstracting HTML, browser flaws
 (duplicate form submissions) and form validation, it provides a comfortable
 way to obtain reliable and validated data from users.
-
-[![Latest Stable Version](https://poser.pugx.org/depage/htmlform/v/stable.png)](https://packagist.org/packages/depage/htmlform)
-[![Build Status](https://travis-ci.org/depage/depage-forms.png?branch=master)](https://travis-ci.org/depage/depage-forms)
 
 
 Features
@@ -35,8 +32,8 @@ Features
 Prerequisites
 -------------
 
-- PHP 5.3
-- jQuery >=1.4.3 (optional, for client side validation and richtext field)
+- PHP 8.0
+- jQuery optional, for client side validation and richtext field)
 
 Introduction
 ------------
@@ -47,23 +44,11 @@ Introduction
   [depage-forms: validation of html5 forms (part II)](Docs/Validation.md)
 
 
-Download
---------
-- <http://www.depage.net/downloads/depage-forms-latest.zip>
-
 Install Using Composer
 ----------------------
-Get composer at <http://getcomposer.org> and then just add this to your composer.json.
+Get composer at <https://getcomposer.org> and then just add this to your composer.json.
 
-    {
-        "require": {
-            "depage/htmlform": "*"
-        }
-    }
-
-Now run
-
-    composer install
+    composer require depage/htmlform
 
 to install the current version of depage-htmlform into your vendor dir.
 
@@ -72,9 +57,9 @@ For more information
 --------------------
 
 - You can fork us at:
-  <http://github.com/depage/depage-forms/>
+  <https://github.com/depage/depage-forms/>
 - You find the documentation at:
-  <http://docs.depage.net/depage-forms/>
+  <https://docs.depage.net/depage-forms/>
 - For more information about depage-cms go to:
   <http://www.depagecms.net/>
 - if you want to support with development
@@ -83,6 +68,6 @@ For more information
 License (dual)
 --------------
 
-- GPL2: <http://www.gnu.org/licenses/gpl-2.0.html>
-- MIT: <http://www.opensource.org/licenses/mit-license.php>
+- GPL2: <https://www.gnu.org/licenses/gpl-2.0.html>
+- MIT: <https://www.opensource.org/licenses/mit-license.php>
 

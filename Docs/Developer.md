@@ -1,4 +1,4 @@
-Developer guide
+Developer guide     {#developer-guide}
 ---------------
 
 The idea behind this project is to combine comfortable form-generation and

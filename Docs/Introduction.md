@@ -1,5 +1,5 @@
-depage-forms: Introduction
-==========================
+Getting Started     {#introduction}
+===============
 
 HTML forms: Easy and difficult at the same time
 -----------------------------------------------
@@ -22,26 +22,29 @@ Because we did not want to fight anymore, we are introducing today:
 
 depage-forms – html5-forms made easy!
 
-
-Documentation
-Download [zip]
-Fork us/Source-Code
-
 depage-forms is PHP library for HTML form generation with focus on usability for developers and users.
 
-
-
 It is part of the upcoming version of depage-cms, but it also works as a standalone library. By abstracting HTML, browser flaws (duplicate form submissions) and form validation, it provides a comfortable way to obtain reliable and validated data from users.
-
-
 
 We are (by far) not the first trying to solve these problems. For PHP there are Zend-Forms and Phorms for example. But I think we found a rather unique approach to solve these problem.
 So, how does it work?
 
+
+Install Using Composer
+----------------------
+Get composer at <http://getcomposer.org> and then just add this to your composer.json.
+
+    composer require depage/htmlform
+
+to install the current version of depage-htmlform into your vendor dir.
+
+
+Creating a simple form
+----------------------
+
 First we load the Library and initialize an instance of the htmlforms-class. Almost every action goes through the htmlforms-class. Besides fieldsets and steps (later more about this) we only talk to instances of the htmlform directly.
 
 ```php
-require_once('path/to/htmlform.php');
 $form = new Depage\HtmlForm\HtmlForm('simpleForm');
 ```
 
@@ -94,8 +97,8 @@ Here is the full example:
 
 @include simple.php
 
-Next Steps:
------------
+
+### Next Steps:
 
 In the next posts about depage-forms we will introduce some extended features like:
 

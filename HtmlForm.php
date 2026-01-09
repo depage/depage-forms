@@ -14,7 +14,7 @@
 
 // {{{ namespace
 /**
- * @namespace depage
+ * @namespace Depage
  * @brief depage cms
  *
  * @namespace Depage::HtmlForm
@@ -121,6 +121,8 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  *
  * You can find a list of available input-class in @link Depage::HtmlForm::Elements
  * elements@endlink.
+ *
+ * @see Depage::HtmlForm::Elements
  **/
 class HtmlForm extends Abstracts\Container
 {
