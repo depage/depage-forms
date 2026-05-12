@@ -137,7 +137,7 @@ class Multiple extends Abstracts\Input
      *
      * @see     __toString()
      **/
-    protected function htmlList(array|null $options = null, array|null $value = null): string
+    protected function htmlList(?array $options = null, array|string|null $value = null): string
     {
         if ($value == null) {
             $value      = $this->htmlValue();
@@ -168,12 +168,12 @@ class Multiple extends Abstracts\Input
                 $class = "input-multiple-option-" . str_replace(" ", "-", $index);
                 $optionHtml = $this->listHtml[$index] ?? "<span>{$option}</span>";
 
-                $list .= "<span>" .
-                    "<label class=\"{$class}\" title=\"{$option}\">" .
-                        "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>" .
-                        $optionHtml .
-                    "</label>" .
-                "</span>";
+                $list .= "<span>"
+                    . "<label class=\"{$class}\" title=\"{$option}\">"
+                        . "<input type=\"checkbox\" name=\"{$this->name}[]\"{$inputAttributes} value=\"{$index}\"{$selected}>"
+                        . $optionHtml
+                    . "</label>"
+                . "</span>";
             }
         }
 
@@ -203,22 +203,22 @@ class Multiple extends Abstracts\Input
 
             $inputAttributes = $this->htmlInputAttributes();
 
-            return "<p {$wrapperAttributes}>" .
-                "<label>" .
-                    "<span class=\"depage-label\">{$label}{$marker}</span>" .
-                    "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>" .
-                "</label>" .
-                $errorMessage .
-                $helpMessage .
-            "</p>\n";
+            return "<p {$wrapperAttributes}>"
+                . "<label>"
+                    . "<span class=\"depage-label\">{$label}{$marker}</span>"
+                    . "<select multiple name=\"{$this->name}[]\"{$inputAttributes}>{$list}</select>"
+                . "</label>"
+                . $errorMessage
+                . $helpMessage
+            . "</p>\n";
         } else {
             // render HTML checkbox
-            return "<p {$wrapperAttributes}>" .
-                "<span class=\"depage-label\">{$label}{$marker}</span>" .
-                "<span>{$list}</span>" .
-                $errorMessage .
-                $helpMessage .
-            "</p>\n";
+            return "<p {$wrapperAttributes}>"
+                . "<span class=\"depage-label\">{$label}{$marker}</span>"
+                . "<span>{$list}</span>"
+                . $errorMessage
+                . $helpMessage
+            . "</p>\n";
         }
     }
     // }}}

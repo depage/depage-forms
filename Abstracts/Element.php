@@ -98,7 +98,7 @@ abstract class Element
      * @param  object $form       parent form object reference
      * @return void
      **/
-    public function __construct(string $name, array $parameters, object|null $form)
+    public function __construct(string $name, array $parameters, ?object $form)
     {
         $this->checkName($name);
 
@@ -301,6 +301,19 @@ abstract class Element
         }
 
         return $htmlOptions;
+    }
+    // }}}
+
+    // {{{ htmlList()
+    /**
+     * @brief   Renders HTML datalist
+     *
+     * @param  array  $options datalist
+     * @return string $htmlList   rendered HTML datalist
+     **/
+    protected function htmlList(?array $options = null, array|string|null $value = null): string
+    {
+        return "";
     }
     // }}}
 

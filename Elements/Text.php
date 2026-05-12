@@ -117,15 +117,15 @@ class Text extends Abstracts\Input
         $errorMessage       = $this->htmlErrorMessage();
         $helpMessage        = $this->htmlHelpMessage();
 
-        return "<p {$wrapperAttributes}>" .
-            "<label>" .
-                "<span class=\"depage-label\">{$label}{$marker}</span>" .
-                "<input name=\"{$this->name}\" type=\"{$type}\"{$inputAttributes} value=\"{$value}\">" .
-                $list .
-            "</label>" .
-            $errorMessage .
-            $helpMessage .
-        "</p>\n";
+        return "<p {$wrapperAttributes}>"
+            . "<label>"
+                . "<span class=\"depage-label\">{$label}{$marker}</span>"
+                . "<input name=\"{$this->name}\" type=\"{$type}\"{$inputAttributes} value=\"{$value}\">"
+                . $list
+            . "</label>"
+            . $errorMessage
+            . $helpMessage
+        . "</p>\n";
     }
     // }}}
 
@@ -136,7 +136,7 @@ class Text extends Abstracts\Input
      * @param  array  $options datalist
      * @return string $htmlList   rendered HTML datalist
      **/
-    protected function htmlList($options = null)
+    protected function htmlList(?array $options = null, array|string|null $value = null): string
     {
         if ($this->list && is_array($this->list)) {
             $formName   = $this->htmlFormName();
