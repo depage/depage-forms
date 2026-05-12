@@ -167,6 +167,20 @@ class htmlDomTest extends TestCase
         $this->assertEquals($expected, $this->htmldom->__toString());
     }
     // }}}
+    // {{{ testTextContentOnly()
+    /**
+     * Test text content only
+     **/
+    public function testTextContentOnly()
+    {
+        $this->htmldom->loadHTML("text only");
+        $this->htmldom->cleanHtml();
+
+        $expected = "<p>text only</p>\n";
+
+        $this->assertEquals($expected, $this->htmldom->__toString());
+    }
+    // }}}
     // {{{ testEmptyContentParagraph()
     /**
      * Test empty content

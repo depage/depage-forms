@@ -85,10 +85,10 @@ class HtmlDom extends \DOMDocument
         }
 
         // @todo take original content-type if available
-        $success = @$tmpDOM->loadHTML("<meta http-equiv=\"content-type\" content=\"text/html; charset=$encoding\">$html");
+        $success = @$tmpDOM->loadHTML("<meta http-equiv=\"content-type\" content=\"text/html; charset=$encoding\">$html", $options);
 
         $xpath = new \DOMXPath($tmpDOM);
-        $nodelist = $xpath->query("//body/*");
+        $nodelist = $xpath->query("//body/node()");
 
         $this->resolveExternals = true;
         $this->loadXML('<?xml version="1.0" encoding="utf-8"?>
@@ -153,6 +153,23 @@ class HtmlDom extends \DOMDocument
         }
         // }}}
 
+        // {{{ move textNode in body into p-tags
+        $nodelist = $xpath->query("//body/text()");
+
+        for ($i = $nodelist->length - 1; $i >= 0; $i--) {
+            $node = $nodelist->item($i);
+
+            if (!empty(trim($node->textContent))) {
+                // put text nodes into additional p when added directly to body
+                $paragraph = $node->parentNode->insertBefore($this->createElement("p"), $node);
+                $paragraph->appendChild($node);
+            } else {
+                // remove empty text nodes
+                $node->parentNode->removeChild($node);
+            }
+        }
+        // }}}
+
         // {{{ remove all nodes with tagnames that are not allowed
         $nodelist = $xpath->query("//body//*");
 
@@ -162,7 +179,10 @@ class HtmlDom extends \DOMDocument
             if (!isset($tags[$node->nodeName])) {
                 // move child nodes before element itself
                 while ($node->firstChild != null) {
-                    if ($node->parentNode->nodeName == "body" && $node->firstChild->nodeType  == XML_TEXT_NODE) {
+                    if ($node->parentNode->nodeName == "body"
+                        && $node->firstChild->nodeType  == XML_TEXT_NODE
+                        && !empty(trim($node->firstChild->textContent))
+                    ) {
                         // put text nodes into additional p when added directly to body
                         $paragraph = $node->parentNode->insertBefore($this->createElement("p"), $node);
                         $paragraph->appendChild($node->firstChild);
