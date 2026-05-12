@@ -32,13 +32,6 @@ class elementTestClass extends element
 }
 // }}}
 
-// {{{ undefinedMethodException
-/**
- * Replacement exception for undefinedMethod Error
- **/
-class undefinedMethodException extends Exception {}
-// }}}
-
 /**
  * General tests for the element class.
  **/

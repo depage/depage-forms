@@ -156,12 +156,12 @@ abstract class Element
                 return $this->$escapedAttribute;
             }
             if (!isset($this->$attribute)) {
-                trigger_error("Call to undefined method $function", E_USER_ERROR);
+                throw new Exceptions\UndefinedMethodException($function);
             }
 
             return $this->htmlEscape($this->$attribute);
         } else {
-            trigger_error("Call to undefined method $function", E_USER_ERROR);
+            throw new Exceptions\UndefinedMethodException($function);
         }
     }
     // }}}
@@ -252,7 +252,7 @@ abstract class Element
      * @param  string $type     type of log message
      * @return void
      **/
-    protected function log(string $argument, string $type = null): void
+    protected function log(string $argument, ?string $type = null): void
     {
         if (is_callable([$this->log, 'log'])) {
             $this->log->log($argument, $type);
@@ -314,7 +314,7 @@ abstract class Element
         if (is_array($this->dataAttr)) {
             foreach ($this->dataAttr as $key => $val) {
                 // @todo throw error when key is not plain string?
-                $attributes .= " data-$key=\"" . $this->htmlEscape($val) . "\"";
+                $attributes .= " data-$key=\"" . $this->htmlEscape((string) $val) . "\"";
             }
         }
 

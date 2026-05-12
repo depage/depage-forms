@@ -10,15 +10,17 @@
 
 namespace Depage\HtmlForm\Elements;
 
-define("UPLOAD_ERR_FILE_EXTENSION", 1000);
+use Depage\HtmlForm\Abstracts;
 
 /**
  * @brief   HTML file input type.
  *
  * @todo    dummy - not implemented yet
  **/
-class File extends Text
+class File extends Abstracts\Input
 {
+    public const UPLOAD_ERR_FILE_EXTENSION = 1000;
+
     // {{{ variables
     protected $value = [];
 
@@ -133,7 +135,7 @@ class File extends Text
      *
      * @return array $files returns an array of all uploaded files
      **/
-    public function handleUploadedFiles(array $files = null): array
+    public function handleUploadedFiles(?array $files = null): array
     {
         if (!is_array($files)) {
             $files = [];
@@ -145,7 +147,7 @@ class File extends Text
         if (isset($_FILES[$this->name])) {
             foreach ($_FILES[$this->name]["error"] as $key => $error) {
                 if (!empty($extRegex) && !preg_match("/.*(" . $extRegex . ")$/i", $_FILES[$this->name]["name"][$key])) {
-                    $error = UPLOAD_ERR_FILE_EXTENSION;
+                    $error = self::UPLOAD_ERR_FILE_EXTENSION;
                 }
                 if ($error == UPLOAD_ERR_OK) {
                     $uploadName = $_FILES[$this->name]["tmp_name"][$key];
@@ -172,7 +174,7 @@ class File extends Text
                         UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
                         UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
                         UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop.",
-                        UPLOAD_ERR_FILE_EXTENSION => "The uploaded file has an unallowed extension.", // @todo add error message to form
+                        self::UPLOAD_ERR_FILE_EXTENSION => "The uploaded file has an unallowed extension.", // @todo add error message to form
                     ];
                     $this->log("htmlform: " . $errorMsgs[$error]);
                     // TODO can't send array here

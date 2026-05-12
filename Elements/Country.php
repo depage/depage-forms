@@ -52,7 +52,7 @@ class Country extends Single
      *
      * @param array $iso list/subset of country iso codes to filter
      **/
-    public static function getCountries(array|string $iso = null): array
+    public static function getCountries(array|string|null $iso = null): array
     {
         $countries = [
             'ad' => _("Andorra"),
