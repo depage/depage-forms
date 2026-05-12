@@ -26,3 +26,13 @@ OUTPUT_DIRECTORY       = .
 # command).
 
 EXAMPLE_PATH           = Docs/examples/
+
+# The SITEMAP_URL tag is used to specify the full URL of the place where the
+# generated documentation will be placed on the server by the user during the
+# deployment of the documentation. The generated sitemap is called sitemap.xml
+# and placed on the directory specified by HTML_OUTPUT. In case no SITEMAP_URL
+# is specified no sitemap is generated. For information about the sitemap
+# protocol see https://www.sitemaps.org
+# This tag requires that the tag GENERATE_HTML is set to YES.
+
+SITEMAP_URL            = https://docs.depage.net/depage-forms/Docs/html/
