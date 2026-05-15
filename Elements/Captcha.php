@@ -31,6 +31,11 @@ class Captcha extends Text
      **/
     protected $sessionSlot = null;
 
+    protected $textColor = false;
+    protected $backgroundColor = false;
+    protected $width = 250;
+    protected $height = 100;
+
     // {{{ setDefaults()
     /**
      * @brief   collects initial values across subclasses.
@@ -189,22 +194,20 @@ class Captcha extends Text
 
         $this->captcha->build($this->width, $this->height);
 
-        return "<p {$wrapperAttributes}>" .
-            "<label>" .
-                "<span class=\"depage-label\">{$label}{$marker}</span>" .
-                "<span class=\"captcha-img\">" .
-                    "<img src=\"" . $this->captcha->inline() . "\" />" .
-                "</span>" .
-                "<input name=\"{$this->name}\" type=\"{$type}\"{$inputAttributes} value=\"$value\">" .
-                $list .
-            "</label>" .
-            $errorMessage .
-            $helpMessage .
-        "</p>\n";
+        return "<p {$wrapperAttributes}>"
+            . "<label>"
+                . "<span class=\"depage-label\">{$label}{$marker}</span>"
+                . "<span class=\"captcha-img\">"
+                    . "<img src=\"" . $this->captcha->inline() . "\" />"
+                . "</span>"
+                . "<input name=\"{$this->name}\" type=\"{$type}\"{$inputAttributes} value=\"$value\">"
+                . $list
+            . "</label>"
+            . $errorMessage
+            . $helpMessage
+        . "</p>\n";
     }
     // }}}
 }
-
-
 
 // vim:set ft=php sw=4 sts=4 fdm=marker et :

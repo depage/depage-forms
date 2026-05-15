@@ -39,6 +39,16 @@ namespace Depage\HtmlForm\Elements;
  **/
 class Address extends Fieldset
 {
+    protected $props = [];
+    protected $propsMaxLength = [];
+    protected $prefix = '';
+    protected $labelAddress1;
+    protected $labelAddress2;
+    protected $labelCity;
+    protected $labelState;
+    protected $labelZip;
+    protected $labelCountry;
+
     // {{{ __construct()
     /**
      * @brief   multiple class constructor
