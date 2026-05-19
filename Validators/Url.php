@@ -43,7 +43,9 @@ class Url extends Validator
 
         $scheme   = isset($info['scheme']) ? $info['scheme'] . '://' : '';
         $host     = $info['host'] ?? '';
-        $host     = idn_to_ascii($host);
+        if (!empty($host)) {
+            $host = idn_to_ascii($host);
+        }
         $port     = isset($info['port']) ? ':' . $info['port'] : '';
         $user     = isset($info['user']) ? rawurlencode($info['user']) : '';
         $pass     = isset($info['pass']) ? ':' . rawurlencode($info['pass']) : '';
@@ -75,7 +77,9 @@ class Url extends Validator
 
         $scheme   = isset($info['scheme']) ? $info['scheme'] . '://' : '';
         $host     = $info['host'] ?? '';
-        $host     = idn_to_utf8($host);
+        if (!empty($host)) {
+            $host = idn_to_utf8($host);
+        }
         $port     = isset($info['port']) ? ':' . $info['port'] : '';
         $user     = isset($info['user']) ? rawurldecode($info['user']) : '';
         $pass     = isset($info['pass']) ? ':' . rawurldecode($info['pass']) : '';
