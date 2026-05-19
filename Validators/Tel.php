@@ -25,7 +25,7 @@ class Tel extends RegEx
     {
         parent::__construct($log);
 
-        $this->regEx = '/^[0-9\/\(\)\+\-\. ]*$/';
+        $this->regEx = '/^[0-9\/\(\)\+\-\. ]+$/';
     }
     // }}}
 

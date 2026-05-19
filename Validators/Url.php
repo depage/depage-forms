@@ -35,6 +35,10 @@ class Url extends Validator
      **/
     public static function normalizeUrl($url): string
     {
+        if (empty($url)) {
+            return "";
+        }
+
         $info = parse_url(trim($url));
 
         $scheme   = isset($info['scheme']) ? $info['scheme'] . '://' : '';
@@ -64,6 +68,9 @@ class Url extends Validator
      **/
     public static function humanReadableUrl($url): string
     {
+        if (empty($url)) {
+            return "";
+        }
         $info = parse_url(trim($url));
 
         $scheme   = isset($info['scheme']) ? $info['scheme'] . '://' : '';

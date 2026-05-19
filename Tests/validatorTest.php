@@ -60,6 +60,7 @@ class validatorTest extends TestCase
     public function testEmail()
     {
         $emailValidator = Validator::factory('Email');
+        $this->assertFalse($emailValidator->validate('', ['checkDns' => false]));
         $this->assertFalse($emailValidator->validate('anyString', ['checkDns' => false]));
         $this->assertTrue($emailValidator->validate('test@depage.net', ['checkDns' => false]));
     }
@@ -72,6 +73,7 @@ class validatorTest extends TestCase
     public function testUrl()
     {
         $urlValidator = Validator::factory('Url');
+        $this->assertFalse($urlValidator->validate(''));
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('http://www.depage.net'));
     }
@@ -84,6 +86,7 @@ class validatorTest extends TestCase
     public function testTel()
     {
         $urlValidator = Validator::factory('Tel');
+        $this->assertFalse($urlValidator->validate(''));
         $this->assertFalse($urlValidator->validate('anyString'));
         $this->assertTrue($urlValidator->validate('+(123)-32 2.3'));
     }
@@ -96,6 +99,7 @@ class validatorTest extends TestCase
     public function testCustomRegEx()
     {
         $customValidator = Validator::factory('/[a-zA-Z]/');
+        $this->assertFalse($customValidator->validate(''));
         $this->assertFalse($customValidator->validate('1234'));
         $this->assertFalse($customValidator->validate('letters'));
         $this->assertTrue($customValidator->validate('l'));
@@ -109,10 +113,11 @@ class validatorTest extends TestCase
     public function testNumber()
     {
         $numberValidator = Validator::factory('Number');
-        $this->assertFalse($numberValidator->validate('letters', ['min' => null,    'max' => null]));
-        $this->assertFalse($numberValidator->validate(-10, ['min' => 0,       'max' => 10]));
-        $this->assertTrue($numberValidator->validate(5, ['min' => 0,       'max' => 10]));
-        $this->assertTrue($numberValidator->validate(5, ['min' => null,    'max' => null]));
+        $this->assertFalse($numberValidator->validate('', ['min' => null, 'max' => null]));
+        $this->assertFalse($numberValidator->validate('letters', ['min' => null, 'max' => null]));
+        $this->assertFalse($numberValidator->validate(-10, ['min' => 0, 'max' => 10]));
+        $this->assertTrue($numberValidator->validate(5, ['min' => 0, 'max' => 10]));
+        $this->assertTrue($numberValidator->validate(5, ['min' => null, 'max' => null]));
     }
     // }}}
 
