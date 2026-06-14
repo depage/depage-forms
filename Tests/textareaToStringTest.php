@@ -25,7 +25,7 @@ class textareaToStringTest extends TestCase
      **/
     public function testSimple()
     {
-        $expected = '<p id="formName-textareaName" class="input-textarea" data-textarea-options="{&quot;autogrow&quot;:false}" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea" data-textarea-options="{&quot;autogrow&quot;:false}" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textareaName</span>' .
                 '<textarea name="textareaName"></textarea>' .
@@ -42,7 +42,7 @@ class textareaToStringTest extends TestCase
      **/
     public function testValue()
     {
-        $expected = '<p id="formName-textareaName" class="input-textarea" data-textarea-options="{&quot;autogrow&quot;:false}" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea" data-textarea-options="{&quot;autogrow&quot;:false}" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textareaName</span>' .
                 '<textarea name="textareaName">testValue</textarea>' .
@@ -60,7 +60,7 @@ class textareaToStringTest extends TestCase
      **/
     public function testRequired()
     {
-        $expected = '<p id="formName-textareaName" class="input-textarea required" data-textarea-options="{&quot;autogrow&quot;:false}" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea required" data-textarea-options="{&quot;autogrow&quot;:false}" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textareaName <em>*</em></span>' .
                 '<textarea name="textareaName" required="required"></textarea>' .
@@ -78,7 +78,7 @@ class textareaToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-textareaName" class="input-textarea" title="ti&quot;&gt;tle" data-textarea-options="{&quot;autogrow&quot;:false}" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-textareaName" class="input-textarea" title="ti&quot;&gt;tle" data-textarea-options="{&quot;autogrow&quot;:false}" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel</span>' .
                 '<textarea name="textareaName"></textarea>' .
@@ -88,7 +88,7 @@ class textareaToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
         ];
         $textarea = new textarea('textareaName', $parameters, $this->form);

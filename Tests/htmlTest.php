@@ -15,4 +15,12 @@ class htmlTest extends TestCase
         $this->assertEquals('htmlString', $html->__toString());
     }
     // }}}
+
+    // {{{ testUnsaitizedHtml()
+    public function testUnsaitizedHtml()
+    {
+        $html = new Html('<div>htmlString</div>', ['sanitize' => false]);
+        $this->assertEquals('<div>htmlString</div>', $html->__toString());
+    }
+    // }}}
 }

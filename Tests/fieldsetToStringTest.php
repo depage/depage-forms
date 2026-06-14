@@ -59,7 +59,7 @@ class fieldsetToStringTest extends TestCase
     {
         $expected = '<fieldset id="formName-fieldsetName" name="fieldsetName">' .
             '<legend><span>fieldsetName</span></legend>' .
-            '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+            '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">textName</span>' .
                     '<input name="textName" type="text" value="">' .

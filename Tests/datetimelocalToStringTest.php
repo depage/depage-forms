@@ -25,7 +25,7 @@ class datetimelocalToStringTest extends TestCase
      **/
     public function testSimple()
     {
-        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">datetimelocalName</span>' .
                 '<input name="datetimelocalName" type="datetime-local" value="">' .
@@ -42,7 +42,7 @@ class datetimelocalToStringTest extends TestCase
      **/
     public function testValue()
     {
-        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">datetimelocalName</span>' .
                 '<input name="datetimelocalName" type="datetime-local" value="7331">' .
@@ -60,7 +60,7 @@ class datetimelocalToStringTest extends TestCase
      **/
     public function testRequired()
     {
-        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">datetimelocalName <em>*</em></span>' .
                 '<input name="datetimelocalName" type="datetime-local" required="required" value="">' .
@@ -78,7 +78,7 @@ class datetimelocalToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-datetimelocalName" class="input-datetimelocal required" title="ti&quot;&gt;tle" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="datetimelocalName" type="datetime-local" required="required" value="">' .
@@ -88,7 +88,7 @@ class datetimelocalToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
         ];

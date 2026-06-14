@@ -52,7 +52,7 @@ class stepToStringTest extends TestCase
      **/
     public function testAddText()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">textName</span>' .
                     '<input name="textName" type="text" value="">' .

@@ -64,6 +64,7 @@ class HtmlDom extends \DOMDocument
         parent::__construct($version, $encoding);
     }
     // }}}
+
     // {{{ loadHTML()
     /**
      * @brief   loads html from a htmls string
@@ -110,6 +111,7 @@ class HtmlDom extends \DOMDocument
         return $success;
     }
     // }}}
+
     // {{{ cleanHTML()
     /**
      * @brief   cleans up a htmlDOM
@@ -121,7 +123,7 @@ class HtmlDom extends \DOMDocument
      *
      * @return void
      **/
-    public function cleanHTML($allowedTags = null, $allowedAttributes = null)
+    public function cleanHTML($allowedTags = null, $allowedAttributes = null, $wrapTextNodes = true)
     {
         $xpath = new \DOMXPath($this);
 
@@ -153,19 +155,26 @@ class HtmlDom extends \DOMDocument
         }
         // }}}
 
+        // Blacklisted event handler attribute pattern for all common DOM events
+        $eventHandlerPattern = '/^on(abort|activate|afterprint|animationend|animationiteration|animationstart|beforeprint|beforeunload|beforecopy|beforecut|beforeeditfocus|beforepaste|beforescriptactivate|blur|bounce|cancel|change|click|close|command|componentending|componentloaded|contextmenu|copy|cut|dbclick|dblclick|delay|delete|drag|dragstart|drop|error|eval|exception|finish|focus|focusin|focusout|formchange|forminput|full-screen-change|fullscreenchange|fullscreenerror|gesturerotate|gesturestart|gestureswipe|gesturechange|hashchange|help|hoveroff|hoveron|input|invalid|keydown|keypress|keyup|listitemsenter|listitemsexit|load|loadeddata|loadedmetadata|loadend|loadstart|MSGestureChange|MSGestureDoubleTap|MSGestureEnd|MSGestureHold|MSGestureStart|MSGestureTap|MSGotPointerCapture|MSGestureTapAndHold|MSGestureUpdate|MSGotPointerCapture|MSHold|MSInertiaStart|MSPointerCancel|MSPointerDown|MSPointerMove|MSPointerOver|MSPointerOut|MSPointerUp|MSPan|MSPanStarted|MSPanupdate|MSRubberSelect|MSRubberSelectEnd|MSRubberSelectStart|MSScroll|MSScrollUpdate|MSManipulationStateChanged|MSGotPointerrcapture|MSReleasePointerCapture|MSScroll|MSScrollUpdate|MSZoom|MSZoomBegin|MSZoomEnd|open|orientationchange|overflowchanged|pause|paste|pauseanimation|restart|restored|save|scroll|seek|show|showMessage|sleep|split|start|submit|suspend|touchcancel|touchenter|touchleave|touchmove|touchstart|transitionend|unload|unpause|unseek|unshow|vibrate|webkitAnimationEnd|webkitAnimationIteration|webkitAnimationStart|webkitTransitionEnd|volumechange|waiting)|$/i';
+
+        $dangerousSchemes = ['javascript', 'vbscript', 'data', 'file', 'blob', 'about'];
+
         // {{{ move textNode in body into p-tags
-        $nodelist = $xpath->query("//body/text()");
+        if ($wrapTextNodes) {
+            $nodelist = $xpath->query("//body/text()");
 
-        for ($i = $nodelist->length - 1; $i >= 0; $i--) {
-            $node = $nodelist->item($i);
+            for ($i = $nodelist->length - 1; $i >= 0; $i--) {
+                $node = $nodelist->item($i);
 
-            if (!empty(trim($node->textContent))) {
-                // put text nodes into additional p when added directly to body
-                $paragraph = $node->parentNode->insertBefore($this->createElement("p"), $node);
-                $paragraph->appendChild($node);
-            } else {
-                // remove empty text nodes
-                $node->parentNode->removeChild($node);
+                if (!empty(trim($node->textContent))) {
+                    // put text nodes into additional p when added directly to body
+                    $paragraph = $node->parentNode->insertBefore($this->createElement("p"), $node);
+                    $paragraph->appendChild($node);
+                } else {
+                    // remove empty text nodes
+                    $node->parentNode->removeChild($node);
+                }
             }
         }
         // }}}
@@ -180,8 +189,8 @@ class HtmlDom extends \DOMDocument
                 // move child nodes before element itself
                 while ($node->firstChild != null) {
                     if ($node->parentNode->nodeName == "body"
-                        && $node->firstChild->nodeType  == XML_TEXT_NODE
-                        && !empty(trim($node->firstChild->textContent))
+                         && $node->firstChild->nodeType   == XML_TEXT_NODE
+                         && !empty(trim($node->firstChild->textContent))
                     ) {
                         // put text nodes into additional p when added directly to body
                         $paragraph = $node->parentNode->insertBefore($this->createElement("p"), $node);
@@ -197,10 +206,35 @@ class HtmlDom extends \DOMDocument
                 // test for allowed attributes
                 for ($j = $node->attributes->length - 1; $j >= 0; $j--) {
                     $attr = $node->attributes->item($j);
+                    $attrName = strtolower($attr->name);
 
-                    // remove attributes that are not in allowedAttributes
-                    if (!in_array($attr->name, $allowedAttributes)) {
+                    // Remove event handler attributes (on*)
+                    if (strpos($attrName, 'on') === 0) {
                         $node->removeAttribute($attr->name);
+                        continue;
+                    }
+
+                    // Remove attributes that are not in allowedAttributes
+                    if (!in_array($attrName, $allowedAttributes)) {
+                        $node->removeAttribute($attr->name);
+                        continue;
+                    }
+
+                    // Sanitize href/src/action attributes to block dangerous URI schemes
+                    if (in_array($attrName, ['href', 'src', 'action', 'formaction'])) {
+                        $attrValue = trim($attr->value);
+                        foreach ($dangerousSchemes as $dangerous) {
+                            $prefix = $dangerous . ':';
+                            if (stripos($attrValue, $prefix) === 0) {
+                                $node->removeAttribute($attr->name);
+                                break;
+                            }
+                            // Also strip leading whitespace/comments that might be used to bypass
+                            if (preg_match('/^\s*(?:\/\*.*\*\/\s*)?' . preg_quote($prefix, '/') . '/i', $attrValue)) {
+                                $node->removeAttribute($attr->name);
+                                break;
+                            }
+                        }
                     }
                 }
 
@@ -219,6 +253,7 @@ class HtmlDom extends \DOMDocument
             }
         }
         // }}}
+
         // {{{ add br to empty paragraphs to keep them
         $nodelist = $xpath->query("//p[. = '' and count(br) = 0]");
 
@@ -226,6 +261,7 @@ class HtmlDom extends \DOMDocument
             $node->appendChild($this->createElement("br"));
         }
         // }}}
+
         // {{{ make sure li-nodes are always inside ul, ol or menu
         $nodelist = $xpath->query("//li");
         $parentNodes = ["ul", "ol", "menu"];
@@ -249,6 +285,7 @@ class HtmlDom extends \DOMDocument
             }
         }
         // }}}
+
         // {{{ remove empty inline element
         $nodelist = $xpath->query("//b[not(node())] | //i[not(node())] | //strong[not(node())] | //span[not(node())] | //a[not(node())] | //u[not(node())]");
 
@@ -258,6 +295,7 @@ class HtmlDom extends \DOMDocument
             $node->parentNode->removeChild($node);
         }
         // }}}
+
         // {{{ clean nodes if only one paragraph with a br to leave only empty string in result body
         $nodes = $this->getBodyNodes();
         if ($nodes->length == 1) {
@@ -269,6 +307,7 @@ class HtmlDom extends \DOMDocument
         // }}}
     }
     // }}}
+
     // {{{ cutToMaxlength()
     /**
      * @brief cutToMaxlength
@@ -310,6 +349,7 @@ class HtmlDom extends \DOMDocument
         }
     }
     // }}}
+
     // {{{ __toString()
     /**
      * @brief __toString
@@ -327,6 +367,7 @@ class HtmlDom extends \DOMDocument
         return $html;
     }
     // }}}
+
     // {{{ __serialize()
     public function __serialize(): array
     {
@@ -335,6 +376,7 @@ class HtmlDom extends \DOMDocument
         ];
     }
     // }}}
+
     // {{{ __unserialize()
     public function __unserialize(array $data): void
     {

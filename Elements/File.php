@@ -151,19 +151,42 @@ class File extends Abstracts\Input
                 }
                 if ($error == UPLOAD_ERR_OK) {
                     $uploadName = $_FILES[$this->name]["tmp_name"][$key];
-                    $tmpName = tempnam("", "depage-form-upload-");
-                    $success = move_uploaded_file($uploadName, $tmpName);
-                    if ($this->maxNum > 1) {
-                        $files[] = [
-                            'name' => $_FILES[$this->name]["name"][$key],
-                            'tmp_name' => $tmpName,
-                        ];
+                    $safeFilename = $this->sanitizeFilename($_FILES[$this->name]["name"][$key]);
 
+                    // Validate MIME type
+                    if (function_exists('finfo_open') && $this->isAllowedMimeType($uploadName, $safeFilename)) {
+                        $uploadName = $uploadName; // ok
                     } else {
-                        $files[0] = [
-                            'name' => $_FILES[$this->name]["name"][$key],
-                            'tmp_name' => $tmpName,
-                        ];
+                        $this->log("htmlform: Uploaded file has disallowed MIME type.");
+                        $error = self::UPLOAD_ERR_FILE_EXTENSION;
+                    }
+
+                    if ($error == UPLOAD_ERR_OK) {
+                        $tmpName = sys_get_temp_dir() . '/htmlforms/' . session_id() . '_' . uniqid('depage-form-upload-', true);
+                        $success = move_uploaded_file($uploadName, $tmpName);
+                        if (!$success) {
+                            $this->log("htmlform: Failed to move uploaded file to secure temp location.");
+                            $error = UPLOAD_ERR_CANT_WRITE;
+                        }
+                    }
+
+                    if ($error == UPLOAD_ERR_OK) {
+                        if ($this->maxNum > 1) {
+                            $files[] = [
+                                'name' => $safeFilename,
+                                'tmp_name' => $tmpName,
+                            ];
+
+                        } else {
+                            $files[0] = [
+                                'name' => $safeFilename,
+                                'tmp_name' => $tmpName,
+                            ];
+                        }
+                    } else {
+                        if (isset($tmpName) && file_exists($tmpName)) {
+                            unlink($tmpName);
+                        }
                     }
                 } else {
                     $errorMsgs = [
@@ -187,6 +210,132 @@ class File extends Abstracts\Input
         $this->value = array_slice($files, - $this->maxNum, $this->maxNum);
 
         return $this->value;
+    }
+    // }}}
+
+    // {{{ sanitizeFilename()
+    /**
+     * @brief Sanitizes a filename to prevent directory traversal and injection
+     *
+     * @param string $filename raw filename from upload
+     * @return string sanitized filename
+     **/
+    protected function sanitizeFilename(string $filename): string
+    {
+        // Use basename to strip any path components
+        $filename = basename($filename);
+
+        // Remove null bytes and non-printable characters
+        $filename = preg_replace('/[\x00-\x1f\x7f]/', '', $filename);
+
+        // Only allow safe filename characters, then trim to prevent overlong names
+        $filename = preg_replace('/[^a-zA-Z0-9\.\-_]/', '_', $filename);
+        $filename = substr($filename, 0, 255);
+
+        // Prevent hidden files and dangerous extensions
+        $filename = ltrim($filename, '.');
+
+        // Final safety: only allow safe characters
+        $filename = preg_replace('/[^a-zA-Z0-9\.\-_]/', '', $filename);
+
+        return !empty($filename) ? $filename : 'uploaded_file';
+    }
+    // }}}
+
+    // {{{ getAllowedMimeTypes()
+    /**
+     * @brief Returns the list of allowed MIME types based on allowedExtensions
+     *
+     * @return array list of allowed MIME type patterns
+     **/
+    protected function getAllowedMimeTypes(): array
+    {
+        // Map common extensions to MIME types
+        $extensionMap = [
+            'jpg'    => ['image/jpeg'],
+            'jpeg'   => ['image/jpeg'],
+            'png'    => ['image/png'],
+            'gif'    => ['image/gif'],
+            'bmp'    => ['image/bmp'],
+            'webp'   => ['image/webp'],
+            'tiff'   => ['image/tiff'],
+            'svg'    => ['image/svg+xml'],
+            'pdf'    => ['application/pdf'],
+            'doc'    => ['application/msword'],
+            'docx'   => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+            'xls'    => ['application/vnd.ms-excel'],
+            'xlsx'   => ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+            'csv'    => ['text/csv'],
+            'txt'    => ['text/plain'],
+            'rtf'    => ['application/rtf'],
+            'odt'    => ['application/vnd.oasis.opendocument.text'],
+            'ods'    => ['application/vnd.oasis.opendocument.spreadsheet'],
+            'zip'    => ['application/zip'],
+            'gz'     => ['application/gzip'],
+            'tar'    => ['application/x-tar'],
+            'xml'    => ['application/xml', 'text/xml'],
+            'json'   => ['application/json'],
+            'mp3'    => ['audio/mpeg'],
+            'mp4'    => ['video/mp4'],
+            'mpeg'   => ['video/mpeg'],
+            'ogg'    => ['application/ogg', 'audio/ogg'],
+            'ogv'    => ['video/ogg'],
+            'webm'   => ['video/webm'],
+            'aac'    => ['audio/aac'],
+            'wav'    => ['audio/wav'],
+            'eps'    => ['application/postscript'],
+            'ps'     => ['application/postscript'],
+        ];
+
+        $allowedMimes = [];
+        if (!empty($this->allowedExtensions)) {
+            $extensions = array_map('trim', explode(',', $this->allowedExtensions));
+            foreach ($extensions as $ext) {
+                $ext = strtolower($ext);
+                if (isset($extensionMap[$ext])) {
+                    $allowedMimes = array_merge($allowedMimes, $extensionMap[$ext]);
+                }
+            }
+        }
+
+        return $allowedMimes;
+    }
+    // }}}
+
+    // {{{ isAllowedMimeType()
+    /**
+     * @brief Checks if a file's MIME type is allowed
+     *
+     * @param string $uploadPath path to the uploaded temp file
+     * @param string $safeFilename sanitized filename for logging
+     * @return bool true if MIME type is allowed
+     **/
+    protected function isAllowedMimeType(string $uploadPath, string $safeFilename): bool
+    {
+        $allowedMimes = $this->getAllowedMimeTypes();
+
+        // If no extensions are specified, allow all (backwards compatible)
+        if (empty($allowedMimes)) {
+            return true;
+        }
+
+        // Use finfo for reliable MIME detection
+        if (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $uploadPath);
+            finfo_close($finfo);
+        } else {
+            // Fallback: attempt basic detection via file extension
+            $ext = strtolower(pathinfo($safeFilename, PATHINFO_EXTENSION));
+            $extMap = [
+                'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
+                'gif' => 'image/gif', 'bmp' => 'image/bmp', 'webp' => 'image/webp',
+                'pdf' => 'application/pdf', 'zip' => 'application/zip',
+            ];
+            $mimeType = $extMap[$ext] ?? 'application/octet-stream';
+        }
+
+        return in_array($mimeType, $allowedMimes);
     }
     // }}}
 

@@ -25,7 +25,7 @@ class richtextToStringTest extends TestCase
      **/
     public function testSimple()
     {
-        $expected = '<p id="formName-textareaName" class="input-richtext" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-richtext" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textareaName</span>' .
                 '<textarea name="textareaName"></textarea>' .
@@ -42,7 +42,7 @@ class richtextToStringTest extends TestCase
      **/
     public function testValue()
     {
-        $expected = '<p id="formName-textareaName" class="input-richtext" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-richtext" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textareaName</span>' .
                 '<textarea name="textareaName">&lt;p&gt;testValue&lt;/p&gt;' . "\n" . '</textarea>' .
@@ -60,7 +60,7 @@ class richtextToStringTest extends TestCase
      **/
     public function testRequired()
     {
-        $expected = '<p id="formName-textareaName" class="input-richtext required" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textareaName" class="input-richtext required" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textareaName <em>*</em></span>' .
                 '<textarea name="textareaName" required="required"></textarea>' .
@@ -78,7 +78,7 @@ class richtextToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-textareaName" class="input-richtext" title="ti&quot;&gt;tle" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-textareaName" class="input-richtext" title="ti&quot;&gt;tle" data-richtext-options="{&quot;stylesheet&quot;:null,&quot;allowedTags&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;strong&quot;,&quot;i&quot;,&quot;em&quot;,&quot;small&quot;,&quot;p&quot;,&quot;br&quot;,&quot;h1&quot;,&quot;h2&quot;,&quot;ul&quot;,&quot;ol&quot;,&quot;li&quot;]}" data-textarea-options="{&quot;autogrow&quot;:true}" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel</span>' .
                 '<textarea name="textareaName"></textarea>' .
@@ -88,7 +88,7 @@ class richtextToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
         ];
         $textarea = new Richtext('textareaName', $parameters, $this->form);

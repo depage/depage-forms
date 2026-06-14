@@ -25,7 +25,7 @@ class booleanToStringTest extends TestCase
      **/
     public function testSimple()
     {
-        $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed">' .
+        $expected = '<p id="formName-booleanName" class="input-boolean" data-errormessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" value="true">' .
                 '<span class="depage-label">booleanName</span>' .
@@ -42,7 +42,7 @@ class booleanToStringTest extends TestCase
      **/
     public function testChecked()
     {
-        $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed">' .
+        $expected = '<p id="formName-booleanName" class="input-boolean" data-errormessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" value="true" checked="yes">' .
                 '<span class="depage-label">booleanName</span>' .
@@ -60,7 +60,7 @@ class booleanToStringTest extends TestCase
      **/
     public function testCheckedDefault()
     {
-        $expected = '<p id="formName-booleanName" class="input-boolean" data-errorMessage="Please check this box if you want to proceed">' .
+        $expected = '<p id="formName-booleanName" class="input-boolean" data-errormessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" value="true" checked="yes">' .
                 '<span class="depage-label">booleanName</span>' .
@@ -78,7 +78,7 @@ class booleanToStringTest extends TestCase
      **/
     public function testRequired()
     {
-        $expected = '<p id="formName-booleanName" class="input-boolean required" data-errorMessage="Please check this box if you want to proceed">' .
+        $expected = '<p id="formName-booleanName" class="input-boolean required" data-errormessage="Please check this box if you want to proceed">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" required="required" value="true">' .
                 '<span class="depage-label">booleanName <em>*</em></span>' .
@@ -96,7 +96,7 @@ class booleanToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-booleanName" class="input-boolean required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-booleanName" class="input-boolean required" title="ti&quot;&gt;tle" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<input type="checkbox" name="booleanName" required="required" value="true">' .
                 '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
@@ -106,7 +106,7 @@ class booleanToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
         ];

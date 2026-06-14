@@ -85,7 +85,7 @@ class htmlformToStringTest extends TestCase
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
             '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="1">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
-            '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
+            '<p id="formName-text1" class="input-text" data-errormessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">text1</span>' .
                     '<input name="text1" type="text" value="">' .
@@ -117,7 +117,7 @@ class htmlformToStringTest extends TestCase
             '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
             '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="1">' . "\n" .
             '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
-            '<p id="formName-text1" class="input-text" data-errorMessage="Please enter valid data">' .
+            '<p id="formName-text1" class="input-text" data-errormessage="Please enter valid data">' .
                 '<label>' .
                     '<span class="depage-label">text1</span>' .
                     '<input name="text1" type="text" value="">' .

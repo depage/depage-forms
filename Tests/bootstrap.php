@@ -53,7 +53,7 @@ class nameTestForm
  **/
 class csrfTestForm extends Depage\HtmlForm\HtmlForm
 {
-    protected function getNewCsrfToken()
+    protected function getNewCsrfToken(): string
     {
         return "xxxxxxxx";
     }

@@ -51,7 +51,7 @@ class prgTest extends TestCase
         $_POST['formCsrfToken']  = 'xxxxxxxx';
         $_POST['postedText'] = 'submitted';
 
-        $form = new htmlformTestClass('formName', ['successURL' => 'http://www.depagecms.net']);
+        $form = new htmlformTestClass('formName', ['successURL' => 'https://www.depagecms.net']);
 
         $postedTextElement = $form->addText('postedText');
         $unpostedTextElement = $form->addText('unpostedText');
@@ -65,7 +65,7 @@ class prgTest extends TestCase
         $form->process();
         $this->assertTrue($form->validate());
         // should redirect to success address
-        $this->assertEquals('http://www.depagecms.net', $form->testRedirect);
+        $this->assertEquals('https://www.depagecms.net', $form->testRedirect);
     }
     // }}}
 

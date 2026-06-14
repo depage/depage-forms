@@ -25,7 +25,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckbox()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName</span>' .
             '<span></span>' .
         '</p>' . "\n";
@@ -40,7 +40,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelect()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName</span>' .
                 '<select multiple name="elementName[]"></select>' .
@@ -59,7 +59,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckboxRequired()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple required skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple required skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName <em>*</em></span>' .
             '<span></span>' .
         '</p>' . "\n";
@@ -75,7 +75,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelectRequired()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple required skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple required skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName <em>*</em></span>' .
                 '<select multiple name="elementName[]" required="required"></select>' .
@@ -95,7 +95,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckboxList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
@@ -133,7 +133,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelectList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName</span>' .
                 '<select multiple name="elementName[]">' .
@@ -160,7 +160,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckboxAssociativeList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
@@ -203,7 +203,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckboxAssociativeListHtml()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
@@ -251,7 +251,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelectAssociativeList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName</span>' .
                 '<select multiple name="elementName[]">' .
@@ -282,7 +282,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelectOptgroups()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName</span>' .
                 '<select multiple name="elementName[]">' .
@@ -322,7 +322,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckboxHtmlEscaping()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple required skin-checkbox" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-elementName" class="input-multiple required skin-checkbox" title="ti&quot;&gt;tle" data-errormessage="er&quot;&gt;rorMessage">' .
             '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
             '<span></span>' .
         '</p>' . "\n";
@@ -330,7 +330,7 @@ class multipleToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
         ];
@@ -345,7 +345,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelectHtmlEscaping()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple required skin-select" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-elementName" class="input-multiple required skin-select" title="ti&quot;&gt;tle" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<select multiple name="elementName[]" required="required"></select>' .
@@ -355,7 +355,7 @@ class multipleToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'skin'          => 'select',
             'required'      => true,
@@ -371,7 +371,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testHtmlCheckboxEscapedList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
@@ -409,7 +409,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testHtmlSelectEscapedList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName</span>' .
                 '<select multiple name="elementName[]">' .
@@ -435,7 +435,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testCheckboxEscapedAssociativeList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-checkbox" data-errormessage="Please enter valid data">' .
             '<span class="depage-label">elementName</span>' .
             '<span>' .
                 '<span>' .
@@ -478,7 +478,7 @@ class multipleToStringTest extends TestCase
      **/
     public function testSelectEscapedAssociativeList()
     {
-        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-elementName" class="input-multiple skin-select" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">elementName</span>' .
                 '<select multiple name="elementName[]">' .

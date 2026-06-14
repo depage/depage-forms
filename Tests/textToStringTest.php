@@ -25,7 +25,7 @@ class textToStringTest extends TestCase
      **/
     public function testSimple()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" value="">' .
@@ -42,7 +42,7 @@ class textToStringTest extends TestCase
      **/
     public function testValue()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" value="testValue">' .
@@ -60,7 +60,7 @@ class textToStringTest extends TestCase
      **/
     public function testDefaultValue()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" value="testValue">' .
@@ -78,7 +78,7 @@ class textToStringTest extends TestCase
      **/
     public function testRequired()
     {
-        $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text required" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName <em>*</em></span>' .
                 '<input name="textName" type="text" required="required" value="">' .
@@ -116,7 +116,7 @@ class textToStringTest extends TestCase
                 } elseif ($status) {
                     $attribute = " $attr=\"on\"";
                 }
-                $expected = '<p id="formName-textName" class="input-text required" data-errorMessage="Please enter valid data">' .
+                $expected = '<p id="formName-textName" class="input-text required" data-errormessage="Please enter valid data">' .
                     '<label>' .
                         '<span class="depage-label">textName <em>*</em></span>' .
                         '<input name="textName" type="text" required="required"' . $attribute . ' value="">' .
@@ -136,7 +136,7 @@ class textToStringTest extends TestCase
      **/
     public function testList()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -163,7 +163,7 @@ class textToStringTest extends TestCase
      **/
     public function testAssociativeList()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -193,7 +193,7 @@ class textToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" lang="la&quot;&gt;ng" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-textName" class="input-text required" title="ti&quot;&gt;tle" lang="la&quot;&gt;ng" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="textName" type="text" required="required" value="val&quot;&gt;ue&lt;&#039;">' .
@@ -203,7 +203,7 @@ class textToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'lang'         => 'la">ng',
             'required'      => true,
@@ -220,7 +220,7 @@ class textToStringTest extends TestCase
      **/
     public function testHtmlEscapedList()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .
@@ -246,7 +246,7 @@ class textToStringTest extends TestCase
      **/
     public function testEscapedAssociativeList()
     {
-        $expected = '<p id="formName-textName" class="input-text" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="text" list="formName-textName-list" value="">' .

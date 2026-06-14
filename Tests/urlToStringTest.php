@@ -25,7 +25,7 @@ class urlToStringTest extends TestCase
      **/
     public function testValue()
     {
-        $expected = '<p id="formName-textName" class="input-url" data-errorMessage="Please enter a valid URL">' .
+        $expected = '<p id="formName-textName" class="input-url" data-errormessage="Please enter a valid URL">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="url" value="http://depage.net">' .
@@ -43,7 +43,7 @@ class urlToStringTest extends TestCase
      **/
     public function testUrlWithAllOptions()
     {
-        $expected = '<p id="formName-textName" class="input-url" data-errorMessage="Please enter a valid URL">' .
+        $expected = '<p id="formName-textName" class="input-url" data-errormessage="Please enter a valid URL">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="url" value="https://username:password@depage.net:8443/path/to/file/?query=string#fragment">' .
@@ -61,7 +61,7 @@ class urlToStringTest extends TestCase
      **/
     public function testIdnHostname()
     {
-        $expected = '<p id="formName-textName" class="input-url" data-errorMessage="Please enter a valid URL">' .
+        $expected = '<p id="formName-textName" class="input-url" data-errormessage="Please enter a valid URL">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="url" value="https://täöüst.de">' .
@@ -79,7 +79,7 @@ class urlToStringTest extends TestCase
      **/
     public function testUnencodedIdnHostname()
     {
-        $expected = '<p id="formName-textName" class="input-url" data-errorMessage="Please enter a valid URL">' .
+        $expected = '<p id="formName-textName" class="input-url" data-errormessage="Please enter a valid URL">' .
             '<label>' .
                 '<span class="depage-label">textName</span>' .
                 '<input name="textName" type="url" value="https://täöüst.de">' .

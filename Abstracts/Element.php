@@ -326,7 +326,14 @@ abstract class Element
         $attributes = "";
         if (is_array($this->dataAttr)) {
             foreach ($this->dataAttr as $key => $val) {
-                // @todo throw error when key is not plain string?
+                // normalize key to lowercase
+                $key = mb_strtolower($key);
+
+                // Validate that key is a safe HTML5 data attribute name
+                if (!is_string($key) || !preg_match('/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/', $key)) {
+                    continue;
+                }
+                // Also ensure the value is safely escaped
                 $attributes .= " data-$key=\"" . $this->htmlEscape((string) $val) . "\"";
             }
         }

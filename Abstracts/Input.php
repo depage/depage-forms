@@ -668,7 +668,7 @@ abstract class Input extends Element
      **/
     protected function htmlDataAttributes(): string
     {
-        $this->dataAttr['errorMessage'] = $this->errorMessage;
+        $this->dataAttr['errormessage'] = $this->errorMessage;
 
         return parent::htmlDataAttributes();
     }
@@ -720,7 +720,7 @@ abstract class Input extends Element
             && $this->value !== null
             && $this->errorMessage !== ""
         ) {
-            $errorMessage = "<span class=\"errorMessage\">" . $this->htmlEscape($this->errorMessage) . "</span>";
+            $errorMessage = "<span class=\"errormessage\">" . $this->htmlEscape($this->errorMessage) . "</span>";
         } else {
             $errorMessage = "";
         }

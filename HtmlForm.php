@@ -76,10 +76,12 @@ namespace Depage\HtmlForm;
 function autoload($class)
 {
     $class = str_replace('\\', '/', str_replace(__NAMESPACE__ . '\\', '', $class));
-    $file = __DIR__ . '/' . $class . '.php';
+    $filePath = __DIR__ . '/' . $class . '.php';
+    $filePath = str_replace('..', '', $filePath);
 
-    if (file_exists($file)) {
-        require_once($file);
+    $resolved = realpath($filePath);
+    if ($resolved !== false && file_exists($resolved)) {
+        require_once($resolved);
     }
 }
 
@@ -262,11 +264,15 @@ class HtmlForm extends Abstracts\Container
     {
         $this->isAutoSaveRequest = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
 
-        $this->url = parse_url($_SERVER['REQUEST_URI']);
-
         parent::__construct($name, $parameters, $this);
 
         $this->url = parse_url($this->submitURL);
+        if (!empty($this->successURL)) {
+            $this->validateRedirectUrl($this->successURL, true);
+        }
+        if (!empty($this->cancelURL)) {
+            $this->validateRedirectUrl($this->cancelURL, true);
+        }
         if (empty($this->successURL)) {
             $this->successURL = $this->submitURL;
         }
@@ -340,7 +346,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    private function startSession()
+    private function startSession(): void
     {
         // check if there's an open session
         if (!session_id()) {
@@ -353,6 +359,8 @@ class HtmlForm extends Abstracts\Container
                 $params['domain'],
                 $params['secure'],
                 $params['httponly'],
+                null,
+                ['SameSite' => 'Lax'],
             );
             session_start();
 
@@ -384,7 +392,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return void
      **/
-    private function sessionExpiry()
+    private function sessionExpiry(): void
     {
         if (isset($this->ttl) && is_numeric($this->ttl)) {
             $timestamp = time();
@@ -419,7 +427,7 @@ class HtmlForm extends Abstracts\Container
      *
      * @return array element objects
      **/
-    protected function getNewCsrfToken()
+    protected function getNewCsrfToken(): string
     {
         return base64_encode(openssl_random_pseudo_bytes(16));
     }
@@ -621,6 +629,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief   Builds URL from parts
      *
+     * @param  array $args query parameters to add to the URL
      * @return  new URL
      **/
     public function buildUrl(array $args = []): string
@@ -638,6 +647,7 @@ class HtmlForm extends Abstracts\Container
     /**
      * @brief   Adding step parameter to already existing query
      *
+     * @param  array $args query parameters to add to the URL
      * @return  new query
      **/
     public function buildUrlQuery(array $args = []): string
@@ -974,6 +984,75 @@ class HtmlForm extends Abstracts\Container
         }
     }
     // }}}
+    // {{{ validateRedirectUrl()
+    /**
+     * @brief Validates a redirect URL to prevent open redirects.
+     *
+     * @param string $url url to validate
+     * @param bool $allowExternal whether to allow redirects to external hosts
+     * @return void
+     * @throws \InvalidArgumentException if URL is invalid or external
+     **/
+    private function validateRedirectUrl(string $url, $allowExternal = false): void
+    {
+        if (empty($url)) {
+            return;
+        }
+
+        $parsed = parse_url($url);
+
+        if ($parsed === false) {
+            throw new \InvalidArgumentException("Invalid redirect URL.");
+        }
+
+        if (isset($parsed['scheme']) && $parsed['scheme'] !== 'https') {
+            //throw new \InvalidArgumentException("Only HTTPS redirects are allowed.");
+        }
+
+        if (!isset($parsed['host'])) {
+            return;
+        }
+
+        if (!$allowExternal) {
+            $allowedHosts = $_SERVER['HTTP_HOST'] ?? '';
+            $allowedHosts = array_map('trim', explode(',', $allowedHosts));
+            if (!in_array($parsed['host'], $allowedHosts, true)) {
+                throw new \InvalidArgumentException("Redirect to external host not allowed.");
+            }
+        }
+    }
+    // }}}
+    // {{{ validateRedirect()
+    /**
+     * @brief Validates and sanitizes a URL for use in redirect().
+     *
+     * @param string $url url to validate
+     * @return void
+     * @throws \InvalidArgumentException
+     **/
+    private function validateRedirect(string $url): void
+    {
+        if (empty($url)) {
+            throw new \InvalidArgumentException("Empty URL.");
+        }
+
+        if (preg_match('/[\r\n]/', $url)) {
+            throw new \InvalidArgumentException("Invalid URL: newline characters detected.");
+        }
+
+        $parsed = parse_url($url);
+        if ($parsed === false) {
+            throw new \InvalidArgumentException("Invalid URL format.");
+        }
+
+        if (isset($parsed['scheme'])) {
+            $allowedSchemes = ['http', 'https'];
+            if (!in_array(strtolower($parsed['scheme']), $allowedSchemes, true)) {
+                throw new \InvalidArgumentException("Invalid URL scheme.");
+            }
+        }
+    }
+    // }}}
     // {{{ redirect()
     /**
      * @brief Redirects Browser to a different URL.
@@ -982,8 +1061,10 @@ class HtmlForm extends Abstracts\Container
      */
     public function redirect(string $url): void
     {
-        header('Location: ' . $url);
-        die("Tried to redirect you to <a href=\"$url\">$url</a>");
+        $this->validateRedirect($url);
+        $safeUrl = htmlspecialchars($url, ENT_QUOTES | FILTER_FLAG_NO_ENCODE_QUOTES, 'UTF-8');
+        header('Location: ' . $safeUrl);
+        exit;
     }
     // }}}
     // {{{ httpResponseCode()

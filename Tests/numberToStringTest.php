@@ -25,7 +25,7 @@ class numberToStringTest extends TestCase
      **/
     public function testSimple()
     {
-        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number">' .
+        $expected = '<p id="formName-numberName" class="input-number" data-errormessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="depage-label">numberName</span>' .
                 '<input name="numberName" type="number" value="0">' .
@@ -42,7 +42,7 @@ class numberToStringTest extends TestCase
      **/
     public function testValue()
     {
-        $expected = '<p id="formName-numberName" class="input-number" data-errorMessage="Please enter a valid number">' .
+        $expected = '<p id="formName-numberName" class="input-number" data-errormessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="depage-label">numberName</span>' .
                 '<input name="numberName" type="number" value="7331">' .
@@ -60,7 +60,7 @@ class numberToStringTest extends TestCase
      **/
     public function testRequired()
     {
-        $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number">' .
+        $expected = '<p id="formName-numberName" class="input-number required" data-errormessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="depage-label">numberName <em>*</em></span>' .
                 '<input name="numberName" type="number" required="required" value="0">' .
@@ -78,7 +78,7 @@ class numberToStringTest extends TestCase
      **/
     public function testMinMax()
     {
-        $expected = '<p id="formName-numberName" class="input-number required" data-errorMessage="Please enter a valid number">' .
+        $expected = '<p id="formName-numberName" class="input-number required" data-errormessage="Please enter a valid number">' .
             '<label>' .
                 '<span class="depage-label">numberName <em>*</em></span>' .
                 '<input name="numberName" type="number" max="150" min="0" step="2" required="required" value="0">' .
@@ -103,7 +103,7 @@ class numberToStringTest extends TestCase
      **/
     public function testHtmlEscaping()
     {
-        $expected = '<p id="formName-numberName" class="input-number required" title="ti&quot;&gt;tle" data-errorMessage="er&quot;&gt;rorMessage">' .
+        $expected = '<p id="formName-numberName" class="input-number required" title="ti&quot;&gt;tle" data-errormessage="er&quot;&gt;rorMessage">' .
             '<label>' .
                 '<span class="depage-label">la&quot;&gt;bel <em>ma&quot;&gt;rker</em></span>' .
                 '<input name="numberName" type="number" required="required" value="0">' .
@@ -113,7 +113,7 @@ class numberToStringTest extends TestCase
         $parameters = [
             'label'         => 'la">bel',
             'marker'        => 'ma">rker',
-            'errorMessage'  => 'er">rorMessage',
+            'errormessage'  => 'er">rorMessage',
             'title'         => 'ti">tle',
             'required'      => true,
         ];

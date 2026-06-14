@@ -24,7 +24,7 @@ class passwordToStringTest extends TestCase
     public function testAutocompleteDefault()
     {
         $password = new Password('passwordName', [], $this->form);
-        $expected = '<p id="formName-passwordName" class="input-password" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-passwordName" class="input-password" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">passwordName</span>' .
                 '<input name="passwordName" type="password" value="">' .
@@ -41,7 +41,7 @@ class passwordToStringTest extends TestCase
     public function testAutocompleteNewPassword()
     {
         $password = new Password('passwordName', ['autocomplete' => "new-password"], $this->form);
-        $expected = '<p id="formName-passwordName" class="input-password" data-errorMessage="Please enter valid data">' .
+        $expected = '<p id="formName-passwordName" class="input-password" data-errormessage="Please enter valid data">' .
             '<label>' .
                 '<span class="depage-label">passwordName</span>' .
                 '<input name="passwordName" type="password" autocomplete="new-password" value="">' .
