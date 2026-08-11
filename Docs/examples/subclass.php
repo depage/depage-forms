@@ -4,12 +4,14 @@
  */
 require_once '../../HtmlForm.php';
 
+use Depage\HtmlForm\HtmlForm;
+
 /*
  * Example subclass
  */
-class HtmlFormSubclass extends Depage\HtmlForm\HtmlForm
+class HtmlFormSubclass extends HtmlForm
 {
-    public function __construct($name, $parameters = [])
+    public function __construct(string $name, array $parameters = [], HtmlForm|null $form = null)
     {
         parent::__construct($name, $parameters);
 
@@ -25,7 +27,7 @@ class HtmlFormSubclass extends Depage\HtmlForm\HtmlForm
      * entered a user name. This can be done by overriding the onValidate()
      * method with a custom rule.
      */
-    public function onValidate()
+    protected function onValidate(): bool
     {
         /*
          * If the 'username' field is not empty, set the 'email' field

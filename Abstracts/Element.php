@@ -25,6 +25,8 @@ use Depage\HtmlForm\Exceptions;
  * @method string htmlWrapperAttributes() Returns HTML escaped wrapperAttributes attribute.
  * @method string htmlErrorMessage() Returns HTML escaped errorMessage attribute.
  * @method string htmlHelpMessage() Returns HTML escaped helpMessage attribute.
+ * @method string htmlFormName() Returns HTML escaped formName attribute.
+ * @method string htmlClasses() Returns HTML escaped classes attribute.
  **/
 abstract class Element
 {
@@ -229,7 +231,7 @@ abstract class Element
      * @param  string $name element name
      * @return void
      **/
-    private function checkName($name)
+    private function checkName($name): void
     {
         if (
             !is_string($name)
@@ -309,6 +311,7 @@ abstract class Element
      * @brief   Renders HTML datalist
      *
      * @param  array  $options datalist
+     * @param  array|string|null $value   current value
      * @return string $htmlList   rendered HTML datalist
      **/
     protected function htmlList(?array $options = null, array|string|null $value = null): string

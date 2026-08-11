@@ -113,7 +113,7 @@ class Fieldset extends Abstracts\Container
 
         $newElement = parent::addElement($type, $name, $parameters);
 
-        if (!($newElement instanceof fieldset)) {
+        if (!($newElement instanceof Fieldset)) {
             $this->form->updateInputValue($name);
         }
 

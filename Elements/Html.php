@@ -83,7 +83,12 @@ class Html
             $sanitizer = new HtmlSanitizer();
             $sanitizer->loadHTML($this->htmlString);
             $sanitizer->cleanHTML($this->allowedTags, null, false);
-            return (string) mb_trim($sanitizer);
+
+            if (function_exists('mb_trim')) {
+                return (string) mb_trim($sanitizer);
+            }
+
+            return (string) trim($sanitizer);
         }
 
         return (string) $this->htmlString;

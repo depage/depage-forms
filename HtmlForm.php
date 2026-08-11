@@ -125,6 +125,12 @@ spl_autoload_register(__NAMESPACE__ . '\autoload');
  * elements@endlink.
  *
  * @see Depage::HtmlForm::Elements
+ *
+ * @method string htmlLabel() Returns HTML escaped label attribute.
+ * @method string htmlCancelLabel() Returns HTML escaped cancelLabel attribute.
+ * @method string htmlBackLabel() Returns HTML escaped backLabel attribute.
+ * @method string htmlClass() Returns HTML escaped class attribute.
+ * @method string htmlMethod() Returns HTML escaped method attribute.
  **/
 class HtmlForm extends Abstracts\Container
 {
@@ -262,6 +268,12 @@ class HtmlForm extends Abstracts\Container
      **/
     public function __construct(string $name, array $parameters = [], HtmlForm|null $form = null)
     {
+        // workaround for crash with gettext when LANG is not set in the environment
+        // gettext is used in default settings of some input elements (e,g, error messages)
+        if (empty(getenv('LANG'))) {
+            $fallback = getenv('LANGUAGE') ?: 'en_US.UTF-8';
+            putenv('LANG=' . $fallback);
+        }
         $this->isAutoSaveRequest = isset($_POST['formAutosave']) && $_POST['formAutosave'] === "true";
 
         parent::__construct($name, $parameters, $this);
@@ -353,15 +365,14 @@ class HtmlForm extends Abstracts\Container
             $params = session_get_cookie_params();
             $sessionName = session_name();
 
-            session_set_cookie_params(
-                $this->ttl,
-                $params['path'],
-                $params['domain'],
-                $params['secure'],
-                $params['httponly'],
-                null,
-                ['SameSite' => 'Lax'],
-            );
+            session_set_cookie_params([
+                'lifetime' => $this->ttl,
+                'path' => $params['path'],
+                'domain' => $params['domain'],
+                'secure' => $params['secure'],
+                'httponly' => $params['httponly'],
+                'samesite' => 'Lax',
+            ]);
             session_start();
 
             // Extend the expiration time upon page load
@@ -858,7 +869,7 @@ class HtmlForm extends Abstracts\Container
             if (is_callable($this->validator)) {
                 $this->valid = call_user_func($this->validator, $this, $this->getValues());
             } else {
-                throw new exceptions\validatorNotCallable("The validator paramater must be callable");
+                throw new Exceptions\ValidatorNotCallable("The validator paramater must be callable");
             }
         }
         $this->valid = $this->valid && $this->sessionSlot['formFinalPost'];
@@ -871,13 +882,13 @@ class HtmlForm extends Abstracts\Container
     // }}}
     // {{{ onPost()
     /**
-     * @brief   onPost hook
+     * @brief     onPost hook
      *
      * Can be overridden to run a custom method when form is posted
      *
      * @return targetUrl
      *
-     * @see     process()
+     * @see         process()
      **/
     protected function onPost(): bool
     {
@@ -1178,7 +1189,7 @@ class HtmlForm extends Abstracts\Container
 
         foreach ($this->elementsAndHtml as $element) {
             // leave out inactive step elements
-            if (!($element instanceof elements\step)
+            if (!($element instanceof Elements\Step)
                 || (isset($this->steps[$this->currentStepId]) && $this->steps[$this->currentStepId] == $element)
             ) {
                 $renderedElements .= $element;

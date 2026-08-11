@@ -150,7 +150,7 @@ abstract class Container extends Element
         $this->elements[] = $newElement;
         $this->elementsAndHtml[] = $newElement;
 
-        if ($newElement instanceof container) {
+        if ($newElement instanceof Container) {
             $newElement->addChildElements();
         }
 
