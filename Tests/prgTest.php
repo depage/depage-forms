@@ -265,5 +265,32 @@ class prgTest extends TestCase
         $this->assertEquals("https://depage.net/submiturl.html?test=bogus", $form->buildUrl());
     }
     // }}}
+
+    // {{{ testRedirectToNonHttpSchemeThrows()
+    /**
+     * Non-HTTP redirect schemes must be rejected to avoid gopher://, file://, data:// etc.
+     **/
+    public function testRedirectToNonHttpSchemeThrows()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new htmlformTestClass('formName', ['successURL' => 'file:///etc/passwd']);
+    }
+    // }}}
+
+    // {{{ testRedirectToGopherSchemeThrows()
+    public function testRedirectToGopherSchemeThrows()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new htmlformTestClass('formName', ['successURL' => 'gopher://example.com/']);
+    }
+    // }}}
+
+    // {{{ testRedirectToHttpSchemeAllowed()
+    public function testRedirectToHttpSchemeAllowed()
+    {
+        $form = new htmlformTestClass('formName', ['successURL' => 'http://example.com/']);
+        $this->assertInstanceOf(htmlformTestClass::class, $form);
+    }
+    // }}}
 }
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */

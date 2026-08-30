@@ -173,10 +173,10 @@ class Text extends Abstracts\Input
         $attributes = parent::htmlInputAttributes();
 
         if ($this->maxlength) {
-            $attributes .= " maxlength=\"{$this->maxlength}\"";
+            $attributes .= ' maxlength="' . $this->htmlEscape((string) $this->maxlength) . '"';
         }
         if ($this->placeholder) {
-            $attributes .= " placeholder=\"{$this->placeholder}\"";
+            $attributes .= ' placeholder="' . $this->htmlEscape((string) $this->placeholder) . '"';
         }
         if ($this->list) {
             $attributes .= " list=\"{$this->formName}-{$this->name}-list\"";

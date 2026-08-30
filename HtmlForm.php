@@ -1016,8 +1016,8 @@ class HtmlForm extends Abstracts\Container
             throw new \InvalidArgumentException("Invalid redirect URL.");
         }
 
-        if (isset($parsed['scheme']) && $parsed['scheme'] !== 'https') {
-            //throw new \InvalidArgumentException("Only HTTPS redirects are allowed.");
+        if (isset($parsed['scheme']) && !in_array(strtolower($parsed['scheme']), ['http', 'https'], true)) {
+            throw new \InvalidArgumentException("Redirect to non-HTTP scheme not allowed.");
         }
 
         if (!isset($parsed['host'])) {

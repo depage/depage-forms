@@ -270,5 +270,27 @@ class textToStringTest extends TestCase
         $this->assertEquals($expected, $text->__toString());
     }
     // }}}
+
+    // {{{ testPlaceholderEscaping()
+    /**
+     * Rendered element; tests html escaping of the placeholder attribute so a
+     * value containing a quote cannot break out of the attribute.
+     **/
+    public function testPlaceholderEscaping()
+    {
+        $expected = '<p id="formName-textName" class="input-text" data-errormessage="Please enter valid data">' .
+            '<label>' .
+                '<span class="depage-label">textName</span>' .
+                '<input name="textName" type="text" placeholder="va&quot;&gt;lu" value="">' .
+            '</label>' .
+        '</p>' . "\n";
+
+        $parameters = [
+            'placeholder' => 'va">lu',
+        ];
+        $text = new text('textName', $parameters, $this->form);
+        $this->assertEquals($expected, $text->__toString());
+    }
+    // }}}
 }
 /* vim:set ft=php sw=4 sts=4 fdm=marker et : */
