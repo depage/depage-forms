@@ -440,7 +440,14 @@ class HtmlForm extends Abstracts\Container
      **/
     protected function getNewCsrfToken(): string
     {
-        return base64_encode(openssl_random_pseudo_bytes(16));
+        // Keep drawing fresh tokens until the OS CSPRNG reports the bytes are
+        // cryptographically strong. If the RNG is in degraded mode the token
+        // would be predictable and CSRF protection would be defeated.
+        do {
+            $csrfToken = base64_encode(openssl_random_pseudo_bytes(16, $cryptoStrong));
+        } while (!$cryptoStrong && strlen($csrfToken) > 0);
+
+        return $csrfToken;
     }
     // }}}
 
@@ -804,6 +811,16 @@ class HtmlForm extends Abstracts\Container
         $this->setCurrentStep();
         // if there's post-data from this form
         if (isset($_POST['formName']) && ($_POST['formName'] === $this->name)) {
+            // CSRF verification: a form submission with a missing or incorrect
+            // token is rejected here, before any onPost() business logic or
+            // session mutation (formFinalPost, value population) can run.
+            $csrfToken = isset($_POST['formCsrfToken']) ? $_POST['formCsrfToken'] : null;
+            if (!is_string($csrfToken) || $csrfToken !== $this->sessionSlot['formCsrfToken']) {
+                $this->httpResponseCode(400);
+                $this->log('HtmlForm: Request rejected because of a missing or incorrect CsrfToken');
+                return;
+            }
+
             // save in session if submission was from last step
             $this->sessionSlot['formFinalPost'] = count($this->steps) == 0 || $_POST['formStep'] + 1 == count($this->steps)
                 && !$this->isAutoSaveRequest;
@@ -924,13 +941,18 @@ class HtmlForm extends Abstracts\Container
     {
         parent::validate();
 
-        if (isset($_POST['formCsrfToken'])) {
-            $hasCorrectToken = $_POST['formCsrfToken'] === $this->sessionSlot['formCsrfToken'];
+        if (isset($_POST['formName'])) {
+            // Enforce CSRF for the submission itself: a missing or incorrect
+            // token here is treated as invalid (not silently accepted). This is
+            // scoped to actual form submissions only, so a direct validate()
+            // call (no POST) used to check a finalized form stays unaffected.
+            $csrfToken = isset($_POST['formCsrfToken']) ? $_POST['formCsrfToken'] : null;
+            $hasCorrectToken = is_string($csrfToken) && ($csrfToken === $this->sessionSlot['formCsrfToken']);
             $this->valid = $this->valid && $hasCorrectToken;
 
             if (!$hasCorrectToken) {
                 $this->httpResponseCode(400);
-                $this->log("HtmlForm: Requst invalid because of incorrect CsrfToken");
+                $this->log('HtmlForm: Request invalid because of a missing or incorrect CsrfToken');
             }
         }
 

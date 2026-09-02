@@ -141,6 +141,7 @@ class prgTest extends TestCase
         $_POST['formStep'] = '0';
 
         $_GET['step'] = 'bogusStepId';
+        $_POST['formCsrfToken'] = 'xxxxxxxx';
 
         $form = new htmlformTestClass('formName');
         $step0 = $form->addStep('step0');
@@ -216,6 +217,7 @@ class prgTest extends TestCase
         $_POST['formStep'] = '0';
 
         $_GET['step'] = 'bogusStepId';
+        $_POST['formCsrfToken'] = 'xxxxxxxx';
 
         $form = new htmlformTestClass('formName');
         $step0 = $form->addStep('step0');
