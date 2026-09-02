@@ -284,16 +284,16 @@ abstract class Element
     protected function htmlEscape(array|string $options = []): array|string
     {
         if (is_string($options)) {
-            $htmlOptions = htmlspecialchars($options, ENT_QUOTES);
+            $htmlOptions = htmlspecialchars($options, ENT_QUOTES | ENT_SUBSTITUTE);
         } elseif (is_array($options)) {
             $htmlOptions = [];
 
             foreach ($options as $index => $option) {
                 if (is_string($index)) {
-                    $index  = htmlspecialchars($index, ENT_QUOTES);
+                    $index  = htmlspecialchars($index, ENT_QUOTES | ENT_SUBSTITUTE);
                 }
                 if (is_string($option)) {
-                    $option = htmlspecialchars($option, ENT_QUOTES);
+                    $option = htmlspecialchars($option, ENT_QUOTES | ENT_SUBSTITUTE);
                 }
 
                 $htmlOptions[$index] = $option;
