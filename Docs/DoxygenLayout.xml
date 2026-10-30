@@ -17,6 +17,15 @@
     <tab type="user" url="." title=""/>
 
     <tab type="namespacelist" visible="yes" title="Classes" intro="A list of namespaces and its classes"/>
+
+    <tab type="user" url="." title=""/>
+
+    <tab type="user" url="https://github.com/depage/depage-forms" title="GitHub"/>
+    <tab type="user" url="https://github.com/depage/depage-forms/issues" title="Issues"/>
+
+    <tab type="user" url="." title=""/>
+
+    <tab type="user" url="https://docs.depage.net" title="docs.depage.net"/>
   </navindex>
 
   <!-- Layout definition for a class page -->
