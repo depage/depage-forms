@@ -17,6 +17,12 @@ use Depage\HtmlForm\Abstracts\HtmlDom as HtmlSanitizer;
  *
  * Class for custom HTML code sections.
  *
+ * By default the HTML is printed as-is, so you should only add HTML
+ * that you control yourself. If you want to add HTML from an untrusted
+ * source, set the sanitize-parameter to true (or use
+ * Depage::HtmlForm::Abstracts::Container::addSanitizedHtml()). All tags
+ * and attributes that are not allowed are then removed before rendering.
+ *
  * Usage
  * -----
  *
@@ -44,7 +50,7 @@ class Html
     /**
      * @brief Whether to sanitize the HTML or pass it through raw
      **/
-    private $sanitize = true;
+    private $sanitize = false;
     /**
      * @brief Allowed tags for sanitization
      **/
@@ -55,8 +61,15 @@ class Html
     /**
      * @brief html class constructor
      *
+     * By default the HTML is printed as-is, so you should only add HTML
+     * that you control yourself. Set the sanitize-parameter to true to
+     * remove all tags and attributes that are not allowed before rendering.
+     *
      * @param string $htmlString HTML to be printed
-     * @param array $parameters Optional parameters for sanitization
+     * @param array $parameters Optional parameters for sanitization:
+     *                          - sanitize (bool): whether to sanitize the HTML (default: false)
+     *                          - allowedTags (array): tags that are allowed inside of the HTML;
+     *                            defaults to HtmlDom::DEFAULT_ALLOWED_TAGS when sanitizing
      **/
     public function __construct(string $htmlString, $parameters = [])
     {
@@ -73,9 +86,12 @@ class Html
 
     // {{{ __toString()
     /**
-     * @brief   Renders element to sanitized HTML.
+     * @brief   Renders element to HTML.
      *
-     * @return string $this->htmlString Sanitized HTML-rendered element
+     * Renders the element to HTML. The HTML is sanitized first when the
+     * sanitize-parameter was set to true, otherwise it is printed as-is.
+     *
+     * @return string $this->htmlString HTML-rendered element
      **/
     public function __toString(): string
     {

@@ -44,6 +44,38 @@ Introduction
   [depage-forms: validation of html5 forms (part II)](Docs/Validation.md)
 
 
+Custom HTML and Security
+------------------------
+
+You can add custom HTML in between the form elements with `addHtml()`.
+The HTML is printed as-is, so you should only add HTML that you control
+yourself:
+
+```php
+$form->addHtml('<div class="note">Custom <b>HTML</b> element</div>');
+```
+
+If you want to add HTML from an untrusted source, e.g. HTML that was
+entered by a user, use `addSanitizedHtml()` instead. It removes all tags
+and attributes that are not explicitly allowed before rendering:
+
+```php
+// sanitize with the default list of allowed tags:
+// p, br, h1, h2, ul, ol, li, a, b, strong, i, em
+$form->addSanitizedHtml($userHtml);
+
+// or pass your own list of allowed tags
+// (add ".classname" to only allow specific classes on a tag)
+$form->addSanitizedHtml($userHtml, ['p', 'br', 'a', 'b', 'i', 'em', 'div.note']);
+```
+
+Alternatively you can pass the sanitize-parameter to `addHtml()`:
+
+```php
+$form->addHtml($userHtml, ['sanitize' => true]);
+```
+
+
 Install Using Composer
 ----------------------
 Get composer at <https://getcomposer.org> and then just add this to your composer.json.

@@ -19,9 +19,9 @@ class HtmlDom extends \DOMDocument
 {
     // {{{ variables
     /**
-     * @brief Tags that are allowed inside of html
+     * @brief Default tags that are allowed inside of html
      **/
-    protected $allowedTags = [
+    public const DEFAULT_ALLOWED_TAGS = [
         "p",
         "br",
         "h1",
@@ -36,6 +36,11 @@ class HtmlDom extends \DOMDocument
         "i",
         "em",
     ];
+
+    /**
+     * @brief Tags that are allowed inside of html
+     **/
+    protected $allowedTags = self::DEFAULT_ALLOWED_TAGS;
 
     /**
      * @brief allowedAttributes

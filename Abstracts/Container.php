@@ -226,14 +226,55 @@ abstract class Container extends Element
     /**
      * @brief   Adds a new custom HTML element to the container.
      *
+     * The HTML is printed as-is by default, so you should only add HTML
+     * that you control yourself. If you want to add HTML from an untrusted
+     * source, use addSanitizedHtml() instead or set the sanitize-parameter
+     * to true.
+     *
      * @param  string $html HTML code
+     * @param  array $parameters Optional parameters for the Html element:
+     *                          sanitize (bool) and allowedTags (array)
      * @return object $htmlElement    HTML element object
      *
      * @see     Depage::HtmlForm::Elements::Html
+     * @see     Depage::HtmlForm::Abstracts::Container::addSanitizedHtml()
      **/
-    public function addHtml(string $html): object
+    public function addHtml(string $html, array $parameters = []): object
     {
-        $htmlElement = new Elements\Html($html);
+        $htmlElement = new Elements\Html($html, $parameters);
+
+        $this->elementsAndHtml[] = $htmlElement;
+
+        return $htmlElement;
+    }
+    // }}}
+    // {{{ addSanitizedHtml()
+    /**
+     * @brief   Adds a new custom HTML element with sanitized HTML to the container.
+     *
+     * The HTML is cleaned up before rendering: all tags and attributes that
+     * are not explicitly allowed get removed. Use this method whenever the
+     * HTML does not come from a trusted source, e.g. when it was entered by
+     * a user.
+     *
+     * By default the same tags as in the HtmlDom-class are allowed
+     * (p, br, h1, h2, ul, ol, li, a, b, strong, i and em). You can
+     * override them with the allowedTags-parameter.
+     *
+     * @param  string $html HTML code
+     * @param  array $allowedTags optional list of tags that are allowed inside
+     *                           of the HTML; defaults to HtmlDom::DEFAULT_ALLOWED_TAGS
+     * @return object $htmlElement    HTML element object
+     *
+     * @see     Depage::HtmlForm::Elements::Html
+     * @see     Depage::HtmlForm::Abstracts::HtmlDom::cleanHTML()
+     **/
+    public function addSanitizedHtml(string $html, array $allowedTags = HtmlDom::DEFAULT_ALLOWED_TAGS): object
+    {
+        $htmlElement = new Elements\Html($html, [
+            'sanitize' => true,
+            'allowedTags' => $allowedTags,
+        ]);
 
         $this->elementsAndHtml[] = $htmlElement;
 

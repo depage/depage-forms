@@ -64,6 +64,16 @@ $form->addEmail('email', [
 ]);
 ```
 
+You can also add custom HTML in between the form elements with `addHtml()`. The HTML is printed as-is, so you should only add HTML that you control yourself. If the HTML comes from an untrusted source, e.g. from user input, use `addSanitizedHtml()` instead: It removes all tags and attributes that are not explicitly allowed before rendering.
+
+```php
+// custom HTML that you control yourself
+$form->addHtml('<div class="note">This is a note</div>');
+
+// HTML from an untrusted source, e.g. entered by a user
+$form->addSanitizedHtml($userHtml);
+```
+
 Next comes the processing — The process-method is essential and the backbone of the htmlforms-class:
 
 - It validates submitted data if there is any.

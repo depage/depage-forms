@@ -114,6 +114,69 @@ class containerTest extends TestCase
     }
     // }}}
 
+    // {{{ testAddHtmlIsNotSanitizedByDefault()
+    /**
+     * Tests that addHtml prints the HTML as-is by default.
+     **/
+    public function testAddHtmlIsNotSanitizedByDefault()
+    {
+        $html = $this->container->addHtml('<div id="myimage">htmlString</div>');
+        $this->assertEquals('<div id="myimage">htmlString</div>', $html->__toString());
+    }
+    // }}}
+
+    // {{{ testAddHtmlWithSanitizeParameter()
+    /**
+     * Tests addHtml method with sanitize-parameter.
+     **/
+    public function testAddHtmlWithSanitizeParameter()
+    {
+        $html = $this->container->addHtml('<div>htmlString</div>', ['sanitize' => true]);
+        $this->assertEquals('<p>htmlString</p>', $html->__toString());
+    }
+    // }}}
+
+    // {{{ testAddSanitizedHtml()
+    /**
+     * Tests addSanitizedHtml method with default allowed tags.
+     **/
+    public function testAddSanitizedHtml()
+    {
+        // not allowed tags get removed
+        $html = $this->container->addSanitizedHtml('<div>htmlString</div>');
+        $this->assertEquals('<p>htmlString</p>', $html->__toString());
+
+        // allowed tags are kept
+        $html = $this->container->addSanitizedHtml('<p>para <b>bold</b> <a href="https://example.com/">link</a></p>');
+        $this->assertEquals('<p>para <b>bold</b> <a href="https://example.com/">link</a></p>', $html->__toString());
+    }
+    // }}}
+
+    // {{{ testAddSanitizedHtmlRemovesDangerousHtml()
+    /**
+     * Tests that addSanitizedHtml removes scripts and event handlers.
+     **/
+    public function testAddSanitizedHtmlRemovesDangerousHtml()
+    {
+        $html = $this->container->addSanitizedHtml('<script>alert(1)</script><p>htmlString</p>');
+        $this->assertEquals('<p>htmlString</p>', $html->__toString());
+
+        $html = $this->container->addSanitizedHtml('<p onclick="alert(1)">htmlString</p>');
+        $this->assertEquals('<p>htmlString</p>', $html->__toString());
+    }
+    // }}}
+
+    // {{{ testAddSanitizedHtmlWithCustomAllowedTags()
+    /**
+     * Tests addSanitizedHtml method with custom allowed tags.
+     **/
+    public function testAddSanitizedHtmlWithCustomAllowedTags()
+    {
+        $html = $this->container->addSanitizedHtml('<div>htmlString</div>', ['div']);
+        $this->assertEquals('<div>htmlString</div>', $html->__toString());
+    }
+    // }}}
+
     // {{{ testSetRequired()
     /**
      * Tests setting multiple subelements required attribute

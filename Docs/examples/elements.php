@@ -172,9 +172,19 @@ $form->addCreditcard('creditcard');
 /*
  * HTML element
  *
- * Adds HTML code.
+ * Adds HTML code as-is. Only use this for HTML that you
+ * control yourself.
  */
 $form->addHtml('Custom <b>HTML</b> element');
+
+/*
+ * Sanitized HTML element
+ *
+ * Adds HTML code and removes all tags and attributes that
+ * are not allowed. Use this for HTML from untrusted sources,
+ * e.g. HTML that was entered by a user.
+ */
+$form->addSanitizedHtml('<p>Sanitized <i>HTML</i> element</p>');
 
 $form->process();
 

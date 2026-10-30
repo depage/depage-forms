@@ -143,4 +143,34 @@ class htmlformToStringTest extends TestCase
         $this->assertEquals($expected, $form->__toString());
     }
     // }}}
+
+    // {{{ testCustomHtml()
+    /**
+     * Form with custom HTML: addHtml is printed as-is while
+     * addSanitizedHtml is cleaned up before rendering.
+     **/
+    public function testCustomHtml()
+    {
+        $expected = '<form id="formName" name="formName" class="depage-form " method="post" action="http://www.depagecms.net/" data-jsvalidation="blur" data-jsautosave="false" enctype="multipart/form-data">' . "\n" .
+            '<input name="formName" id="formName-formName" type="hidden" class="input-hidden" value="formName">' . "\n" .
+            '<input name="formStep" id="formName-formStep" type="hidden" class="input-hidden" value="0">' . "\n" .
+            '<input name="formCsrfToken" id="formName-formCsrfToken" type="hidden" class="input-hidden" value="xxxxxxxx">' . "\n" .
+            '<div id="myimage">raw</div>' .
+            '<p>sanitized</p>' . "\n" .
+            '<p>keep</p>' .
+            '<p id="formName-submit" class="submit">' .
+                '<input type="submit" name="formSubmit" value="submit">' .
+            '</p>' . "\n" .
+        '</form>';
+
+        // step-parameter is set by previous tests
+        unset($_GET['step']);
+
+        $form = new csrfTestForm('formName');
+        $form->addHtml('<div id="myimage">raw</div>');
+        $form->addSanitizedHtml('<div>sanitized</div><p onclick="alert(1)">keep</p>');
+
+        $this->assertEquals($expected, $form->__toString());
+    }
+    // }}}
 }
