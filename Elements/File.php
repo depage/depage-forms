@@ -162,11 +162,17 @@ class File extends Abstracts\Input
                     }
 
                     if ($error == UPLOAD_ERR_OK) {
-                        $tmpName = sys_get_temp_dir() . '/htmlforms/' . session_id() . '_' . uniqid('depage-form-upload-', true);
-                        $success = move_uploaded_file($uploadName, $tmpName);
-                        if (!$success) {
-                            $this->log("htmlform: Failed to move uploaded file to secure temp location.");
+                        $tmpDir = sys_get_temp_dir() . '/htmlforms';
+                        if (!is_dir($tmpDir) && !@mkdir($tmpDir, 0700, true) && !is_dir($tmpDir)) {
+                            $this->log("htmlform: Could not create temp folder for uploaded files.");
                             $error = UPLOAD_ERR_CANT_WRITE;
+                        } else {
+                            $tmpName = $tmpDir . '/' . session_id() . '_' . uniqid('depage-form-upload-', true);
+                            $success = move_uploaded_file($uploadName, $tmpName);
+                            if (!$success) {
+                                $this->log("htmlform: Failed to move uploaded file to secure temp location.");
+                                $error = UPLOAD_ERR_CANT_WRITE;
+                            }
                         }
                     }
 
@@ -323,7 +329,6 @@ class File extends Abstracts\Input
         if (function_exists('finfo_open')) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimeType = finfo_file($finfo, $uploadPath);
-            finfo_close($finfo);
         } else {
             // Fallback: attempt basic detection via file extension
             $ext = strtolower(pathinfo($safeFilename, PATHINFO_EXTENSION));
