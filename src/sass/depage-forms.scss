@@ -652,6 +652,11 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     }
     .ts-dropdown {
         position: absolute;
+        left: 0;
+        // tom-select only sets the dropdown width itself when it is
+        // rendered into the body (dropdownParent: 'body'); inside the
+        // wrapper it needs an explicit width to match the control
+        width: 100%;
         z-index: 100000;
         border: 1px solid $depageFormBorderColorFocus;
         background: #ffffff;

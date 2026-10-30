@@ -1412,7 +1412,18 @@ export class DepageForm {
         Squire.prototype.handleTableButtonClick = function(e, cell) {
             cell = cell || e.currentTarget;
 
-            if (e.offsetX < cell.offsetWidth) return;
+            // the "+" and "-" buttons are rendered through css inside the
+            // right padding-area of the last cell (td:last-child:before /
+            // :after at right: 0 with padding-right: 1em on the cell);
+            // compare the click position against the content-box width —
+            // the equivalent of the old jquery $cell.width() — so that
+            // clicks in the padding-area count as button clicks
+            var cellStyle = getComputedStyle(cell);
+            var contentWidth = cell.clientWidth
+                - parseFloat(cellStyle.paddingLeft)
+                - parseFloat(cellStyle.paddingRight);
+
+            if (e.offsetX < contentWidth) return;
 
             var currentRow = cell.parentElement;
 
@@ -1453,12 +1464,31 @@ export class DepageForm {
         import("tom-select").then(({ default: TomSelect }) => {
             selects.forEach((select) => {
                 var maxItems = select.getAttribute("data-max-items");
+                var options = {
+                    persist: false,
+                };
 
-                new TomSelect(select, {
-                    maxItems: maxItems === null ? null : parseInt(maxItems),
-                    plugins: ['remove_button'],
-                    persist: false
-                });
+                // only override maxItems when it is set explicitly;
+                // without it tom-select itself defaults to 1 item for
+                // single <select> elements (and null for multiple ones)
+                if (maxItems !== null) {
+                    options.maxItems = parseInt(maxItems);
+                }
+
+                // the remove-button only makes sense where an item can
+                // actually be removed: on multiple selects or on single
+                // selects that have an empty option to fall back to.
+                // unlike selectize's remove_button, tom-select's version
+                // would otherwise also render it on single selects,
+                // which could then be cleared to a value that the plain
+                // <select> can never have
+                var hasEmptyOption = Array.from(select.options).some((option) => option.value === "");
+
+                if (select.multiple || hasEmptyOption) {
+                    options.plugins = ['remove_button'];
+                }
+
+                new TomSelect(select, options);
             });
         }).catch((exception) => {
             console.warn("depage-forms: could not initialize tom-select", exception);
