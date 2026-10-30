@@ -1,0 +1,54 @@
+{
+    "name": "@depage/htmlform",
+    "version": "0.1.0",
+    "description": "depage-forms is a PHP library for HTML form generation with focus on usability. This package provides the client-side JavaScript enhancement: validation, autosave and richtext-editing for depage-forms — with or without jQuery.",
+    "type": "module",
+    "main": "./src/htmlform.js",
+    "exports": {
+        ".": "./src/htmlform.js",
+        "./jquery": "./src/htmlform-jquery.js",
+        "./sass/*": "./src/sass/*"
+    },
+    "files": [
+        "src",
+        "dist"
+    ],
+    "scripts": {
+        "build": "bun run build:js && bun run build:css",
+        "build:js": "vite build --mode vanilla && vite build --mode jquery",
+        "build:css": "bun scripts/build-css.ts",
+        "test": "bun test src/tests"
+    },
+    "keywords": [
+        "html",
+        "form",
+        "forms",
+        "validation"
+    ],
+    "license": "MIT OR GPL-2.0-or-later",
+    "homepage": "https://github.com/depage/depage-forms",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/depage/depage-forms.git"
+    },
+    "dependencies": {
+        "dompurify": "^3.2.6",
+        "squire-rte": "^2.2.0",
+        "tom-select": "^2.4.3"
+    },
+    "peerDependencies": {
+        "jquery": "^3.6.0"
+    },
+    "peerDependenciesMeta": {
+        "jquery": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@happy-dom/global-registrator": "^21.0.4",
+        "happy-dom": "^21.0.4",
+        "jquery": "^3.7.1",
+        "sass": "^1.89.0",
+        "vite": "^7.0.0"
+    }
+}

@@ -158,7 +158,12 @@ But if you use the input-multiple with the checkbox skin, the user only has to c
 Javascript Validation
 ---------------------
 
-For Browsers that don't support the direct validation of input fields or to display the error-messages directly, we can activate the validation with javascript. We have to include jQuery, the jquery-tools and the effects.js into the html-code.
+To display the error-messages directly and to keep the user from submitting invalid data, we can activate the validation with javascript. We just have to include the depage-forms script bundle into the html-code — it works without jQuery and uses the browser's built-in validation:
+
+```html
+<link rel="stylesheet" href="dist/depage-forms.css">
+<script src="dist/depage-form.js"></script>
+```
 
 The validation is executed on blur by default, which means everytime you leave a specific input element. The user may only submit the form after entering valid data for all fields.
 

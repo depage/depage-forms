@@ -31,7 +31,7 @@ $form->process();
 ?>
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
+    <link rel="stylesheet" type="text/css" href="../../dist/depage-forms.css">
 </head>
 <body>
     <?php echo($form); ?>

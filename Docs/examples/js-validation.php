@@ -67,16 +67,16 @@ if ($form->validate()) {
     $form->clearSession();
 } else {
     /*
-     * Load the necessary scripts. jQuery, jQuery Tools and the depage-forms
-     * customization.
+     * Load the necessary scripts. The depage-forms standalone bundle
+     * enhances the form: validation, autosave and richtext support.
+     * (Use dist/depage-form-jquery.js instead if you prefer the
+     * jQuery plugin API.)
      */
     ?>
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
-    <script src="../../lib/js/validator.js"></script>
-    <script src="../../lib/js/effect.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../dist/depage-forms.css">
+    <script src="../../dist/depage-form.js"></script>
 </head>
 <body>
 <?php

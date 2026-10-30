@@ -16,7 +16,7 @@ $form = new Depage\HtmlForm\HtmlForm('jsRichtext');
  */
 $form->addRichtext('html', [
     'label' => 'Richtext',
-    'stylesheet' => '../../lib/css/depage-richtext.css',
+    'stylesheet' => '../../dist/depage-richtext.css',
     'defaultValue' => "
         <h1>headline h1</h2>
         <p>test</p>
@@ -65,17 +65,16 @@ if ($form->validate()) {
 }
 
 /*
- * Load the necessary scripts. jQuery, jQuery Tools and the depage-forms
- * customization.
+ * Load the necessary scripts. The depage-forms standalone bundle
+ * enhances the form: validation, autosave and richtext support.
+ * (Use dist/depage-form-jquery.js instead if you prefer the
+ * jQuery plugin API.)
  */
 ?>
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../../lib/css/depage-forms.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script src="../../lib/js/validator.js"></script>
-    <script src="../../lib/js/depage-richtext.min.js"></script>
-    <script src="../../lib/js/effect.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../dist/depage-forms.css">
+    <script src="../../dist/depage-form.js"></script>
 </head>
 <body>
 <?php

@@ -1,0 +1,8 @@
+.aider*
+.env
+node_modules/
+.phpunit.cache/
+.phpunit.result.cache
+.php-cs-fixer.cache
+.DS_Store
+vendor/

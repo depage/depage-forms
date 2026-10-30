@@ -79,7 +79,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         > p {
             clear: left;
         }
-        .errorMessage {
+        .errormessage {
             right: 0;
             padding-right: 1em;
             max-width: 66.6666%;
@@ -97,7 +97,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         > p {
             clear: right;
         }
-        .errorMessage {
+        .errormessage {
             right: 33.3333%;
             padding-right: 1em;
             max-width: 66.6666%;
@@ -116,10 +116,10 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         select,
         textarea,
         .textarea,
-        .selectize-input {
+        .ts-control {
             width: 100%;
         }
-        .errorMessage {
+        .errormessage {
             right: 0;
             padding-right: 1em;
             max-width: 100%;
@@ -146,10 +146,10 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
             select,
             textarea,
             .textarea,
-            .selectize-input {
+            .ts-control {
                 width: 100%;
             }
-            .errorMessage {
+            .errormessage {
                 right: 0;
                 padding-right: 1em;
                 max-width: 100%;
@@ -189,7 +189,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     select,
     textarea,
     .textarea,
-    .selectize-input {
+    .ts-control {
         width: 66.6667%;
         font-family: inherit;
         font-size: 1em;
@@ -309,7 +309,7 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         color: #999999;
         background: #dddddd;
     }
-    .errorMessage {
+    .errormessage {
         display: block;
         position: absolute;
         clear: both;
@@ -458,29 +458,15 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
     // }}}
 
     // javascript based controls:
-    // {{{ selectize
-    .selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
-        visibility: visible !important;
-        background: #f2f2f2 !important;
-        background: rgba(0, 0, 0, 0.06) !important;
-        border: 0 none !important;
-        @include box-shadow(inset 0 0 12px 4px #ffffff);
-    }
-    .selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
-        content: '!';
-        visibility: hidden;
-    }
-    .selectize-control.plugin-drag_drop .ui-sortable-helper {
-        @include box-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
-    }
-    .selectize-dropdown-header {
+    // {{{ tom-select
+    .ts-dropdown-header {
         position: relative;
         padding: 5px 8px;
         border-bottom: 1px solid $depageFormBorderColor;
         background: #f8f8f8;
         @include radius($depageFormBorderRadius $depageFormBorderRadius 0 0);
     }
-    .selectize-dropdown-header-close {
+    .ts-dropdown-header-close {
         position: absolute;
         right: 8px;
         top: 50%;
@@ -490,16 +476,16 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         line-height: 20px;
         font-size: 20px !important;
     }
-    .selectize-dropdown-header-close:hover {
+    .ts-dropdown-header-close:hover {
         color: #000000;
     }
-    .selectize-dropdown .optgroup-header {
+    .ts-dropdown .optgroup-header {
         color: #303030;
     }
-    .selectize-dropdown .optgroup [data-value] {
+    .ts-dropdown .optgroup [data-value] {
         padding-left: 20px !important;
     }
-    .selectize-dropdown.plugin-optgroup_columns .optgroup {
+    .ts-dropdown.plugin-optgroup_columns .optgroup {
         border-right: 1px solid #f2f2f2;
         border-top: 0 none;
         float: left;
@@ -507,22 +493,21 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
-    .selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
+    .ts-dropdown.plugin-optgroup_columns .optgroup:last-child {
         border-right: 0 none;
     }
-    .selectize-dropdown.plugin-optgroup_columns .optgroup:before {
+    .ts-dropdown.plugin-optgroup_columns .optgroup:before {
         display: none;
     }
-    .selectize-dropdown.plugin-optgroup_columns .optgroup-header {
+    .ts-dropdown.plugin-optgroup_columns .optgroup-header {
         border-top: 0 none;
     }
-    .selectize-control.plugin-remove_button [data-value] {
+    .ts-wrapper.plugin-remove_button .item {
         position: relative;
         padding-right: 20px !important;
     }
-    .selectize-control.plugin-remove_button [data-value] .remove {
+    .ts-wrapper.plugin-remove_button .item .remove {
         z-index: 1;
-        /* fixes ie bug (see #392) */
         position: absolute;
         top: 0;
         right: 0;
@@ -535,44 +520,43 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         vertical-align: middle;
         display: inline-block;
         padding: 1px 0 0 0;
-        //border-left: 1px solid $depageFormBorderColor;
         @include radius(0 $depageFormBorderRadius $depageFormBorderRadius 0);
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         color: color.mix($depageFormTextColor, $depageFormInputBackground, 50%);
     }
-    .selectize-control.plugin-remove_button [data-value] .remove:hover {
+    .ts-wrapper.plugin-remove_button .item .remove:hover {
         background: rgba(0, 0, 0, 0.05);
     }
-    .selectize-control.plugin-remove_button [data-value].active .remove {
+    .ts-wrapper.plugin-remove_button .item.active .remove {
         border-left-color: #cacaca;
     }
-    .selectize-control.plugin-remove_button .disabled [data-value] .remove:hover {
+    .ts-wrapper.plugin-remove_button.disabled .item .remove:hover {
         background: none;
     }
-    .selectize-control.plugin-remove_button .disabled [data-value] .remove {
+    .ts-wrapper.plugin-remove_button.disabled .item .remove {
         border-left-color: #ffffff;
     }
-    .selectize-control {
+    .ts-wrapper {
         position: relative;
     }
-    .selectize-dropdown,
-    .selectize-input,
-    .selectize-input input {
+    .ts-dropdown,
+    .ts-control,
+    .ts-control input {
         color: $depageFormTextColor;
         font-family: inherit;
         font-size: 1em;
         line-height: 1em;
         -webkit-font-smoothing: inherit;
     }
-    .selectize-input,
-    .selectize-control.single .selectize-input.input-active {
+    .ts-control,
+    .ts-wrapper.single.input-active .ts-control {
         background: $depageFormInputBackground;
         cursor: text;
         display: inline-block;
     }
-    .selectize-input {
+    .ts-control {
         border-width: 1px;
         border-style: solid;
         border-color: $depageFormBorderColor;
@@ -586,30 +570,30 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         box-sizing: border-box;
         @include radius($depageFormBorderRadius);
     }
-    .selectize-control.multi .selectize-input.has-items {
+    .ts-wrapper.multi .ts-control.has-items {
         padding: 6px 8px 3px;
     }
-    .selectize-input.full {
+    .ts-control.full {
         background-color: $depageFormInputBackground;
     }
-    .selectize-input.disabled,
-    .selectize-input.disabled * {
+    .ts-control.disabled,
+    .ts-control.disabled * {
         cursor: default !important;
     }
-    .selectize-input.focus {
+    .ts-control.focus {
         border-color: $depageFormBorderColorFocus;
         @include box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.2));
         @include box-shadow(0 0 0.2em rgba(0, 0, 0, 0.5));
     }
-    .error .selectize-input {
+    .error .ts-control {
         border-color: $depageFormBorderColorError;
     }
-    .selectize-input > * {
+    .ts-control > * {
         vertical-align: baseline;
         display: -moz-inline-stack;
         display: inline-block;
     }
-    .selectize-control.multi .selectize-input > div {
+    .ts-wrapper.multi .ts-control > .item {
         cursor: pointer;
         margin: 0 3px 3px 0;
         padding: 2px 6px;
@@ -617,17 +601,17 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         color: $depageFormTextColor;
         @include radius($depageFormBorderRadius * 0.5);
     }
-    .selectize-control.multi .selectize-input > div.active {
+    .ts-wrapper.multi .ts-control > .item.active {
         color: $depageFormSelectionColor;
         background: $depageFormSelectionBackground;
     }
-    .selectize-control.multi .selectize-input.disabled > div,
-    .selectize-control.multi .selectize-input.disabled > div.active {
+    .ts-wrapper.multi .ts-control.disabled > .item,
+    .ts-wrapper.multi .ts-control.disabled > .item.active {
         color: #7d7d7d;
         background: #ffffff;
         border: 0 solid #ffffff;
     }
-    .selectize-input > input {
+    .ts-control > input {
         display: inline-block !important;
         padding: 0 !important;
         min-height: 0 !important;
@@ -641,18 +625,18 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         -webkit-user-select: auto !important;
         @include box-shadow(none !important);
     }
-    .selectize-input > input::-ms-clear {
+    .ts-control > input::-ms-clear {
         display: none;
     }
-    .selectize-input > input:focus {
+    .ts-control > input:focus {
         outline: none !important;
     }
-    .selectize-input::after {
+    .ts-control::after {
         content: ' ';
         display: block;
         clear: left;
     }
-    .selectize-input.dropdown-active::before {
+    .ts-control.dropdown-active::before {
         content: ' ';
         display: block;
         position: absolute;
@@ -662,11 +646,11 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         left: 0;
         right: 0;
     }
-    .selectize-input.dropdown-active {
+    .ts-control.dropdown-active {
         @include radius(0, "bottom", "left");
         @include radius(0, "bottom", "right");
     }
-    .selectize-dropdown {
+    .ts-dropdown {
         position: absolute;
         z-index: 100000;
         border: 1px solid $depageFormBorderColorFocus;
@@ -679,52 +663,52 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
         @include radius(0 0 $depageFormBorderRadius $depageFormBorderRadius);
     }
-    .selectize-dropdown [data-selectable] {
+    .ts-dropdown [data-selectable] {
         cursor: pointer;
         overflow: hidden;
     }
-    .selectize-dropdown [data-selectable] .highlight {
+    .ts-dropdown [data-selectable] .highlight {
         background: rgba(125, 168, 208, 0.2);
         -webkit-border-radius: 1px;
         -moz-border-radius: 1px;
         border-radius: 1px;
     }
-    .selectize-dropdown [data-selectable],
-    .selectize-dropdown .optgroup-header {
+    .ts-dropdown [data-selectable],
+    .ts-dropdown .optgroup-header {
         padding: 5px 8px;
     }
-    .selectize-dropdown .optgroup:first-child .optgroup-header {
+    .ts-dropdown .optgroup:first-child .optgroup-header {
         border-top: 0 none;
     }
-    .selectize-dropdown .optgroup-header {
+    .ts-dropdown .optgroup-header {
         color: #303030;
         background: #ffffff;
         cursor: default;
     }
-    .selectize-dropdown .active {
+    .ts-dropdown .active {
         color: $depageFormSelectionColor;
         background: $depageFormSelectionBackground;
     }
-    .selectize-dropdown .active.create {
+    .ts-dropdown .active.create {
         color: #495c68;
     }
-    .selectize-dropdown .create {
+    .ts-dropdown .create {
         color: rgba(48, 48, 48, 0.5);
     }
-    .selectize-dropdown-content {
+    .ts-dropdown-content {
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 200px;
     }
-    .selectize-control.single .selectize-input,
-    .selectize-control.single .selectize-input input {
+    .ts-wrapper.single .ts-control,
+    .ts-wrapper.single .ts-control input {
         cursor: pointer;
     }
-    .selectize-control.single .selectize-input.input-active,
-    .selectize-control.single .selectize-input.input-active input {
+    .ts-wrapper.single.input-active .ts-control,
+    .ts-wrapper.single.input-active .ts-control input {
         cursor: text;
     }
-    .selectize-control.single .selectize-input:after {
+    .ts-wrapper.single .ts-control:after {
         content: ' ';
         display: block;
         position: absolute;
@@ -737,21 +721,34 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
         border-width: 5px 5px 0 5px;
         border-color: #808080 transparent transparent transparent;
     }
-    .selectize-control.single .selectize-input.dropdown-active:after {
+    .ts-wrapper.single .ts-control.dropdown-active:after {
         margin-top: -4px;
         border-width: 0 5px 5px 5px;
         border-color: transparent transparent #808080 transparent;
     }
-    .selectize-control.rtl.single .selectize-input:after {
+    .ts-wrapper.rtl.single .ts-control:after {
         left: 15px;
         right: auto;
     }
-    .selectize-control.rtl .selectize-input > input {
+    .ts-wrapper.rtl .ts-control > input {
         margin: 0 4px 0 -2px !important;
     }
-    .selectize-control .selectize-input.disabled {
+    .ts-wrapper .ts-control.disabled {
         opacity: 0.5;
         background-color: #fafafa;
+    }
+    // hide the original select that tom-select replaces
+    .ts-wrapper + select.ts-hidden-accessible,
+    select.ts-hidden-accessible {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0 0 0 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
     }
     // }}}
     // {{{ richtext

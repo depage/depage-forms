@@ -13,7 +13,7 @@ Features
 
 - validation
     - server side
-    - client side [(jQuery Tools)](http://flowplayer.org/tools/ "jQuery Tools")
+    - client side (native browser validation, no dependencies)
     - available for standard input elements
     - customizable with regular expressions
     - basic CSRF protection
@@ -32,8 +32,9 @@ Features
 Prerequisites
 -------------
 
-- PHP 8.0
-- jQuery optional, for client side validation and richtext field)
+- PHP 8.3
+- a modern browser for the client side enhancement (evergreen browsers)
+- jQuery is optional and only needed for the legacy jQuery plugin API
 
 Introduction
 ------------
@@ -83,6 +84,64 @@ Get composer at <https://getcomposer.org> and then just add this to your compose
     composer require depage/htmlform
 
 to install the current version of depage-htmlform into your vendor dir.
+
+
+Client Side JavaScript
+----------------------
+
+The JavaScript that enhances the forms (client side validation, autosave
+and richtext editing) is provided as ES modules and as prebuilt bundles
+in `dist/`. It does not need jQuery.
+
+With a script tag (bundles from `dist/`):
+
+```html
+<link rel="stylesheet" href="dist/depage-forms.css">
+<script src="dist/depage-form.js"></script>
+```
+
+The bundle auto-initializes all forms with the class `depage-form`.
+
+As an ES module, e.g. with npm:
+
+```bash
+npm install @depage/htmlform
+```
+
+```js
+import DepageForm, { setup, setupForm } from "@depage/htmlform";
+import "@depage/htmlform/sass/depage-forms.scss"; // or link dist/depage-forms.css
+
+// initialize all forms with class "depage-form":
+setup();
+
+// or a single form element:
+setupForm(formElement);
+```
+
+If you want to keep using the classic jQuery plugin API
+(`$(".depage-form").depageForm()`), use the jQuery build instead:
+
+```html
+<script src="jquery.min.js"></script>
+<script src="dist/depage-form-jquery.js"></script>
+```
+
+```js
+import "@depage/htmlform/jquery";
+```
+
+The form events (`depageForm.beforeAutosave`, `depageForm.autosaved`,
+`depageForm.autosaveFailed`, `depageForm.richtextInitialized`) are
+dispatched as native `CustomEvent`s; with the jQuery build they are
+bridged, so `$form.on()`/`$form.trigger()` keep working as well.
+
+To rebuild the bundles and the css from `src/` yourself:
+
+```bash
+bun install
+bun run build
+```
 
 
 For more information

@@ -10,20 +10,22 @@ doc:
 test:
 	cd Tests; $(MAKE) $(MFLAGS)
 
-release: clean jshint min jsmin
-	mkdir Release
-	tar cfz Release/depage-forms.tar.gz README.md Abstracts Docs/examples Elements Exceptions Validators lib/js/*.min.js lib/css lib/*.png HtmlForm.php composer.json
-	zip -r release/depage-forms.zip README.md Abstracts Docs/examples Elements Exceptions Validators lib/js/*.min.js lib/css lib/*.png HtmlForm.php composer.json
+release: clean jsmin
+	mkdir -p Release
+	tar cfz Release/depage-forms.tar.gz README.md Abstracts Docs/examples Elements Exceptions Validators dist HtmlForm.php composer.json package.json
+	zip -r Release/depage-forms.zip README.md Abstracts Docs/examples Elements Exceptions Validators dist HtmlForm.php composer.json package.json
 	shasum -a 512 Release/depage-forms.zip > Release/depage-forms.zip.sha2
 	shasum -a 512 Release/depage-forms.tar.gz > Release/depage-forms.tar.gz.sha2
 
 min: clean jsmin
 
+# builds the javascript bundles and the css from src/ into dist/
 jsmin:
-	cd lib/js; $(MAKE) $(MFLAGS) jsmin
+	bun install
+	bun run build
 
-jshint:
-	cd lib/js; $(MAKE) $(MFLAGS) jshint
+jstest:
+	bun test src/tests
 
 clean:
 	$(RM) Docs/depage-docu/ Docs/html/
