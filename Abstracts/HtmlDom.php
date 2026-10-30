@@ -86,7 +86,10 @@ class HtmlDom extends \DOMDocument
         }
 
         // @todo take original content-type if available
-        $success = @$tmpDOM->loadHTML("<meta http-equiv=\"content-type\" content=\"text/html; charset=$encoding\">$html", $options);
+        // wrap the html in an explicit body-tag so that parsing does not
+        // depend on libxml-version specific implied tags: libxml < 2.14
+        // would otherwise put bare text into an additional p-element
+        $success = @$tmpDOM->loadHTML("<meta http-equiv=\"content-type\" content=\"text/html; charset=$encoding\"><body>$html</body>", $options);
 
         $xpath = new \DOMXPath($tmpDOM);
         $nodelist = $xpath->query("//body/node()");
@@ -102,7 +105,28 @@ class HtmlDom extends \DOMDocument
         }
         $rootnode = $this->documentElement;
 
+        // elements that get moved into head by the html-parser as long as
+        // they appear before the first actual body content
+        $headElements = ["meta", "link", "title", "base", "script", "style"];
+        $foundContent = false;
+
         foreach ($nodelist as $node) {
+            if (!$foundContent) {
+                if ($node->nodeType == XML_ELEMENT_NODE && in_array($node->nodeName, $headElements)) {
+                    // skip head-elements that appear before any body content
+                    continue;
+                }
+                if ($node->nodeType == XML_TEXT_NODE && trim($node->textContent) == "") {
+                    // skip whitespace before the first body content
+                    continue;
+                }
+                if ($node->nodeType == XML_COMMENT_NODE) {
+                    // skip comments before the first body content
+                    continue;
+                }
+                $foundContent = true;
+            }
+
             // copy all nodes inside the body tag to target document
             $newnode = $this->importNode($node, true);
             $rootnode->appendChild($newnode);
