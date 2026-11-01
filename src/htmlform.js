@@ -19,10 +19,52 @@
  *     - "fail"                              validation failed            detail: { errors }
  *     - "success"                           validation succeeded        detail: { inputs }
  *     - "depageForm.beforeAutosave"         before autosaving (cancelable — call preventDefault() to skip)
- *     - "depageForm.autosaved"              autosave succeeded          detail: { response }
+ *     - "depageForm.autosaved"              autosave succeeded          detail: { response, result, values }
  *     - "depageForm.autosaveFailed"         autosave failed
  *     - "depageForm.richtextInitialized"    richtext editor is set up   detail: { container, editor }
+ *     - "depageForm.showLinkDialog"         the richtext editor wants to edit a link
+ *                                           (cancelable)                 detail: { href, callback, editor }
+ *
+ * the "depageForm.autosaved" event carries the parsed response of the
+ * autosave ("result", null when the response is not json) and the values
+ * that were sent ("values"), so that a listener can work with them
+ * without reading the response body a second time.
+ *
+ * richtext editor backends:
+ *     The richtext editor can use different backends, selected per form
+ *     through the "editor" key in data-richtext-options or globally via
+ *     DepageForm.defaultEditor:
+ *
+ *     - "squire" (default) squire-rte based editor
+ *     - "tiptap"           TipTap (ProseMirror) based editor with native
+ *                          table support
  **/
+
+// {{{ dbid placeholders
+/**
+ * @brief   counter for the placeholder ids of the nodes the editor creates
+ *
+ * The editor marks the nodes it creates with a negative id, so that the
+ * server can tell them apart from the database ids of the stored nodes.
+ * The counter is global (and not per editor), because one autosave
+ * request contains the content of all richtext fields of the form and
+ * the placeholders have to be unique within the request — the mapping
+ * the server returns is unambiguous then, too.
+ **/
+var dbidPlaceholderCounter = 0;
+
+/**
+ * @brief   the next placeholder id for a node the editor created
+ *
+ * The id is a string, like the ids the editor reads from the markup —
+ * the editor does not have to distinguish between the two.
+ **/
+function nextDbidPlaceholder() {
+    dbidPlaceholderCounter -= 1;
+
+    return String(dbidPlaceholderCounter);
+}
+// }}}
 
 // {{{ throttle()
 /**
@@ -421,13 +463,894 @@ class Toolbar {
     }
     // }}}
     // {{{ setPositionBySelection()
+    /**
+     * @brief   positions the toolbar centered above the selection
+     *
+     * Passes 0 as the left-offset: the stylesheet centers the toolbar
+     * on its left-position through transform: translateX(-50%). The
+     * old jquery code compensated for that implicitly, because
+     * $.fn.offset() measures the rendered box (including the
+     * transform) — setting style.left directly must not subtract half
+     * the toolbar width again.
+     **/
     setPositionBySelection() {
-        var pos = this.editor.getPosBySelection(this.toolbar.offsetHeight * 1.5, this.toolbar.offsetWidth * 0.5);
+        var pos = this.editor.getPosBySelection(this.toolbar.offsetHeight * 1.5, 0);
 
         this.toolbar.style.top = pos.top + "px";
         this.toolbar.style.left = pos.left + "px";
 
         return this;
+    }
+    // }}}
+}
+/* }}} */
+
+/* {{{ TipTap backend */
+// {{{ tiptapProtocolsRegistered
+/**
+ * @brief   guards the one-time linkifyjs protocol registration
+ **/
+var tiptapProtocolsRegistered = false;
+// }}}
+// {{{ findLinkRange()
+/**
+ * @brief   finds the text-range covered by the link-mark around pos
+ *
+ * @param   object doc prosemirror document
+ * @param   number pos position inside the document
+ * @return  object|null { from, to, attributes }
+ **/
+function findLinkRange(doc, pos) {
+    var found = null;
+
+    doc.descendants((node, nodePos) => {
+        if (found || !node.isText) return;
+
+        var link = node.marks.find((mark) => mark.type.name == "link");
+
+        if (!link) return;
+
+        var from = nodePos;
+        var to = nodePos + node.nodeSize;
+
+        if (pos >= from && pos <= to) {
+            found = {
+                from: from,
+                to: to,
+                attributes: link.attrs
+            };
+        }
+    });
+
+    return found;
+}
+// }}}
+// {{{ removeTrailingBreaks()
+/**
+ * @brief   removes the <br> elements at the end of a block element
+ *
+ * The old squire editor added the line breaks directly into the
+ * markup: the php side adds a <br> to every empty paragraph (see
+ * HtmlDom::cleanHTML()) and the editor added a <br> for every soft
+ * line break. ProseMirror on the other hand renders the line break
+ * of an empty paragraph itself (as .ProseMirror-trailingBreak) and
+ * only knows a <br> as a hard break inside a paragraph.
+ *
+ * So the trailing <br>s have to be removed before the content is
+ * handed to tiptap — otherwise an empty paragraph would contain a
+ * hard break and the text would be typed after the break.
+ *
+ * Only trailing breaks are removed: a <br> inside a paragraph is a
+ * soft line break and has to stay.
+ *
+ * @param   string html html markup
+ * @return  string html markup without trailing <br> elements
+ **/
+function removeTrailingBreaks(html) {
+    if (!html) return html;
+
+    // use the same parsing context as tiptap does, so the content is
+    // not changed in any other way than by removing the breaks
+    var body = new DOMParser().parseFromString("<body>" + html + "</body>", "text/html").body;
+
+    var stripBreaks = function (node) {
+        while (true) {
+            var last = null;
+
+            for (var child = node.lastChild; child; child = child.previousSibling) {
+                if (child.nodeType == 1) {
+                    // the last element child
+                    last = child;
+                    break;
+                }
+                if (child.nodeType == 3 && child.data.trim() == "") {
+                    // ignore whitespace between the elements
+                    continue;
+                }
+                // there is text content after the breaks — keep them
+                return;
+            }
+
+            if (!last || last.nodeName != "BR") return;
+
+            node.removeChild(last);
+        }
+    };
+
+    var elements = body.querySelectorAll("*");
+
+    for (var i = 0; i < elements.length; i++) {
+        stripBreaks(elements[i]);
+    }
+    stripBreaks(body);
+
+    return body.innerHTML;
+}
+// }}}
+// {{{ dbidKey()
+/**
+ * @brief   key of a mark, to tell the marks of a document apart
+ *
+ * @param   object mark      the mark to build the key for
+ * @param   bool withoutDbid leave the dbid out of the key
+ *
+ * @return  string the key of the mark
+ **/
+function dbidKey(mark, withoutDbid = false) {
+    var attrs = Object.assign({}, mark.attrs);
+
+    if (withoutDbid) {
+        delete attrs.dbid;
+    }
+
+    return mark.type.name + "|" + JSON.stringify(attrs);
+}
+// }}}
+// {{{ collectDbidCarriers()
+/**
+ * @brief   collects the nodes and the mark ranges of a document that carry a dbid
+ *
+ * A mark can span several nodes; the server stores every rendered
+ * element as a node of its own, so every range of a mark needs a dbid of
+ * its own.
+ *
+ * @param   object doc the prosemirror document to walk
+ *
+ * @return  array the carriers (nodes and mark ranges) in document order
+ **/
+function collectDbidCarriers(doc) {
+    var carriers = [];
+    var ranges = [];
+    var openRanges = new Map();
+
+    doc.descendants((node, pos) => {
+        if (!node.isText) {
+            carriers.push({
+                kind: "node",
+                pos: pos,
+                node: node,
+                dbid: node.attrs.dbid,
+            });
+        }
+
+        var to = pos + node.nodeSize;
+
+        node.marks.forEach((mark) => {
+            var key = dbidKey(mark);
+            var current = openRanges.get(key);
+
+            if (current && current.to === pos) {
+                // the mark continues in this node
+                current.to = to;
+            } else {
+                current = { key: key, from: pos, to: to, mark: mark };
+                ranges.push(current);
+                openRanges.set(key, current);
+            }
+        });
+
+        return true;
+    });
+
+    ranges.forEach((range) => {
+        carriers.push({
+            kind: "mark",
+            from: range.from,
+            to: range.to,
+            mark: range.mark,
+            dbid: range.mark.attrs.dbid,
+        });
+    });
+
+    carriers.sort((a, b) => {
+        var aPos = a.kind == "node" ? a.pos : a.from;
+        var bPos = b.kind == "node" ? b.pos : b.from;
+
+        return aPos - bPos;
+    });
+
+    return carriers;
+}
+// }}}
+// {{{ setCarrierDbid()
+/**
+ * @brief   sets the dbid of a node or of a mark range in a transaction
+ *
+ * @param   object tr      the transaction to change
+ * @param   object carrier the carrier to change
+ * @param   string dbid    the dbid to set
+ **/
+function setCarrierDbid(tr, carrier, dbid) {
+    if (carrier.kind == "node") {
+        tr.setNodeMarkup(
+            carrier.pos,
+            undefined,
+            Object.assign({}, carrier.node.attrs, { dbid: dbid })
+        );
+    } else {
+        // a mark can not be changed in place, it has to be removed and
+        // added again with the new attributes
+        tr.removeMark(carrier.from, carrier.to, carrier.mark);
+        tr.addMark(
+            carrier.from,
+            carrier.to,
+            carrier.mark.type.create(Object.assign({}, carrier.mark.attrs, { dbid: dbid }))
+        );
+    }
+}
+// }}}
+// {{{ assignDbidPlaceholders()
+/**
+ * @brief   gives the nodes and marks without a usable dbid a placeholder id
+ *
+ * The nodes the editor creates (and the nodes of a pasted or duplicated
+ * block, which carry the id of the block they were copied from) get a
+ * negative placeholder id. The server stores them with a new database id
+ * and reports the mapping, so that the editor can replace the
+ * placeholders with the database ids afterwards.
+ *
+ * @param   object state the prosemirror state to work on
+ *
+ * @return  object the transaction that assigns the placeholders, null if
+ *          there is nothing to assign
+ **/
+function assignDbidPlaceholders(state) {
+    var carriers = collectDbidCarriers(state.doc);
+    var used = new Set();
+    var changes = [];
+
+    for (var i = 0; i < carriers.length; i++) {
+        var carrier = carriers[i];
+        var dbid = carrier.dbid;
+
+        if (carrier.kind == "node" && !("dbid" in carrier.node.attrs)) {
+            // the node type does not know the attribute
+            continue;
+        }
+        if (carrier.kind == "mark" && !("dbid" in carrier.mark.attrs)) {
+            continue;
+        }
+
+        if (dbid === null || dbid === undefined || dbid === "" || used.has(String(dbid))) {
+            changes.push(carrier);
+        } else {
+            used.add(String(dbid));
+        }
+    }
+
+    if (changes.length == 0) {
+        return null;
+    }
+
+    var tr = state.tr;
+
+    for (var i = 0; i < changes.length; i++) {
+        setCarrierDbid(tr, changes[i], nextDbidPlaceholder());
+    }
+
+    return tr;
+}
+// }}}
+// {{{ applyDbidIds()
+/**
+ * @brief   replaces the placeholder ids of the document with the database ids
+ *
+ * The server stores the nodes the editor created with new database ids
+ * and reports the mapping from the placeholders to them; the editor
+ * replaces the placeholders, so that the next save can match the nodes
+ * by their database id.
+ *
+ * @param   object editor the tiptap editor
+ * @param   object ids    mapping from the placeholder id to the database id
+ *
+ * @return  bool whether the document was changed
+ **/
+function applyDbidIds(editor, ids) {
+    var map = new Map();
+
+    Object.keys(ids || {}).forEach((placeholder) => {
+        map.set(String(placeholder), String(ids[placeholder]));
+    });
+
+    if (map.size == 0) {
+        return false;
+    }
+
+    var carriers = collectDbidCarriers(editor.state.doc);
+    var changes = [];
+
+    for (var i = 0; i < carriers.length; i++) {
+        var carrier = carriers[i];
+
+        if (carrier.dbid === null || carrier.dbid === undefined || carrier.dbid === "") {
+            continue;
+        }
+
+        if (map.has(String(carrier.dbid))) {
+            changes.push(carrier);
+        }
+    }
+
+    if (changes.length == 0) {
+        return false;
+    }
+
+    var tr = editor.state.tr;
+
+    for (var i = 0; i < changes.length; i++) {
+        setCarrierDbid(tr, changes[i], map.get(String(changes[i].dbid)));
+    }
+
+    editor.view.dispatch(tr);
+
+    return true;
+}
+// }}}
+// {{{ buildTipTapExtensions()
+/**
+ * @brief   builds the tiptap extension list from the allowedTags option
+ *
+ * With tiptap the allowedTags list is not a filter but the schema:
+ * only what is registered here can exist in the document. Tags are
+ * mapped onto the corresponding extensions, "tag.class" entries keep
+ * their class through generic class-attributes.
+ *
+ * @param   array allowedTags list of tags like ["p", "a", "h1.teaser"]
+ * @param   object imports the dynamically imported tiptap modules
+ * @return  array extensions
+ **/
+function buildTipTapExtensions(allowedTags, imports) {
+    var core = imports.core;
+    var Paragraph = imports.Paragraph;
+    var Heading = imports.Heading;
+    var StarterKit = imports.StarterKit;
+    var Link = imports.Link;
+    var tableModule = imports.table;
+    var Subscript = imports.Subscript;
+    var Superscript = imports.Superscript;
+
+    var tags = new Set();
+
+    for (var i = 0; i < (allowedTags || []).length; i++) {
+        tags.add(splitTag(allowedTags[i]).tag);
+    }
+
+    var headingLevels = [];
+    for (var level = 1; level <= 6; level++) {
+        if (tags.has("h" + level)) {
+            headingLevels.push(level);
+        }
+    }
+
+    var classAttribute = {
+        default: null,
+        parseHTML: (element) => element.getAttribute("class"),
+        renderHTML: (attributes) => attributes.class ? { class: attributes.class } : {},
+    };
+
+    // depage stores a database id in every element of the richtext
+    // content — as data-dbid in the html; the squire backend kept
+    // them through dompurify's allowed attributes. xmldb's
+    // saveNodePatch() needs those ids to only save the parts of the
+    // tree that actually changed (without them it falls back to
+    // saving the whole subtree), so they must survive the schema
+    // roundtrip on every node and mark
+    var dbidAttribute = {
+        default: null,
+        parseHTML: (element) => element.getAttribute("data-dbid"),
+        renderHTML: (attributes) => attributes.dbid ? { "data-dbid": attributes.dbid } : {},
+        // a block created by splitting another one is a new node and
+        // must get a new id when saving — squire behaved the same
+        // way, because it created the new block without copying the
+        // attributes of the old one
+        keepOnSplit: false,
+    };
+
+    var extensions = [
+        core.Extension.create({
+            name: "depageDbid",
+
+            // adds the dbid attribute to all node and mark types at
+            // once, so it does not have to be repeated for every
+            // extension
+            addGlobalAttributes() {
+                return [{
+                    types: "*",
+                    attributes: {
+                        dbid: dbidAttribute,
+                    },
+                }];
+            },
+
+            // the nodes the editor creates get a placeholder id, so that
+            // the server can tell them apart from the stored nodes and
+            // report the database ids they were stored with
+            addProseMirrorPlugins() {
+                return [
+                    new imports.Plugin({
+                        appendTransaction: (transactions, oldState, newState) => {
+                            if (!transactions.some((tr) => tr.docChanged)) {
+                                return null;
+                            }
+
+                            return assignDbidPlaceholders(newState);
+                        },
+                    }),
+                ];
+            },
+        }),
+        StarterKit.configure({
+            // replaced by the extended versions below, so that class
+            // attributes survive the roundtrip
+            paragraph: false,
+            heading: false,
+            // the link mark is configured separately below
+            link: false,
+            bold: tags.has("b") || tags.has("strong"),
+            italic: tags.has("i") || tags.has("em"),
+            strike: tags.has("s"),
+            underline: tags.has("u"),
+            bulletList: tags.has("ul"),
+            orderedList: tags.has("ol"),
+            listItem: tags.has("ul") || tags.has("ol"),
+            hardBreak: tags.has("br"),
+            blockquote: false,
+            code: false,
+            codeBlock: false,
+            horizontalRule: false,
+        }),
+        Paragraph.extend({
+            addAttributes() {
+                return Object.assign({}, this.parent?.(), { class: classAttribute });
+            },
+        }),
+    ];
+
+    if (headingLevels.length > 0) {
+        extensions.push(Heading.extend({
+            addAttributes() {
+                return Object.assign({}, this.parent?.(), { class: classAttribute });
+            },
+        }).configure({
+            levels: headingLevels,
+        }));
+    }
+
+    if (tags.has("small")) {
+        extensions.push(core.Mark.create({
+            name: "small",
+
+            parseHTML() {
+                return [{ tag: "small" }];
+            },
+
+            renderHTML() {
+                return ["small", 0];
+            },
+        }));
+    }
+
+    if (tags.has("sub")) {
+        extensions.push(Subscript);
+    }
+    if (tags.has("sup")) {
+        extensions.push(Superscript);
+    }
+
+    if (tags.has("a")) {
+        extensions.push(Link.extend({
+            addAttributes() {
+                // dbid (data-dbid) comes from the global depageDbid
+                // extension
+                return Object.assign({}, this.parent?.(), {
+                    class: classAttribute,
+                });
+            },
+        }).configure({
+            // keep the depage dialog in charge of opening links
+            openOnClick: false,
+            autolink: true,
+            linkOnPaste: true,
+            // the depage-internal schemes are registered once with
+            // linkifyjs in setupTipTapEditor(); not passing them here
+            // keeps the extension from re-registering them for every
+            // editor instance (which would warn once linkify is
+            // initialized)
+            protocols: [],
+            // …but parse-time validation must still accept them: the
+            // default check only allows the standard schemes
+            isAllowedUri: (url, ctx) => !!imports.linkIsAllowedUri(url, ["pageref", "libref", "footnote"]),
+        }));
+    }
+
+    if (tags.has("table")) {
+        var Table = tableModule.Table;
+        var TableRow = tableModule.TableRow;
+        var TableCell = tableModule.TableCell;
+        var TableHeader = tableModule.TableHeader;
+        var TextSelection = imports.TextSelection;
+
+        extensions.push(Table.extend({
+            // render plain <table><tbody>…</tbody></table> markup without
+            // the colgroups and inline widths that the default adds, so
+            // the saved html stays compatible with depage's stylesheets
+            // and xslt templates
+            renderHTML({ HTMLAttributes }) {
+                return [
+                    "table",
+                    core.mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+                    ["tbody", 0],
+                ];
+            },
+        }).configure({
+            // no TableView / tableWrapper div — keep depage's DOM structure
+            View: null,
+            resizable: false,
+        }));
+        extensions.push(TableRow);
+        extensions.push(TableCell);
+        extensions.push(TableHeader);
+
+        // {{{ Tab navigation between cells
+        // selects the content of the next/previous cell, so that typing
+        // replaces it — the same behaviour as the squire implementation
+        extensions.push(core.Extension.create({
+            name: "depageTabCellNavigation",
+
+            addKeyboardShortcuts() {
+                var selectCell = (forward) => {
+                    var editor = this.editor;
+                    var state = editor.state;
+                    var $from = state.selection.$from;
+
+                    var cells = [];
+                    var current = -1;
+
+                    state.doc.descendants((node, pos) => {
+                        if (node.type.name == "tableCell" || node.type.name == "tableHeader") {
+                            if (pos < $from.pos && $from.pos < pos + node.nodeSize) {
+                                current = cells.length;
+                            }
+
+                            cells.push({
+                                pos: pos,
+                                size: node.nodeSize
+                            });
+                        }
+                    });
+
+                    if (current == -1) return false;
+
+                    var index = current + (forward ? 1 : -1);
+
+                    if (index < 0 || index >= cells.length) return false;
+
+                    var cell = cells[index];
+                    var selection = TextSelection.create(state.doc, cell.pos + 1, cell.pos + cell.size - 1);
+
+                    editor.view.dispatch(state.tr.setSelection(selection).scrollIntoView());
+
+                    return true;
+                };
+
+                return {
+                    Tab: () => selectCell(true),
+                    "Shift-Tab": () => selectCell(false),
+                };
+            },
+        }));
+        // }}}
+    }
+
+    return extensions;
+}
+// }}}
+// {{{ TipTapFacade
+/**
+ * @brief   exposes the editor API used by the Toolbar on a tiptap editor
+ *
+ * Implements the same surface as the patched Squire instance, so the
+ * Toolbar, the link dialog and the table row buttons work with both
+ * backends unchanged.
+ **/
+class TipTapFacade {
+    // {{{ constructor()
+    constructor(editor, container) {
+        this.editor = editor;
+        this.container = container;
+        this._root = editor.view.dom;
+    }
+    // }}}
+    // {{{ basics
+    focus() {
+        this.editor.commands.focus();
+
+        return this;
+    }
+
+    blur() {
+        this.editor.commands.blur();
+
+        return this;
+    }
+
+    getHTML() {
+        return this.editor.getHTML();
+    }
+
+    setHTML(html) {
+        // remove the stray line breaks the php side adds to empty
+        // paragraphs — otherwise they would end up as hard breaks in
+        // the document
+        this.editor.commands.setContent(removeTrailingBreaks(html || ""), false);
+
+        return this;
+    }
+
+    setEditable(editable) {
+        this.editor.setEditable(editable);
+
+        return this;
+    }
+    // }}}
+    // {{{ inlineMarkFor()
+    /**
+     * @brief   maps html tags to tiptap mark names
+     **/
+    inlineMarkFor(tag) {
+        return {
+            b: "bold",
+            strong: "bold",
+            i: "italic",
+            em: "italic",
+            u: "underline",
+            s: "strike",
+            small: "small",
+            sub: "subscript",
+            sup: "superscript",
+        }[tag];
+    }
+    // }}}
+    // {{{ hasFormat()
+    hasFormat(tag, attributes) {
+        var result = splitTag(tag);
+
+        tag = result.tag;
+        attributes = attributes || result.attributes;
+
+        var mark = this.inlineMarkFor(tag);
+
+        if (mark) {
+            return this.editor.isActive(mark);
+        }
+        if (tag == "a") {
+            return this.editor.isActive("link");
+        }
+        if (tag == "ul") {
+            return this.editor.isActive("bulletList");
+        }
+        if (tag == "ol") {
+            return this.editor.isActive("orderedList");
+        }
+        if (/^h[1-6]$/.test(tag)) {
+            return this.editor.isActive("heading", Object.assign({ level: parseInt(tag[1]) }, attributes));
+        }
+        if (tag == "p") {
+            return this.editor.isActive("paragraph", attributes);
+        }
+
+        return false;
+    }
+    // }}}
+    // {{{ changeFormat()
+    /**
+     * @brief   adds and/or removes a format — same signature as squire
+     *
+     * @param   object|null add { tag, attributes } format to add
+     * @param   object|null remove { tag } format to remove
+     **/
+    changeFormat(add, remove) {
+        if (remove) {
+            this.removeFormat(remove);
+        }
+        if (add) {
+            this.applyFormat(add);
+        }
+
+        return this;
+    }
+    // }}}
+    // {{{ applyFormat()
+    applyFormat(spec) {
+        var result = splitTag(spec.tag);
+        var tag = result.tag;
+        var attributes = Object.assign({}, result.attributes, spec.attributes);
+
+        var mark = this.inlineMarkFor(tag);
+
+        if (mark) {
+            this.editor.chain().focus().setMark(mark, attributes).run();
+        } else if (tag == "a") {
+            if (attributes.href && this.editor.commands.setLink) {
+                this.editor.chain().focus().extendMarkRange("link").setLink(attributes).run();
+            }
+        } else {
+            this.replaceBlock(spec.tag);
+        }
+
+        return this;
+    }
+    // }}}
+    // {{{ removeFormat()
+    removeFormat(spec) {
+        var tag = splitTag(spec.tag).tag;
+        var mark = this.inlineMarkFor(tag);
+
+        if (mark) {
+            this.editor.chain().focus().unsetMark(mark).run();
+        } else if (tag == "a") {
+            if (this.editor.commands.unsetLink) {
+                this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+            }
+        } else if (tag == "ul" || tag == "ol") {
+            this.removeList();
+        }
+
+        return this;
+    }
+    // }}}
+    // {{{ replaceBlock()
+    replaceBlock(tag) {
+        var result = splitTag(tag);
+        var attributes = {};
+
+        if (result.className !== undefined) {
+            attributes.class = result.className;
+        }
+
+        if (/^h[1-6]$/.test(result.tag)) {
+            this.editor.chain().focus().setNode("heading", Object.assign({ level: parseInt(result.tag[1]) }, attributes)).run();
+        } else {
+            this.editor.chain().focus().setNode("paragraph", attributes).run();
+        }
+
+        return this;
+    }
+    // }}}
+    // {{{ lists
+    makeUnorderedList() {
+        this.editor.chain().focus().toggleBulletList().run();
+
+        return this;
+    }
+
+    makeOrderedList() {
+        this.editor.chain().focus().toggleOrderedList().run();
+
+        return this;
+    }
+
+    removeList() {
+        this.editor.chain().focus().liftListItem("listItem").run();
+
+        return this;
+    }
+    // }}}
+    // {{{ getPosBySelection()
+    /**
+     * @brief   returns the position of the current editor selection
+     *
+     * Used to place floating UI (toolbar, link dialog) near the
+     * selection. Measures the selection stored in the prosemirror
+     * state through view.coordsAtPos() — reading the live window
+     * selection is not reliable here: as soon as a floating toolbar
+     * button is pressed, the editor and with it the dom selection lose
+     * focus, while the stored prosemirror selection survives. That
+     * stored selection is what the toolbar and the link dialog must be
+     * positioned against.
+     *
+     * @param   number offsetTop offset to move the position up
+     * @param   number offsetLeft offset to move the position left
+     * @return  object { top, left } in page coordinates
+     **/
+    getPosBySelection(offsetTop, offsetLeft) {
+        offsetTop = offsetTop || 0;
+        offsetLeft = offsetLeft || 0;
+
+        var view = this.editor.view;
+        var selection = this.editor.state.selection;
+
+        var from = view.coordsAtPos(selection.from);
+        var to = view.coordsAtPos(selection.to);
+
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+
+        // @todo check if mouse position is inside rect and position the toolbar next to mouse
+        // @todo check that toolbar stays in visible area of window
+        // @todo change position only if necessary (if selection has changed)
+        // @todo adjust toolbar position on iOS because of native popup
+
+        var left = Math.min(from.left, to.left);
+        var right = Math.max(from.right, to.right);
+        var top = Math.min(from.top, to.top) + scrollTop - offsetTop;
+
+        left = left + (right - left) * 0.5 + scrollLeft - offsetLeft;
+
+        if (top < 60) {
+            top = 60;
+        }
+
+        return {
+            top: top,
+            left: left
+        };
+    }
+    // }}}
+    // {{{ showLinkDialog()
+    showLinkDialog(href, callback) {
+        emit(this._root, "depageForm.showLinkDialog", {
+            href: href,
+            callback: callback,
+            editor: this
+        }, true);
+
+        return this;
+    }
+    // }}}
+    // {{{ handleTableButtonClick()
+    handleTableButtonClick(e, cell) {
+        cell = cell || e.currentTarget;
+
+        // the "+" and "-" buttons are rendered through css inside the
+        // right padding-area of the last cell — same geometry check as
+        // the squire implementation
+        var cellStyle = getComputedStyle(cell);
+        var contentWidth = cell.clientWidth
+            - parseFloat(cellStyle.paddingLeft)
+            - parseFloat(cellStyle.paddingRight);
+
+        if (e.offsetX < contentWidth) return;
+        if (!this.editor.commands.addRowAfter) return;
+
+        var row = cell.parentElement;
+        var pos = this.editor.view.posAtDOM(cell, 0);
+
+        if (e.offsetY < 20) {
+            this.editor.chain().focus().setTextSelection(pos).addRowAfter().run();
+        } else if (e.offsetY < 40) {
+            // keep at least one row, like the squire implementation
+            if (row.parentElement && row.parentElement.children.length > 1) {
+                this.editor.chain().focus().setTextSelection(pos).deleteRow().run();
+            }
+        }
+
+        return false;
+    }
+    // }}}
+    // {{{ destroy()
+    destroy() {
+        this.editor.destroy();
     }
     // }}}
 }
@@ -596,21 +1519,32 @@ export class DepageForm {
     // {{{ addFocusClassHandlers()
     /**
      * @brief   adds a focus-class to the fieldset of the focused input
+     *
+     * For richtext editors the focus target is the editable element:
+     * the .textarea-content div itself for the squire backend, a child
+     * of it (the ProseMirror root) for the tiptap backend — so richtext
+     * membership is checked with closest() instead of matches().
      **/
     addFocusClassHandlers() {
-        var selector = "input, textarea, select, .input-richtext .textarea-content";
+        var selector = "input, textarea, select";
+
+        var getFieldset = (target) => {
+            if (target.matches(selector)) {
+                return target.closest("fieldset");
+            }
+
+            var content = target.closest(".input-richtext .textarea-content");
+
+            return content ? content.closest("fieldset") : null;
+        };
 
         this.form.addEventListener("focusin", (e) => {
-            if (!e.target.matches(selector)) return;
-
-            var fieldset = e.target.closest("fieldset");
+            var fieldset = getFieldset(e.target);
 
             if (fieldset) fieldset.classList.add("focus");
         });
         this.form.addEventListener("focusout", (e) => {
-            if (!e.target.matches(selector)) return;
-
-            var fieldset = e.target.closest("fieldset");
+            var fieldset = getFieldset(e.target);
 
             if (fieldset) fieldset.classList.remove("focus");
         });
@@ -1014,7 +1948,18 @@ export class DepageForm {
 
             form.classList.add("autosave-success");
             form.classList.remove("autosave-failed");
-            emit(form, "depageForm.autosaved", { response: response });
+
+            // the parsed response is passed on, so that a listener can
+            // work with it (the mapping of the ids of the new nodes, for
+            // example) without reading the body of the response again
+            var result = null;
+            try {
+                result = await response.clone().json();
+            } catch (exception) {
+                result = null;
+            }
+
+            emit(form, "depageForm.autosaved", { response: response, result: result, values: data });
 
             this.state.successTimer = setTimeout(() => {
                 form.classList.remove("autosave-success");
@@ -1064,24 +2009,15 @@ export class DepageForm {
     /* {{{ richtext */
     // {{{ setupRichtextEditor()
     /**
-     * @brief   replaces a textarea with a squire richtext editor
+     * @brief   replaces a textarea with a richtext editor
      *
-     * dompurify and squire-rte are imported dynamically, so they are
-     * only loaded when the form actually contains a richtext element.
+     * Builds the shared DOM scaffolding (wrapper div + hidden input) and
+     * then hands over to the backend selected through the "editor" key in
+     * the richtext options or DepageForm.defaultEditor.
      *
      * @param   element container .input-richtext paragraph
      **/
     async setupRichtextEditor(container) {
-        var autosave = this.autosaveEnabled;
-        var form = this.form;
-
-        const [{ default: DOMPurify }, { default: Squire }] = await Promise.all([
-            import("dompurify"),
-            import("squire-rte"),
-        ]);
-
-        this.patchSquire(Squire);
-
         // @todo merge option arrays
         var options = {};
 
@@ -1098,7 +2034,12 @@ export class DepageForm {
 
         if (!textarea) return;
 
-        var maxlength = parseInt(textarea.getAttribute("maxlength")) || -1;
+        var context = {
+            container: container,
+            options: options,
+            maxlength: parseInt(textarea.getAttribute("maxlength")) || -1,
+            value: textarea.value
+        };
 
         var wrapper = document.createElement("div");
         wrapper.className = "textarea richtext";
@@ -1114,6 +2055,47 @@ export class DepageForm {
         input.name = textarea.name;
         input.value = textarea.value; // old textarea value
         textarea.after(input);
+
+        context.wrapper = wrapper;
+        context.div = div;
+        context.input = input;
+        context.autosave = this.autosaveEnabled;
+        context.form = this.form;
+
+        textarea.remove();
+
+        var backend = options.editor || DepageForm.defaultEditor || "squire";
+
+        if (backend == "tiptap") {
+            await this.setupTipTapEditor(context);
+        } else {
+            await this.setupSquireEditor(context);
+        }
+    }
+    // }}}
+    // {{{ setupSquireEditor()
+    /**
+     * @brief   richtext backend: replaces the textarea with a squire editor
+     *
+     * dompurify and squire-rte are imported dynamically, so they are
+     * only loaded when the form actually contains a richtext element.
+     **/
+    async setupSquireEditor(context) {
+        var container = context.container;
+        var options = context.options;
+        var wrapper = context.wrapper;
+        var div = context.div;
+        var input = context.input;
+        var maxlength = context.maxlength;
+        var autosave = context.autosave;
+        var form = context.form;
+
+        const [{ default: DOMPurify }, { default: Squire }] = await Promise.all([
+            import("dompurify"),
+            import("squire-rte"),
+        ]);
+
+        this.patchSquire(Squire);
 
         var allowedTags = [];
 
@@ -1144,9 +2126,7 @@ export class DepageForm {
             }
         });
 
-        editor.setHTML(textarea.value);
-
-        textarea.remove();
+        editor.setHTML(context.value);
 
         var toolbar = new Toolbar(container, options, editor);
         var scrollTop = 0;
@@ -1306,6 +2286,279 @@ export class DepageForm {
         emit(form, "depageForm.richtextInitialized", { container: container, editor: editor });
     }
     // }}}
+    // {{{ setupTipTapEditor()
+    /**
+     * @brief   richtext backend: replaces the textarea with a tiptap editor
+     *
+     * TipTap is a schema-based editor built on ProseMirror: the
+     * allowedTags option is turned into the document schema itself, so
+     * unknown tags are dropped instead of filtered. The tiptap packages
+     * are imported dynamically, so they are only loaded when the form
+     * actually contains a richtext element using this backend.
+     **/
+    async setupTipTapEditor(context) {
+        var container = context.container;
+        var options = context.options;
+        var wrapper = context.wrapper;
+        var div = context.div;
+        var input = context.input;
+        var maxlength = context.maxlength;
+        var autosave = context.autosave;
+        var form = context.form;
+
+        const [
+            core,
+            { Paragraph },
+            { Heading },
+            { StarterKit },
+            link,
+            table,
+            { Subscript },
+            { Superscript },
+            { Plugin, TextSelection },
+        ] = await Promise.all([
+            import("@tiptap/core"),
+            import("@tiptap/extension-paragraph"),
+            import("@tiptap/extension-heading"),
+            import("@tiptap/starter-kit"),
+            import("@tiptap/extension-link"),
+            import("@tiptap/extension-table"),
+            import("@tiptap/extension-subscript"),
+            import("@tiptap/extension-superscript"),
+            import("@tiptap/pm/state"),
+        ]);
+
+        // {{{ register depage protocols with linkifyjs
+        // autolink uses linkifyjs, which only accepts custom schemes
+        // before it initializes itself — so register them once, before
+        // the first editor is created
+        if (!tiptapProtocolsRegistered) {
+            tiptapProtocolsRegistered = true;
+
+            const { registerCustomProtocol } = await import("linkifyjs");
+
+            for (var scheme of ["pageref", "libref", "footnote"]) {
+                registerCustomProtocol(scheme);
+            }
+        }
+        // }}}
+
+        var extensions = buildTipTapExtensions(options.allowedTags, {
+            core: core,
+            Paragraph: Paragraph,
+            Heading: Heading,
+            StarterKit: StarterKit,
+            Link: link.Link,
+            linkIsAllowedUri: link.isAllowedUri,
+            table: table,
+            Subscript: Subscript,
+            Superscript: Superscript,
+            Plugin: Plugin,
+            TextSelection: TextSelection,
+        });
+
+        var editor = new core.Editor({
+            element: div,
+            extensions: extensions,
+            // remove the stray line breaks the php side adds to empty
+            // paragraphs — otherwise they would end up as hard breaks
+            // in the document
+            content: removeTrailingBreaks(context.value),
+            editorProps: {
+                // pasted content gets the same cleanup as the content
+                // the editor is initialized with — the squire backend
+                // did the same, because it sanitized every pasted
+                // fragment the same way
+                transformPastedHTML: (html) => removeTrailingBreaks(html),
+            },
+        });
+
+        var facade = new TipTapFacade(editor, container);
+        var toolbar = new Toolbar(container, options, facade);
+        var scrollTop = 0;
+
+        wrapper.editor = facade;
+        wrapper.toolbar = toolbar;
+
+        // the server stores the nodes the editor created with new
+        // database ids and reports the mapping from their placeholder
+        // ids to them; the editor replaces the placeholders with the
+        // database ids, so that the next save can match the nodes by
+        // their database id
+        form.addEventListener("depageForm.autosaved", (e) => {
+            var detail = e.detail || {};
+            var ids = detail.result && detail.result.ids;
+
+            if (!ids) return;
+
+            if (!applyDbidIds(editor, ids)) return;
+
+            // the value of the input has to be updated right away: the
+            // update handler is throttled and a save in between would
+            // send the placeholder ids again, which would store the node
+            // a second time
+            input.value = editor.getHTML();
+
+            // the values that were sent are remembered with the new ids,
+            // so that the ids alone do not trigger another save
+            var sent = detail.values ? detail.values[input.name] : null;
+
+            if (sent !== null && sent !== undefined && this.state.lastSaved) {
+                var html = String(sent);
+
+                Object.keys(ids).forEach((placeholder) => {
+                    html = html
+                        .split('data-dbid="' + placeholder + '"')
+                        .join('data-dbid="' + ids[placeholder] + '"');
+                });
+
+                this.state.lastSaved[input.name] = html;
+            }
+        });
+
+        // shows the toolbar when the editor is focused and a real
+        // (non-collapsed) selection exists, hides it otherwise — the
+        // squire backend behaved the same way, because squire only
+        // fires "select" when the selection is not collapsed (and
+        // "cursor" otherwise). Hooked into "focus" as well, so the
+        // toolbar stays visible when a formatting button blurs and
+        // re-focuses the editor without changing the selection.
+        var updateToolbar = () => {
+            if (editor.isFocused && !editor.state.selection.empty) {
+                var t = toolbar.show();
+                if (t) t.setPositionBySelection();
+            } else {
+                toolbar.hide();
+            }
+        };
+
+        editor.on("update", throttle(() => {
+            input.value = editor.getHTML();
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+
+            if (autosave) {
+                this.changed();
+            }
+
+            // hide while typing (the selection collapses) — but do
+            // not hide unconditionally: the throttled trailing call
+            // would otherwise remove the toolbar up to a second after
+            // a content change even though the selection is still
+            // there
+            updateToolbar();
+        }, 1000, {
+            leading: true,
+            trailing: true
+        }));
+
+        editor.on("focus", () => {
+            wrapper.classList.add("focus");
+            wrapper.scrollTop = scrollTop;
+
+            updateToolbar();
+        });
+        editor.on("blur", () => {
+            input.value = editor.getHTML();
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+
+            if (autosave) {
+                this.changed();
+            }
+
+            wrapper.classList.remove("focus");
+
+            toolbar.hide();
+        });
+        editor.on("selectionUpdate", updateToolbar);
+
+        div.addEventListener("dblclick", (e) => {
+            var a = e.target.closest("a");
+
+            if (!a) return;
+
+            setTimeout(() => {
+                var pos = editor.view.posAtDOM(a, 0);
+                var range = findLinkRange(editor.state.doc, pos);
+
+                if (range) {
+                    editor.commands.setTextSelection(range);
+                }
+
+                facade.showLinkDialog(a.getAttribute("href"), (value) => {
+                    if (!editor.commands.setLink) return;
+
+                    if (value != "") {
+                        // keep existing attributes like class and data-dbid
+                        var attributes = Object.assign({}, range ? range.attributes : {}, { href: value });
+
+                        editor.chain().focus().extendMarkRange("link").setLink(attributes).run();
+                    } else {
+                        editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                    }
+                });
+            }, 50);
+        });
+        div.addEventListener("click", (e) => {
+            var cell = e.target.closest("table td:last-child");
+
+            if (cell && div.contains(cell)) {
+                facade.handleTableButtonClick(e, cell);
+            }
+        });
+
+        wrapper.addEventListener("scroll", () => {
+            scrollTop = wrapper.scrollTop;
+        });
+
+        if (maxlength > 0) {
+            var isMac = /Mac OS X/.test(navigator.userAgent);
+            var remaining = document.createElement("span");
+            remaining.className = "text-remaining";
+            wrapper.appendChild(remaining);
+
+            var updateRemaining = function() {
+                var length = div.textContent.length;
+
+                remaining.textContent = (maxlength - length) + " / " + maxlength;
+                remaining.classList.toggle("error", length > maxlength);
+
+                return length;
+            };
+
+            updateRemaining();
+
+            div.addEventListener("keydown", (e) => {
+                var keycode = e.keyCode;
+
+                //List of keycodes of printable characters from:
+                //http://stackoverflow.com/questions/12467240/determine-if-javascript-e-keycode-is-a-printable-non-control-character
+                var printable =
+                    (keycode > 47 && keycode < 58)   || // number keys
+                    keycode == 32 || keycode == 13   || // spacebar & return key(s) (if you want to allow carriage returns)
+                    (keycode > 64 && keycode < 91)   || // letter keys
+                    (keycode > 95 && keycode < 112)  || // numpad keys
+                    (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+                    (keycode > 218 && keycode < 223);   // [\]' (in order)
+
+                // @todo check if text is selected because it would be overridden
+                var shortcutKey = (isMac && e.metaKey) || e.ctrlKey;
+                var length = updateRemaining();
+
+                if (!shortcutKey && printable) {
+                    if (length >= maxlength) {
+                        e.preventDefault();
+                    }
+                }
+            });
+            for (var event of ["keyup", "contextmenu", "input"]) {
+                div.addEventListener(event, updateRemaining);
+            }
+            editor.on("update", updateRemaining);
+        }
+
+        emit(form, "depageForm.richtextInitialized", { container: container, editor: facade });
+    }
+    // }}}
     // {{{ patchSquire()
     /**
      * @brief   adds depage helpers to the Squire prototype (once)
@@ -1403,10 +2656,23 @@ export class DepageForm {
         // }}}
         // {{{ Squire.showLinkDialog()
         if (typeof Squire.prototype.showLinkDialog === 'undefined') {
-            Squire.prototype.showLinkDialog = function(_href, _callback) {
-                // @todo implement fallback -> alert?
+            Squire.prototype.showLinkDialog = function(href, callback) {
+                // dispatched on the editable root, so it bubbles up to the
+                // form and the document; the embedding application (e.g.
+                // the depage-cms interface) listens for it and opens a
+                // dialog — same contract as the tiptap backend
+                emit(this._root, "depageForm.showLinkDialog", {
+                    href: href,
+                    callback: callback,
+                    editor: this
+                }, true);
             };
         }
+        // }}}
+        // {{{ Squire.setEditable()
+        Squire.prototype.setEditable = function(editable) {
+            this._root.setAttribute("contenteditable", editable ? "true" : "false");
+        };
         // }}}
         // {{{ Squire.handleTableButtonClick()
         Squire.prototype.handleTableButtonClick = function(e, cell) {
@@ -1583,6 +2849,14 @@ export function setup(root) {
 
 DepageForm.setup = setup;
 DepageForm.setupForm = setupForm;
+
+/**
+ * @brief   default richtext editor backend: "squire" or "tiptap"
+ *
+ * can be overridden per form through the "editor" key in
+ * data-richtext-options.
+ **/
+DepageForm.defaultEditor = "squire";
 
 export default DepageForm;
 

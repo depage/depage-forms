@@ -32,7 +32,17 @@
         "url": "https://github.com/depage/depage-forms.git"
     },
     "dependencies": {
+        "@tiptap/core": "^3.32.2",
+        "@tiptap/extension-heading": "^3.32.2",
+        "@tiptap/extension-link": "^3.32.2",
+        "@tiptap/extension-paragraph": "^3.32.2",
+        "@tiptap/extension-subscript": "^3.32.2",
+        "@tiptap/extension-superscript": "^3.32.2",
+        "@tiptap/extension-table": "^3.32.2",
+        "@tiptap/pm": "^3.32.2",
+        "@tiptap/starter-kit": "^3.32.2",
         "dompurify": "^3.2.6",
+        "linkifyjs": "^4.4.0",
         "squire-rte": "^2.2.0",
         "tom-select": "^2.4.3"
     },
