@@ -14,11 +14,12 @@ const { default: DepageForm } = await import("../htmlform.js");
 var previousEditor = DepageForm.defaultEditor;
 var container;
 var editor;
+var form;
 
 beforeAll(async () => {
     DepageForm.defaultEditor = "tiptap";
 
-    var form = document.querySelector("form.depage-form");
+    form = document.querySelector("form.depage-form");
 
     container = form.querySelector(".input-richtext");
 
@@ -83,6 +84,37 @@ test("focus() accepts a position", () => {
     editor.focus("end");
 
     expect(editor.getBlockStyle()).toBe("p");
+});
+// }}}
+// {{{ replaceDbidIds
+test("replaceDbidIds() replaces the placeholder ids with the database ids", () => {
+    editor.setHTML('<p data-dbid="-1">test</p>');
+    expect(editor.getHTML()).toContain('data-dbid="-1"');
+
+    // the server stores the nodes the editor created with new database
+    // ids and reports the mapping from the placeholder ids to them
+    expect(editor.replaceDbidIds({ "-1": "4711" })).toBe(true);
+    expect(editor.getHTML()).toContain('data-dbid="4711"');
+    expect(editor.getHTML()).not.toContain('data-dbid="-1"');
+
+    // nothing to replace
+    expect(editor.replaceDbidIds({ "-1": "4711" })).toBe(false);
+});
+// }}}
+// {{{ autosaved event
+test("the ids of the autosave response replace the placeholder ids", () => {
+    editor.setHTML('<p data-dbid="-2">test</p>');
+    expect(editor.getHTML()).toContain('data-dbid="-2"');
+
+    form.dispatchEvent(new CustomEvent("depageForm.autosaved", {
+        bubbles: true,
+        detail: {
+            result: { ids: { "-2": "4712" } },
+        },
+    }));
+
+    expect(editor.getHTML()).toContain('data-dbid="4712"');
+    expect(editor.getHTML()).not.toContain('data-dbid="-2"');
 });
 // }}}
 

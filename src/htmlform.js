@@ -1176,6 +1176,25 @@ class TipTapFacade {
         return tag;
     }
     // }}}
+    // {{{ replaceDbidIds()
+    /**
+     * @brief   replaces the placeholder ids of the document with the database ids
+     *
+     * The editor marks the nodes it creates with a negative placeholder id,
+     * so that the server can tell them apart from the nodes it stores
+     * already. The server stores them with new database ids and reports the
+     * mapping from the placeholder ids to them; the editor replaces the
+     * placeholders, so that the following saves match the nodes by their
+     * database id.
+     *
+     * @param   object ids    mapping from the placeholder id to the database id
+     *
+     * @return  bool   whether the document was changed
+     **/
+    replaceDbidIds(ids) {
+        return applyDbidIds(this.editor, ids);
+    }
+    // }}}
     // {{{ getEditableElement()
     /**
      * @brief   returns the element that handles the keyboard events
@@ -2478,7 +2497,7 @@ export class DepageForm {
 
             if (!ids) return;
 
-            if (!applyDbidIds(editor, ids)) return;
+            if (!facade.replaceDbidIds(ids)) return;
 
             // the value of the input has to be updated right away: the
             // update handler is throttled and a save in between would
