@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "@tiptap/core": "^3.32.2",
+        "@tiptap/extension-blockquote": "^3.32.2",
         "@tiptap/extension-heading": "^3.32.2",
         "@tiptap/extension-link": "^3.32.2",
         "@tiptap/extension-paragraph": "^3.32.2",

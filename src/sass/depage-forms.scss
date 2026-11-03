@@ -775,6 +775,17 @@ $depageFormRadiobuttonHeight: $depageFormRadiobuttonSize !default;
                 outline: none;
             }
 
+            // the tiptap backend creates its own contenteditable element
+            // inside the textarea-content element
+            .ProseMirror {
+                outline: none;
+                // prosemirror needs these to wrap long lines and to keep
+                // the soft line breaks of the text
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
             h1,
             h2,
             h3,

@@ -159,6 +159,16 @@ function splitTag(tag) {
     };
 }
 // }}}
+// {{{ blockTagNames
+/**
+ * @brief   matches the names of the block elements
+ *
+ * Used to find the block that contains the selection — the tiptap
+ * backend gets the block from the prosemirror state, the squire backend
+ * has to walk up the dom tree.
+ **/
+var blockTagNames = /^(P|H[1-6]|DIV|UL|OL|LI|DL|DT|DD|BLOCKQUOTE|PRE|TABLE|THEAD|TBODY|TFOOT|TR|TD|TH|ADDRESS|SECTION|ARTICLE|ASIDE|HEADER|FOOTER|FIGURE|FIGCAPTION|MAIN|NAV|HR|CENTER|BODY)$/;
+// }}}
 // {{{ emit()
 /**
  * @brief   dispatches a bubbling CustomEvent and returns it
@@ -835,6 +845,8 @@ function buildTipTapExtensions(allowedTags, imports) {
         tags.add(splitTag(allowedTags[i]).tag);
     }
 
+    var Blockquote = imports.Blockquote;
+
     var headingLevels = [];
     for (var level = 1; level <= 6; level++) {
         if (tags.has("h" + level)) {
@@ -933,6 +945,17 @@ function buildTipTapExtensions(allowedTags, imports) {
             },
         }).configure({
             levels: headingLevels,
+        }));
+    }
+
+    if (tags.has("blockquote") && Blockquote) {
+        // StarterKit has it disabled, because the class attribute of the
+        // blockquote would not survive the roundtrip — but the forum
+        // posts need it
+        extensions.push(Blockquote.extend({
+            addAttributes() {
+                return Object.assign({}, this.parent?.(), { class: classAttribute });
+            },
         }));
     }
 
@@ -1082,8 +1105,21 @@ class TipTapFacade {
     }
     // }}}
     // {{{ basics
-    focus() {
-        this.editor.commands.focus();
+    /**
+     * @brief   focuses the editor
+     *
+     * @param   string|null position "start" or "end" to move the cursor
+     *                          to the beginning or the end of the
+     *                          document
+     *
+     * @return  object  the facade
+     **/
+    focus(position) {
+        if (position) {
+            this.editor.commands.focus(position);
+        } else {
+            this.editor.commands.focus();
+        }
 
         return this;
     }
@@ -1111,6 +1147,48 @@ class TipTapFacade {
         this.editor.setEditable(editable);
 
         return this;
+    }
+    // }}}
+    // {{{ getBlockStyle()
+    /**
+     * @brief   returns the style of the block the cursor is in
+     *
+     * The style is the tag of the block with its class name, in the same
+     * notation the allowedTags option uses: "h3.character", "p.action" or
+     * "p" for a paragraph without a class.
+     *
+     * @return  string|null  the style of the current block
+     **/
+    getBlockStyle() {
+        var node = this.editor.state.selection.$from.parent;
+
+        if (!node) return null;
+
+        var tag = node.type.name;
+
+        if (tag == "paragraph") tag = "p";
+        if (tag == "heading") tag = "h" + node.attrs.level;
+
+        if (node.attrs.class) {
+            return tag + "." + node.attrs.class;
+        }
+
+        return tag;
+    }
+    // }}}
+    // {{{ getEditableElement()
+    /**
+     * @brief   returns the element that handles the keyboard events
+     *
+     * Squire makes the ".textarea-content" element itself editable and
+     * dispatches its own events, tiptap creates its own contenteditable
+     * element inside it. The keyboard shortcuts of an application have to
+     * be bound to this element.
+     *
+     * @return  object  the editable element
+     **/
+    getEditableElement() {
+        return this._root;
     }
     // }}}
     // {{{ inlineMarkFor()
@@ -1220,13 +1298,19 @@ class TipTapFacade {
     }
     // }}}
     // {{{ replaceBlock()
+    /**
+     * @brief   changes the tag and the class of the current block
+     *
+     * The class is always set explicitly: prosemirror's setNode() copies
+     * the attributes of the current block, so a style without a class
+     * would keep the class of the old block — "p" would stay
+     * "p.character" instead of becoming a plain paragraph.
+     **/
     replaceBlock(tag) {
         var result = splitTag(tag);
-        var attributes = {};
-
-        if (result.className !== undefined) {
-            attributes.class = result.className;
-        }
+        var attributes = {
+            class: result.className !== undefined ? result.className : null,
+        };
 
         if (/^h[1-6]$/.test(result.tag)) {
             this.editor.chain().focus().setNode("heading", Object.assign({ level: parseInt(result.tag[1]) }, attributes)).run();
@@ -2315,6 +2399,7 @@ export class DepageForm {
             table,
             { Subscript },
             { Superscript },
+            { Blockquote },
             { Plugin, TextSelection },
         ] = await Promise.all([
             import("@tiptap/core"),
@@ -2325,6 +2410,7 @@ export class DepageForm {
             import("@tiptap/extension-table"),
             import("@tiptap/extension-subscript"),
             import("@tiptap/extension-superscript"),
+            import("@tiptap/extension-blockquote"),
             import("@tiptap/pm/state"),
         ]);
 
@@ -2353,6 +2439,7 @@ export class DepageForm {
             table: table,
             Subscript: Subscript,
             Superscript: Superscript,
+            Blockquote: Blockquote,
             Plugin: Plugin,
             TextSelection: TextSelection,
         });
@@ -2652,6 +2739,38 @@ export class DepageForm {
                 top: top,
                 left: left
             };
+        };
+        // }}}
+        // {{{ Squire.getBlockStyle()
+        Squire.prototype.getBlockStyle = function() {
+            var range = this.getSelection();
+            var node = range.startContainer;
+
+            if (node.nodeType == 3) {
+                node = node.parentNode;
+            }
+
+            // climb up to the block element that contains the selection
+            while (node && node != this._root && node.nodeType == 1) {
+                if (blockTagNames.test(node.nodeName)) break;
+
+                node = node.parentNode;
+            }
+
+            if (!node || node == this._root) return null;
+
+            var style = node.nodeName.toLowerCase();
+
+            if (node.className) {
+                style += "." + node.className;
+            }
+
+            return style;
+        };
+        // }}}
+        // {{{ Squire.getEditableElement()
+        Squire.prototype.getEditableElement = function() {
+            return this._root;
         };
         // }}}
         // {{{ Squire.showLinkDialog()
