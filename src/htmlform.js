@@ -38,6 +38,11 @@
  *     - "squire" (default) squire-rte based editor
  *     - "tiptap"           TipTap (ProseMirror) based editor with native
  *                          table support
+ *
+ * richtext editor options (data-richtext-options):
+ *     - "allowedTags"      tags the editor may contain
+ *     - "addDbids"         keep the data-dbid attributes that depage-xmldb
+ *                          stores in the content (default: false)
  **/
 
 // {{{ dbid placeholders
@@ -817,9 +822,10 @@ function applyDbidIds(editor, ids) {
  *
  * @param   array allowedTags list of tags like ["p", "a", "h1.teaser"]
  * @param   object imports the dynamically imported tiptap modules
+ * @param   bool addDbids whether to keep depage-xmldb's data-dbid attributes
  * @return  array extensions
  **/
-function buildTipTapExtensions(allowedTags, imports) {
+function buildTipTapExtensions(allowedTags, imports, addDbids = false) {
     var core = imports.core;
     var Paragraph = imports.Paragraph;
     var Heading = imports.Heading;
@@ -848,9 +854,9 @@ function buildTipTapExtensions(allowedTags, imports) {
         renderHTML: (attributes) => attributes.class ? { class: attributes.class } : {},
     };
 
-    // depage stores a database id in every element of the richtext
-    // content — as data-dbid in the html; the squire backend kept
-    // them through dompurify's allowed attributes. xmldb's
+    // depage-xmldb stores a database id in every element of the
+    // richtext content — as data-dbid in the html; the squire backend
+    // kept them through dompurify's allowed attributes. xmldb's
     // saveNodePatch() needs those ids to only save the parts of the
     // tree that actually changed (without them it falls back to
     // saving the whole subtree), so they must survive the schema
@@ -867,7 +873,10 @@ function buildTipTapExtensions(allowedTags, imports) {
     };
 
     var extensions = [
-        core.Extension.create({
+        // the dbid attributes only make sense when the content comes
+        // from depage-xmldb — without it they are neither parsed nor
+        // rendered
+        ...(addDbids ? [core.Extension.create({
             name: "depageDbid",
 
             // adds the dbid attribute to all node and mark types at
@@ -898,7 +907,7 @@ function buildTipTapExtensions(allowedTags, imports) {
                     }),
                 ];
             },
-        }),
+        })] : []),
         StarterKit.configure({
             // replaced by the extended versions below, so that class
             // attributes survive the roundtrip
@@ -2030,6 +2039,10 @@ export class DepageForm {
         } catch (exception) {
         }
 
+        // the data-dbid attributes of the content are only needed when
+        // it comes from depage-xmldb
+        options.addDbids = options.addDbids === true;
+
         var textarea = container.querySelector("textarea");
 
         if (!textarea) return;
@@ -2103,12 +2116,19 @@ export class DepageForm {
             allowedTags.push(splitTag(options.allowedTags[i]).tag);
         }
 
+        var allowedAttributes = ['class', 'href', 'target', 'alt', 'title'];
+
+        if (options.addDbids === true) {
+            // the ids depage-xmldb stores in the content
+            allowedAttributes.push('data-dbid');
+        }
+
         var editor = new Squire(div, {
             blockTag: 'P',
             sanitizeToDOMFragment: function(html, _self) {
                 var frag = DOMPurify.sanitize(html, {
                     ALLOWED_TAGS: allowedTags,
-                    ALLOWED_ATTR: ['class', 'href', 'target', 'alt', 'title', 'data-dbid'],
+                    ALLOWED_ATTR: allowedAttributes,
                     WHOLE_DOCUMENT: false,
                     RETURN_DOM: true,
                     RETURN_DOM_FRAGMENT: true,
@@ -2355,7 +2375,7 @@ export class DepageForm {
             Superscript: Superscript,
             Plugin: Plugin,
             TextSelection: TextSelection,
-        });
+        }, options.addDbids === true);
 
         var editor = new core.Editor({
             element: div,
@@ -2488,7 +2508,8 @@ export class DepageForm {
                     if (!editor.commands.setLink) return;
 
                     if (value != "") {
-                        // keep existing attributes like class and data-dbid
+                        // keep existing attributes like class and (if
+                        // addDbids is enabled) data-dbid
                         var attributes = Object.assign({}, range ? range.attributes : {}, { href: value });
 
                         editor.chain().focus().extendMarkRange("link").setLink(attributes).run();
