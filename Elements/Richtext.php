@@ -52,6 +52,12 @@ class Richtext extends Textarea
      * @brief   autogrow
      **/
     public $autogrow = true;
+
+    /**
+     * @brief   keep the data-dbid attributes depage-xmldb stores in the
+     *          richtext content
+     **/
+    public $addDbids = false;
     // }}}
 
     // {{{ setDefaults()
@@ -72,6 +78,7 @@ class Richtext extends Textarea
         $this->defaults['cols'] = null;
         $this->defaults['stylesheet'] = null;
         $this->defaults['autogrow'] = true;
+        $this->defaults['addDbids'] = false;
         $this->defaults['allowedTags'] = [
             // inline elements
             "a",
@@ -102,6 +109,7 @@ class Richtext extends Textarea
         $options = [];
         $options['stylesheet'] = $this->stylesheet;
         $options['allowedTags'] = $this->allowedTags;
+        $options['addDbids'] = (bool) $this->addDbids;
 
         $this->dataAttr['richtext-options'] = json_encode($options);
 
