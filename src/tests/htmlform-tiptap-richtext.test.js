@@ -7,7 +7,7 @@
 import { test, expect, beforeAll, afterAll } from "bun:test";
 import { renderFixture } from "./dom.js";
 
-document.body.innerHTML = renderFixture("render-richtext-fixture.php");
+document.body.innerHTML = renderFixture("render-richtext-dbid-fixture.php");
 
 const { default: DepageForm } = await import("../htmlform.js");
 
@@ -23,6 +23,9 @@ beforeAll(async () => {
 
     container = form.querySelector(".input-richtext");
 
+    // the fixture is rendered with the addDbids option, so the dbid
+    // replacement has the attributes it works on in the schema; the
+    // tiptap backend is selected globally in beforeAll
     var instance = DepageForm.setupForm(form);
     await instance.ready;
 
